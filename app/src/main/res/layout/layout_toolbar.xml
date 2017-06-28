@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="59dp">
+
+    <ImageView
+        android:id="@+id/im_back_arrow"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/nav_search"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="33dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="@string/app_name"
+        style="@style/tool_bar"/>
+</RelativeLayout>

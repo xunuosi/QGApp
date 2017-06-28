@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">QGApp</string>
+    <!--bottomBar-->
+    <string name="bottomBar_home">首页</string>
+    <string name="bottomBar_knowledge">知识库</string>
+    <string name="bottomBar_res">资源库</string>
+    <string name="bottomBar_user">我的</string>
+</resources>
