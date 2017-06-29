@@ -7,6 +7,7 @@
     <!--BottomBar-->
     <color name="color_bottom_divider">#e2e4e5</color>
     <color name="color_bottom_text">#3a3a3a</color>
+    <color name="color_selected_bottom_text">#2377d2</color>
     <!--toolBar-->
     <color name="color_toolbar_text">#333333</color>
 </resources>

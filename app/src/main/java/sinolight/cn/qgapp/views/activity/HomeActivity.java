@@ -2,7 +2,9 @@ package sinolight.cn.qgapp.views.activity;
 
 import android.Manifest;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -15,6 +17,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.PageBottomTabLayout;
+import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
+import me.majiajie.pagerbottomtabstrip.item.NormalItemView;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.dagger.component.DaggerHomeActivityComponent;
@@ -75,11 +79,11 @@ public class HomeActivity extends BaseActivity implements PermissionListener,IHo
     protected void initViews() {
         setSupportActionBar(toolBar);
         tvTitle.setText(R.string.toolbar_home_title);
-        mNavigationController = bottomTab.material()
-                .addItem(R.drawable.bg_tab_home, getString(R.string.bottomBar_home))
-                .addItem(R.drawable.bg_tab_knowledge, getString(R.string.bottomBar_knowledge))
-                .addItem(R.drawable.bg_tab_resource, getString(R.string.bottomBar_res))
-                .addItem(R.drawable.bg_tab_user, getString(R.string.bottomBar_user))
+        mNavigationController = bottomTab.custom()
+                .addItem(newItem(R.drawable.tab_home,R.drawable.tab_home_pre,getString(R.string.bottomBar_home)))
+                .addItem(newItem(R.drawable.tab_knowledge,R.drawable.tab_knowledge_pre,getString(R.string.bottomBar_knowledge)))
+                .addItem(newItem(R.drawable.tab_resource,R.drawable.tab_resource_pre,getString(R.string.bottomBar_res)))
+                .addItem(newItem(R.drawable.tab_user,R.drawable.tab_user_pre,getString(R.string.bottomBar_user)))
                 .build();
 
         addFragment(R.id.home_activity_container, mHomeFragment);
@@ -111,6 +115,15 @@ public class HomeActivity extends BaseActivity implements PermissionListener,IHo
 
             }
         });
+    }
+
+    //创建一个Item
+    private BaseTabItem newItem(int drawable, int checkedDrawable, String text){
+        NormalItemView normalItemView = new NormalItemView(this);
+        normalItemView.initialize(drawable,checkedDrawable,text);
+        normalItemView.setTextDefaultColor(ActivityCompat.getColor(mContext, R.color.color_bottom_text));
+        normalItemView.setTextCheckedColor(ActivityCompat.getColor(mContext, R.color.color_selected_bottom_text));
+        return normalItemView;
     }
 
     private void checkAppPermission() {
