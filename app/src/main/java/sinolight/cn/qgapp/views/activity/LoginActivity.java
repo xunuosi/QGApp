@@ -1,5 +1,7 @@
 package sinolight.cn.qgapp.views.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -12,6 +14,10 @@ import sinolight.cn.qgapp.views.view.ILoginActivityView;
  */
 
 public class LoginActivity extends BaseActivity implements ILoginActivityView {
+
+    public static Intent getCallIntent(Context context) {
+        return new Intent(context, LoginActivity.class);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

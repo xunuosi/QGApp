@@ -21,4 +21,9 @@
         <item name="android:textColor">@color/color_toolbar_text</item>
         <item name="android:textSize">18sp</item>
     </style>
+
+    <style name="login_edit_text">
+        <item name="android:textColorHint">@color/color_login_gray</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 </resources>

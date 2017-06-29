@@ -104,7 +104,8 @@ public class HomeActivity extends BaseActivity implements PermissionListener,IHo
                         replaceFragment(R.id.home_activity_container, mResourceFragment);
                         break;
                     case 3:
-                        replaceFragment(R.id.home_activity_container, mUserFragment);
+//                        replaceFragment(R.id.home_activity_container, mUserFragment);
+                        startActivity(LoginActivity.getCallIntent(mContext));
                         break;
                 }
             }

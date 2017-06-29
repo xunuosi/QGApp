@@ -3,6 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#b4b4b4</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="color_white">#fff</color>
     <!--Home-->
     <!--BottomBar-->
     <color name="color_bottom_divider">#e2e4e5</color>
@@ -10,4 +11,9 @@
     <color name="color_selected_bottom_text">#2377d2</color>
     <!--toolBar-->
     <color name="color_toolbar_text">#333333</color>
+    <!--login-->
+    <color name="color_login_gray">#c9c8c8</color>
+    <color name="color_login_text">#3a3a3a</color>
+    <color name="color_login_blue">#2377d2</color>
+    <color name="color_login_dark_blue">#0d5db3</color>
 </resources>

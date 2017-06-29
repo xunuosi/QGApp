@@ -3,6 +3,8 @@ package sinolight.cn.qgapp;
 import android.app.Application;
 import android.content.Context;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+
 import sinolight.cn.qgapp.dagger.component.ApplicationComponent;
 import sinolight.cn.qgapp.dagger.component.DaggerApplicationComponent;
 import sinolight.cn.qgapp.dagger.module.ApplicationModule;
@@ -26,6 +28,7 @@ public class App extends Application {
                 .applicationModule(new ApplicationModule(this))
                 .build();
 
+        Fresco.initialize(this);
     }
 
     public ApplicationComponent getApplicationComponent() {

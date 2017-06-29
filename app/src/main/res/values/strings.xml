@@ -8,4 +8,8 @@
     <string name="exception_message_generic">通用错误</string>
     <string name="exception_message_no_connection">网络连接错误</string>
     <string name="toolbar_home_title">轻工知识库</string>
+    <string name="user_name">用户名</string>
+    <string name="password">密码</string>
+    <string name="text_login">登录</string>
+    <string name="text_register">注册</string>
 </resources>
