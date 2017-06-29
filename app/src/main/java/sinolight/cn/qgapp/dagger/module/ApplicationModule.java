@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import sinolight.cn.qgapp.App;
+import sinolight.cn.qgapp.utils.ToastUtil;
 
 /**
  * Created by xns on 2017/6/1.
@@ -15,15 +16,19 @@ import sinolight.cn.qgapp.App;
 @Module
 public class ApplicationModule {
 
-    private final App mApplication;
+    private final App context;
 
-    public ApplicationModule(App application) {
-        this.mApplication = application;
+    public ApplicationModule(App context) {
+        this.context = context;
     }
 
     @Provides @Singleton
     Context provideApplicationContext() {
-        return this.mApplication;
+        return this.context;
     }
 
+    @Provides @Singleton
+    public ToastUtil provideToastUtil(){
+        return new ToastUtil(context);
+    }
 }

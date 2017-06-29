@@ -7,7 +7,6 @@ import javax.inject.Singleton;
 import dagger.Component;
 import sinolight.cn.qgapp.dagger.module.ApplicationModule;
 import sinolight.cn.qgapp.views.activity.BaseActivity;
-import sinolight.cn.qgapp.views.activity.HomeActivity;
 
 /**
  * Created by xns on 2017/6/1.
@@ -18,8 +17,6 @@ import sinolight.cn.qgapp.views.activity.HomeActivity;
 public interface ApplicationComponent {
 
     void inject(BaseActivity baseActivity);
-
-    void inject(HomeActivity homeActivity);
 
     Context context();
 }

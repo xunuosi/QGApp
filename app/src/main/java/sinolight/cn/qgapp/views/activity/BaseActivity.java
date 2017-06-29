@@ -8,6 +8,8 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -20,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import sinolight.cn.qgapp.App;
+import sinolight.cn.qgapp.dagger.component.ApplicationComponent;
+import sinolight.cn.qgapp.dagger.module.ActivityModule;
 import sinolight.cn.qgapp.utils.ActivityCollector;
 import sinolight.cn.qgapp.utils.PermissionListener;
 
@@ -47,9 +52,39 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         ActivityCollector.addActivity(this);
 
+        this.getApplicationComponent().inject(this);
+
         initData();
         initViews();
     }
+
+    /**
+     * Adds a {@link Fragment} to this activity's layout.
+     *
+     * @param containerViewId The container view to where add the fragment.
+     * @param fragment The fragment to be added.
+     */
+    protected void addFragment(int containerViewId, Fragment fragment) {
+        final FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(containerViewId, fragment);
+        fragmentTransaction.commit();
+    }
+
+    protected void replaceFragment(int containerViewId, Fragment fragment) {
+        final FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(containerViewId, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    protected ApplicationComponent getApplicationComponent() {
+        return ((App) getApplication()).getApplicationComponent();
+    }
+
+    protected ActivityModule getActivityModule() {
+        return new ActivityModule(this);
+    }
+
 
     protected void setTranslucentStatus() {
         // 5.0以上系统状态栏透明
