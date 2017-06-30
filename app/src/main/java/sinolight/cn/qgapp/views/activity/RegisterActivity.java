@@ -71,7 +71,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterActivityV
     @Override
     protected void initViews() {
         mPresenter.getVCode();
-        Bitmap codeBitmap = VCodeUtil.createSecurityCodeBitmap(120, 35, 16, 1, "ab12");
+        Bitmap codeBitmap = VCodeUtil.createSecurityCodeBitmap(125, 35, 18, 2.0f, "ab12");
         mIvRegisterCode.setImageBitmap(codeBitmap);
     }
 
