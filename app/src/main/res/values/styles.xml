@@ -26,4 +26,17 @@
         <item name="android:textColorHint">@color/color_login_gray</item>
         <item name="android:textSize">18sp</item>
     </style>
+
+    <style name="register_text">
+        <item name="android:textColor">@color/color_register_text_gray</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginEnd">15dp</item>
+    </style>
+
+    <style name="register_edit_text">
+        <item name="android:textColorHint">@color/color_login_gray</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:background">@null</item>
+    </style>
 </resources>

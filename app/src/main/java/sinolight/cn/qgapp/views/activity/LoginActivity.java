@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 
+import butterknife.OnClick;
+import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.views.view.ILoginActivityView;
 
@@ -37,5 +40,16 @@ public class LoginActivity extends BaseActivity implements ILoginActivityView {
     @Override
     protected void initData() {
 
+    }
+
+    @OnClick({R.id.btn_login, R.id.btn_register})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_login:
+                break;
+            case R.id.btn_register:
+                startActivity(RegisterActivity.getCallIntent(App.getContext()));
+                break;
+        }
     }
 }

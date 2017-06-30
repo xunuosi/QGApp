@@ -16,4 +16,7 @@
     <color name="color_login_text">#3a3a3a</color>
     <color name="color_login_blue">#2377d2</color>
     <color name="color_login_dark_blue">#0d5db3</color>
+    <!--register-->
+    <color name="color_register_bg_gray">#ededed</color>
+    <color name="color_register_text_gray">#979595</color>
 </resources>
