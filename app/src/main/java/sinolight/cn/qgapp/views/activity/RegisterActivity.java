@@ -4,36 +4,28 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.format.DateFormat;
-import android.util.Log;
 
-import java.text.SimpleDateFormat;
+
+import javax.inject.Inject;
 
 import sinolight.cn.qgapp.R;
-import sinolight.cn.qgapp.data.http.HttpManager;
-import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
-import sinolight.cn.qgapp.data.http.entity.VCodeEntity;
-import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
+import sinolight.cn.qgapp.dagger.component.DaggerRegisterActivityComponent;
+import sinolight.cn.qgapp.dagger.module.RegisterActivityModule;
+import sinolight.cn.qgapp.presenter.RegisterActivityPresenter;
+import sinolight.cn.qgapp.views.view.IRegisterActivityView;
 
 /**
  * Created by xns on 2017/6/30.
  * 注册界面
  */
 
-public class RegisterActivity extends BaseActivity {
-    //声明监听
-    private HttpSubscriber mHttpObserver = new HttpSubscriber(new OnResultCallBack<VCodeEntity>() {
+public class RegisterActivity extends BaseActivity implements IRegisterActivityView {
+    @Inject
+    Context mContext;
+    @Inject
+    RegisterActivityPresenter mPresenter;
 
-        @Override
-        public void onSuccess(VCodeEntity vCodeEntity) {
-            Log.i("xns", "code:" + vCodeEntity.toString());
-        }
 
-        @Override
-        public void onError(int code, String errorMsg) {
-            Log.i("xns", "code:" + code + ",errorMsg:" + errorMsg);
-        }
-    });
 
 
     public static Intent getCallIntent(Context context) {
@@ -42,7 +34,18 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        this.initializeInjector();
         super.onCreate(savedInstanceState);
+    }
+
+    private void initializeInjector() {
+        DaggerRegisterActivityComponent
+                .builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(getActivityModule())
+                .registerActivityModule(new RegisterActivityModule(this))
+                .build()
+                .inject(this);
     }
 
     @Override
@@ -52,20 +55,17 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-
+        mPresenter.getVCode();
     }
 
     @Override
     protected void initData() {
 
-        String time = "20170630135015";
-        //发起请求
-        HttpManager.getInstance().getCode(mHttpObserver, time);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mHttpObserver.unSubscribe();
+        mPresenter.clear();
     }
 }
