@@ -19,4 +19,5 @@
     <!--register-->
     <color name="color_register_bg_gray">#ededed</color>
     <color name="color_register_text_gray">#979595</color>
+    <color name="color_register_vcode">#1d1d1d</color>
 </resources>
