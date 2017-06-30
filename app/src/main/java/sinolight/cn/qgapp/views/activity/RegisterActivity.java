@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import java.lang.ref.WeakReference;
 
 import javax.inject.Inject;
 
@@ -42,6 +46,8 @@ public class RegisterActivity extends BaseActivity implements IRegisterActivityV
     @BindView(R.id.iv_register_code)
     ImageView mIvRegisterCode;
 
+    private WeakReference<Bitmap> codeBitmap;
+
 
     public static Intent getCallIntent(Context context) {
         return new Intent(context, RegisterActivity.class);
@@ -70,9 +76,8 @@ public class RegisterActivity extends BaseActivity implements IRegisterActivityV
 
     @Override
     protected void initViews() {
-        mPresenter.getVCode();
-        Bitmap codeBitmap = VCodeUtil.createSecurityCodeBitmap(125, 35, 18, 2.0f, "ab12");
-        mIvRegisterCode.setImageBitmap(codeBitmap);
+        mPresenter.init2show();
+
     }
 
     @Override
@@ -86,7 +91,20 @@ public class RegisterActivity extends BaseActivity implements IRegisterActivityV
         mPresenter.clear();
     }
 
-    @OnClick(R.id.btn_register_reg)
-    public void onViewClicked() {
+    @Override
+    public void initShow(String vCode) {
+        codeBitmap = new WeakReference<>(VCodeUtil.createSecurityCodeBitmap(135, 35, 16, 1.5f, vCode));
+        mIvRegisterCode.setImageBitmap(codeBitmap.get());
+    }
+
+    @OnClick({R.id.iv_register_code, R.id.btn_register_reg})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_register_code:
+                mPresenter.refresh2show();
+                break;
+            case R.id.btn_register_reg:
+                break;
+        }
     }
 }

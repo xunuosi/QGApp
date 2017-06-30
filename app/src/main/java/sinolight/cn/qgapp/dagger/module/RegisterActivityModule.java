@@ -5,6 +5,7 @@ import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
 import sinolight.cn.qgapp.dagger.PerActivity;
+import sinolight.cn.qgapp.data.db.DaoSession;
 import sinolight.cn.qgapp.presenter.RegisterActivityPresenter;
 import sinolight.cn.qgapp.views.view.IRegisterActivityView;
 
@@ -28,8 +29,8 @@ public class RegisterActivityModule {
 
     @Provides
     @PerActivity
-    RegisterActivityPresenter provideITMDetailPresenter(IRegisterActivityView view, Context context) {
-        return new RegisterActivityPresenter(view, context);
+    RegisterActivityPresenter provideITMDetailPresenter(IRegisterActivityView view, Context context, DaoSession daoSession) {
+        return new RegisterActivityPresenter(view, daoSession, context);
     }
 
 }

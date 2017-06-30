@@ -8,6 +8,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import sinolight.cn.qgapp.dagger.component.ApplicationComponent;
 import sinolight.cn.qgapp.dagger.component.DaggerApplicationComponent;
 import sinolight.cn.qgapp.dagger.module.ApplicationModule;
+import sinolight.cn.qgapp.data.db.GreenDaoHelper;
 import sinolight.cn.qgapp.data.http.HttpManager;
 
 /**
@@ -31,6 +32,11 @@ public class App extends Application {
 
         Fresco.initialize(this);
         HttpManager.init(this);
+        initDatabase();
+    }
+
+    private void initDatabase() {
+        GreenDaoHelper.initDatabase();
     }
 
     public ApplicationComponent getApplicationComponent() {
