@@ -8,6 +8,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import sinolight.cn.qgapp.dagger.component.ApplicationComponent;
 import sinolight.cn.qgapp.dagger.component.DaggerApplicationComponent;
 import sinolight.cn.qgapp.dagger.module.ApplicationModule;
+import sinolight.cn.qgapp.data.http.HttpManager;
 
 /**
  * Created by xns on 2017/6/29.
@@ -29,6 +30,7 @@ public class App extends Application {
                 .build();
 
         Fresco.initialize(this);
+        HttpManager.init(this);
     }
 
     public ApplicationComponent getApplicationComponent() {
