@@ -2,6 +2,7 @@ package sinolight.cn.qgapp.presenter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
@@ -10,11 +11,14 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
+import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.db.DaoSession;
 import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
 import sinolight.cn.qgapp.data.http.entity.VCodeEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
+import sinolight.cn.qgapp.utils.TextFormatUtil;
+import sinolight.cn.qgapp.utils.ToastUtil;
 import sinolight.cn.qgapp.views.view.IRegisterActivityView;
 
 /**
@@ -71,5 +75,41 @@ public class RegisterActivityPresenter extends BasePresenter<IRegisterActivityVi
 
     public void refresh2show() {
         getVCode();
+    }
+
+
+    public void registerAccount(String account, String email, String pwd, String rePwd, String vCode) {
+        if (TextUtils.isEmpty(account)) {
+            view().showToastMsg(R.string.text_user_empty);
+            return;
+        } else if (!TextFormatUtil.isUserName(account) && !TextFormatUtil.isEmail(account)) {
+            view().showToastMsg(R.string.text_valid_user);
+            return;
+        } else if (TextUtils.isEmpty(email)) {
+            view().showToastMsg(R.string.text_email_empty);
+            return;
+        } else if (!TextFormatUtil.isEmail(email)) {
+            view().showToastMsg(R.string.text_valid_email);
+            return;
+        } else if (TextUtils.isEmpty(pwd)) {
+            view().showToastMsg(R.string.text_pwd_empty);
+            return;
+        } else if (!TextFormatUtil.isPassword(pwd)) {
+            view().showToastMsg(R.string.text_valid_pwd);
+            return;
+        } else if (TextUtils.isEmpty(rePwd)) {
+            view().showToastMsg(R.string.text_repwd_empty);
+            return;
+        } else if (!TextFormatUtil.isPassword(rePwd)) {
+            view().showToastMsg(R.string.text_valid_pwd);
+            return;
+        } else if (!pwd.equals(rePwd)) {
+            view().showToastMsg(R.string.text_pwd_not_equal);
+            return;
+        } else if (TextUtils.isEmpty(vCode)) {
+            view().showToastMsg(R.string.text_vcode_empty);
+            return;
+        }
+
     }
 }

@@ -166,11 +166,11 @@
 
         <EditText
             android:id="@+id/et_code"
-            android:inputType="textPassword"
             style="@style/register_edit_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:maxLength="6"/>
         <ImageView
             android:id="@+id/iv_register_code"
             android:layout_width="120dp"
@@ -178,7 +178,8 @@
             android:layout_gravity="center"
             android:background="@drawable/btn_bg_white"
             android:scaleType="centerInside"
-            android:layout_marginRight="15dp"/>
+            android:layout_marginRight="15dp"
+            android:src="@drawable/ic_error_red_24dp"/>
     </LinearLayout>
 
     <Button

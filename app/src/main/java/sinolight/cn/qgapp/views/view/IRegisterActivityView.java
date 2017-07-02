@@ -8,4 +8,6 @@ package sinolight.cn.qgapp.views.view;
 public interface IRegisterActivityView {
 
     void initShow(String vCode);
+
+    void showToastMsg(int msgId);
 }

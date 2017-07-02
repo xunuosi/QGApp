@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import sinolight.cn.qgapp.dagger.module.ApplicationModule;
 import sinolight.cn.qgapp.data.db.DaoSession;
+import sinolight.cn.qgapp.utils.ToastUtil;
 import sinolight.cn.qgapp.views.activity.BaseActivity;
 
 /**
@@ -22,4 +23,6 @@ public interface ApplicationComponent {
     Context context();
 
     DaoSession daoSeesion();
+
+    ToastUtil toastUtil();
 }

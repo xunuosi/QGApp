@@ -20,6 +20,7 @@ import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.dagger.component.DaggerRegisterActivityComponent;
 import sinolight.cn.qgapp.dagger.module.RegisterActivityModule;
 import sinolight.cn.qgapp.presenter.RegisterActivityPresenter;
+import sinolight.cn.qgapp.utils.ToastUtil;
 import sinolight.cn.qgapp.utils.VCodeUtil;
 import sinolight.cn.qgapp.views.view.IRegisterActivityView;
 
@@ -33,6 +34,8 @@ public class RegisterActivity extends BaseActivity implements IRegisterActivityV
     Context mContext;
     @Inject
     RegisterActivityPresenter mPresenter;
+    @Inject
+    ToastUtil mToast;
     @BindView(R.id.et_register_user)
     EditText mEtRegisterUser;
     @BindView(R.id.et_email)
@@ -97,6 +100,12 @@ public class RegisterActivity extends BaseActivity implements IRegisterActivityV
         mIvRegisterCode.setImageBitmap(codeBitmap.get());
     }
 
+    @Override
+    public void showToastMsg(int msgId) {
+        String msg = getString(msgId);
+        mToast.showToast(msg);
+    }
+
     @OnClick({R.id.iv_register_code, R.id.btn_register_reg})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -104,6 +113,11 @@ public class RegisterActivity extends BaseActivity implements IRegisterActivityV
                 mPresenter.refresh2show();
                 break;
             case R.id.btn_register_reg:
+                mPresenter.registerAccount(mEtRegisterUser.getText().toString().trim(),
+                            mEtEmail.getText().toString().trim(),
+                            mEtPw.getText().toString().trim(),
+                            mEtRepw.getText().toString().trim(),
+                            mEtCode.getText().toString().trim());
                 break;
         }
     }

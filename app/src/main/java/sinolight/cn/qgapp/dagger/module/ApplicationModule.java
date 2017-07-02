@@ -38,4 +38,5 @@ public class ApplicationModule {
     DaoSession provideDaoSession() {
         return GreenDaoHelper.getDaoSession();
     }
+
 }
