@@ -12,6 +12,7 @@ import java.util.Locale;
 import javax.inject.Inject;
 
 import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.data.bean.Account;
 import sinolight.cn.qgapp.data.db.DaoSession;
 import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
@@ -28,13 +29,16 @@ import sinolight.cn.qgapp.views.view.IRegisterActivityView;
 
 public class RegisterActivityPresenter extends BasePresenter<IRegisterActivityView, DaoSession> {
     private Context mContext;
+    private Account user;
+    private String vCode;
 
     //声明监听
     private HttpSubscriber mVCodeObserver = new HttpSubscriber(new OnResultCallBack<VCodeEntity>() {
 
         @Override
         public void onSuccess(VCodeEntity vCodeEntity) {
-            view().initShow(vCodeEntity.getVcode());
+            vCode = vCodeEntity.getVcode();
+            view().initShow(vCode);
         }
 
         @Override
@@ -79,37 +83,51 @@ public class RegisterActivityPresenter extends BasePresenter<IRegisterActivityVi
 
 
     public void registerAccount(String account, String email, String pwd, String rePwd, String vCode) {
-        if (TextUtils.isEmpty(account)) {
-            view().showToastMsg(R.string.text_user_empty);
-            return;
-        } else if (!TextFormatUtil.isUserName(account) && !TextFormatUtil.isEmail(account)) {
-            view().showToastMsg(R.string.text_valid_user);
-            return;
-        } else if (TextUtils.isEmpty(email)) {
-            view().showToastMsg(R.string.text_email_empty);
-            return;
-        } else if (!TextFormatUtil.isEmail(email)) {
-            view().showToastMsg(R.string.text_valid_email);
-            return;
-        } else if (TextUtils.isEmpty(pwd)) {
-            view().showToastMsg(R.string.text_pwd_empty);
-            return;
-        } else if (!TextFormatUtil.isPassword(pwd)) {
-            view().showToastMsg(R.string.text_valid_pwd);
-            return;
-        } else if (TextUtils.isEmpty(rePwd)) {
-            view().showToastMsg(R.string.text_repwd_empty);
-            return;
-        } else if (!TextFormatUtil.isPassword(rePwd)) {
-            view().showToastMsg(R.string.text_valid_pwd);
-            return;
-        } else if (!pwd.equals(rePwd)) {
-            view().showToastMsg(R.string.text_pwd_not_equal);
-            return;
-        } else if (TextUtils.isEmpty(vCode)) {
-            view().showToastMsg(R.string.text_vcode_empty);
-            return;
+        if (checkoutData(account, email, pwd, rePwd, vCode)) {
+            user = new Account();
+            user.setName(account);
+            user.setPassword(pwd);
+            user.setEmail(email);
         }
 
+    }
+
+    private boolean checkoutData(String account, String email, String pwd, String rePwd, String vCode) {
+        if (TextUtils.isEmpty(account)) {
+            view().showToastMsg(R.string.text_user_empty);
+            return false;
+        } else if (!TextFormatUtil.isUserName(account) && !TextFormatUtil.isEmail(account)) {
+            view().showToastMsg(R.string.text_valid_user);
+            return false;
+        } else if (TextUtils.isEmpty(email)) {
+            view().showToastMsg(R.string.text_email_empty);
+            return false;
+        } else if (!TextFormatUtil.isEmail(email)) {
+            view().showToastMsg(R.string.text_valid_email);
+            return false;
+        } else if (TextUtils.isEmpty(pwd)) {
+            view().showToastMsg(R.string.text_pwd_empty);
+            return false;
+        } else if (!TextFormatUtil.isPassword(pwd)) {
+            view().showToastMsg(R.string.text_valid_pwd);
+            return false;
+        } else if (TextUtils.isEmpty(rePwd)) {
+            view().showToastMsg(R.string.text_repwd_empty);
+            return false;
+        } else if (!TextFormatUtil.isPassword(rePwd)) {
+            view().showToastMsg(R.string.text_valid_pwd);
+            return false;
+        } else if (!pwd.equals(rePwd)) {
+            view().showToastMsg(R.string.text_pwd_not_equal);
+            return false;
+        } else if (TextUtils.isEmpty(vCode)) {
+            view().showToastMsg(R.string.text_vcode_empty);
+            return false;
+        } else if (!this.vCode.equals(vCode)) {
+            view().showToastMsg(R.string.text_vcode_not_equal);
+            return false;
+        }
+
+        return true;
     }
 }

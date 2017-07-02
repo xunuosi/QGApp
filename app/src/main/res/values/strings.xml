@@ -28,4 +28,5 @@
     <string name="text_valid_pwd">包含特殊字符的密码或位数低于6位</string>
     <string name="text_valid_email">Email格式错误</string>
     <string name="text_pwd_not_equal">密码两次输入不一致</string>
+    <string name="text_vcode_not_equal">验证码不匹配</string>
 </resources>
