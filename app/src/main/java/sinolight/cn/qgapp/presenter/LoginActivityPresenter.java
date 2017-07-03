@@ -27,12 +27,11 @@ public class LoginActivityPresenter extends BasePresenter<ILoginActivityView, Da
     private Context mContext;
     private String userName;
     private String pwd;
-    private String token;
     private HttpSubscriber loginObserver = new HttpSubscriber(new OnResultCallBack<TokenEntity>() {
 
         @Override
         public void onSuccess(TokenEntity tokenEntity) {
-            token = tokenEntity.getToken();
+            String token = tokenEntity.getToken();
 
             SharedPfUtil.setParam(mContext, AppContants.Account.USER_NAME, userName);
             SharedPfUtil.setParam(mContext, AppContants.Account.PASS_WORD, pwd);
