@@ -59,7 +59,7 @@ public class HttpSubscriber<T> implements Observer<T> {
                 mOnResultListener.onError(code, msg.split("#")[1]);
             } else {
                 code = ApiException.Code_Default;
-                mOnResultListener.onError(code, msg);
+                mOnResultListener.onError(code, ApiException.SERVICE_EXCEPTION);
             }
         }
     }

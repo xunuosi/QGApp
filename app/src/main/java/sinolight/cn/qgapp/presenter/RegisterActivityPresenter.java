@@ -60,6 +60,7 @@ public class RegisterActivityPresenter extends BasePresenter<IRegisterActivityVi
         public void onSuccess(TokenEntity tokenEntity) {
             // 用户存储到数据库中
             model.getAccountDao().save(user);
+            view().showLoading(false);
             view().showToastMsg(R.string.text_register_success);
             Intent intent = LoginActivity.getCallIntent(mContext);
             intent.putExtra(AppContants.Account.USER_NAME, user.getName());
@@ -69,6 +70,7 @@ public class RegisterActivityPresenter extends BasePresenter<IRegisterActivityVi
         @Override
         public void onError(int code, String errorMsg) {
             L.d(TAG, "code:" + code + ",errorMsg:" + errorMsg);
+            view().showLoading(false);
             Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
         }
     });
@@ -112,6 +114,7 @@ public class RegisterActivityPresenter extends BasePresenter<IRegisterActivityVi
 
     public void registerAccount(String account, String email, String pwd, String rePwd, String vCode) {
         if (checkoutData(account, email, pwd, rePwd, vCode)) {
+            view().showLoading(true);
             // 请求注册接口
             HttpManager.getInstance().register(mRegisterObserver, account, email, pwd, rePwd, vCode);
 
@@ -154,7 +157,7 @@ public class RegisterActivityPresenter extends BasePresenter<IRegisterActivityVi
         } else if (TextUtils.isEmpty(vCode)) {
             view().showToastMsg(R.string.text_vcode_empty);
             return false;
-        } else if (!this.vCode.equalsIgnoreCase(vCode)) {
+        } else if (this.vCode == null || !this.vCode.equalsIgnoreCase(vCode)) {
             view().showToastMsg(R.string.text_vcode_not_equal);
             return false;
         }

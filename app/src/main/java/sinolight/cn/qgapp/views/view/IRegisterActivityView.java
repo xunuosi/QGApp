@@ -15,4 +15,6 @@ public interface IRegisterActivityView {
     void showToastMsg(int msgId);
 
     void gotoActivity(Intent intent);
+
+    void showLoading(boolean enable);
 }

@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import java.lang.ref.WeakReference;
 
@@ -48,6 +50,10 @@ public class RegisterActivity extends BaseActivity implements IRegisterActivityV
     EditText mEtCode;
     @BindView(R.id.iv_register_code)
     ImageView mIvRegisterCode;
+    @BindView(R.id.loading_root)
+    RelativeLayout mLoadingRoot;
+    @BindView(R.id.btn_register_reg)
+    Button mBtnRegisterReg;
 
     private WeakReference<Bitmap> codeBitmap;
 
@@ -115,6 +121,16 @@ public class RegisterActivity extends BaseActivity implements IRegisterActivityV
         startActivity(intent);
     }
 
+    @Override
+    public void showLoading(boolean enable) {
+        if (enable) {
+            mLoadingRoot.setVisibility(View.VISIBLE);
+        } else {
+            mLoadingRoot.setVisibility(View.GONE);
+        }
+        mBtnRegisterReg.setEnabled(!enable);
+    }
+
     @OnClick({R.id.iv_register_code, R.id.btn_register_reg})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -123,10 +139,10 @@ public class RegisterActivity extends BaseActivity implements IRegisterActivityV
                 break;
             case R.id.btn_register_reg:
                 mPresenter.registerAccount(mEtRegisterUser.getText().toString().trim(),
-                            mEtEmail.getText().toString().trim(),
-                            mEtPw.getText().toString().trim(),
-                            mEtRepw.getText().toString().trim(),
-                            mEtCode.getText().toString().trim());
+                        mEtEmail.getText().toString().trim(),
+                        mEtPw.getText().toString().trim(),
+                        mEtRepw.getText().toString().trim(),
+                        mEtCode.getText().toString().trim());
                 break;
         }
     }
