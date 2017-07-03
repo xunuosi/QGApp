@@ -123,7 +123,7 @@ public class LoginActivity extends BaseActivity implements ILoginActivityView {
         } else {
             mLoadingRoot.setVisibility(View.GONE);
         }
-        mEtLoginPw.setEnabled(!enable);
-        mEtLoginUser.setEnabled(!enable);
+        mBtnLogin.setEnabled(!enable);
+        mBtnRegister.setEnabled(!enable);
     }
 }

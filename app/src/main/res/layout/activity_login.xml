@@ -145,5 +145,6 @@
         android:textColor="@color/color_login_text"
         android:textSize="16sp"
         app:layout_constraintHorizontal_bias="0.567" />
-    <include layout="@layout/layout_loading"/>
+    <include layout="@layout/layout_loading"
+        android:visibility="gone"/>
 </android.support.constraint.ConstraintLayout>

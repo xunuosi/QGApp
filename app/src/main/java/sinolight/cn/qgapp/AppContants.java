@@ -13,6 +13,7 @@ public interface AppContants {
 
     interface Account {
         String USER_NAME = "account_name";
+        String PASS_WORD = "account_pwd";
         String TOKEN = "account_token";
     }
 }

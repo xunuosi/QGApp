@@ -116,7 +116,7 @@ public class HttpManager {
         toSubscribe(mApiService.register(name, email, pwd, repwd, vcode), subscriber);
     }
 
-    public void register(Observer<TokenEntity> subscriber, String name, String pwd) {
+    public void login(Observer<TokenEntity> subscriber, String name, String pwd) {
         toSubscribe(mApiService.login(name, pwd), subscriber);
     }
 }

@@ -3,11 +3,18 @@ package sinolight.cn.qgapp.presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.db.DaoSession;
+import sinolight.cn.qgapp.data.http.HttpManager;
+import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
+import sinolight.cn.qgapp.data.http.entity.TokenEntity;
+import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
+import sinolight.cn.qgapp.utils.L;
+import sinolight.cn.qgapp.utils.SharedPfUtil;
 import sinolight.cn.qgapp.views.view.ILoginActivityView;
 
 /**
@@ -21,6 +28,27 @@ public class LoginActivityPresenter extends BasePresenter<ILoginActivityView, Da
     private String userName;
     private String pwd;
     private String token;
+    private HttpSubscriber loginObserver = new HttpSubscriber(new OnResultCallBack<TokenEntity>() {
+
+        @Override
+        public void onSuccess(TokenEntity tokenEntity) {
+            token = tokenEntity.getToken();
+
+            SharedPfUtil.setParam(mContext, AppContants.Account.USER_NAME, userName);
+            SharedPfUtil.setParam(mContext, AppContants.Account.PASS_WORD, pwd);
+            SharedPfUtil.setParam(mContext, AppContants.Account.TOKEN, token);
+
+            view().showLoading(false);
+            view().showToastMsg(R.string.text_login_success);
+        }
+
+        @Override
+        public void onError(int code, String errorMsg) {
+            L.d(TAG, "code:" + code + ",errorMsg:" + errorMsg);
+            view().showLoading(false);
+            Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
+        }
+    });
 
     public LoginActivityPresenter(ILoginActivityView view, DaoSession daoSession, Context context) {
         mContext = context;
@@ -45,11 +73,15 @@ public class LoginActivityPresenter extends BasePresenter<ILoginActivityView, Da
     @Override
     public void clear() {
         unbindView();
+        loginObserver.unSubscribe();
     }
 
     public void login(String userName, String pwd) {
         if (checkData(userName, pwd)) {
-
+            view().showLoading(true);
+            this.userName = userName;
+            this.pwd = pwd;
+            HttpManager.getInstance().login(loginObserver, userName, pwd);
         }
     }
 
