@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import javax.inject.Inject;
 
@@ -35,6 +37,12 @@ public class LoginActivity extends BaseActivity implements ILoginActivityView {
     EditText mEtLoginUser;
     @BindView(R.id.et_login_pw)
     EditText mEtLoginPw;
+    @BindView(R.id.btn_login)
+    Button mBtnLogin;
+    @BindView(R.id.btn_register)
+    Button mBtnRegister;
+    @BindView(R.id.loading_root)
+    RelativeLayout mLoadingRoot;
 
 
     public static Intent getCallIntent(Context context) {
@@ -106,5 +114,16 @@ public class LoginActivity extends BaseActivity implements ILoginActivityView {
     public void showToastMsg(int msgId) {
         String msg = getString(msgId);
         mToast.showToast(msg);
+    }
+
+    @Override
+    public void showLoading(boolean enable) {
+        if (enable) {
+            mLoadingRoot.setVisibility(View.VISIBLE);
+        } else {
+            mLoadingRoot.setVisibility(View.GONE);
+        }
+        mEtLoginPw.setEnabled(!enable);
+        mEtLoginUser.setEnabled(!enable);
     }
 }

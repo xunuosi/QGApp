@@ -11,13 +11,26 @@ import sinolight.cn.qgapp.data.http.entity.VCodeEntity;
 
 
 public interface ApiService {
-
+    /**
+     * 获取验证码
+     * @param time
+     * @return
+     */
     @FormUrlEncoded
     @POST("account/doVCode")
     Observable<ResultEntity<VCodeEntity>> getCode(
             @Field("time") String time
     );
 
+    /**
+     * 注册接口
+     * @param name
+     * @param email
+     * @param pwd
+     * @param repwd
+     * @param vcode
+     * @return
+     */
     @FormUrlEncoded
     @POST("account/regist")
     Observable<ResultEntity<TokenEntity>> register(
@@ -26,5 +39,18 @@ public interface ApiService {
             @Field("pwd") String pwd,
             @Field("repwd") String repwd,
             @Field("vcode") String vcode
+    );
+
+    /**
+     * 登录接口
+     * @param name
+     * @param pwd
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("account/logOn")
+    Observable<ResultEntity<TokenEntity>> login(
+            @Field("username") String name,
+            @Field("pwd") String pwd
     );
 }

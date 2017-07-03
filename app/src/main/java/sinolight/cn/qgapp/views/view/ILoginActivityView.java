@@ -10,4 +10,6 @@ public interface ILoginActivityView {
     void initShow(String userName);
 
     void showToastMsg(int msgId);
+
+    void showLoading(boolean enable);
 }
