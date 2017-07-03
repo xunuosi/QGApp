@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -96,8 +96,12 @@ public class RegisterActivity extends BaseActivity implements IRegisterActivityV
 
     @Override
     public void initShow(String vCode) {
-        codeBitmap = new WeakReference<>(VCodeUtil.createSecurityCodeBitmap(135, 35, 16, 1.5f, vCode));
-        mIvRegisterCode.setImageBitmap(codeBitmap.get());
+        if (vCode != null) {
+            codeBitmap = new WeakReference<>(VCodeUtil.createSecurityCodeBitmap(135, 35, 16, 1.5f, vCode));
+            mIvRegisterCode.setImageBitmap(codeBitmap.get());
+        }
+        mIvRegisterCode.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_error_red_24dp));
+
     }
 
     @Override
@@ -121,4 +125,5 @@ public class RegisterActivity extends BaseActivity implements IRegisterActivityV
                 break;
         }
     }
+
 }

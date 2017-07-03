@@ -1,9 +1,8 @@
 package sinolight.cn.qgapp.presenter;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.util.Log;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,15 +10,18 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.Account;
 import sinolight.cn.qgapp.data.db.DaoSession;
 import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
+import sinolight.cn.qgapp.data.http.entity.TokenEntity;
 import sinolight.cn.qgapp.data.http.entity.VCodeEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
+import sinolight.cn.qgapp.utils.L;
+import sinolight.cn.qgapp.utils.SharedPfUtil;
 import sinolight.cn.qgapp.utils.TextFormatUtil;
-import sinolight.cn.qgapp.utils.ToastUtil;
 import sinolight.cn.qgapp.views.view.IRegisterActivityView;
 
 /**
@@ -28,6 +30,7 @@ import sinolight.cn.qgapp.views.view.IRegisterActivityView;
  */
 
 public class RegisterActivityPresenter extends BasePresenter<IRegisterActivityView, DaoSession> {
+    private static final String TAG = "RegisterActivityPresent";
     private Context mContext;
     private Account user;
     private String vCode;
@@ -38,14 +41,36 @@ public class RegisterActivityPresenter extends BasePresenter<IRegisterActivityVi
         @Override
         public void onSuccess(VCodeEntity vCodeEntity) {
             vCode = vCodeEntity.getVcode();
+            L.d(TAG, "vCode:" + vCode);
             view().initShow(vCode);
         }
 
         @Override
         public void onError(int code, String errorMsg) {
-            Log.i("xns", "code:" + code + ",errorMsg:" + errorMsg);
+            L.d(TAG, "code:" + code + ",errorMsg:" + errorMsg);
+            view().showToastMsg(R.string.error_internet);
+            view().initShow(null);
         }
     });
+
+    private HttpSubscriber mRegisterObserver = new HttpSubscriber(new OnResultCallBack<TokenEntity>() {
+
+        @Override
+        public void onSuccess(TokenEntity tokenEntity) {
+            String token = tokenEntity.getToken();
+            SharedPfUtil.setParam(mContext, AppContants.Account.TOKEN, token);
+            // 用户存储到数据库中
+            model.getAccountDao().save(user);
+            view().showToastMsg(R.string.text_register_success);
+        }
+
+        @Override
+        public void onError(int code, String errorMsg) {
+            L.d(TAG, "code:" + code + ",errorMsg:" + errorMsg);
+            Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
+        }
+    });
+
 
     @Inject
     public RegisterActivityPresenter(IRegisterActivityView view, DaoSession daoSession, Context context) {
@@ -84,6 +109,9 @@ public class RegisterActivityPresenter extends BasePresenter<IRegisterActivityVi
 
     public void registerAccount(String account, String email, String pwd, String rePwd, String vCode) {
         if (checkoutData(account, email, pwd, rePwd, vCode)) {
+            // 请求注册接口
+            HttpManager.getInstance().register(mRegisterObserver, account, email, pwd, rePwd, vCode);
+
             user = new Account();
             user.setName(account);
             user.setPassword(pwd);
@@ -96,7 +124,7 @@ public class RegisterActivityPresenter extends BasePresenter<IRegisterActivityVi
         if (TextUtils.isEmpty(account)) {
             view().showToastMsg(R.string.text_user_empty);
             return false;
-        } else if (!TextFormatUtil.isUserName(account) && !TextFormatUtil.isEmail(account)) {
+        } else if (!TextFormatUtil.isUserName(account) && !TextFormatUtil.isEmail(account) && !TextFormatUtil.isMobile(account)) {
             view().showToastMsg(R.string.text_valid_user);
             return false;
         } else if (TextUtils.isEmpty(email)) {
@@ -123,7 +151,7 @@ public class RegisterActivityPresenter extends BasePresenter<IRegisterActivityVi
         } else if (TextUtils.isEmpty(vCode)) {
             view().showToastMsg(R.string.text_vcode_empty);
             return false;
-        } else if (!this.vCode.equals(vCode)) {
+        } else if (!this.vCode.equalsIgnoreCase(vCode)) {
             view().showToastMsg(R.string.text_vcode_not_equal);
             return false;
         }

@@ -23,6 +23,7 @@ import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.data.http.api.ApiService;
 import sinolight.cn.qgapp.data.http.cache.CacheProvider;
 import sinolight.cn.qgapp.data.http.entity.ResultEntity;
+import sinolight.cn.qgapp.data.http.entity.TokenEntity;
 import sinolight.cn.qgapp.data.http.entity.VCodeEntity;
 import sinolight.cn.qgapp.data.http.exception.ApiException;
 import sinolight.cn.qgapp.data.http.parser.GsonTSpeaker;
@@ -88,7 +89,7 @@ public class HttpManager {
                     @Override
                     public T apply(@NonNull ResultEntity<T> response) throws Exception {
                         int code= response.getCode();
-                        if (code!=AppContants.SUCCESS_CODE) {
+                        if (code != AppContants.SUCCESS_CODE) {
                             throw new ApiException(code, response.getMessage());
                         } else {
                             return response.getResult();
@@ -109,5 +110,9 @@ public class HttpManager {
 
     public void getCode(Observer<VCodeEntity> subscriber, String time) {
         toSubscribe(mApiService.getCode(time), subscriber);
+    }
+
+    public void register(Observer<TokenEntity> subscriber, String name, String email, String pwd, String repwd, String vcode) {
+        toSubscribe(mApiService.register(name, email, pwd, repwd, vcode), subscriber);
     }
 }

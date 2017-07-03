@@ -1,5 +1,7 @@
 package sinolight.cn.qgapp.views.view;
 
+import android.support.annotation.Nullable;
+
 /**
  * Created by xns on 2017/6/29.
  * RegisterActivity View
@@ -7,7 +9,7 @@ package sinolight.cn.qgapp.views.view;
 
 public interface IRegisterActivityView {
 
-    void initShow(String vCode);
+    void initShow(@Nullable String vCode);
 
     void showToastMsg(int msgId);
 }

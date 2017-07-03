@@ -18,15 +18,17 @@
     <!--Register-->
     <string name="text_confirm_password">确认密码</string>
     <string name="text_code">验证码</string>
+    <string name="text_register_success">用户注册成功</string>
     <!--Msg-->
     <string name="text_user_empty">用户名为空</string>
     <string name="text_email_empty">邮箱为空</string>
     <string name="text_pwd_empty">密码为空</string>
     <string name="text_repwd_empty">确认密码为空</string>
     <string name="text_vcode_empty">验证码为空</string>
-    <string name="text_valid_user">包含特殊字符的用户名</string>
+    <string name="text_valid_user">包含特殊字符的用户名或位数低于5位</string>
     <string name="text_valid_pwd">包含特殊字符的密码或位数低于6位</string>
     <string name="text_valid_email">Email格式错误</string>
     <string name="text_pwd_not_equal">密码两次输入不一致</string>
     <string name="text_vcode_not_equal">验证码不匹配</string>
+    <string name="error_internet">网络异常</string>
 </resources>
