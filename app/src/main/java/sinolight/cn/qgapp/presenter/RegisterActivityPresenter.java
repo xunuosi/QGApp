@@ -1,6 +1,7 @@
 package sinolight.cn.qgapp.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -20,8 +21,8 @@ import sinolight.cn.qgapp.data.http.entity.TokenEntity;
 import sinolight.cn.qgapp.data.http.entity.VCodeEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.L;
-import sinolight.cn.qgapp.utils.SharedPfUtil;
 import sinolight.cn.qgapp.utils.TextFormatUtil;
+import sinolight.cn.qgapp.views.activity.LoginActivity;
 import sinolight.cn.qgapp.views.view.IRegisterActivityView;
 
 /**
@@ -57,11 +58,12 @@ public class RegisterActivityPresenter extends BasePresenter<IRegisterActivityVi
 
         @Override
         public void onSuccess(TokenEntity tokenEntity) {
-            String token = tokenEntity.getToken();
-            SharedPfUtil.setParam(mContext, AppContants.Account.TOKEN, token);
             // 用户存储到数据库中
             model.getAccountDao().save(user);
             view().showToastMsg(R.string.text_register_success);
+            Intent intent = LoginActivity.getCallIntent(mContext);
+            intent.putExtra(AppContants.Account.USER_NAME, user.getName());
+            view().gotoActivity(intent);
         }
 
         @Override
@@ -88,6 +90,7 @@ public class RegisterActivityPresenter extends BasePresenter<IRegisterActivityVi
     public void clear() {
         unbindView();
         mVCodeObserver.unSubscribe();
+        mRegisterObserver.unSubscribe();
     }
 
     private void getVCode() {

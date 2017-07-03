@@ -6,4 +6,8 @@ package sinolight.cn.qgapp.views.view;
  */
 
 public interface ILoginActivityView {
+
+    void initShow(String userName);
+
+    void showToastMsg(int msgId);
 }

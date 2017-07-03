@@ -111,6 +111,7 @@
             android:id="@+id/et_login_pw"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:inputType="textPassword"
             style="@style/login_edit_text"
             android:background="@null"
             android:hint="@string/password"/>

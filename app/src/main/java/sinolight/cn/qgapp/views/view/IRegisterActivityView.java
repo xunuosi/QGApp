@@ -1,5 +1,6 @@
 package sinolight.cn.qgapp.views.view;
 
+import android.content.Intent;
 import android.support.annotation.Nullable;
 
 /**
@@ -12,4 +13,6 @@ public interface IRegisterActivityView {
     void initShow(@Nullable String vCode);
 
     void showToastMsg(int msgId);
+
+    void gotoActivity(Intent intent);
 }

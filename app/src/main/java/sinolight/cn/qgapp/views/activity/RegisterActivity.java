@@ -110,6 +110,11 @@ public class RegisterActivity extends BaseActivity implements IRegisterActivityV
         mToast.showToast(msg);
     }
 
+    @Override
+    public void gotoActivity(Intent intent) {
+        startActivity(intent);
+    }
+
     @OnClick({R.id.iv_register_code, R.id.btn_register_reg})
     public void onViewClicked(View view) {
         switch (view.getId()) {

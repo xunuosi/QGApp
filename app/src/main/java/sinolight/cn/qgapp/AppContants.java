@@ -12,6 +12,7 @@ public interface AppContants {
     //    String baseUrl = "test";
 
     interface Account {
+        String USER_NAME = "account_name";
         String TOKEN = "account_token";
     }
 }
