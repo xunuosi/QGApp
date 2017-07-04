@@ -46,10 +46,6 @@ public class HomeActivity extends BaseActivity implements PermissionListener,IHo
 
     @BindView(R.id.bottom_tab)
     PageBottomTabLayout bottomTab;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    @BindView(R.id.tool_bar)
-    Toolbar toolBar;
     @BindView(R.id.home_activity_container)
     FrameLayout mHomeActivityContainer;
 
@@ -82,8 +78,6 @@ public class HomeActivity extends BaseActivity implements PermissionListener,IHo
 
     @Override
     protected void initViews() {
-        setSupportActionBar(toolBar);
-        tvTitle.setText(R.string.toolbar_home_title);
         mNavigationController = bottomTab.custom()
                 .addItem(newItem(R.drawable.tab_home,R.drawable.tab_home_pre,getString(R.string.bottomBar_home)))
                 .addItem(newItem(R.drawable.tab_knowledge,R.drawable.tab_knowledge_pre,getString(R.string.bottomBar_knowledge)))
@@ -142,10 +136,6 @@ public class HomeActivity extends BaseActivity implements PermissionListener,IHo
     @Override
     protected void initData() {
 
-    }
-
-    @OnClick(R.id.im_back_arrow)
-    public void onViewClicked() {
     }
 
     @Override

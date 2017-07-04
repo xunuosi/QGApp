@@ -15,6 +15,7 @@
     <string name="text_login">登录</string>
     <string name="text_register">注册</string>
     <string name="text_email">邮箱</string>
+    <string name="text_knowledge_">邮箱</string>
     <!--Register-->
     <string name="text_confirm_password">确认密码</string>
     <string name="text_code">验证码</string>
