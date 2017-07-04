@@ -15,7 +15,12 @@
     <string name="text_login">登录</string>
     <string name="text_register">注册</string>
     <string name="text_email">邮箱</string>
-    <string name="text_knowledge_">邮箱</string>
+    <string name="text_knowledge_store">行业知识库</string>
+    <string name="text_resource_store">资源库</string>
+    <string name="text_baike_store">百科库</string>
+    <string name="text_standard_store">标准库</string>
+    <string name="text_eBook_store">电子书城</string>
+    <string name="text_master_store">行业专家</string>
     <!--Register-->
     <string name="text_confirm_password">确认密码</string>
     <string name="text_code">验证码</string>

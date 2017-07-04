@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="color_white">#fff</color>
     <!--Home-->
+    <color name="color_home_text">#2b333b</color>
     <!--BottomBar-->
     <color name="color_bottom_divider">#e2e4e5</color>
     <color name="color_bottom_text">#3a3a3a</color>
