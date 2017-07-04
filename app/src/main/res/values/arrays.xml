@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="stores">
+        <item>行业知识库</item>
+        <item>资源库</item>
+        <item>百科库</item>
+        <item>标准库</item>
+        <item>电子书城</item>
+        <item>行业专家</item>
+    </string-array>
+</resources>
