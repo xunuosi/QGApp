@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.dagger.component.UserComponent;
 
 /**
  * Created by xns on 2017/6/29.
@@ -32,5 +33,10 @@ public class ResourceFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View fragmentView = inflater.inflate(R.layout.fragment_resource, container, false);
         return fragmentView;
+    }
+
+    @Override
+    protected UserComponent getComponent() {
+        return null;
     }
 }
