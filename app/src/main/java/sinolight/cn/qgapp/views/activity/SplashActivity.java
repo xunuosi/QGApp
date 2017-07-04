@@ -74,6 +74,7 @@ public class SplashActivity extends BaseActivity {
                         e.printStackTrace();
                     }
                     startActivity(LoginActivity.getCallIntent(mContext));
+                    finish();
                 }
             }
         }).start();
