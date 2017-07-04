@@ -55,7 +55,8 @@ public class LoginActivity extends BaseActivity implements ILoginActivityView {
         super.onCreate(savedInstanceState);
     }
 
-    private void initializeInjector() {
+    @Override
+    protected void initializeInjector() {
         DaggerLoginActivityComponent
                 .builder()
                 .applicationComponent(getApplicationComponent())

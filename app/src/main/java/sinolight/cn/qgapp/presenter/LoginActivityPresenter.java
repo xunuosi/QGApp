@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 
 import sinolight.cn.qgapp.AppContants;
+import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.db.DaoSession;
 import sinolight.cn.qgapp.data.http.HttpManager;
@@ -33,9 +34,9 @@ public class LoginActivityPresenter extends BasePresenter<ILoginActivityView, Da
         public void onSuccess(TokenEntity tokenEntity) {
             String token = tokenEntity.getToken();
 
-            SharedPfUtil.setParam(mContext, AppContants.Account.USER_NAME, userName);
+            AppHelper.getInstance().setCurrentUserName(userName);
+            AppHelper.getInstance().setCurrentToken(token);
             SharedPfUtil.setParam(mContext, AppContants.Account.PASS_WORD, pwd);
-            SharedPfUtil.setParam(mContext, AppContants.Account.TOKEN, token);
 
             view().showLoading(false);
             view().showToastMsg(R.string.text_login_success);

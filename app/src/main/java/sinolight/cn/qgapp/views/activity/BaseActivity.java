@@ -200,4 +200,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void initViews();
 
     protected abstract void initData();
+
+    protected abstract void initializeInjector();
 }

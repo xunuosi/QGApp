@@ -2,6 +2,7 @@ package sinolight.cn.qgapp.views.activity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -53,6 +54,10 @@ public class HomeActivity extends BaseActivity implements PermissionListener,IHo
     @BindView(R.id.home_activity_container)
     FrameLayout mHomeActivityContainer;
 
+    public static Intent getCallIntent(Context context) {
+        return new Intent(context, HomeActivity.class);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         this.initializeInjector();
@@ -60,7 +65,8 @@ public class HomeActivity extends BaseActivity implements PermissionListener,IHo
         checkAppPermission();
     }
 
-    private void initializeInjector() {
+    @Override
+    protected void initializeInjector() {
         DaggerHomeActivityComponent
                 .builder()
                 .applicationComponent(getApplicationComponent())

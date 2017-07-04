@@ -33,6 +33,7 @@ public class App extends Application {
         Fresco.initialize(this);
         HttpManager.init(this);
         initDatabase();
+        AppHelper.getInstance().init(instance);
     }
 
     private void initDatabase() {

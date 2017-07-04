@@ -36,7 +36,7 @@ public class SharedPfUtil {
         SharedPreferences sp = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
 
         if ("String".equals(type)) {
-            return (T) sp.getString(key, (String) defaultObject);
+            return (T) sp.getString(key, null);
         } else if ("Integer".equals(type)) {
             return (T) (Integer) sp.getInt(key, (Integer) defaultObject);
         } else if ("Boolean".equals(type)) {

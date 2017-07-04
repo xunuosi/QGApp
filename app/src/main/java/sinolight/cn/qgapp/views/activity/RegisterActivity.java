@@ -68,7 +68,8 @@ public class RegisterActivity extends BaseActivity implements IRegisterActivityV
         super.onCreate(savedInstanceState);
     }
 
-    private void initializeInjector() {
+    @Override
+    protected void initializeInjector() {
         DaggerRegisterActivityComponent
                 .builder()
                 .applicationComponent(getApplicationComponent())
