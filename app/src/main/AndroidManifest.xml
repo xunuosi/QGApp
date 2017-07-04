@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name=".views.activity.SplashActivity">
+        <activity android:name=".views.activity.SplashActivity"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,10 +22,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".views.activity.HomeActivity"
+                  android:screenOrientation="portrait"
                   android:launchMode="singleTask"/>
         <activity android:name=".views.activity.LoginActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".views.activity.RegisterActivity"/>
+                  android:screenOrientation="portrait"
+                  android:launchMode="singleTask"
+                  android:windowSoftInputMode="stateVisible"/>
+        <activity android:name=".views.activity.RegisterActivity"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateVisible"/>
     </application>
 
 </manifest>
