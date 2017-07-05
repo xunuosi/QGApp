@@ -56,7 +56,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 holder = new HomeBannerHolder(mInflater.inflate(R.layout.item_banner, parent, false));
                 break;
             case TYPE_STORE:
-
+//                holder = new StoreHolder(mInflater.inflate(R.layout.item));
                 break;
         }
         return holder;

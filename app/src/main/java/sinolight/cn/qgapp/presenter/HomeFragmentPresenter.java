@@ -84,7 +84,7 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
                 AppHelper.getInstance().getCurrentToken(),
                 false);
         // 初始化本地Item数据
-//        initLocalData();
+        initLocalData();
     }
 
     private void initLocalData() {
@@ -130,7 +130,6 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
      * @return
      */
     private boolean checkData() {
-//        return (mHomeBannerDatas != null && mStoreDatas != null);
-        return mHomeBannerDatas != null;
+        return (mHomeBannerDatas != null && mStoreDatas != null);
     }
 }
