@@ -106,9 +106,9 @@ public class RegisterActivity extends BaseActivity implements IRegisterActivityV
         if (vCode != null) {
             codeBitmap = new WeakReference<>(VCodeUtil.createSecurityCodeBitmap(135, 35, 16, 1.5f, vCode));
             mIvRegisterCode.setImageBitmap(codeBitmap.get());
+        } else {
+            mIvRegisterCode.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_error_red_24dp));
         }
-        mIvRegisterCode.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_error_red_24dp));
-
     }
 
     @Override

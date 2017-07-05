@@ -1,6 +1,8 @@
 package sinolight.cn.qgapp.data.http.api;
 
 
+import java.util.List;
+
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -62,7 +64,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("home/doRotationChart")
-    Observable<ResultEntity<BannerEntity>> getHomeBanner(
+    Observable<ResultEntity<List<BannerEntity>>> getHomeBanner(
             @Field("token") String token
     );
 }

@@ -2,6 +2,7 @@ package sinolight.cn.qgapp.data.http.cache;
 
 
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -13,8 +14,8 @@ import sinolight.cn.qgapp.data.http.entity.ResultEntity;
 public interface CacheProvider {
 
     @LifeCache(duration = 5, timeUnit = TimeUnit.MINUTES)
-    Observable<ResultEntity<BannerEntity>> getHomeBanner(
-            Observable<ResultEntity<BannerEntity>> oRepos,
+    Observable<ResultEntity<List<BannerEntity>>> getHomeBanner(
+            Observable<ResultEntity<List<BannerEntity>>> oRepos,
             EvictProvider evictDynamicKey);
 
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -102,7 +103,7 @@ public class HttpManager {
                 .subscribe(s);
     }
 
-    public void getHomeBannerWithCache(Observer<BannerEntity> subscriber, String token, boolean update) {
+    public void getHomeBannerWithCache(Observer<List<BannerEntity>> subscriber, String token, boolean update) {
         toSubscribe(cacheProvider.getHomeBanner(mApiService.getHomeBanner(token),new EvictProvider(update)), subscriber);
     }
 //    public void getDatasNoCache(Observer<TestBean> subscriber, int pno, int ps, String dtype) {

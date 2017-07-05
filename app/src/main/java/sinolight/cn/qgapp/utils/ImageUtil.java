@@ -60,7 +60,7 @@ public class ImageUtil {
      * @param width
      * @param height
      */
-    public static void frescoShowImageByUri(Activity activity, String path, SimpleDraweeView view,
+    public static void frescoShowImageByUri(Context activity, String path, SimpleDraweeView view,
                                             int width, int height) {
 
         if (path == null || activity == null || view == null) {
@@ -89,16 +89,16 @@ public class ImageUtil {
 
     /**
      * Fresco框架显示图片的方法
-     * @param activity
+     * @param context
      * @param resId
      * @param view
      * @param width
      * @param height
      */
-    public static void frescoShowImageByResId(Activity activity, int resId, SimpleDraweeView view,
+    public static void frescoShowImageByResId(Context context, int resId, SimpleDraweeView view,
                                               int width, int height) {
 
-        if (activity == null || view == null) {
+        if (context == null || view == null) {
             return;
         }
         if (width == 0 || height == 0) {
@@ -108,7 +108,7 @@ public class ImageUtil {
 
         ImageRequest request = ImageRequestBuilder.newBuilderWithResourceId(resId)
                 .setResizeOptions(new ResizeOptions(
-                        ScreenUtil.dip2px(activity, width), ScreenUtil.dip2px(activity, height)))
+                        ScreenUtil.dip2px(context, width), ScreenUtil.dip2px(context, height)))
                 .build();
 
         DraweeController controller = Fresco.newDraweeControllerBuilder()
@@ -128,7 +128,7 @@ public class ImageUtil {
      * @param width
      * @param height
      */
-    public static void frescoShowImageByUri2px(Activity activity, String path, SimpleDraweeView view,
+    public static void frescoShowImageByUri2px(Context activity, String path, SimpleDraweeView view,
                                                int width, int height) {
 
         if (path == null || activity == null || view == null) {

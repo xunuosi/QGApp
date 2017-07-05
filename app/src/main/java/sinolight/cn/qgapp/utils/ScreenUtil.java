@@ -74,4 +74,9 @@ public class ScreenUtil {
     public static int sp2px(float spValue, float fontScale) {
         return (int) (spValue * fontScale + 0.5f);
     }
+
+    public static int getScreenWidth2Dp(Context context) {
+        int screenWidth = getScreenWidth(context);
+        return px2dip(context, screenWidth);
+    }
 }

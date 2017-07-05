@@ -107,20 +107,23 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected void setStatusBarFontDark(boolean dark) {
         // 小米MIUI
-        try {
-            Window window = getWindow();
-            Class clazz = getWindow().getClass();
-            Class layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
-            Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
-            int darkModeFlag = field.getInt(layoutParams);
-            Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
-            if (dark) {    //状态栏亮色且黑色字体
-                extraFlagField.invoke(window, darkModeFlag, darkModeFlag);
-            } else {       //清除黑色字体
-                extraFlagField.invoke(window, 0, darkModeFlag);
+        if (Build.MANUFACTURER.equals("Xiaomi")) {
+
+            try {
+                Window window = getWindow();
+                Class clazz = getWindow().getClass();
+                Class layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
+                Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
+                int darkModeFlag = field.getInt(layoutParams);
+                Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
+                if (dark) {    //状态栏亮色且黑色字体
+                    extraFlagField.invoke(window, darkModeFlag, darkModeFlag);
+                } else {       //清除黑色字体
+                    extraFlagField.invoke(window, 0, darkModeFlag);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         // 魅族FlymeUI

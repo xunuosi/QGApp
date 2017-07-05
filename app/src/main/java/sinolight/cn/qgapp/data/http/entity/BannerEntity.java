@@ -8,7 +8,7 @@ package sinolight.cn.qgapp.data.http.entity;
 public class BannerEntity {
     private String id;
     private String title;
-    private String cover;
+    private String Cover;
 
     public BannerEntity() {
     }
@@ -30,11 +30,11 @@ public class BannerEntity {
     }
 
     public String getCover() {
-        return cover;
+        return Cover;
     }
 
     public void setCover(String cover) {
-        this.cover = cover;
+        this.Cover = cover;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class BannerEntity {
         return "BannerEntity{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
-                ", cover='" + cover + '\'' +
+                ", cover='" + Cover + '\'' +
                 '}';
     }
 }

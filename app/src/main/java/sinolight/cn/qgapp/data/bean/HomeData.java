@@ -7,8 +7,8 @@ import java.util.List;
  * 首页数据的包装类
  */
 
-public class HomeData {
-    private int id;
+public class HomeData<T> {
+    private String id;
     private String title;
     private String url;
     private int resId;
@@ -25,16 +25,16 @@ public class HomeData {
      */
     private boolean isSpan;
     // 封装的具体数据
-    private List<Object> datas;
+    private List<T> datas;
 
     public HomeData() {
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -84,5 +84,27 @@ public class HomeData {
 
     public void setSpan(boolean span) {
         isSpan = span;
+    }
+
+    public List<T> getDatas() {
+        return datas;
+    }
+
+    public void setDatas(List<T> datas) {
+        this.datas = datas;
+    }
+
+    @Override
+    public String toString() {
+        return "HomeData{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", url='" + url + '\'' +
+                ", resId=" + resId +
+                ", isLocal=" + isLocal +
+                ", itemType=" + itemType +
+                ", isSpan=" + isSpan +
+                ", datas=" + datas +
+                '}';
     }
 }
