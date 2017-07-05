@@ -36,7 +36,7 @@ public class LoginActivityPresenter extends BasePresenter<ILoginActivityView, Da
 
             AppHelper.getInstance().setCurrentUserName(userName);
             AppHelper.getInstance().setCurrentToken(token);
-            SharedPfUtil.setParam(mContext, AppContants.Account.PASS_WORD, pwd);
+            AppHelper.getInstance().setCurrentPW(pwd);
 
             view().showLoading(false);
             view().showToastMsg(R.string.text_login_success);

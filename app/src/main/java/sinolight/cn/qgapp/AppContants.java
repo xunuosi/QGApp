@@ -16,5 +16,6 @@ public interface AppContants {
         String USER_NAME = "account_name";
         String PASS_WORD = "account_pwd";
         String TOKEN = "account_token";
+        String IS_LOGINED = "account_isLogined";
     }
 }

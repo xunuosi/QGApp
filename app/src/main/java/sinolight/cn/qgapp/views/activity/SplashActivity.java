@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 
 import javax.inject.Inject;
 
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
 
@@ -65,7 +66,7 @@ public class SplashActivity extends BaseActivity {
                         }
                     }
                     //enter main screen
-                    startActivity(HomeActivity.getCallIntent(mContext));
+                    startActivity(HomeActivity.getCallIntent(mContext).putExtra(AppContants.Account.IS_LOGINED, true));
                     finish();
                 } else {
                     try {
