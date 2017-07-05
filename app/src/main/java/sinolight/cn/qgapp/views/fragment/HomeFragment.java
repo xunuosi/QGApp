@@ -23,6 +23,7 @@ import sinolight.cn.qgapp.dagger.HasComponent;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
 import sinolight.cn.qgapp.data.bean.LocalDataBean;
 import sinolight.cn.qgapp.presenter.HomeFragmentPresenter;
+import sinolight.cn.qgapp.utils.MyItemDivider;
 import sinolight.cn.qgapp.views.view.IHomeFragmentView;
 
 /**
@@ -49,7 +50,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
     }
 
     public HomeFragment() {
-        setRetainInstance(true);
+
     }
 
     @Override
@@ -94,6 +95,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
         mLayoutManager = new GridLayoutManager(mContext, 3);
         mRvHf.setLayoutManager(mLayoutManager);
         mRvHf.setHasFixedSize(true);
+        mRvHf.addItemDecoration(new MyItemDivider(mContext));
         mRvHf.setAdapter(adapter);
     }
 

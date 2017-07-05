@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.data.bean.HomeData;
 import sinolight.cn.qgapp.data.bean.LocalDataBean;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
@@ -23,6 +24,7 @@ public class HomeDataMapper {
             throw new IllegalArgumentException("Cannot transform a null value");
         }
         final HomeData homeData = new HomeData();
+        homeData.setTitle(App.getContext().getString(bean.getText()));
         homeData.setResId(bean.getResId());
         homeData.setItemType(adapterType);
         homeData.setSpan(isSpan);

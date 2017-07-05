@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -17,6 +18,8 @@ import me.majiajie.pagerbottomtabstrip.PageBottomTabLayout;
 import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
 import me.majiajie.pagerbottomtabstrip.item.NormalItemView;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
+import sinolight.cn.qgapp.AppContants;
+import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.dagger.HasComponent;
 import sinolight.cn.qgapp.dagger.component.DaggerHomeActivityComponent;
@@ -24,6 +27,11 @@ import sinolight.cn.qgapp.dagger.component.DaggerUserComponent;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
 import sinolight.cn.qgapp.dagger.module.HomeActivityModule;
 import sinolight.cn.qgapp.dagger.module.UserModule;
+import sinolight.cn.qgapp.data.http.HttpManager;
+import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
+import sinolight.cn.qgapp.data.http.entity.TokenEntity;
+import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
+import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.utils.PermissionListener;
 import sinolight.cn.qgapp.views.fragment.HomeFragment;
 import sinolight.cn.qgapp.views.fragment.KnowledgeFragment;
@@ -32,10 +40,25 @@ import sinolight.cn.qgapp.views.fragment.UserFragment;
 import sinolight.cn.qgapp.views.view.IHomeActivityView;
 
 public class HomeActivity extends BaseActivity implements PermissionListener, IHomeActivityView, HasComponent<UserComponent> {
-
+    private static final String TAG = "HomeActivity";
     private NavigationController mNavigationController;
     private UserComponent userComponent;
+    private HttpSubscriber loginObserver = new HttpSubscriber(new OnResultCallBack<TokenEntity>() {
 
+        @Override
+        public void onSuccess(TokenEntity tokenEntity) {
+            String token = tokenEntity.getToken();
+            AppHelper.getInstance().setCurrentToken(token);
+        }
+
+        @Override
+        public void onError(int code, String errorMsg) {
+            L.d(TAG, "code:" + code + ",errorMsg:" + errorMsg);
+            Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
+            startActivity(LoginActivity.getCallIntent(mContext).putExtra(AppContants.Account.USER_NAME, 
+                    AppHelper.getInstance().getCurrentUserName()));
+        }
+    }); 
     @Inject
     Context mContext;
     @Inject
@@ -61,6 +84,23 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
         this.initializeInjector();
         super.onCreate(savedInstanceState);
         checkAppPermission();
+        Intent intent = getIntent();
+        if (intent != null) {
+            boolean isLogined = intent.getBooleanExtra(AppContants.Account.IS_LOGINED, false);
+            if (isLogined) {
+                HttpManager.getInstance().login(loginObserver, 
+                        AppHelper.getInstance().getCurrentUserName(),
+                        AppHelper.getInstance().getCurrentPW());
+            } else {
+                // TODO: 2017/7/5  
+            } 
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        loginObserver.unSubscribe();
     }
 
     @Override

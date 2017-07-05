@@ -39,7 +39,8 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         public void onSuccess(List<BannerEntity> bannerEntities) {
             mHomeBannerDatas = bannerEntities;
             transformHomeData(mHomeBannerDatas, HomeAdapter.TYPE_BANNER, true);
-            closeLoading();
+            // 初始化本地Item数据
+            initLocalData();
         }
 
         @Override
@@ -47,7 +48,8 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
             L.d(TAG, "code:" + code + ",errorMsg:" + errorMsg);
             mHomeBannerDatas = new ArrayList<>();
             transformHomeData(mHomeBannerDatas, HomeAdapter.TYPE_BANNER, true);
-            closeLoading();
+            // 初始化本地Item数据
+            initLocalData();
             Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
         }
     });
@@ -83,18 +85,41 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         model.getHomeBannerWithCache(homeBannerObserver,
                 AppHelper.getInstance().getCurrentToken(),
                 false);
-        // 初始化本地Item数据
-        initLocalData();
     }
 
     private void initLocalData() {
         mStoreDatas = new ArrayList<>();
-        for (int i = 0;i<6;i++) {
-            LocalDataBean bean = new LocalDataBean();
-            bean.setText(R.string.text_knowledge_store);
-            bean.setText(R.drawable.holder_circle_image);
-            mStoreDatas.add(bean);
-        }
+
+        LocalDataBean bean1 = new LocalDataBean();
+        bean1.setText(R.string.text_knowledge_store);
+        bean1.setResId(R.drawable.holder_circle_image);
+        mStoreDatas.add(bean1);
+
+        LocalDataBean bean2 = new LocalDataBean();
+        bean2.setText(R.string.text_resource_store);
+        bean2.setResId(R.drawable.holder_circle_image);
+        mStoreDatas.add(bean2);
+
+        LocalDataBean bean3 = new LocalDataBean();
+        bean3.setText(R.string.text_baike_store);
+        bean3.setResId(R.drawable.holder_circle_image);
+        mStoreDatas.add(bean3);
+
+        LocalDataBean bean4 = new LocalDataBean();
+        bean4.setText(R.string.text_standard_store);
+        bean4.setResId(R.drawable.holder_circle_image);
+        mStoreDatas.add(bean4);
+
+        LocalDataBean bean5 = new LocalDataBean();
+        bean5.setText(R.string.text_eBook_store);
+        bean5.setResId(R.drawable.holder_circle_image);
+        mStoreDatas.add(bean5);
+
+        LocalDataBean bean6 = new LocalDataBean();
+        bean6.setText(R.string.text_master_store);
+        bean6.setResId(R.drawable.holder_circle_image);
+        mStoreDatas.add(bean6);
+
         transformHomeData(mStoreDatas, HomeAdapter.TYPE_STORE, false);
         closeLoading();
     }
