@@ -14,6 +14,7 @@ public class AppHelper {
     private static AppHelper instance = null;
     private AppModel mModel;
     private String userName;
+    private String pwd;
     private String token;
 
     private AppHelper() {
@@ -55,6 +56,14 @@ public class AppHelper {
     }
 
     public boolean isLogined() {
-        return this.getCurrentToken() != null;
+        return this.getCurrentToken() != null && this.getCurrentUserName() != null && this.getCurrentPW() != null;
+    }
+
+    public String getCurrentPW() {
+        if (pwd == null) {
+            pwd = mModel.getCurrentPW();
+        }
+        return pwd;
     }
 }
+
