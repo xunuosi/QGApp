@@ -5,6 +5,7 @@ import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
+import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.ResultEntity;
 import sinolight.cn.qgapp.data.http.entity.TokenEntity;
 import sinolight.cn.qgapp.data.http.entity.VCodeEntity;
@@ -52,5 +53,16 @@ public interface ApiService {
     Observable<ResultEntity<TokenEntity>> login(
             @Field("username") String name,
             @Field("pwd") String pwd
+    );
+
+    /**
+     * 首页轮播图片
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("home/doRotationChart")
+    Observable<ResultEntity<BannerEntity>> getHomeBanner(
+            @Field("token") String token
     );
 }
