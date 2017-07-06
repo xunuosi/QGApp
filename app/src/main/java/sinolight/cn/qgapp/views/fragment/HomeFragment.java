@@ -9,6 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
+import com.aspsine.swipetoloadlayout.OnRefreshListener;
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -31,7 +35,7 @@ import sinolight.cn.qgapp.views.view.IHomeFragmentView;
  * 首页Fragment
  */
 
-public class HomeFragment extends BaseFragment implements IHomeFragmentView {
+public class HomeFragment extends BaseFragment implements IHomeFragmentView, OnRefreshListener {
     private static final String TAG = "HomeFragment";
     @Inject
     List<LocalDataBean> storeDatas;
@@ -42,6 +46,8 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
     @BindView(R.id.rv_hf)
     RecyclerView mRvHf;
     Unbinder unbinder;
+    @BindView(R.id.swipe_hf)
+    SwipeToLoadLayout mSwipeHf;
 
     private RecyclerView.LayoutManager mLayoutManager;
 
@@ -63,6 +69,9 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View fragmentView = inflater.inflate(R.layout.fragment_home, container, false);
         unbinder = ButterKnife.bind(this, fragmentView);
+        // 添加Swipe监听
+        mSwipeHf.setOnRefreshListener(this);
+        mSwipeHf.setRefreshing(true);
         return fragmentView;
     }
 
@@ -70,13 +79,13 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         this.getComponent().inject(this);
+        mPresenter.bindView(this);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        mPresenter.bindView(this);
-        mPresenter.initData();
+
     }
 
     @Override
@@ -100,6 +109,20 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
     }
 
     @Override
+    public void showLoading(boolean enable) {
+        if (enable) {
+            mSwipeHf.post(new Runnable() {
+                @Override
+                public void run() {
+                    mSwipeHf.setRefreshing(true);
+                }
+            });
+        } else {
+            mSwipeHf.setRefreshing(false);
+        }
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
@@ -107,5 +130,10 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
 
     @OnClick(R.id.iv_hf_search)
     public void onViewClicked() {
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.initData();
     }
 }
