@@ -42,7 +42,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, OnR
     Context mContext;
     @Inject
     HomeFragmentPresenter mPresenter;
-    @BindView(R.id.rv_hf)
+    @BindView(R.id.swipe_target)
     RecyclerView mRvHf;
     Unbinder unbinder;
     @BindView(R.id.swipe_hf)
@@ -125,6 +125,14 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, OnR
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mSwipeHf.isRefreshing()) {
+            mSwipeHf.setRefreshing(false);
+        }
     }
 
     @OnClick(R.id.iv_hf_search)
