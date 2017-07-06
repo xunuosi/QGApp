@@ -1,64 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<com.aspsine.swipetoloadlayout.SwipeToLoadLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:swipe="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_home_bg">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/tool_bar_hf"
-        android:layout_width="0dp"
-        android:layout_height="59dp"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:contentInsetEnd="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetRight="0dp"
-        app:contentInsetStart="0dp"
-        android:background="@color/color_white">
-        <ImageView
-            android:id="@+id/iv_hf_search"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/nav_search_white"
-            android:scaleType="centerInside"
-            android:layout_marginStart="15dp"/>
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="@string/toolbar_home_title"
-            style="@style/tool_bar"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="55dp"/>
-    </android.support.v7.widget.Toolbar>
-    <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:background="@color/color_bottom_divider"
-        android:id="@+id/empty_view2"
-        app:layout_constraintTop_toBottomOf="@+id/tool_bar_hf"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_hf"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginTop="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/empty_view2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintVertical_bias="0.0"
-        android:background="@color/color_white"/>
-
-</android.support.constraint.ConstraintLayout>
+    swipe:default_to_loading_more_scrolling_duration="500"
+    swipe:load_more_final_drag_offset="@dimen/load_more_final_offset_google"
+    swipe:load_more_trigger_offset="@dimen/load_more_trigger_offset_google"
+    swipe:refresh_final_drag_offset="@dimen/refresh_final_offset_google"
+    swipe:refresh_trigger_offset="@dimen/refresh_trigger_offset_google"
+    swipe:load_more_complete_delay_duration="0"
+    swipe:swipe_style="above">
+    <include
+        android:id="@id/swipe_refresh_header"
+        layout="@layout/layout_google_hook_header"/>
+    <android.support.constraint.ConstraintLayout
+        android:id="@id/swipe_target"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_home_bg">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tool_bar_hf"
+            android:layout_width="0dp"
+            android:layout_height="59dp"
+            android:background="@color/color_white"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:contentInsetEnd="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetStart="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <ImageView
+                android:id="@+id/iv_hf_search"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="15dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/nav_search_white"/>
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="55dp"
+                android:layout_marginStart="15dp"
+                android:gravity="center"
+                android:text="@string/toolbar_home_title"/>
+        </android.support.v7.widget.Toolbar>
+        <View
+            android:id="@+id/empty_view2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/color_bottom_divider"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tool_bar_hf"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_hf"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="1dp"
+            android:background="@color/color_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/empty_view2"
+            app:layout_constraintVertical_bias="0.0"/>
+    </android.support.constraint.ConstraintLayout>
+</com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
