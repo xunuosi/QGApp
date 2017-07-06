@@ -68,10 +68,18 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, OnR
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View fragmentView = inflater.inflate(R.layout.fragment_home, container, false);
         unbinder = ButterKnife.bind(this, fragmentView);
+        return fragmentView;
+    }
+
+    private void initView() {
         // 添加Swipe监听
         mSwipeHf.setOnRefreshListener(this);
         mSwipeHf.setRefreshing(true);
-        return fragmentView;
+
+        mLayoutManager = new GridLayoutManager(mContext, 3);
+        mRvHf.setLayoutManager(mLayoutManager);
+        mRvHf.setHasFixedSize(true);
+        mRvHf.addItemDecoration(new MyItemDivider(mContext));
     }
 
     @Override
@@ -79,6 +87,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, OnR
         super.onActivityCreated(savedInstanceState);
         this.getComponent().inject(this);
         mPresenter.bindView(this);
+        initView();
     }
 
     @Override
@@ -100,10 +109,6 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, OnR
 
     @Override
     public void showView(HomeAdapter adapter) {
-        mLayoutManager = new GridLayoutManager(mContext, 3);
-        mRvHf.setLayoutManager(mLayoutManager);
-        mRvHf.setHasFixedSize(true);
-        mRvHf.addItemDecoration(new MyItemDivider(mContext));
         mRvHf.setAdapter(adapter);
     }
 
