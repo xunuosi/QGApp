@@ -53,6 +53,12 @@ public class MyItemDivider extends Y_DividerItemDecoration {
                         .create();
                 break;
             default:
+                divider = new Y_DividerBuilder()
+                        .setLeftSideLine(true, ContextCompat.getColor(context, R.color.color_transparent_all), 0.5f, 0, 0)
+                        .setBottomSideLine(true, ContextCompat.getColor(context, R.color.color_transparent_all), 0.5f, 0, 0)
+                        .setRightSideLine(true, ContextCompat.getColor(context, R.color.color_transparent_all), 0.5f, 0, 0)
+                        .setTopSideLine(true, ContextCompat.getColor(context, R.color.color_transparent_all), 0.5f, 0, 0)
+                        .create();
                 break;
         }
         return divider;
