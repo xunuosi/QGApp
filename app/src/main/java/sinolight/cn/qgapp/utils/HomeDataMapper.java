@@ -62,6 +62,8 @@ public class HomeDataMapper {
             homeDataCollection = new ArrayList<>();
             HomeData<BannerEntity> bean = new HomeData<>();
             bean.setLocal(true);
+            bean.setSpan(isSpan);
+            bean.setItemType(adapterType);
             homeDataCollection.add(bean);
         }
         homeDataMap.put(adapterType, homeDataCollection);

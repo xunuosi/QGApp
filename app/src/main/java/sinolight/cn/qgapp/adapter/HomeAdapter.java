@@ -19,6 +19,7 @@ import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.HomeData;
 import sinolight.cn.qgapp.utils.HomeDataMapper;
 import sinolight.cn.qgapp.views.holder.HomeBannerHolder;
+import sinolight.cn.qgapp.views.holder.HomeHotPicsHolder;
 import sinolight.cn.qgapp.views.holder.StoreHolder;
 
 /**
@@ -30,7 +31,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     // 首页顶端Banner
     public static final int TYPE_BANNER = 0;
     // 热门图集Banner
-    public static final int TYPE_BANNER_IMAGES = 2;
+    public static final int TYPE_HOT_PICS = 2;
     // 推荐词条Banner
     public static final int TYPE_BANNER_WORDS = 3;
     // 六大库分类
@@ -60,6 +61,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case TYPE_STORE:
                 holder = new StoreHolder(mInflater.inflate(R.layout.item_store, parent, false));
                 break;
+            case TYPE_HOT_PICS:
+                holder = new HomeHotPicsHolder(mInflater.inflate(R.layout.item_hot_images, parent, false));
+                break;
         }
         return holder;
     }
@@ -72,6 +76,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 break;
             case TYPE_STORE:
                 ((StoreHolder) holder).setData(homeDatas.get(position));
+                break;
+            case TYPE_HOT_PICS:
+                ((HomeHotPicsHolder) holder).setData(homeDatas.get(position));
                 break;
         }
     }
@@ -94,8 +101,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
-                    RecyclerView.Adapter adapter = recyclerView.getAdapter();
-                    if (isFullSpanType(adapter.getItemViewType(position))) {
+                    if (isFullSpanType(position)) {
                         return gridLayoutManager.getSpanCount();
                     }
                     return 1;
@@ -104,8 +110,8 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    private boolean isFullSpanType(int type) {
-        return type == TYPE_BANNER;
+    private boolean isFullSpanType(int pos) {
+        return homeDatas.get(pos).isSpan();
     }
 
 }

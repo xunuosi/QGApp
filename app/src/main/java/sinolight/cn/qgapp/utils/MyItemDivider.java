@@ -44,6 +44,14 @@ public class MyItemDivider extends Y_DividerItemDecoration {
                         .setTopSideLine(true, ContextCompat.getColor(context, R.color.color_bottom_divider), 0.5f, 0, 0)
                         .create();
                 break;
+            case 7:
+                divider = new Y_DividerBuilder()
+                        .setLeftSideLine(true, ContextCompat.getColor(context, R.color.color_bottom_divider), 0.5f, 0, 0)
+                        .setBottomSideLine(true, ContextCompat.getColor(context, R.color.color_bottom_divider), 0.5f, 0, 0)
+                        .setRightSideLine(true, ContextCompat.getColor(context, R.color.color_bottom_divider), 0.5f, 0, 0)
+                        .setTopSideLine(true, ContextCompat.getColor(context, R.color.color_bottom_divider), 0.5f, 0, 0)
+                        .create();
+                break;
             default:
                 break;
         }

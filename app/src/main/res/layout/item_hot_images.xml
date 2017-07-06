@@ -3,12 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/banner_home_head_root"
+    android:id="@+id/item_hot_imgs_root"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/hf_head_banner_root_height">
+    android:layout_height="@dimen/hf_hot_imgs_root_height"
+    android:layout_marginTop="@dimen/hf_hot_imgs_root_mTop_mBottom"
+    android:layout_marginBottom="@dimen/hf_hot_imgs_root_mTop_mBottom"
+    android:layout_marginStart="@dimen/hf_hot_imgs_root_mLeft_mRight"
+    android:layout_marginEnd="@dimen/hf_hot_imgs_root_mLeft_mRight">
 
     <com.youth.banner.Banner
-        android:id="@+id/banner_home_head"
+        android:id="@+id/item_hot_imgs_banner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:layout_constraintTop_creator="1"

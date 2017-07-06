@@ -106,6 +106,10 @@ public class HttpManager {
     public void getHomeBannerWithCache(Observer<List<BannerEntity>> subscriber, String token, boolean update) {
         toSubscribe(cacheProvider.getHomeBanner(mApiService.getHomeBanner(token),new EvictProvider(update)), subscriber);
     }
+
+    public void getHotPicsWithCache(Observer<List<BannerEntity>> subscriber, String token, boolean update) {
+        toSubscribe(cacheProvider.getHotPics(mApiService.getHotPics(token),new EvictProvider(update)), subscriber);
+    }
 //    public void getDatasNoCache(Observer<TestBean> subscriber, int pno, int ps, String dtype) {
 //        toSubscribe(mApiService.getDatas(pno, ps,dtype), subscriber);
 //    }

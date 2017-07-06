@@ -17,6 +17,7 @@ import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.HomeData;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
+import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.utils.ScreenUtil;
 import sinolight.cn.qgapp.views.widget.FrescoLoader;
 
@@ -25,28 +26,30 @@ import sinolight.cn.qgapp.views.widget.FrescoLoader;
  * 首页顶部轮播图片
  */
 
-public class HomeBannerHolder extends RecyclerView.ViewHolder {
-    private static final String TAG = "HomeBannerHolder";
+public class HomeHotPicsHolder extends RecyclerView.ViewHolder {
+    private static final String TAG = "HomeHotPicsHolder";
     private HomeData mHomeData;
     private List imgList;
     private int width;
     private int height;
 
-    @BindView(R.id.banner_home_head)
+    @BindView(R.id.item_hot_imgs_banner)
     Banner mBannerHomeHead;
-    @BindView(R.id.banner_home_head_root)
+    @BindView(R.id.item_hot_imgs_root)
     ConstraintLayout mBannerHomeHeadRoot;
 
-    public HomeBannerHolder(View layout) {
+    public HomeHotPicsHolder(View layout) {
         super(layout);
         ButterKnife.bind(this, itemView);
         width = ScreenUtil.getScreenWidth2Dp(App.getContext());
-        height = (int) App.getContext().getResources().getDimension(R.dimen.hf_head_banner_root_height);
+        height = (int) App.getContext().getResources().getDimension(R.dimen.hf_hot_imgs_root_height);
+        L.d(TAG, "width:" + width + ",height:" + height);
     }
 
     public void setData(HomeData data) {
         mHomeData = data;
         transformData();
+
     }
 
     private void transformData() {

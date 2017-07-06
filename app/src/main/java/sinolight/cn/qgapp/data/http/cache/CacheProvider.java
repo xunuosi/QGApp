@@ -18,4 +18,8 @@ public interface CacheProvider {
             Observable<ResultEntity<List<BannerEntity>>> oRepos,
             EvictProvider evictDynamicKey);
 
+    @LifeCache(duration = 5, timeUnit = TimeUnit.MINUTES)
+    Observable<ResultEntity<List<BannerEntity>>> getHotPics(
+            Observable<ResultEntity<List<BannerEntity>>> oRepos,
+            EvictProvider evictDynamicKey);
 }

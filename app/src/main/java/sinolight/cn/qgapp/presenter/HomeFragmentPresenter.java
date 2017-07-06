@@ -31,8 +31,11 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
     private Context mContext;
     private List<HomeData> homeDatas;
     private HomeAdapter mHomeAdapter;
+
     private List<BannerEntity> mHomeBannerDatas;
+    private List<BannerEntity> mHotPicsDatas;
     private List<LocalDataBean> mStoreDatas;
+
     private HttpSubscriber homeBannerObserver = new HttpSubscriber(new OnResultCallBack<List<BannerEntity>>() {
 
         @Override
@@ -54,6 +57,23 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         }
     });
 
+    private HttpSubscriber hotPicsObserver = new HttpSubscriber(new OnResultCallBack<List<BannerEntity>>() {
+
+        @Override
+        public void onSuccess(List<BannerEntity> bannerEntities) {
+            mHotPicsDatas = bannerEntities;
+            transformHomeData(mHotPicsDatas, HomeAdapter.TYPE_HOT_PICS, true);
+        }
+
+        @Override
+        public void onError(int code, String errorMsg) {
+            L.d(TAG, "hotPicsObserver code:" + code + ",errorMsg:" + errorMsg);
+            mHotPicsDatas = new ArrayList<>();
+            transformHomeData(mHotPicsDatas, HomeAdapter.TYPE_HOT_PICS, true);
+            Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
+        }
+    });
+
     @Inject
     public HomeFragmentPresenter(Context context) {
         this.mContext = context;
@@ -69,6 +89,7 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
     public void clear() {
         unbindView();
         homeBannerObserver.unSubscribe();
+        hotPicsObserver.unSubscribe();
         // 清理内存数据
         HomeDataMapper.reset();
         mStoreDatas = null;
@@ -121,7 +142,9 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         mStoreDatas.add(bean6);
 
         transformHomeData(mStoreDatas, HomeAdapter.TYPE_STORE, false);
-        closeLoading();
+
+        // 获取热门图集
+        model.getHotPicsWithCache(hotPicsObserver, AppHelper.getInstance().getCurrentToken(), false);
     }
 
     /**
@@ -138,7 +161,12 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
             case HomeAdapter.TYPE_STORE:
                 homeDatas.addAll(HomeDataMapper.transformLocalDatas(list, type, isSpan));
                 break;
+            case HomeAdapter.TYPE_HOT_PICS:
+                homeDatas.addAll(HomeDataMapper.transformBannerDatas(list, type, isSpan));
+                break;
         }
+        // 数据加载完毕
+        closeLoading();
     }
 
     private void closeLoading() {
@@ -155,6 +183,8 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
      * @return
      */
     private boolean checkData() {
-        return (mHomeBannerDatas != null && mStoreDatas != null);
+        return (mHomeBannerDatas != null &&
+                mStoreDatas != null &&
+                mHotPicsDatas != null);
     }
 }

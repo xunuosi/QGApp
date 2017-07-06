@@ -67,4 +67,15 @@ public interface ApiService {
     Observable<ResultEntity<List<BannerEntity>>> getHomeBanner(
             @Field("token") String token
     );
+
+    /**
+     * 首页-热门图集
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("home/doHotPics")
+    Observable<ResultEntity<List<BannerEntity>>> getHotPics(
+            @Field("token") String token
+    );
 }

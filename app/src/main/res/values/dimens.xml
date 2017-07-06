@@ -3,6 +3,10 @@
     <!--Home Fragment-->
     <dimen name="hf_store_image_size">62dp</dimen>
     <dimen name="hf_store_root_height">133dp</dimen>
+    <dimen name="hf_head_banner_root_height">180dp</dimen>
+    <dimen name="hf_hot_imgs_root_height">100dp</dimen>
+    <dimen name="hf_hot_imgs_root_mTop_mBottom">9dp</dimen>
+    <dimen name="hf_hot_imgs_root_mLeft_mRight">20dp</dimen>
     <!--Common-->
     <dimen name="refresh_header_height_google">100dp</dimen>
     <dimen name="refresh_trigger_offset_google">100dp</dimen>
