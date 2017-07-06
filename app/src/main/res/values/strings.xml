@@ -21,6 +21,9 @@
     <string name="text_standard_store">标准库</string>
     <string name="text_eBook_store">电子书城</string>
     <string name="text_master_store">行业专家</string>
+    <string name="text_new_standard">最新标准</string>
+    <string name="text_newbook_coming">新书袭来</string>
+    <string name="text_hot_article">热门文章</string>
     <!--Register-->
     <string name="text_confirm_password">确认密码</string>
     <string name="text_code">验证码</string>
@@ -39,4 +42,6 @@
     <string name="error_internet">网络异常</string>
     <string name="text_loading">正在加载…</string>
     <string name="text_login_success">登录成功</string>
+    <string name="text_title_holder">GB 5009.2-2016 食品安全国家标准食品中钙的测定</string>
+    <string name="text_content_holder">标准标号：NSBD-00-00</string>
 </resources>

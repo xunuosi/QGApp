@@ -24,6 +24,10 @@ public class HomeData<T> {
      * Span Line
      */
     private boolean isSpan;
+    // 标准号
+    private String stdno;
+    // 实施时间
+    private String imdate;
     // 封装的具体数据
     private List<T> datas;
 
@@ -94,6 +98,22 @@ public class HomeData<T> {
         this.datas = datas;
     }
 
+    public String getStdno() {
+        return stdno;
+    }
+
+    public void setStdno(String stdno) {
+        this.stdno = stdno;
+    }
+
+    public String getImdate() {
+        return imdate;
+    }
+
+    public void setImdate(String imdate) {
+        this.imdate = imdate;
+    }
+
     @Override
     public String toString() {
         return "HomeData{" +
@@ -104,6 +124,8 @@ public class HomeData<T> {
                 ", isLocal=" + isLocal +
                 ", itemType=" + itemType +
                 ", isSpan=" + isSpan +
+                ", stdno='" + stdno + '\'' +
+                ", imdate='" + imdate + '\'' +
                 ", datas=" + datas +
                 '}';
     }

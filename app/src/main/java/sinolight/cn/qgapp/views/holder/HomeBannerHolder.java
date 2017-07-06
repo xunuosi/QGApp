@@ -41,7 +41,8 @@ public class HomeBannerHolder extends RecyclerView.ViewHolder {
         super(layout);
         ButterKnife.bind(this, itemView);
         width = ScreenUtil.getScreenWidth2Dp(App.getContext());
-        height = (int) App.getContext().getResources().getDimension(R.dimen.hf_head_banner_root_height);
+        height = (int) (App.getContext().getResources().getDimensionPixelOffset(R.dimen.hf_head_banner_root_height) /
+                App.getContext().getResources().getDisplayMetrics().density);
     }
 
     public void setData(HomeData data) {

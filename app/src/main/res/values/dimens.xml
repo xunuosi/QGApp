@@ -7,6 +7,14 @@
     <dimen name="hf_hot_imgs_root_height">100dp</dimen>
     <dimen name="hf_hot_imgs_root_mTop_mBottom">9dp</dimen>
     <dimen name="hf_hot_imgs_root_mLeft_mRight">20dp</dimen>
+
+    <dimen name="hf_item_title_root_height">58dp</dimen>
+    <dimen name="hf_item_title_img_size">20dp</dimen>
+
+    <dimen name="hf_item_standard_root_height">175dp</dimen>
+    <dimen name="hf_item_standard_img_width">97dp</dimen>
+    <dimen name="hf_item_standard_img_height">134dp</dimen>
+
     <!--Common-->
     <dimen name="refresh_header_height_google">100dp</dimen>
     <dimen name="refresh_trigger_offset_google">100dp</dimen>

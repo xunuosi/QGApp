@@ -42,8 +42,8 @@ public class HomeHotPicsHolder extends RecyclerView.ViewHolder {
         super(layout);
         ButterKnife.bind(this, itemView);
         width = ScreenUtil.getScreenWidth2Dp(App.getContext());
-        height = (int) App.getContext().getResources().getDimension(R.dimen.hf_hot_imgs_root_height);
-        L.d(TAG, "width:" + width + ",height:" + height);
+        height = (int) (App.getContext().getResources().getDimensionPixelOffset(R.dimen.hf_hot_imgs_root_height) /
+                        App.getContext().getResources().getDisplayMetrics().density);
     }
 
     public void setData(HomeData data) {

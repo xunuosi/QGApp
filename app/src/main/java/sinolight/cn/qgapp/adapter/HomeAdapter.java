@@ -18,8 +18,10 @@ import butterknife.ButterKnife;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.HomeData;
 import sinolight.cn.qgapp.utils.HomeDataMapper;
+import sinolight.cn.qgapp.views.holder.CommonTitleHolder;
 import sinolight.cn.qgapp.views.holder.HomeBannerHolder;
 import sinolight.cn.qgapp.views.holder.HomeHotPicsHolder;
+import sinolight.cn.qgapp.views.holder.StandardHolder;
 import sinolight.cn.qgapp.views.holder.StoreHolder;
 
 /**
@@ -36,6 +38,10 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int TYPE_BANNER_WORDS = 3;
     // 六大库分类
     public static final int TYPE_STORE = 1;
+    // 分类显示时的title
+    public static final int TYPE_COMMON_TITLE = 4;
+    // 最新标准
+    public static final int TYPE_STANDARD = 5;
 
     private Context mContext;
     private LayoutInflater mInflater;
@@ -64,6 +70,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case TYPE_HOT_PICS:
                 holder = new HomeHotPicsHolder(mInflater.inflate(R.layout.item_hot_images, parent, false));
                 break;
+            case TYPE_COMMON_TITLE:
+                holder = new CommonTitleHolder(mInflater.inflate(R.layout.item_commen_title, parent, false));
+                break;
+            case TYPE_STANDARD:
+                holder = new StandardHolder(mInflater.inflate(R.layout.item_standard, parent, false));
+                break;
         }
         return holder;
     }
@@ -79,6 +91,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 break;
             case TYPE_HOT_PICS:
                 ((HomeHotPicsHolder) holder).setData(homeDatas.get(position));
+                break;
+            case TYPE_COMMON_TITLE:
+                ((CommonTitleHolder) holder).setData(homeDatas.get(position));
+                break;
+            case TYPE_STANDARD:
+                ((StandardHolder) holder).setData(homeDatas.get(position));
                 break;
         }
     }

@@ -16,6 +16,7 @@ import sinolight.cn.qgapp.data.bean.LocalDataBean;
 import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
+import sinolight.cn.qgapp.data.http.entity.StandardEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.HomeDataMapper;
 import sinolight.cn.qgapp.utils.L;
@@ -28,13 +29,50 @@ import sinolight.cn.qgapp.views.view.IHomeFragmentView;
 
 public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, HttpManager> {
     private static final String TAG = "HomeFragmentPresenter";
+    private static final int TYPE_STANDARD = 0;
+    private static final int TYPE_NEW_BOOKS = 1;
+    private static final int TYPE_HOT_ARTICLE = 2;
+
+    private String token;
     private Context mContext;
     private List<HomeData> homeDatas;
     private HomeAdapter mHomeAdapter;
 
+    private int[] storeImgArr = {
+            R.drawable.holder_circle_image,
+            R.drawable.holder_circle_image,
+            R.drawable.holder_circle_image,
+            R.drawable.holder_circle_image,
+            R.drawable.holder_circle_image,
+            R.drawable.holder_circle_image
+    };
+
+    private int[] storeStrArr = {
+            R.string.text_knowledge_store,
+            R.string.text_resource_store,
+            R.string.text_baike_store,
+            R.string.text_standard_store,
+            R.string.text_eBook_store,
+            R.string.text_master_store
+    };
+
+    private int[] titleImgArr = {
+            R.drawable.title_icon_standard,
+            R.drawable.title_icon_newbooks,
+            R.drawable.title_icon_hot_article
+    };
+
+    private int[] titleStrArr = {
+            R.string.text_new_standard,
+            R.string.text_newbook_coming,
+            R.string.text_hot_article
+    };
+
     private List<BannerEntity> mHomeBannerDatas;
     private List<BannerEntity> mHotPicsDatas;
+    private List<StandardEntity> mStandardDatas;
     private List<LocalDataBean> mStoreDatas;
+    private List<LocalDataBean> mTitleDatas;
 
     private HttpSubscriber homeBannerObserver = new HttpSubscriber(new OnResultCallBack<List<BannerEntity>>() {
 
@@ -63,6 +101,7 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         public void onSuccess(List<BannerEntity> bannerEntities) {
             mHotPicsDatas = bannerEntities;
             transformHomeData(mHotPicsDatas, HomeAdapter.TYPE_HOT_PICS, true);
+            loadTitle(TYPE_STANDARD, HomeAdapter.TYPE_COMMON_TITLE, true);
         }
 
         @Override
@@ -71,13 +110,69 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
             mHotPicsDatas = new ArrayList<>();
             transformHomeData(mHotPicsDatas, HomeAdapter.TYPE_HOT_PICS, true);
             Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
+            loadTitle(TYPE_STANDARD, HomeAdapter.TYPE_COMMON_TITLE, true);
         }
     });
+
+    private HttpSubscriber standardObserver = new HttpSubscriber(new OnResultCallBack<List<StandardEntity>>() {
+
+        @Override
+        public void onSuccess(List<StandardEntity> bannerEntities) {
+            mStandardDatas = bannerEntities;
+            transformHomeData(mStandardDatas, HomeAdapter.TYPE_STANDARD, true);
+            loadTitle(TYPE_NEW_BOOKS, HomeAdapter.TYPE_COMMON_TITLE, true);
+        }
+
+        @Override
+        public void onError(int code, String errorMsg) {
+            L.d(TAG, "hotPicsObserver code:" + code + ",errorMsg:" + errorMsg);
+            mStandardDatas = new ArrayList<>();
+            transformHomeData(mStandardDatas, HomeAdapter.TYPE_STANDARD, true);
+            Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
+            loadTitle(TYPE_NEW_BOOKS, HomeAdapter.TYPE_COMMON_TITLE, true);
+        }
+    });
+
+    /**
+     * 加载Item分类标题的方法
+     * @param titleType
+     * @param adapterType
+     * @param span
+     */
+    private void loadTitle(int titleType, int adapterType, boolean span) {
+        switch (titleType) {
+            case TYPE_STANDARD:
+                insertHomeData(mTitleDatas.get(TYPE_STANDARD), adapterType, span);
+                loadStandardData();
+                break;
+            case TYPE_NEW_BOOKS:
+                insertHomeData(mTitleDatas.get(TYPE_NEW_BOOKS), adapterType, span);
+                break;
+            case TYPE_HOT_ARTICLE:
+                insertHomeData(mTitleDatas.get(TYPE_HOT_ARTICLE), adapterType, span);
+                break;
+        }
+    }
+
+    private void loadStandardData() {
+        model.getNewestStdDataWithCache(standardObserver, token, false);
+    }
+
+    /**
+     * 转换单个HomeData的方法
+     * @param bean
+     * @param type
+     * @param span
+     */
+    private void insertHomeData(LocalDataBean bean, int type, boolean span) {
+        homeDatas.add(HomeDataMapper.transformLocalData(bean, type, span));
+    }
 
     @Inject
     public HomeFragmentPresenter(Context context) {
         this.mContext = context;
         setModel(HttpManager.getInstance());
+        token = AppHelper.getInstance().getCurrentToken();
     }
 
     @Override
@@ -90,6 +185,7 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         unbindView();
         homeBannerObserver.unSubscribe();
         hotPicsObserver.unSubscribe();
+        standardObserver.unSubscribe();
         // 清理内存数据
         HomeDataMapper.reset();
         mStoreDatas = null;
@@ -110,36 +206,21 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
 
     private void initLocalData() {
         mStoreDatas = new ArrayList<>();
+        for (int i=0;i<storeImgArr.length;i++) {
+            LocalDataBean bean = new LocalDataBean();
+            bean.setText(storeStrArr[i]);
+            bean.setResId(storeImgArr[i]);
+            mStoreDatas.add(bean);
+        }
 
-        LocalDataBean bean1 = new LocalDataBean();
-        bean1.setText(R.string.text_knowledge_store);
-        bean1.setResId(R.drawable.holder_circle_image);
-        mStoreDatas.add(bean1);
-
-        LocalDataBean bean2 = new LocalDataBean();
-        bean2.setText(R.string.text_resource_store);
-        bean2.setResId(R.drawable.holder_circle_image);
-        mStoreDatas.add(bean2);
-
-        LocalDataBean bean3 = new LocalDataBean();
-        bean3.setText(R.string.text_baike_store);
-        bean3.setResId(R.drawable.holder_circle_image);
-        mStoreDatas.add(bean3);
-
-        LocalDataBean bean4 = new LocalDataBean();
-        bean4.setText(R.string.text_standard_store);
-        bean4.setResId(R.drawable.holder_circle_image);
-        mStoreDatas.add(bean4);
-
-        LocalDataBean bean5 = new LocalDataBean();
-        bean5.setText(R.string.text_eBook_store);
-        bean5.setResId(R.drawable.holder_circle_image);
-        mStoreDatas.add(bean5);
-
-        LocalDataBean bean6 = new LocalDataBean();
-        bean6.setText(R.string.text_master_store);
-        bean6.setResId(R.drawable.holder_circle_image);
-        mStoreDatas.add(bean6);
+        // 初始化首页标题资源
+        mTitleDatas = new ArrayList<>();
+        for (int i=0;i<titleImgArr.length;i++) {
+            LocalDataBean bean = new LocalDataBean();
+            bean.setText(titleStrArr[i]);
+            bean.setResId(titleImgArr[i]);
+            mTitleDatas.add(bean);
+        }
 
         transformHomeData(mStoreDatas, HomeAdapter.TYPE_STORE, false);
 
@@ -164,6 +245,9 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
             case HomeAdapter.TYPE_HOT_PICS:
                 homeDatas.addAll(HomeDataMapper.transformBannerDatas(list, type, isSpan));
                 break;
+            case HomeAdapter.TYPE_STANDARD:
+                homeDatas.addAll(HomeDataMapper.transformStandardDatas(list, type, isSpan));
+                break;
         }
         // 数据加载完毕
         closeLoading();
@@ -185,6 +269,7 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
     private boolean checkData() {
         return (mHomeBannerDatas != null &&
                 mStoreDatas != null &&
-                mHotPicsDatas != null);
+                mHotPicsDatas != null &&
+                mTitleDatas !=null);
     }
 }

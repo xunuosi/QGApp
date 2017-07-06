@@ -45,4 +45,22 @@
         <item name="android:textSize">16sp</item>
         <item name="android:gravity">center</item>
     </style>
+
+    <style name="hf_title_text">
+        <item name="android:textColor">@color/color_hf_title_text</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="hf_standard_title_text">
+        <item name="android:textColor">@color/color_hf_stad_title_text</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+    <style name="hf_standard_text">
+        <item name="android:textColor">@color/color_hf_stad_text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">left</item>
+    </style>
 </resources>

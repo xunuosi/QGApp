@@ -10,6 +10,8 @@
     <color name="color_home_bg">#f1f1f1</color>
     <color name="color_toolbar_bg">#e2e4e5</color>
     <color name="color_hf_title_text">#666666</color>
+    <color name="color_hf_stad_title_text">#2b333b</color>
+    <color name="color_hf_stad_text">#666666</color>
     <!--BottomBar-->
     <color name="color_bottom_divider">#e2e4e5</color>
     <color name="color_bottom_text">#3a3a3a</color>

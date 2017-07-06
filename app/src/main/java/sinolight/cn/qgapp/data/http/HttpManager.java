@@ -25,6 +25,7 @@ import sinolight.cn.qgapp.data.http.api.ApiService;
 import sinolight.cn.qgapp.data.http.cache.CacheProvider;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.ResultEntity;
+import sinolight.cn.qgapp.data.http.entity.StandardEntity;
 import sinolight.cn.qgapp.data.http.entity.TokenEntity;
 import sinolight.cn.qgapp.data.http.entity.VCodeEntity;
 import sinolight.cn.qgapp.data.http.exception.ApiException;
@@ -109,6 +110,10 @@ public class HttpManager {
 
     public void getHotPicsWithCache(Observer<List<BannerEntity>> subscriber, String token, boolean update) {
         toSubscribe(cacheProvider.getHotPics(mApiService.getHotPics(token),new EvictProvider(update)), subscriber);
+    }
+
+    public void getNewestStdDataWithCache(Observer<List<StandardEntity>> subscriber, String token, boolean update) {
+        toSubscribe(cacheProvider.getNewestStdData(mApiService.getNewestStdData(token),new EvictProvider(update)), subscriber);
     }
 //    public void getDatasNoCache(Observer<TestBean> subscriber, int pno, int ps, String dtype) {
 //        toSubscribe(mApiService.getDatas(pno, ps,dtype), subscriber);

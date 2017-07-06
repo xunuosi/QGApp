@@ -9,6 +9,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.ResultEntity;
+import sinolight.cn.qgapp.data.http.entity.StandardEntity;
 import sinolight.cn.qgapp.data.http.entity.TokenEntity;
 import sinolight.cn.qgapp.data.http.entity.VCodeEntity;
 
@@ -76,6 +77,17 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("home/doHotPics")
     Observable<ResultEntity<List<BannerEntity>>> getHotPics(
+            @Field("token") String token
+    );
+
+    /**
+     * 首页-最新标准
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("home/doNewestStdData")
+    Observable<ResultEntity<List<StandardEntity>>> getNewestStdData(
             @Field("token") String token
     );
 }
