@@ -37,18 +37,8 @@ public class StoreHolder extends RecyclerView.ViewHolder {
     public StoreHolder(View layout) {
         super(layout);
         ButterKnife.bind(this, layout);
-        final ViewTreeObserver viewTreeObserver = ivStore.getViewTreeObserver();
-        viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                L.d(TAG, "width:" + width + ",height:" + height);
-                ivStore.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                width = ivStore.getHeight();
-                height = ivStore.getWidth();
-            }
-        });
-
-
+        this.width = (int) App.getContext().getResources().getDimension(R.dimen.hf_store_image_size);
+        this.height = (int) App.getContext().getResources().getDimension(R.dimen.hf_store_image_size);
     }
 
     public void setData(HomeData homeData) {

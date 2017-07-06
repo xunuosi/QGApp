@@ -5,14 +5,14 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:id="@+id/store_hf_head_root"
     android:layout_width="match_parent"
-    android:layout_height="133dp">
+    android:layout_height="@dimen/hf_store_root_height">
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_store"
-        android:layout_width="62dp"
-        android:layout_height="62dp"
+        android:layout_width="@dimen/hf_store_image_size"
+        android:layout_height="@dimen/hf_store_image_size"
         fresco:placeholderImage="@drawable/holder_circle_image"
-        fresco:actualImageScaleType="fitCenter"
+        fresco:actualImageScaleType="fitXY"
         android:layout_marginLeft="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="0dp"

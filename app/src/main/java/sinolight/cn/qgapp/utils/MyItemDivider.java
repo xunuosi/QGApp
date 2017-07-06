@@ -25,18 +25,23 @@ public class MyItemDivider extends Y_DividerItemDecoration {
     @Override
     public Y_Divider getDivider(int itemPosition) {
         Y_Divider divider = null;
-        switch (itemPosition % 2) {
+        switch (itemPosition) {
             case 0:
                 divider = new Y_DividerBuilder()
-                        .setBottomSideLine(true, ContextCompat.getColor(context, R.color.color_bottom_divider), 1, 0, 0)
+                        .setBottomSideLine(true, ContextCompat.getColor(context, R.color.color_bottom_divider), 0.5f, 0, 0)
                         .create();
                 break;
             case 1:
-                //第二个显示Left和bottom
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
                 divider = new Y_DividerBuilder()
-                        .setLeftSideLine(true, ContextCompat.getColor(context, R.color.color_bottom_divider), 1, 0, 0)
-                        .setBottomSideLine(true, ContextCompat.getColor(context, R.color.color_bottom_divider), 1, 0, 0)
-                        .setRightSideLine(true, ContextCompat.getColor(context, R.color.color_bottom_divider), 1, 0, 0)
+                        .setLeftSideLine(true, ContextCompat.getColor(context, R.color.color_bottom_divider), 0.5f, 0, 0)
+                        .setBottomSideLine(true, ContextCompat.getColor(context, R.color.color_bottom_divider), 0.5f, 0, 0)
+                        .setRightSideLine(true, ContextCompat.getColor(context, R.color.color_bottom_divider), 0.5f, 0, 0)
+                        .setTopSideLine(true, ContextCompat.getColor(context, R.color.color_bottom_divider), 0.5f, 0, 0)
                         .create();
                 break;
             default:

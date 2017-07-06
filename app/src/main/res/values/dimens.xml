@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Home Fragment-->
+    <dimen name="hf_store_image_size">62dp</dimen>
+    <dimen name="hf_store_root_height">133dp</dimen>
+</resources>
