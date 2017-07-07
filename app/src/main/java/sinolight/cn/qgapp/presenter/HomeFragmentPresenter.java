@@ -16,6 +16,7 @@ import sinolight.cn.qgapp.data.bean.LocalDataBean;
 import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
+import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
 import sinolight.cn.qgapp.data.http.entity.StandardEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
@@ -72,6 +73,7 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
     private List<BannerEntity> mHomeBannerDatas;
     private List<BannerEntity> mHotPicsDatas;
     private List<RecommendEntity> mRecoDatas;
+    private List<NewBookEntity> mNewBooks;
     private List<StandardEntity> mStandardDatas;
     private List<LocalDataBean> mStoreDatas;
     private List<LocalDataBean> mTitleDatas;
@@ -154,6 +156,25 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         }
     });
 
+    private HttpSubscriber newBooksObserver = new HttpSubscriber(new OnResultCallBack<List<NewBookEntity>>() {
+
+        @Override
+        public void onSuccess(List<NewBookEntity> bannerEntities) {
+            mNewBooks = bannerEntities;
+            transformHomeData(mNewBooks, HomeAdapter.TYPE_NEW_BOOKS, true);
+            loadTitle(TYPE_HOT_ARTICLE, HomeAdapter.TYPE_COMMON_TITLE, true);
+        }
+
+        @Override
+        public void onError(int code, String errorMsg) {
+            L.d(TAG, "hotPicsObserver code:" + code + ",errorMsg:" + errorMsg);
+            mNewBooks = new ArrayList<>();
+            transformHomeData(mNewBooks, HomeAdapter.TYPE_NEW_BOOKS, true);
+            Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
+            loadTitle(TYPE_HOT_ARTICLE, HomeAdapter.TYPE_COMMON_TITLE, true);
+        }
+    });
+
     /**
      * 加载Item分类标题的方法
      * @param titleType
@@ -168,11 +189,19 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
                 break;
             case TYPE_NEW_BOOKS:
                 insertHomeData(mTitleDatas.get(TYPE_NEW_BOOKS), adapterType, span);
+                loadNewBooksData();
                 break;
             case TYPE_HOT_ARTICLE:
                 insertHomeData(mTitleDatas.get(TYPE_HOT_ARTICLE), adapterType, span);
                 break;
         }
+    }
+
+    /**
+     * 获取新书数据
+     */
+    private void loadNewBooksData() {
+        model.getNewsBooksWithCache(newBooksObserver, token, false);
     }
 
     private void loadStandardData() {
@@ -215,6 +244,7 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         hotPicsObserver.unSubscribe();
         standardObserver.unSubscribe();
         recWordsObserver.unSubscribe();
+        newBooksObserver.unSubscribe();
         // 清理内存数据
         HomeDataMapper.reset();
         mStoreDatas = null;
@@ -266,19 +296,22 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
     private void transformHomeData(List list, int type, boolean isSpan) {
         switch (type) {
             case HomeAdapter.TYPE_BANNER:
-                homeDatas.addAll(HomeDataMapper.transformBannerDatas(list, type, isSpan));
+                homeDatas.addAll(HomeDataMapper.transformBannerEntitys(list, type, isSpan));
                 break;
             case HomeAdapter.TYPE_STORE:
                 homeDatas.addAll(HomeDataMapper.transformLocalDatas(list, type, isSpan));
                 break;
             case HomeAdapter.TYPE_HOT_PICS:
-                homeDatas.addAll(HomeDataMapper.transformBannerDatas(list, type, isSpan));
+                homeDatas.addAll(HomeDataMapper.transformBannerEntitys(list, type, isSpan));
                 break;
             case HomeAdapter.TYPE_STANDARD:
                 homeDatas.addAll(HomeDataMapper.transformStandardDatas(list, type, isSpan));
                 break;
             case HomeAdapter.TYPE_BANNER_WORDS:
-                homeDatas.addAll(HomeDataMapper.transformBannerDatas(list, type, isSpan));
+                homeDatas.addAll(HomeDataMapper.transformBannerEntitys(list, type, isSpan));
+                break;
+            case HomeAdapter.TYPE_NEW_BOOKS:
+                homeDatas.addAll(HomeDataMapper.transformNewBookEntitys(list, type, isSpan));
                 break;
         }
         // 数据加载完毕

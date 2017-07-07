@@ -24,6 +24,7 @@ import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.data.http.api.ApiService;
 import sinolight.cn.qgapp.data.http.cache.CacheProvider;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
+import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
 import sinolight.cn.qgapp.data.http.entity.ResultEntity;
 import sinolight.cn.qgapp.data.http.entity.StandardEntity;
@@ -119,6 +120,10 @@ public class HttpManager {
 
     public void getRecommendWordsWithCache(Observer<List<RecommendEntity>> subscriber, String token, boolean update) {
         toSubscribe(cacheProvider.getRecommendWords(mApiService.getRecommendWords(token),new EvictProvider(update)), subscriber);
+    }
+
+    public void getNewsBooksWithCache(Observer<List<NewBookEntity>> subscriber, String token, boolean update) {
+        toSubscribe(cacheProvider.getNewsBooks(mApiService.getNewsBooks(token),new EvictProvider(update)), subscriber);
     }
 //    public void getDatasNoCache(Observer<TestBean> subscriber, int pno, int ps, String dtype) {
 //        toSubscribe(mApiService.getDatas(pno, ps,dtype), subscriber);

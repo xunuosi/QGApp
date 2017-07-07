@@ -20,6 +20,11 @@
     <dimen name="hf_item_standard_img_width">97dp</dimen>
     <dimen name="hf_item_standard_img_height">134dp</dimen>
 
+    <dimen name="hf_item_nb_root_height">260dp</dimen>
+    <dimen name="hf_item_nb_mRight">29dp</dimen>
+    <dimen name="hf_item_nb_width">132dp</dimen>
+    <dimen name="hf_item_nb_iv_height">185dp</dimen>
+
     <!--Common-->
     <dimen name="refresh_header_height_google">100dp</dimen>
     <dimen name="refresh_trigger_offset_google">100dp</dimen>

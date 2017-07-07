@@ -10,6 +10,7 @@ import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.data.bean.HomeData;
 import sinolight.cn.qgapp.data.bean.LocalDataBean;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
+import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.StandardEntity;
 
 /**
@@ -49,7 +50,7 @@ public class HomeDataMapper {
         return homedataCollection;
     }
 
-    public static List<HomeData> transformBannerDatas(List<BannerEntity> beans,int adapterType, boolean isSpan) {
+    public static List<HomeData> transformBannerEntitys(List<BannerEntity> beans,int adapterType, boolean isSpan) {
         List<HomeData> homeDataCollection;
         if (beans != null && !beans.isEmpty()) {
             homeDataCollection = new ArrayList<>();
@@ -65,6 +66,29 @@ public class HomeDataMapper {
             bean.setLocal(true);
             bean.setSpan(isSpan);
             bean.setItemType(adapterType);
+            homeDataCollection.add(bean);
+        }
+        homeDataMap.put(adapterType, homeDataCollection);
+        return homeDataCollection;
+    }
+
+    public static List<HomeData> transformNewBookEntitys(List<NewBookEntity> beans, int adapterType, boolean isSpan) {
+        List<HomeData> homeDataCollection;
+        if (beans != null && !beans.isEmpty()) {
+            homeDataCollection = new ArrayList<>();
+            HomeData<NewBookEntity> bean = new HomeData<>();
+            bean.setLocal(false);
+            bean.setSpan(isSpan);
+            bean.setItemType(adapterType);
+            bean.setDatas(beans);
+            homeDataCollection.add(bean);
+        } else {
+            homeDataCollection = new ArrayList<>();
+            HomeData<NewBookEntity> bean = new HomeData<>();
+            bean.setLocal(true);
+            bean.setSpan(isSpan);
+            bean.setItemType(adapterType);
+            bean.setDatas(beans);
             homeDataCollection.add(bean);
         }
         homeDataMap.put(adapterType, homeDataCollection);

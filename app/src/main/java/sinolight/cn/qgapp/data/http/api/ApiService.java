@@ -8,6 +8,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
+import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
 import sinolight.cn.qgapp.data.http.entity.ResultEntity;
 import sinolight.cn.qgapp.data.http.entity.StandardEntity;
@@ -100,6 +101,17 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("home/doRecommendEntry")
     Observable<ResultEntity<List<RecommendEntity>>> getRecommendWords(
+            @Field("token") String token
+    );
+
+    /**
+     * 首页-新书来袭
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("home/doNewsBooks")
+    Observable<ResultEntity<List<NewBookEntity>>> getNewsBooks(
             @Field("token") String token
     );
 }

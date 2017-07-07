@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_hf_new_book_root"
+    android:layout_width="@dimen/hf_item_nb_width"
+    android:layout_height="@dimen/hf_item_nb_root_height"
+    android:layout_marginLeft="@dimen/hf_hot_imgs_root_mLeft_mRight"
+    android:layout_marginRight="@dimen/hf_item_nb_mRight">
+
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/iv_item_nb"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/hf_item_nb_iv_height"
+        android:layout_marginTop="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        fresco:placeholderImage="@drawable/ic_book_holder"
+        fresco:actualImageScaleType="fitXY"/>
+
+    <TextView
+        android:id="@+id/tv_item_nb"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/text_book_title_holder"
+        style="@style/hf_nb_text"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/iv_item_nb"
+        fresco:layout_constraintBottom_toBottomOf="parent"
+        fresco:layout_constraintLeft_toLeftOf="parent"
+        fresco:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintVertical_bias="0.333"/>
+</android.support.constraint.ConstraintLayout>

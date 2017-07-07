@@ -7,9 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.youth.banner.Banner;
 
 import java.util.List;
 
@@ -21,6 +18,7 @@ import sinolight.cn.qgapp.utils.HomeDataMapper;
 import sinolight.cn.qgapp.views.holder.CommonTitleHolder;
 import sinolight.cn.qgapp.views.holder.HomeBannerHolder;
 import sinolight.cn.qgapp.views.holder.HomeHotPicsHolder;
+import sinolight.cn.qgapp.views.holder.NewBooksHolder;
 import sinolight.cn.qgapp.views.holder.RecoWordsHolder;
 import sinolight.cn.qgapp.views.holder.StandardHolder;
 import sinolight.cn.qgapp.views.holder.StoreHolder;
@@ -43,6 +41,8 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int TYPE_COMMON_TITLE = 4;
     // 最新标准
     public static final int TYPE_STANDARD = 5;
+    // 新书布局
+    public static final int TYPE_NEW_BOOKS = 6;
 
     private Context mContext;
     private LayoutInflater mInflater;
@@ -80,6 +80,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case TYPE_BANNER_WORDS:
                 holder = new RecoWordsHolder(mInflater.inflate(R.layout.item_recommend_words, parent, false));
                 break;
+            case TYPE_NEW_BOOKS:
+                holder = new NewBooksHolder(mInflater.inflate(R.layout.item_nb_root, parent, false));
+                break;
         }
         return holder;
     }
@@ -104,6 +107,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 break;
             case TYPE_BANNER_WORDS:
                 ((RecoWordsHolder) holder).setData(homeDatas.get(position));
+                break;
+            case TYPE_NEW_BOOKS:
+                ((NewBooksHolder) holder).setData(homeDatas.get(position));
                 break;
         }
     }
@@ -138,5 +144,4 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private boolean isFullSpanType(int pos) {
         return homeDatas.get(pos).isSpan();
     }
-
 }
