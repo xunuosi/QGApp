@@ -56,9 +56,9 @@ public class HomeHotPicsHolder extends RecyclerView.ViewHolder {
         List<BannerEntity> datas = mHomeData.getDatas();
         if (datas == null || datas.isEmpty()) {
             imgList = new ArrayList();
-            imgList.add(R.drawable.home_banner);
-            imgList.add(R.drawable.home_banner);
-            imgList.add(R.drawable.home_banner);
+            imgList.add(R.drawable.hotpicture_bg);
+            imgList.add(R.drawable.hotpicture_bg);
+            imgList.add(R.drawable.hotpicture_bg);
         } else {
             imgList = new ArrayList();
             for (BannerEntity bean : datas) {

@@ -8,6 +8,11 @@
     <dimen name="hf_hot_imgs_root_mTop_mBottom">9dp</dimen>
     <dimen name="hf_hot_imgs_root_mLeft_mRight">20dp</dimen>
 
+    <dimen name="hf_item_banner_title_height">33dp</dimen>
+    <dimen name="hf_item_banner_title_width">96dp</dimen>
+    <dimen name="hf_item_banner_center_title_height">37dp</dimen>
+    <dimen name="hf_item_banner_center_title_width">187dp</dimen>
+
     <dimen name="hf_item_title_root_height">58dp</dimen>
     <dimen name="hf_item_title_img_size">20dp</dimen>
 
