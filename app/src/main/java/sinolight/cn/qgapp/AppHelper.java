@@ -68,7 +68,7 @@ public class AppHelper {
 
     public void setCurrentPW(String pwd) {
         this.pwd = pwd;
-        mModel.setCurrentToken(pwd);
+        mModel.setCurrentPW(pwd);
     }
 
 }

@@ -9,6 +9,7 @@ import java.util.Map;
 import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.data.bean.HomeData;
 import sinolight.cn.qgapp.data.bean.LocalDataBean;
+import sinolight.cn.qgapp.data.http.entity.ArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.StandardEntity;
@@ -45,6 +46,43 @@ public class HomeDataMapper {
             }
         } else {
             homedataCollection = Collections.emptyList();
+        }
+        homeDataMap.put(adapterType, homedataCollection);
+        return homedataCollection;
+    }
+
+    public static HomeData transformArticleBean(ArticleEntity bean, int adapterType, boolean isSpan) {
+        if (bean == null) {
+            throw new IllegalArgumentException("Cannot transform a null value");
+        }
+        final HomeData homeData = new HomeData();
+        homeData.setId(bean.getId());
+        homeData.setAuthor(bean.getAuthor());
+        homeData.setSource(bean.getSource());
+        homeData.setTitle(bean.getTitle());
+        homeData.setRemark(bean.getRemark());
+        homeData.setItemType(adapterType);
+        homeData.setSpan(isSpan);
+        homeData.setLocal(false);
+        return homeData;
+    }
+
+    public static List<HomeData> transformArticleDatas(List<ArticleEntity> localDataBeans
+            ,int adapterType, boolean isSpan) {
+        List<HomeData> homedataCollection;
+
+        if (localDataBeans != null && !localDataBeans.isEmpty()) {
+            homedataCollection = new ArrayList<>();
+            for (ArticleEntity bean : localDataBeans) {
+                homedataCollection.add(transformArticleBean(bean,adapterType,isSpan));
+            }
+        } else {
+            homedataCollection = new ArrayList<>();
+            HomeData bean = new HomeData();
+            bean.setLocal(true);
+            bean.setSpan(isSpan);
+            bean.setItemType(adapterType);
+            homedataCollection.add(bean);
         }
         homeDataMap.put(adapterType, homedataCollection);
         return homedataCollection;

@@ -12,6 +12,8 @@
     <color name="color_hf_title_text">#666666</color>
     <color name="color_hf_stad_title_text">#2b333b</color>
     <color name="color_hf_stad_text">#666666</color>
+    <color name="color_hf_article_content_text">#999999</color>
+    <color name="color_hf_article_info_text">#555555</color>
     <!--BottomBar-->
     <color name="color_bottom_divider">#e2e4e5</color>
     <color name="color_bottom_text">#3a3a3a</color>

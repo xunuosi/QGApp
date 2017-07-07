@@ -7,6 +7,7 @@ import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
+import sinolight.cn.qgapp.data.http.entity.ArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
@@ -112,6 +113,17 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("home/doNewsBooks")
     Observable<ResultEntity<List<NewBookEntity>>> getNewsBooks(
+            @Field("token") String token
+    );
+
+    /**
+     * 首页-热门文章
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("home/doNewsArticle")
+    Observable<ResultEntity<List<ArticleEntity>>> getNewsArticle(
             @Field("token") String token
     );
 }

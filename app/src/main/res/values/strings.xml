@@ -24,6 +24,8 @@
     <string name="text_new_standard">最新标准</string>
     <string name="text_newbook_coming">新书袭来</string>
     <string name="text_hot_article">热门文章</string>
+    <string name="text_author">作者：</string>
+    <string name="text_resource">来源：</string>
     <!--Register-->
     <string name="text_confirm_password">确认密码</string>
     <string name="text_code">验证码</string>
@@ -50,4 +52,11 @@
     <string name="text_hot_pics">热门图集</string>
     <string name="text_reco_words">推荐词条</string>
     <string name="text_banner_center_title_hodler">类胡萝卜素</string>
+    <string name="text_article_title_holder">生物发酵产业技术</string>
+    <string name="text_book_content_holder">发酵工程是指采用现代工程技术手段，利用微生物的某些特定功能，
+        为人类生产有用的产品，或直接把微生物应用于工业生产过程的一种技术。发酵工程的内容包括菌种选育、培养基的配置、灭菌、
+        种子扩大培养和接种、发酵过程和产品的分离提纯（生物分离工程）等方面。发酵产品具有应用例如食品，以及在一般的工业。
+        一些化学物质的商品，如乙酸，柠檬酸，和乙醇是由发酵制成。</string>
+    <string name="text_book_author_holder">轻工业</string>
+    <string name="text_book_resource_holder">轻工行业全媒体知识平台</string>
 </resources>

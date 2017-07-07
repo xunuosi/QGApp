@@ -35,4 +35,8 @@ public class AppModel {
     public String getCurrentPW() {
         return SharedPfUtil.getParam(mContext, AppContants.Account.PASS_WORD, "String");
     }
+
+    public void setCurrentPW(String pwd) {
+        SharedPfUtil.setParam(mContext, AppContants.Account.PASS_WORD, pwd);
+    }
 }

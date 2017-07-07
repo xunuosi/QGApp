@@ -28,6 +28,12 @@ public class HomeData<T> {
     private String stdno;
     // 实施时间
     private String imdate;
+    // 作者
+    private String author;
+    // 来源
+    private String source;
+    // 简介
+    private String remark;
     // 封装的具体数据
     private List<T> datas;
 
@@ -114,6 +120,30 @@ public class HomeData<T> {
         this.imdate = imdate;
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     @Override
     public String toString() {
         return "HomeData{" +
@@ -126,6 +156,9 @@ public class HomeData<T> {
                 ", isSpan=" + isSpan +
                 ", stdno='" + stdno + '\'' +
                 ", imdate='" + imdate + '\'' +
+                ", author='" + author + '\'' +
+                ", source='" + source + '\'' +
+                ", remark='" + remark + '\'' +
                 ", datas=" + datas +
                 '}';
     }

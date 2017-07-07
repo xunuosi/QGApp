@@ -23,6 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.data.http.api.ApiService;
 import sinolight.cn.qgapp.data.http.cache.CacheProvider;
+import sinolight.cn.qgapp.data.http.entity.ArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
@@ -124,6 +125,10 @@ public class HttpManager {
 
     public void getNewsBooksWithCache(Observer<List<NewBookEntity>> subscriber, String token, boolean update) {
         toSubscribe(cacheProvider.getNewsBooks(mApiService.getNewsBooks(token),new EvictProvider(update)), subscriber);
+    }
+
+    public void getNewsArticleWithCache(Observer<List<ArticleEntity>> subscriber, String token, boolean update) {
+        toSubscribe(cacheProvider.getNewsArticle(mApiService.getNewsArticle(token),new EvictProvider(update)), subscriber);
     }
 //    public void getDatasNoCache(Observer<TestBean> subscriber, int pno, int ps, String dtype) {
 //        toSubscribe(mApiService.getDatas(pno, ps,dtype), subscriber);
