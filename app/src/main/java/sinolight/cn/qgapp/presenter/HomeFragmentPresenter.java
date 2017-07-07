@@ -16,6 +16,7 @@ import sinolight.cn.qgapp.data.bean.LocalDataBean;
 import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
+import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
 import sinolight.cn.qgapp.data.http.entity.StandardEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.HomeDataMapper;
@@ -70,6 +71,7 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
 
     private List<BannerEntity> mHomeBannerDatas;
     private List<BannerEntity> mHotPicsDatas;
+    private List<RecommendEntity> mRecoDatas;
     private List<StandardEntity> mStandardDatas;
     private List<LocalDataBean> mStoreDatas;
     private List<LocalDataBean> mTitleDatas;
@@ -120,7 +122,7 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         public void onSuccess(List<StandardEntity> bannerEntities) {
             mStandardDatas = bannerEntities;
             transformHomeData(mStandardDatas, HomeAdapter.TYPE_STANDARD, true);
-            loadTitle(TYPE_NEW_BOOKS, HomeAdapter.TYPE_COMMON_TITLE, true);
+            loadRecoWordsData();
         }
 
         @Override
@@ -128,6 +130,25 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
             L.d(TAG, "hotPicsObserver code:" + code + ",errorMsg:" + errorMsg);
             mStandardDatas = new ArrayList<>();
             transformHomeData(mStandardDatas, HomeAdapter.TYPE_STANDARD, true);
+            Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
+            loadRecoWordsData();
+        }
+    });
+
+    private HttpSubscriber recWordsObserver = new HttpSubscriber(new OnResultCallBack<List<RecommendEntity>>() {
+
+        @Override
+        public void onSuccess(List<RecommendEntity> bannerEntities) {
+            mRecoDatas = bannerEntities;
+            transformHomeData(mRecoDatas, HomeAdapter.TYPE_BANNER_WORDS, true);
+            loadTitle(TYPE_NEW_BOOKS, HomeAdapter.TYPE_COMMON_TITLE, true);
+        }
+
+        @Override
+        public void onError(int code, String errorMsg) {
+            L.d(TAG, "hotPicsObserver code:" + code + ",errorMsg:" + errorMsg);
+            mRecoDatas = new ArrayList<>();
+            transformHomeData(mRecoDatas, HomeAdapter.TYPE_BANNER_WORDS, true);
             Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
             loadTitle(TYPE_NEW_BOOKS, HomeAdapter.TYPE_COMMON_TITLE, true);
         }
@@ -159,6 +180,13 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
     }
 
     /**
+     * 获取推荐词条
+     */
+    private void loadRecoWordsData() {
+        model.getRecommendWordsWithCache(recWordsObserver, token, false);
+    }
+
+    /**
      * 转换单个HomeData的方法
      * @param bean
      * @param type
@@ -186,6 +214,7 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         homeBannerObserver.unSubscribe();
         hotPicsObserver.unSubscribe();
         standardObserver.unSubscribe();
+        recWordsObserver.unSubscribe();
         // 清理内存数据
         HomeDataMapper.reset();
         mStoreDatas = null;
@@ -247,6 +276,9 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
                 break;
             case HomeAdapter.TYPE_STANDARD:
                 homeDatas.addAll(HomeDataMapper.transformStandardDatas(list, type, isSpan));
+                break;
+            case HomeAdapter.TYPE_BANNER_WORDS:
+                homeDatas.addAll(HomeDataMapper.transformBannerDatas(list, type, isSpan));
                 break;
         }
         // 数据加载完毕

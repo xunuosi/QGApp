@@ -6,7 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/hf_standard_root"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/hf_item_standard_root_height">
+    android:layout_height="@dimen/hf_item_standard_root_height"
+    android:background="@color/color_white">
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_item_standard"

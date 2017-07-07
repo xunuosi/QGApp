@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.youth.banner.Banner;
 
 import java.util.List;
 
@@ -21,6 +21,7 @@ import sinolight.cn.qgapp.utils.HomeDataMapper;
 import sinolight.cn.qgapp.views.holder.CommonTitleHolder;
 import sinolight.cn.qgapp.views.holder.HomeBannerHolder;
 import sinolight.cn.qgapp.views.holder.HomeHotPicsHolder;
+import sinolight.cn.qgapp.views.holder.RecoWordsHolder;
 import sinolight.cn.qgapp.views.holder.StandardHolder;
 import sinolight.cn.qgapp.views.holder.StoreHolder;
 
@@ -76,6 +77,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case TYPE_STANDARD:
                 holder = new StandardHolder(mInflater.inflate(R.layout.item_standard, parent, false));
                 break;
+            case TYPE_BANNER_WORDS:
+                holder = new RecoWordsHolder(mInflater.inflate(R.layout.item_recommend_words, parent, false));
+                break;
         }
         return holder;
     }
@@ -97,6 +101,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 break;
             case TYPE_STANDARD:
                 ((StandardHolder) holder).setData(homeDatas.get(position));
+                break;
+            case TYPE_BANNER_WORDS:
+                ((RecoWordsHolder) holder).setData(homeDatas.get(position));
                 break;
         }
     }
