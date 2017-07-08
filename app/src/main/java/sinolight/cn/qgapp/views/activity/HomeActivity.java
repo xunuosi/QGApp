@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -43,6 +44,8 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
     private static final String TAG = "HomeActivity";
     private NavigationController mNavigationController;
     private UserComponent userComponent;
+    // 标志位表示当前是否为HomeFragment
+    private boolean isHomeFragment = false;
     private HttpSubscriber loginObserver = new HttpSubscriber(new OnResultCallBack<TokenEntity>() {
 
         @Override
@@ -135,6 +138,7 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
                 .build();
 
         addFragment(R.id.home_activity_container, mHomeFragment);
+        isHomeFragment = true;
         mNavigationController.setSelect(0);
 
         mNavigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
@@ -146,12 +150,15 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
                         replaceFragment(R.id.home_activity_container, mHomeFragment);
                         break;
                     case 1:
+                        isHomeFragment = false;
                         replaceFragment(R.id.home_activity_container, mKnowledgeFragment);
                         break;
                     case 2:
+                        isHomeFragment = false;
                         replaceFragment(R.id.home_activity_container, mResourceFragment);
                         break;
                     case 3:
+                        isHomeFragment = false;
 //                        replaceFragment(R.id.home_activity_container, mUserFragment);
                         startActivity(LoginActivity.getCallIntent(mContext));
                         break;
@@ -195,6 +202,17 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
     @Override
     public void onDenied(List<String> deniedPermission) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!isHomeFragment) {
+            mNavigationController.setSelect(0);
+            replaceFragment(R.id.home_activity_container, mHomeFragment);
+            isHomeFragment = true;
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override

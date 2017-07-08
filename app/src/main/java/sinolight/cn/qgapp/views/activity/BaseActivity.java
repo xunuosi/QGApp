@@ -73,7 +73,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void replaceFragment(int containerViewId, Fragment fragment) {
         final FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(containerViewId, fragment);
-        fragmentTransaction.addToBackStack(null);
+//        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
