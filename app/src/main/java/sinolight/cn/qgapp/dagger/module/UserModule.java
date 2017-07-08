@@ -12,6 +12,7 @@ import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.dagger.PerActivity;
 import sinolight.cn.qgapp.data.bean.LocalDataBean;
 import sinolight.cn.qgapp.presenter.HomeFragmentPresenter;
+import sinolight.cn.qgapp.presenter.KnowledgePresenter;
 import sinolight.cn.qgapp.presenter.RegisterActivityPresenter;
 
 /**
@@ -31,15 +32,8 @@ public class UserModule {
 
     @Provides
     @PerActivity
-    List<LocalDataBean> provideStoreDatas() {
-        ArrayList<LocalDataBean> list = new ArrayList<>();
-        for (int i=0;i<6;i++) {
-            LocalDataBean bean = new LocalDataBean();
-            bean.setResId(R.drawable.holder_circle_image);
-            bean.setText(R.string.text_knowledge_store);
-            list.add(bean);
-        }
-        return list;
+    KnowledgePresenter provideKnowledgePresenter(Context context) {
+        return new KnowledgePresenter(context);
     }
 
 }

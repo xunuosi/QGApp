@@ -37,8 +37,6 @@ import sinolight.cn.qgapp.views.view.IHomeFragmentView;
 public class HomeFragment extends BaseFragment implements IHomeFragmentView, OnRefreshListener {
     private static final String TAG = "HomeFragment";
     @Inject
-    List<LocalDataBean> storeDatas;
-    @Inject
     Context mContext;
     @Inject
     HomeFragmentPresenter mPresenter;

@@ -6,21 +6,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import javax.inject.Inject;
+
 import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.dagger.HasComponent;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
+import sinolight.cn.qgapp.presenter.KnowledgePresenter;
+import sinolight.cn.qgapp.views.view.IKnowledgeFragmentView;
 
 /**
  * Created by xns on 2017/6/29.
+ * 知识库Fragment
  */
 
-public class KnowledgeFragment extends BaseFragment {
+public class KnowledgeFragment extends BaseFragment implements IKnowledgeFragmentView {
+    @Inject
+    KnowledgePresenter mPresenter;
 
     public static KnowledgeFragment newInstance() {
         return new KnowledgeFragment();
     }
 
     public KnowledgeFragment() {
-        setRetainInstance(true);
+
     }
 
     @Override
@@ -36,7 +44,25 @@ public class KnowledgeFragment extends BaseFragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        this.getComponent().inject(this);
+        mPresenter.bindView(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.clear();
+    }
+
+    @Override
     protected UserComponent getComponent() {
-        return null;
+        return ((HasComponent<UserComponent>) getActivity()).getComponent();
+    }
+
+    @Override
+    public void showLoading(boolean enable) {
+
     }
 }
