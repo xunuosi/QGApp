@@ -1,5 +1,6 @@
 package sinolight.cn.qgapp.views.holder;
 
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,9 +13,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import sinolight.cn.qgapp.App;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.DataBaseBean;
 import sinolight.cn.qgapp.utils.ImageUtil;
+import sinolight.cn.qgapp.views.activity.DBaseDetailActivity;
 
 /**
  * Created by xns on 2017/7/6.
@@ -33,6 +36,8 @@ public class DatabaseHolder extends RecyclerView.ViewHolder {
     private DataBaseBean baseBean;
     private int width;
     private int height;
+    private String dbId;
+    private String dbName;
 
     public DatabaseHolder(View layout) {
         super(layout);
@@ -55,10 +60,16 @@ public class DatabaseHolder extends RecyclerView.ViewHolder {
         );
         mTvItemKfTitle.setText(baseBean.getName());
         mTvItemKfInfo.setText(baseBean.getAbs());
+
+        dbId = baseBean.getId();
+        dbName = baseBean.getName();
     }
 
     @OnClick(R.id.item_kf_root)
     public void onViewClicked() {
-        Toast.makeText(App.getContext(), baseBean.getName() + "onClick", Toast.LENGTH_SHORT).show();
+        Intent callIntent = DBaseDetailActivity.getCallIntent(App.getContext());
+        callIntent.putExtra(AppContants.DataBase.KEY_ID, dbId);
+        callIntent.putExtra(AppContants.DataBase.KEY_NAME, dbName);
+        App.getContext().startActivity(callIntent);
     }
 }

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 
 import javax.inject.Inject;
 
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.utils.L;
 
@@ -17,6 +18,9 @@ import sinolight.cn.qgapp.utils.L;
 
 public class DBaseDetailActivity extends BaseActivity {
     private static final String TAG = "DBaseDetailActivity";
+
+    private String dbId;
+    private String dbName;
     @Inject
     Context mContext;
 
@@ -28,6 +32,11 @@ public class DBaseDetailActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         L.d(TAG, "context:" + mContext);
+        Intent intent = getIntent();
+        if (intent != null) {
+            dbId = intent.getStringExtra(AppContants.DataBase.KEY_ID);
+            dbName = intent.getStringExtra(AppContants.DataBase.KEY_NAME);
+        }
     }
 
     @Override

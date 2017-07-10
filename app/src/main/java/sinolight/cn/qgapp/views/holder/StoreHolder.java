@@ -2,9 +2,7 @@ package sinolight.cn.qgapp.views.holder;
 
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -15,7 +13,6 @@ import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.HomeData;
 import sinolight.cn.qgapp.utils.ImageUtil;
-import sinolight.cn.qgapp.utils.L;
 
 /**
  * Created by admin on 2017/7/5.3

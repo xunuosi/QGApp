@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -24,7 +23,6 @@ import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.adapter.HomeAdapter;
 import sinolight.cn.qgapp.dagger.HasComponent;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
-import sinolight.cn.qgapp.data.bean.LocalDataBean;
 import sinolight.cn.qgapp.presenter.HomeFragmentPresenter;
 import sinolight.cn.qgapp.utils.MyItemDivider;
 import sinolight.cn.qgapp.views.view.IHomeFragmentView;

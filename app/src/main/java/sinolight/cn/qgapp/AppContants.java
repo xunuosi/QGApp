@@ -18,4 +18,9 @@ public interface AppContants {
         String TOKEN = "account_token";
         String IS_LOGINED = "account_isLogined";
     }
+
+    interface DataBase {
+        String KEY_ID = "key_database_id";
+        String KEY_NAME = "key_database_name";
+    }
 }
