@@ -7,9 +7,11 @@ import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
+import sinolight.cn.qgapp.data.bean.DataBaseBean;
 import sinolight.cn.qgapp.data.http.entity.ArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
+import sinolight.cn.qgapp.data.http.entity.PageEntity;
 import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
 import sinolight.cn.qgapp.data.http.entity.ResultEntity;
 import sinolight.cn.qgapp.data.http.entity.StandardEntity;
@@ -125,5 +127,20 @@ public interface ApiService {
     @POST("home/doNewsArticle")
     Observable<ResultEntity<List<ArticleEntity>>> getNewsArticle(
             @Field("token") String token
+    );
+
+    /**
+     * 知识库-九大行业知识库列表
+     * @param token
+     * @param page
+     * @param size
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("db/doIndustryDB")
+    Observable<ResultEntity<PageEntity<List<DataBaseBean>>>> getDataBase(
+            @Field("token") String token,
+            @Field("page") int page,
+            @Field("size") int size
     );
 }

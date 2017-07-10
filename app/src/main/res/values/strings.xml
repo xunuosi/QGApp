@@ -26,6 +26,16 @@
     <string name="text_hot_article">热门文章</string>
     <string name="text_author">作者：</string>
     <string name="text_resource">来源：</string>
+    <!--行业知识库-->
+    <string name="text_database_food">食品数据库</string>
+    <string name="text_database_paper">造纸数据库</string>
+    <string name="text_database_leather">皮革数据库</string>
+    <string name="text_database_furniture">家具数据库</string>
+    <string name="text_database_pack">包装数据库</string>
+    <string name="text_database_art">工艺美术/艺术设计数据库</string>
+    <string name="text_database_clothing">服装数据库</string>
+    <string name="text_database_electromechanical">机电数据库</string>
+    <string name="text_database_weighing">衡器数据库</string>
     <!--Register-->
     <string name="text_confirm_password">确认密码</string>
     <string name="text_code">验证码</string>
@@ -59,4 +69,7 @@
         一些化学物质的商品，如乙酸，柠檬酸，和乙醇是由发酵制成。</string>
     <string name="text_book_author_holder">轻工业</string>
     <string name="text_book_resource_holder">轻工行业全媒体知识平台</string>
+    <string name="toolbar_knowledge_title">行业知识库</string>
+    <!--Attention-->
+    <string name="attention_data_refresh_error">数据刷新错误，请检查网络或下拉重新刷新数据!</string>
 </resources>
