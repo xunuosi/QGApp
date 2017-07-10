@@ -1,6 +1,8 @@
 package sinolight.cn.qgapp.views.view;
 
 
+import sinolight.cn.qgapp.adapter.KnowledgeAdapter;
+
 /**
  * Created by xns on 2017/7/5.
  * KnowledgeFragment View层接口
@@ -8,7 +10,7 @@ package sinolight.cn.qgapp.views.view;
 
 public interface IKnowledgeFragmentView {
 
-//    void showView(HomeAdapter adapter);
-
     void showLoading(boolean enable);
+
+    void showView(KnowledgeAdapter knowledgeAdapter);
 }

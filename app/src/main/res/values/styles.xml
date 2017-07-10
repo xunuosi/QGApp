@@ -99,4 +99,7 @@
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">left</item>
     </style>
+    <!--KnowledgeFragment-->
+    <style name="kf_text_title" parent="hf_article_text_title"/>
+    <style name="kf_text_info" parent="hf_article_text_content"/>
 </resources>

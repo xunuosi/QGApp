@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_kf_root"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/kf_item_root_height"
+    android:background="@color/color_white">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/iv_item_kf"
+        android:layout_width="@dimen/kf_item_img_width"
+        android:layout_height="@dimen/kf_item_img_height"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        fresco:placeholderImage="@drawable/database_icon_food"
+        fresco:actualImageScaleType="fitCenter"/>
+
+    <TextView
+        android:id="@+id/tv_item_kf_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/text_database_food"
+        style="@style/kf_text_title"
+        app:layout_constraintLeft_toRightOf="@+id/iv_item_kf"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_item_kf_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:lines="3"
+        android:ellipsize="end"
+        android:text="@string/text_book_content_holder"
+        style="@style/kf_text_info"
+        app:layout_constraintLeft_toRightOf="@+id/iv_item_kf"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_kf_title"
+        android:layout_marginRight="16dp"
+        app:layout_constraintRight_toRightOf="parent"/>
+</android.support.constraint.ConstraintLayout>

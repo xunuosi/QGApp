@@ -1,18 +1,13 @@
 package sinolight.cn.qgapp.adapter;
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.HomeData;
 import sinolight.cn.qgapp.utils.HomeDataMapper;

@@ -28,6 +28,10 @@
     <dimen name="hf_item_article_root_height">175dp</dimen>
     <dimen name="hf_item_article_indicator_width">8dp</dimen>
     <dimen name="hf_item_article_indicator_height">9dp</dimen>
+    <!--KnowledgeFragment-->
+    <dimen name="kf_item_root_height">146dp</dimen>
+    <dimen name="kf_item_img_width">120dp</dimen>
+    <dimen name="kf_item_img_height">106dp</dimen>
     <!--Common-->
     <dimen name="refresh_header_height_google">100dp</dimen>
     <dimen name="refresh_trigger_offset_google">100dp</dimen>
