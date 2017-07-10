@@ -8,7 +8,7 @@
         android:id="@+id/im_back_arrow"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:src="@drawable/nav_search_white"
+        android:src="@drawable/nav_search_gray"
         android:layout_centerVertical="true"
         android:layout_marginLeft="33dp"
         />
