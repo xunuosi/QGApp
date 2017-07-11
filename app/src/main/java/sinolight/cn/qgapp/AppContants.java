@@ -10,7 +10,6 @@ public interface AppContants {
 //    String BASE_URL = "http://192.168.25.139:9005/api/";
     int SUCCESS_CODE = -1;
     int FAILED_CODE = 0;
-    //    String baseUrl = "test";
 
     interface Account {
         String USER_NAME = "account_name";
@@ -24,10 +23,21 @@ public interface AppContants {
         String KEY_NAME = "key_database_name";
         String KEY_TYPE = "key_database_type";
 
+        /**
+         * 九大行业库的Enum
+         */
         enum Type implements DataBase {
             DB_FOOD, DB_ART, DB_PAPER,
             DB_LEATHER, DB_FURNITURE, DB_PACK,
             DB_CLOTHING, DB_ELECTROMECHANICAL, DB_WEIGHING
+        }
+
+        /**
+         * 六种资源类型的Enum
+         */
+        enum Res implements DataBase {
+            RES_BOOK, RES_STANDARD, RES_ARTICLE,
+            RES_IMG, RES_DIC, RES_INDUSTRY
         }
     }
 }

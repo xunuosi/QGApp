@@ -19,7 +19,6 @@ import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.dagger.component.DaggerActivityComponent;
 import sinolight.cn.qgapp.utils.ImageUtil;
-import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.utils.ScreenUtil;
 
 /**
@@ -138,6 +137,7 @@ public class DBaseDetailActivity extends BaseActivity {
             case R.id.iv_db_detail_search:
                 break;
             case R.id.tv_db_detail_book:
+                gotoResActivity(AppContants.DataBase.Res.RES_BOOK);
                 break;
             case R.id.tv_db_detail_article:
                 break;
@@ -150,5 +150,9 @@ public class DBaseDetailActivity extends BaseActivity {
             case R.id.tv_db_detail_analysis:
                 break;
         }
+    }
+
+    private void gotoResActivity(AppContants.DataBase.Res resType) {
+        startActivity(DBResourceActivity.getCallIntent(mContext));
     }
 }
