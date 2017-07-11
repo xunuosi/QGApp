@@ -5,6 +5,7 @@ import android.app.Activity;
 import dagger.Component;
 import sinolight.cn.qgapp.dagger.PerActivity;
 import sinolight.cn.qgapp.dagger.module.ActivityModule;
+import sinolight.cn.qgapp.views.activity.DBaseDetailActivity;
 
 /**
  * Created by xns on 2017/6/1.
@@ -15,4 +16,6 @@ import sinolight.cn.qgapp.dagger.module.ActivityModule;
 public interface ActivityComponent {
 
     Activity activity();
+
+    void inject(DBaseDetailActivity dBaseDetailActivity);
 }

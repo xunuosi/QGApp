@@ -34,7 +34,8 @@
     <dimen name="kf_item_img_height">106dp</dimen>
 
     <!--DBDetailActivity-->
-    <dimen name="db_detail_img_height">180dp</dimen>
+    <dimen name="db_detail_img_height">150dp</dimen>
+    <dimen name="db_detail_tv_height">78dp</dimen>
     <!--Common-->
     <dimen name="refresh_header_height_google">100dp</dimen>
     <dimen name="refresh_trigger_offset_google">100dp</dimen>

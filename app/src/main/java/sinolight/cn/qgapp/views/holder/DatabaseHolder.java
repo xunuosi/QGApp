@@ -5,7 +5,6 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -38,6 +37,7 @@ public class DatabaseHolder extends RecyclerView.ViewHolder {
     private int height;
     private String dbId;
     private String dbName;
+    private AppContants.DataBase.Type dbType;
 
     public DatabaseHolder(View layout) {
         super(layout);
@@ -63,6 +63,41 @@ public class DatabaseHolder extends RecyclerView.ViewHolder {
 
         dbId = baseBean.getId();
         dbName = baseBean.getName();
+        dbType = getDbType(dbName);
+    }
+
+    private AppContants.DataBase.Type getDbType(String dbName) {
+        AppContants.DataBase.Type type = null;
+        if (dbName.contains("食品")) {
+            type = AppContants.DataBase.Type.DB_FOOD;
+            return type;
+        } else if (dbName.contains("工艺美术")) {
+            type = AppContants.DataBase.Type.DB_ART;
+            return type;
+        } else if (dbName.contains("造纸")) {
+            type = AppContants.DataBase.Type.DB_PAPER;
+            return type;
+        } else if (dbName.contains("皮革")) {
+            type = AppContants.DataBase.Type.DB_LEATHER;
+            return type;
+        } else if (dbName.contains("家具")) {
+            type = AppContants.DataBase.Type.DB_FURNITURE;
+            return type;
+        } else if (dbName.contains("包装")) {
+            type = AppContants.DataBase.Type.DB_FURNITURE;
+            return type;
+        } else if (dbName.contains("服装")) {
+            type = AppContants.DataBase.Type.DB_CLOTHING;
+            return type;
+        } else if (dbName.contains("机电")) {
+            type = AppContants.DataBase.Type.DB_ELECTROMECHANICAL;
+            return type;
+        } else if (dbName.contains("衡器")) {
+            type = AppContants.DataBase.Type.DB_WEIGHING;
+            return type;
+        }
+
+        return null;
     }
 
     @OnClick(R.id.item_kf_root)
@@ -70,6 +105,8 @@ public class DatabaseHolder extends RecyclerView.ViewHolder {
         Intent callIntent = DBaseDetailActivity.getCallIntent(App.getContext());
         callIntent.putExtra(AppContants.DataBase.KEY_ID, dbId);
         callIntent.putExtra(AppContants.DataBase.KEY_NAME, dbName);
+        callIntent.putExtra(AppContants.DataBase.KEY_TYPE, dbType);
+        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         App.getContext().startActivity(callIntent);
     }
 }

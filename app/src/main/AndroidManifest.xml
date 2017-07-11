@@ -26,6 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".views.activity.DBaseDetailActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".views.activity.LoginActivity"
                   android:screenOrientation="portrait"
                   android:launchMode="singleTask"

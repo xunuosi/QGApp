@@ -22,5 +22,12 @@ public interface AppContants {
     interface DataBase {
         String KEY_ID = "key_database_id";
         String KEY_NAME = "key_database_name";
+        String KEY_TYPE = "key_database_type";
+
+        enum Type implements DataBase {
+            DB_FOOD, DB_ART, DB_PAPER,
+            DB_LEATHER, DB_FURNITURE, DB_PACK,
+            DB_CLOTHING, DB_ELECTROMECHANICAL, DB_WEIGHING
+        }
     }
 }

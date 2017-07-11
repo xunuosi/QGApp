@@ -102,4 +102,6 @@
     <!--KnowledgeFragment-->
     <style name="kf_text_title" parent="hf_article_text_title"/>
     <style name="kf_text_info" parent="hf_article_text_content"/>
+    <!--DBDetail Activity-->
+    <style name="db_detail_text" parent="hf_standard_text"/>
 </resources>
