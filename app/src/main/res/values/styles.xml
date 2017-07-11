@@ -104,4 +104,9 @@
     <style name="kf_text_info" parent="hf_article_text_content"/>
     <!--DBDetail Activity-->
     <style name="db_detail_text" parent="hf_standard_text"/>
+    <!--PopMenu-->
+    <style name="TRM_ANIM_STYLE">
+        <item name="android:windowEnterAnimation">@anim/trm_popup_enter</item>
+        <item name="android:windowExitAnimation">@anim/trm_popup_exit</item>
+    </style>
 </resources>
