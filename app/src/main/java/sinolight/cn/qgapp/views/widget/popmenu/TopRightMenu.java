@@ -3,16 +3,16 @@ package sinolight.cn.qgapp.views.widget.popmenu;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 
-import java.util.ArrayList;
-import java.util.List;
 
+import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.R;
 
 /**
@@ -21,11 +21,8 @@ import sinolight.cn.qgapp.R;
 public class TopRightMenu {
     private Activity mContext;
     private PopupWindow mPopupWindow;
-    private RecyclerView mRecyclerView;
-    private View content;
-
-    private TRMenuAdapter mAdapter;
-    private List<MenuItem> menuItemList;
+    private View contentView;
+    private View container;
 
     private static final int DEFAULT_HEIGHT = 480;
     private int popHeight = DEFAULT_HEIGHT;
@@ -39,24 +36,21 @@ public class TopRightMenu {
 
     private float alpha = 0.75f;
 
-    public TopRightMenu(Activity context) {
+    public TopRightMenu(Activity context,View contentView) {
         this.mContext = context;
+        this.contentView = contentView;
         init();
     }
 
     private void init() {
-        content = LayoutInflater.from(mContext).inflate(R.layout.trm_popup_menu, null);
-        mRecyclerView = (RecyclerView) content.findViewById(R.id.trm_recyclerview);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
-        mRecyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
-
-        menuItemList = new ArrayList<>();
-        mAdapter = new TRMenuAdapter(mContext, this, menuItemList, showIcon);
+        container = LayoutInflater.from(App.getContext()).inflate(R.layout.trm_popup_menu, null, false);
+        FrameLayout layout = container.findViewById(R.id.pop_menu_container);
+        layout.addView(contentView);
     }
 
     private PopupWindow getPopupWindow(){
-        mPopupWindow = new PopupWindow(mContext);
-        mPopupWindow.setContentView(content);
+        mPopupWindow = new PopupWindow(App.getContext());
+        mPopupWindow.setContentView(container);
         mPopupWindow.setHeight(popHeight);
         mPopupWindow.setWidth(popWidth);
         if (needAnimationStyle){
@@ -75,9 +69,6 @@ public class TopRightMenu {
             }
         });
 
-        mAdapter.setData(menuItemList);
-        mAdapter.setShowIcon(showIcon);
-        mRecyclerView.setAdapter(mAdapter);
         return mPopupWindow;
     }
 
@@ -111,26 +102,6 @@ public class TopRightMenu {
     }
 
     /**
-     * 添加单个菜单
-     * @param item
-     * @return
-     */
-    public TopRightMenu addMenuItem(MenuItem item){
-        menuItemList.add(item);
-        return this;
-    }
-
-    /**
-     * 添加多个菜单
-     * @param list
-     * @return
-     */
-    public TopRightMenu addMenuList(List<MenuItem> list){
-        menuItemList.addAll(list);
-        return this;
-    }
-
-    /**
      * 是否让背景变暗
      * @param b
      * @return
@@ -157,11 +128,6 @@ public class TopRightMenu {
      */
     public TopRightMenu setAnimationStyle(int style){
         this.animationStyle = style;
-        return this;
-    }
-
-    public TopRightMenu setOnMenuItemClickListener(OnMenuItemClickListener listener){
-        mAdapter.setOnMenuItemClickListener(listener);
         return this;
     }
 
@@ -203,7 +169,4 @@ public class TopRightMenu {
         }
     }
 
-    public interface OnMenuItemClickListener{
-        void onMenuItemClick(int position);
-    }
 }
