@@ -52,6 +52,8 @@ public class DBResourceActivity extends BaseActivity implements IDBResActivityVi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         this.initializeInjector();
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        mPresenter.show(intent);
     }
 
     @Override
@@ -118,7 +120,7 @@ public class DBResourceActivity extends BaseActivity implements IDBResActivityVi
 
         mTopRightMenu = new TopRightMenu(DBResourceActivity.this, menu);
         mTopRightMenu
-                .setHeight(480)     //默认高度480
+                .setHeight(850)     //默认高度480
                 .setWidth(600)      //默认宽度wrap_content
                 .showIcon(true)     //显示菜单图标，默认为true
                 .dimBackground(true)           //背景变暗，默认为true
@@ -137,4 +139,8 @@ public class DBResourceActivity extends BaseActivity implements IDBResActivityVi
     }
 
 
+    @Override
+    public void initShow(String title) {
+        tvTitle.setText(title);
+    }
 }

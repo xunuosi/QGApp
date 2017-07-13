@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.PopupWindow;
@@ -14,8 +13,6 @@ import android.widget.PopupWindow;
 
 import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.R;
-import sinolight.cn.qgapp.utils.L;
-import sinolight.cn.qgapp.utils.ScreenUtil;
 
 /**
  * Author：Bro0cL on 2016/12/26.
@@ -49,32 +46,7 @@ public class TopRightMenu {
     private void init() {
         container = LayoutInflater.from(App.getContext()).inflate(R.layout.trm_popup_menu, null, false);
         FrameLayout layout = container.findViewById(R.id.pop_menu_container);
-        ViewTreeObserver viewTreeObserver = contentView.getViewTreeObserver();
-        viewTreeObserver.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                L.d(TAG, "width:" + contentView.getWidth() +",height:" + contentView.getHeight());
-                return true;
-            }
-        });
-
-//                checkSize(contentView.getWidth(), contentView.getHeight());
         layout.addView(contentView);
-    }
-
-    /**
-     * 检测popWindow Size是否合理的方法
-     * @param width
-     * @param height
-     */
-    private void checkSize(int width, int height) {
-        if (width <= 0) {
-            setWidth(DEFAULT_WIDTH);
-        } else if (width >= ScreenUtil.getScreenWidth(mContext)) {
-            setWidth(ScreenUtil.getScreenWidth(mContext));
-        } else {
-            setWidth(width);
-        }
     }
 
     private PopupWindow getPopupWindow(){

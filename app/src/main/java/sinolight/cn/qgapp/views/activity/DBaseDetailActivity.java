@@ -140,19 +140,27 @@ public class DBaseDetailActivity extends BaseActivity {
                 gotoResActivity(AppContants.DataBase.Res.RES_BOOK);
                 break;
             case R.id.tv_db_detail_article:
+                gotoResActivity(AppContants.DataBase.Res.RES_ARTICLE);
                 break;
             case R.id.tv_db_detail_dictionary:
+                gotoResActivity(AppContants.DataBase.Res.RES_DIC);
                 break;
             case R.id.tv_db_detail_standard:
+                gotoResActivity(AppContants.DataBase.Res.RES_STANDARD);
                 break;
             case R.id.tv_db_detail_img:
+                gotoResActivity(AppContants.DataBase.Res.RES_IMG);
                 break;
             case R.id.tv_db_detail_analysis:
+                gotoResActivity(AppContants.DataBase.Res.RES_INDUSTRY);
                 break;
         }
     }
 
     private void gotoResActivity(AppContants.DataBase.Res resType) {
-        startActivity(DBResourceActivity.getCallIntent(mContext));
+        Intent intent = DBResourceActivity.getCallIntent(mContext);
+        intent.putExtra(AppContants.DataBase.KEY_RES_TYPE, resType);
+        intent.putExtra(AppContants.DataBase.KEY_TYPE, dbType.getType());
+        startActivity(intent);
     }
 }

@@ -48,7 +48,8 @@ public class ArrowExpandHolder extends TreeNode.BaseNodeViewHolder<ArrowExpandHo
 
     @Override
     public void toggle(boolean active) {
-        arrowView.setImageResource(active ? R.drawable.arrow_white_down : R.drawable.arrow_white_right);
+        arrowView.setImageResource(
+                active ? R.drawable.ic_keyboard_arrow_down_black_24dp : R.drawable.ic_keyboard_arrow_right_black_24dp);
     }
 
     public static class IconTreeItem {
