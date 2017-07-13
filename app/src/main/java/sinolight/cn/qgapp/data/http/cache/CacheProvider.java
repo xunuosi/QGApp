@@ -12,6 +12,7 @@ import io.rx_cache2.LifeCache;
 import sinolight.cn.qgapp.data.bean.DataBaseBean;
 import sinolight.cn.qgapp.data.http.entity.ArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
+import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
 import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
@@ -53,5 +54,10 @@ public interface CacheProvider {
     @LifeCache(duration = 5, timeUnit = TimeUnit.MINUTES)
     Observable<ResultEntity<PageEntity<List<DataBaseBean>>>> getDataBase(
             Observable<ResultEntity<PageEntity<List<DataBaseBean>>>> oRepos,
+            EvictProvider evictDynamicKey);
+
+    @LifeCache(duration = 5, timeUnit = TimeUnit.MINUTES)
+    Observable<ResultEntity<List<DBResTypeEntity>>> getDBResType(
+            Observable<ResultEntity<List<DBResTypeEntity>>> oRepos,
             EvictProvider evictDynamicKey);
 }

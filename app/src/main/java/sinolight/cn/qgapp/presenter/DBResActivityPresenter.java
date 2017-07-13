@@ -3,9 +3,16 @@ package sinolight.cn.qgapp.presenter;
 import android.content.Context;
 import android.content.Intent;
 
+import java.util.List;
+
 import sinolight.cn.qgapp.AppContants;
+import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.http.HttpManager;
+import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
+import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
+import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
+import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.views.view.IDBResActivityView;
 
 /**
@@ -18,6 +25,19 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView,Htt
     private Context mContext;
     private String dbType;
     private AppContants.DataBase.Res resType;
+
+    private HttpSubscriber<List<DBResTypeEntity>> mDBResTypeObserver = new HttpSubscriber<>(new OnResultCallBack<List<DBResTypeEntity>>() {
+
+        @Override
+        public void onSuccess(List<DBResTypeEntity> dbResTypeEntities) {
+            L.d(TAG, "datas:" + dbResTypeEntities.toString());
+        }
+
+        @Override
+        public void onError(int code, String errorMsg) {
+            L.d(TAG, "hotPicsObserver code:" + code + ",errorMsg:" + errorMsg);
+        }
+    });
 
     public DBResActivityPresenter(IDBResActivityView view, Context context) {
         this.mContext = context;
@@ -32,6 +52,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView,Htt
 
     @Override
     public void clear() {
+        mDBResTypeObserver.unSubscribe();
         unbindView();
     }
 
@@ -64,5 +85,11 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView,Htt
                 view().initShow(mContext.getString(R.string.text_analysis));
                 break;
         }
+        // 请求分类数据
+        model.getDBResTypeWithCache(
+                mDBResTypeObserver,
+                AppHelper.getInstance().getCurrentToken(),
+                dbType,
+                false);
     }
 }

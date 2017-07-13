@@ -10,6 +10,7 @@ import retrofit2.http.POST;
 import sinolight.cn.qgapp.data.bean.DataBaseBean;
 import sinolight.cn.qgapp.data.http.entity.ArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
+import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
 import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
@@ -142,5 +143,18 @@ public interface ApiService {
             @Field("token") String token,
             @Field("page") int page,
             @Field("size") int size
+    );
+
+    /**
+     * 某一知识库-六大资源列表分类树
+     * @param token
+     * @param type
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("theme/doThemeInfo")
+    Observable<ResultEntity<List<DBResTypeEntity>>> getDBResType(
+            @Field("token") String token,
+            @Field("type") String type
     );
 }

@@ -26,6 +26,7 @@ import sinolight.cn.qgapp.data.http.api.ApiService;
 import sinolight.cn.qgapp.data.http.cache.CacheProvider;
 import sinolight.cn.qgapp.data.http.entity.ArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
+import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
 import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
@@ -136,6 +137,12 @@ public class HttpManager {
     public void getDataBaseWithCache(Observer<PageEntity<List<DataBaseBean>>> subscriber, String token, int page, int size, boolean update) {
         toSubscribe(cacheProvider.getDataBase(
                 mApiService.getDataBase(token,page,size),
+                new EvictProvider(update)), subscriber);
+    }
+
+    public void getDBResTypeWithCache(Observer<List<DBResTypeEntity>> subscriber, String token, String type, boolean update) {
+        toSubscribe(cacheProvider.getDBResType(
+                mApiService.getDBResType(token,type),
                 new EvictProvider(update)), subscriber);
     }
 //    public void getDatasNoCache(Observer<TestBean> subscriber, int pno, int ps, String dtype) {
