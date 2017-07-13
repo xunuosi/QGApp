@@ -48,6 +48,8 @@ dependencies {
     compile 'me.majiajie:pager-bottom-tab-strip:2.1.0'
     compile 'com.youth.banner:banner:1.4.9'
     compile 'com.yanyusong.y_divideritemdecoration:y_divideritemdecoration:2.0'
+    // AndroidViewTree
+    compile 'com.github.bmelnychuk:atv:1.2.+'
     // fresco
     compile 'com.facebook.fresco:fresco:1.3.0'
     // retrofit2

@@ -33,6 +33,13 @@
     <string name="text_line_standard">标准\nStandards</string>
     <string name="text_line_img">图片\nPictures</string>
     <string name="text_line_analysis">行业分析\nIndustry Analysis</string>
+
+    <string name="text_book">图书</string>
+    <string name="text_article">文章</string>
+    <string name="text_dictionary">词典</string>
+    <string name="text_standard">标准</string>
+    <string name="text_img">图片</string>
+    <string name="text_analysis">行业分析</string>
     <!--行业知识库-->
     <string name="text_database_food">食品数据库</string>
     <string name="text_database_paper">造纸数据库</string>

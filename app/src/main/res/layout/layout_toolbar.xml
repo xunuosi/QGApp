@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_title_root"
     android:layout_width="match_parent"
     android:layout_height="59dp">
 
@@ -8,7 +9,7 @@
         android:id="@+id/im_back_arrow"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:src="@drawable/nav_search_gray"
+        android:src="@drawable/nav_back"
         android:layout_centerVertical="true"
         android:layout_marginLeft="33dp"
         />
@@ -21,4 +22,14 @@
         android:gravity="center"
         android:text="@string/app_name"
         style="@style/tool_bar"/>
+
+    <ImageView
+        android:id="@+id/iv_menu"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/icon_menu_bg"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="33dp"
+        />
 </RelativeLayout>

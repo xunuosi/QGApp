@@ -13,10 +13,6 @@
 
     </style>
 
-    <style name="tab_text">
-
-    </style>
-
     <style name="tool_bar">
         <item name="android:textColor">@color/color_toolbar_text</item>
         <item name="android:textSize">18sp</item>
@@ -104,4 +100,18 @@
     <style name="kf_text_info" parent="hf_article_text_content"/>
     <!--DBDetail Activity-->
     <style name="db_detail_text" parent="hf_standard_text"/>
+    <!--PopMenu-->
+    <style name="TRM_ANIM_STYLE">
+        <item name="android:windowEnterAnimation">@anim/trm_popup_enter</item>
+        <item name="android:windowExitAnimation">@anim/trm_popup_exit</item>
+    </style>
+    <!--TreeView Style-->
+    <style name="TreeNodeStyleCustom">
+        <item name="android:paddingLeft">20dp</item>
+    </style>
+
+    <style name="TreeNodeStyleDivided">
+        <item name="android:showDividers">middle</item>
+        <item name="android:divider">@android:drawable/divider_horizontal_bright</item>
+    </style>
 </resources>

@@ -6,4 +6,6 @@ package sinolight.cn.qgapp.views.view;
  */
 
 public interface IDBResActivityView {
+
+    void initShow(String title);
 }
