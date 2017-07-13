@@ -25,12 +25,16 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView,Htt
     private Context mContext;
     private String dbType;
     private AppContants.DataBase.Res resType;
+    private List<DBResTypeEntity> mTreeTypeList;
+    // 当前遍历Tree时父节点ID
+    private String currentPid;
 
     private HttpSubscriber<List<DBResTypeEntity>> mDBResTypeObserver = new HttpSubscriber<>(new OnResultCallBack<List<DBResTypeEntity>>() {
 
         @Override
         public void onSuccess(List<DBResTypeEntity> dbResTypeEntities) {
-            L.d(TAG, "datas:" + dbResTypeEntities.toString());
+            mTreeTypeList = dbResTypeEntities;
+            disposeData();
         }
 
         @Override
@@ -38,6 +42,22 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView,Htt
             L.d(TAG, "hotPicsObserver code:" + code + ",errorMsg:" + errorMsg);
         }
     });
+
+    /**
+     * 处理数据的方法用于TreeMenu的建立
+     */
+    private void disposeData() {
+        for (DBResTypeEntity bean : mTreeTypeList) {
+            if (bean.getPid().equals(AppContants.DataBase.TREE_PID)) {
+                currentPid = bean.getId();
+                continue;
+            }
+            // 查询当前父节点下的所有子节点
+            if (bean.getPid().equals(currentPid)) {
+
+            }
+        }
+    }
 
     public DBResActivityPresenter(IDBResActivityView view, Context context) {
         this.mContext = context;

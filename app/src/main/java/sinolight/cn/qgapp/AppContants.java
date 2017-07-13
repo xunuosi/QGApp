@@ -23,6 +23,7 @@ public interface AppContants {
         String KEY_NAME = "key_database_name";
         String KEY_TYPE = "key_database_type";
         String KEY_RES_TYPE = "key_res_type";
+        String TREE_PID = "0";
         /**
          * 九大行业库的Enum
          */
