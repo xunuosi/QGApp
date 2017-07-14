@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
@@ -20,7 +21,6 @@ import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.dagger.component.DaggerDBResActivityComponent;
 import sinolight.cn.qgapp.dagger.module.DBResActivityModule;
 import sinolight.cn.qgapp.presenter.DBResActivityPresenter;
-import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.views.holder.ArrowExpandHolder;
 import sinolight.cn.qgapp.views.view.IDBResActivityView;
 import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
@@ -30,11 +30,12 @@ import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
  * 行业库资源的Activity
  */
 
-public class DBResourceActivity extends BaseActivity implements IDBResActivityView {
+public class DBResourceActivity extends BaseActivity implements IDBResActivityView,TreeNode.TreeNodeClickListener {
     private static final String TAG = "DBResourceActivity";
     private static final String NAME = "xns";
 
     private TopRightMenu mTopRightMenu;
+    private AndroidTreeView tView;
     @Inject
     Context mContext;
     @Inject
@@ -94,44 +95,28 @@ public class DBResourceActivity extends BaseActivity implements IDBResActivityVi
             case R.id.im_back_arrow:
                 break;
             case R.id.iv_menu:
-                createTree();
+                mPresenter.popTreeMenu();
                 break;
         }
     }
 
     private void createTree() {
         TreeNode root = TreeNode.root();
-        TreeNode s1 = new TreeNode(new ArrowExpandHolder.IconTreeItem(R.drawable.arrow_white_down, "Folder with very long name ")).setViewHolder(
+        TreeNode s1 = new TreeNode(new ArrowExpandHolder.IconTreeItem("01", "0101", "Folder with very long name ")).setViewHolder(
                 new ArrowExpandHolder(mContext));
-        TreeNode s2 = new TreeNode(new ArrowExpandHolder.IconTreeItem(R.drawable.arrow_white_down, "Folder with very long name ")).setViewHolder(
+        TreeNode s2 = new TreeNode(new ArrowExpandHolder.IconTreeItem("01", "0101", "Folder with very long name ")).setViewHolder(
                 new ArrowExpandHolder(mContext));
         fillFolder(s1);
         fillFolder(s2);
 
         root.addChildren(s1, s2);
 
-        AndroidTreeView tView = new AndroidTreeView(DBResourceActivity.this, root);
-        tView.setDefaultAnimation(true);
-//        tView.setUse2dScroll(true);
-        tView.setDefaultContainerStyle(R.style.TreeNodeStyleDivided, true);
-        tView.setDefaultViewHolder(ArrowExpandHolder.class);
-        tView.setUseAutoToggle(false);
-        View menu = tView.getView();
 
-        mTopRightMenu = new TopRightMenu(DBResourceActivity.this, menu);
-        mTopRightMenu
-                .setHeight(850)     //默认高度480
-                .setWidth(600)      //默认宽度wrap_content
-                .showIcon(true)     //显示菜单图标，默认为true
-                .dimBackground(true)           //背景变暗，默认为true
-                .needAnimationStyle(true)   //显示动画，默认为true
-                .setAnimationStyle(R.style.TRM_ANIM_STYLE)  //默认为R.style.TRM_ANIM_STYLE
-                .showAsDropDown(ivMenu, -225, 0);
     }
     private void fillFolder(TreeNode folder) {
         TreeNode currentNode = folder;
         for (int i = 0; i < 4; i++) {
-            TreeNode file = new TreeNode(new ArrowExpandHolder.IconTreeItem(R.drawable.arrow_white_down, NAME + " " + i))
+            TreeNode file = new TreeNode(new ArrowExpandHolder.IconTreeItem("01", "0101", NAME + " " + i))
                     .setViewHolder(new ArrowExpandHolder(mContext));
             currentNode.addChild(file);
             currentNode = file;
@@ -142,5 +127,37 @@ public class DBResourceActivity extends BaseActivity implements IDBResActivityVi
     @Override
     public void initShow(String title) {
         tvTitle.setText(title);
+    }
+
+    @Override
+    public void popTreeMenu(TreeNode root) {
+        if (tView == null) {
+            tView = new AndroidTreeView(DBResourceActivity.this, root);
+            tView.setDefaultAnimation(true);
+//        tView.setUse2dScroll(true);
+            tView.setDefaultContainerStyle(R.style.TreeNodeStyleDivided, true);
+            tView.setDefaultViewHolder(ArrowExpandHolder.class);
+            tView.setDefaultNodeClickListener(DBResourceActivity.this);
+            tView.setUseAutoToggle(true);
+        }
+        if (mTopRightMenu == null) {
+            mTopRightMenu = new TopRightMenu(DBResourceActivity.this, tView.getView());
+            mTopRightMenu
+                    .setHeight(850)     //默认高度480
+                    .setWidth(450)      //默认宽度wrap_content
+                    .showIcon(true)     //显示菜单图标，默认为true
+                    .dimBackground(true)           //背景变暗，默认为true
+                    .needAnimationStyle(true)   //显示动画，默认为true
+                    .setAnimationStyle(R.style.TRM_ANIM_STYLE)  //默认为R.style.TRM_ANIM_STYLE
+                    .showAsDropDown(ivMenu, -225, 0);
+        } else {
+            mTopRightMenu.showAsDropDown(ivMenu, -225, 0);
+        }
+    }
+
+    @Override
+    public void onClick(TreeNode node, Object value) {
+        ArrowExpandHolder.IconTreeItem item = (ArrowExpandHolder.IconTreeItem) value;
+        Toast.makeText(mContext, "onClick:" + item.id, Toast.LENGTH_SHORT).show();
     }
 }

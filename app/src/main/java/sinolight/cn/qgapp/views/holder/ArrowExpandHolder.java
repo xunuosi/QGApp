@@ -28,7 +28,7 @@ public class ArrowExpandHolder extends TreeNode.BaseNodeViewHolder<ArrowExpandHo
         final View view = inflater.inflate(R.layout.layout_selectable_header, null, false);
 
         tvValue = (TextView) view.findViewById(R.id.node_value);
-        tvValue.setText(value.text);
+        tvValue.setText(value.name);
 
 
         arrowView = (ImageView) view.findViewById(R.id.arrow_icon);
@@ -53,12 +53,16 @@ public class ArrowExpandHolder extends TreeNode.BaseNodeViewHolder<ArrowExpandHo
     }
 
     public static class IconTreeItem {
-        public int icon;
-        public String text;
+        public String id;
+        public String pid;
+        public String name;
+        public boolean haveChild;
 
-        public IconTreeItem(int icon, String text) {
-            this.icon = icon;
-            this.text = text;
+        public IconTreeItem(String id, String pid, String name, boolean haveChild) {
+            this.id = id;
+            this.pid = pid;
+            this.name = name;
+            this.haveChild = haveChild;
         }
     }
 }

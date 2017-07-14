@@ -9,14 +9,9 @@ public class DBResTypeEntity {
     private String id;
     private String name;
     private String pid;
+    private boolean haschild;
 
     public DBResTypeEntity() {
-    }
-
-    public DBResTypeEntity(String id, String name, String pid) {
-        this.id = id;
-        this.name = name;
-        this.pid = pid;
     }
 
     public String getId() {
@@ -43,12 +38,21 @@ public class DBResTypeEntity {
         this.pid = pid;
     }
 
+    public boolean isHaschild() {
+        return haschild;
+    }
+
+    public void setHaschild(boolean haschild) {
+        this.haschild = haschild;
+    }
+
     @Override
     public String toString() {
         return "DBResTypeEntity{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", pid='" + pid + '\'' +
+                ", haschild=" + haschild +
                 '}';
     }
 }
