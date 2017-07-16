@@ -100,28 +100,28 @@ public class DBResourceActivity extends BaseActivity implements IDBResActivityVi
         }
     }
 
-    private void createTree() {
-        TreeNode root = TreeNode.root();
-        TreeNode s1 = new TreeNode(new ArrowExpandHolder.IconTreeItem("01", "0101", "Folder with very long name ")).setViewHolder(
-                new ArrowExpandHolder(mContext));
-        TreeNode s2 = new TreeNode(new ArrowExpandHolder.IconTreeItem("01", "0101", "Folder with very long name ")).setViewHolder(
-                new ArrowExpandHolder(mContext));
-        fillFolder(s1);
-        fillFolder(s2);
-
-        root.addChildren(s1, s2);
-
-
-    }
-    private void fillFolder(TreeNode folder) {
-        TreeNode currentNode = folder;
-        for (int i = 0; i < 4; i++) {
-            TreeNode file = new TreeNode(new ArrowExpandHolder.IconTreeItem("01", "0101", NAME + " " + i))
-                    .setViewHolder(new ArrowExpandHolder(mContext));
-            currentNode.addChild(file);
-            currentNode = file;
-        }
-    }
+//    private void createTree() {
+//        TreeNode root = TreeNode.root();
+//        TreeNode s1 = new TreeNode(new ArrowExpandHolder.IconTreeItem("01", "0101", "Folder with very long name ")).setViewHolder(
+//                new ArrowExpandHolder(mContext));
+//        TreeNode s2 = new TreeNode(new ArrowExpandHolder.IconTreeItem("01", "0101", "Folder with very long name ")).setViewHolder(
+//                new ArrowExpandHolder(mContext));
+//        fillFolder(s1);
+//        fillFolder(s2);
+//
+//        root.addChildren(s1, s2);
+//
+//
+//    }
+//    private void fillFolder(TreeNode folder) {
+//        TreeNode currentNode = folder;
+//        for (int i = 0; i < 4; i++) {
+//            TreeNode file = new TreeNode(new ArrowExpandHolder.IconTreeItem("01", "0101", NAME + " " + i))
+//                    .setViewHolder(new ArrowExpandHolder(mContext));
+//            currentNode.addChild(file);
+//            currentNode = file;
+//        }
+//    }
 
 
     @Override

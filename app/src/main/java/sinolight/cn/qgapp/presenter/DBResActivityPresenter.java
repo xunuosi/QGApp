@@ -29,7 +29,7 @@ import sinolight.cn.qgapp.views.view.IDBResActivityView;
  * DBResActivity Presenter
  */
 
-public class DBResActivityPresenter extends BasePresenter<IDBResActivityView,HttpManager> {
+public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, HttpManager> {
     private static final String TAG = "DBResActivityPresenter";
     private Context mContext;
     private String dbType;
@@ -37,6 +37,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView,Htt
     private List<DBResTypeEntity> mTreeTypeList;
     // 当前遍历Tree时父节点ID
     private String currentPid;
+    private String tempPid;
     private List<TreeNode> mTreeNodes;
     private List<TreeNode> mChilds;
     private List<TreeNode> mParents;
@@ -67,18 +68,105 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView,Htt
         for (DBResTypeEntity bean : mTreeTypeList) {
             if (bean.getPid().equals(rootId)) {
                 currentPid = bean.getId();
+                mTreeTypeList.remove(bean);
                 continue;
             }
             // 查询当前父节点下的所有子节点
             if (bean.getPid().equals(currentPid)) {
                 createRootTree(bean);
+                mTreeTypeList.remove(bean);
                 count++;
+            }
+            // 创建当前节点的子节点
+            if (bean.getPid().equals(tempPid)) {
+                createRootChild(bean);
+                mTreeTypeList.remove(bean);
             }
         }
 
         // 将该级节点保存到Map集合中
-        mMapTreedNodes.put(count, mTreeNodes);
-        count++;
+//        mMapTreedNodes.put(count, mTreeNodes);
+    }
+
+    /**
+     * 创建树的父节点
+     */
+    private void createRootTree(DBResTypeEntity bean) {
+        TreeNode p = new TreeNode(new ArrowExpandHolder.IconTreeItem(
+                bean.getId(),
+                bean.getPid(),
+                bean.getName(),
+                bean.isHaschild())).setViewHolder(new ArrowExpandHolder(mContext));
+//        // 创建它的子节点
+//        if (bean.isHaschild()) {
+//            createChild(p, bean);
+//        }
+        tempPid = bean.getId();
+        mTreeNodes.add(p);
+    }
+
+    private void createRootChild(DBResTypeEntity bean) {
+        TreeNode c = new TreeNode(new ArrowExpandHolder.IconTreeItem(
+                bean.getId(),
+                bean.getPid(),
+                bean.getName(),
+                bean.isHaschild())).setViewHolder(new ArrowExpandHolder(mContext));
+        mTreeNodes.get(mTreeNodes.size()).addChild(c);
+        if (bean.isHaschild()) {
+            createParent(c, bean.getId());
+        }
+    }
+
+    private void createParent(TreeNode p, String id) {
+        for (DBResTypeEntity bean : mTreeTypeList) {
+            if (bean.getPid().equals(id)) {
+                createChild(p, bean);
+                mTreeTypeList.remove(bean);
+            }
+        }
+    }
+
+    /**
+     * 创建树的子节点
+     */
+    private void createChild(TreeNode p, DBResTypeEntity cBean) {
+//        mChilds = new ArrayList<>();
+//        int start = mTreeTypeList.indexOf(bean);
+//        for (int i = start + 1; i < mTreeTypeList.size(); i++) {
+//            DBResTypeEntity childBean = mTreeTypeList.get(i);
+//            if (childBean.isHaschild()) {
+//                createParentTree(p, childBean);
+//            }
+//            if (childBean.getPid().equals(bean.getId())) {
+//                TreeNode c = new TreeNode(new ArrowExpandHolder.IconTreeItem(
+//                        childBean.getId(),
+//                        childBean.getPid(),
+//                        childBean.getName(),
+//                        childBean.isHaschild())).setViewHolder(new ArrowExpandHolder(mContext));
+//                mChilds.add(c);
+//            }
+//        }
+//        p.addChildren(mChilds);
+        TreeNode c = new TreeNode(new ArrowExpandHolder.IconTreeItem(
+                cBean.getId(),
+                cBean.getPid(),
+                cBean.getName(),
+                cBean.isHaschild())).setViewHolder(new ArrowExpandHolder(mContext));
+        p.addChild(c);
+        if (cBean.isHaschild()) {
+            createParent(c, cBean.getId());
+        }
+    }
+
+    private void createRootTree(int key, DBResTypeEntity bean) {
+        List<TreeNode> tempTreeNods = new ArrayList<>();
+        TreeNode p = new TreeNode(new ArrowExpandHolder.IconTreeItem(
+                bean.getId(),
+                bean.getPid(),
+                bean.getName(),
+                bean.isHaschild())).setViewHolder(new ArrowExpandHolder(mContext));
+        tempTreeNods.add(p);
+        mMapTreedNodes.append(key, tempTreeNods);
     }
 
     private void createTreeNode(DBResTypeEntity bean) {
@@ -104,47 +192,6 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView,Htt
             createChild(p, bean);
         }
     }
-
-    /**
-     * 创建树的父节点
-     */
-    private void createRootTree(DBResTypeEntity bean) {
-        TreeNode p = new TreeNode(new ArrowExpandHolder.IconTreeItem(
-                        bean.getId(),
-                        bean.getPid(),
-                        bean.getName(),
-                        bean.isHaschild())).setViewHolder(new ArrowExpandHolder(mContext));
-        // 创建它的子节点
-        if (bean.isHaschild()) {
-            createChild(p, bean);
-        }
-        L.d(TAG,"p:" + p);
-        mTreeNodes.add(p);
-    }
-
-    /**
-     * 创建树的子节点
-     */
-    private void createChild(TreeNode p, DBResTypeEntity bean) {
-        mChilds = new ArrayList<>();
-        int start = mTreeTypeList.indexOf(bean);
-        for (int i = start + 1; i < mTreeTypeList.size(); i++) {
-            DBResTypeEntity childBean = mTreeTypeList.get(i);
-            if (childBean.isHaschild()) {
-                createParentTree(p, childBean);
-            }
-            if (childBean.getPid().equals(bean.getId())) {
-                TreeNode c = new TreeNode(new ArrowExpandHolder.IconTreeItem(
-                        childBean.getId(),
-                        childBean.getPid(),
-                        childBean.getName(),
-                        childBean.isHaschild())).setViewHolder(new ArrowExpandHolder(mContext));
-                mChilds.add(c);
-            }
-        }
-        p.addChildren(mChilds);
-    }
-
 
     public DBResActivityPresenter(IDBResActivityView view, Context context) {
         this.mContext = context;
@@ -205,4 +252,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView,Htt
         root.addChildren(mTreeNodes);
         view().popTreeMenu(root);
     }
+
+
+
 }
