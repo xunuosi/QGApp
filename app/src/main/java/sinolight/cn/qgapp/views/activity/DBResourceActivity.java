@@ -21,7 +21,7 @@ import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.dagger.component.DaggerDBResActivityComponent;
 import sinolight.cn.qgapp.dagger.module.DBResActivityModule;
 import sinolight.cn.qgapp.presenter.DBResActivityPresenter;
-import sinolight.cn.qgapp.views.holder.ArrowExpandHolder;
+import sinolight.cn.qgapp.views.holder.TreeParentHolder;
 import sinolight.cn.qgapp.views.view.IDBResActivityView;
 import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
 
@@ -93,36 +93,13 @@ public class DBResourceActivity extends BaseActivity implements IDBResActivityVi
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.im_back_arrow:
+                finish();
                 break;
             case R.id.iv_menu:
                 mPresenter.popTreeMenu();
                 break;
         }
     }
-
-//    private void createTree() {
-//        TreeNode root = TreeNode.root();
-//        TreeNode s1 = new TreeNode(new ArrowExpandHolder.IconTreeItem("01", "0101", "Folder with very long name ")).setViewHolder(
-//                new ArrowExpandHolder(mContext));
-//        TreeNode s2 = new TreeNode(new ArrowExpandHolder.IconTreeItem("01", "0101", "Folder with very long name ")).setViewHolder(
-//                new ArrowExpandHolder(mContext));
-//        fillFolder(s1);
-//        fillFolder(s2);
-//
-//        root.addChildren(s1, s2);
-//
-//
-//    }
-//    private void fillFolder(TreeNode folder) {
-//        TreeNode currentNode = folder;
-//        for (int i = 0; i < 4; i++) {
-//            TreeNode file = new TreeNode(new ArrowExpandHolder.IconTreeItem("01", "0101", NAME + " " + i))
-//                    .setViewHolder(new ArrowExpandHolder(mContext));
-//            currentNode.addChild(file);
-//            currentNode = file;
-//        }
-//    }
-
 
     @Override
     public void initShow(String title) {
@@ -136,7 +113,7 @@ public class DBResourceActivity extends BaseActivity implements IDBResActivityVi
             tView.setDefaultAnimation(true);
 //        tView.setUse2dScroll(true);
             tView.setDefaultContainerStyle(R.style.TreeNodeStyleDivided, true);
-            tView.setDefaultViewHolder(ArrowExpandHolder.class);
+            tView.setDefaultViewHolder(TreeParentHolder.class);
             tView.setDefaultNodeClickListener(DBResourceActivity.this);
             tView.setUseAutoToggle(true);
         }
@@ -157,7 +134,7 @@ public class DBResourceActivity extends BaseActivity implements IDBResActivityVi
 
     @Override
     public void onClick(TreeNode node, Object value) {
-        ArrowExpandHolder.IconTreeItem item = (ArrowExpandHolder.IconTreeItem) value;
+        TreeParentHolder.IconTreeItem item = (TreeParentHolder.IconTreeItem) value;
         Toast.makeText(mContext, "onClick:" + item.id, Toast.LENGTH_SHORT).show();
     }
 }

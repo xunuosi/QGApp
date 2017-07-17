@@ -15,8 +15,7 @@ import java.util.List;
 
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
-import sinolight.cn.qgapp.utils.L;
-import sinolight.cn.qgapp.views.holder.ArrowExpandHolder;
+import sinolight.cn.qgapp.views.holder.TreeParentHolder;
 
 /**
  * Created by admin on 2017/7/16.
@@ -420,11 +419,11 @@ public class TestActivity extends AppCompatActivity {
 
     private void changeTreeNode() {
         for (DBResTypeEntity bean : mDatas) {
-            TreeNode p = new TreeNode(new ArrowExpandHolder.IconTreeItem(
+            TreeNode p = new TreeNode(new TreeParentHolder.IconTreeItem(
                     bean.getId(),
                     bean.getPid(),
                     bean.getName(),
-                    bean.isHaschild())).setViewHolder(new ArrowExpandHolder(TestActivity.this));
+                    bean.isHaschild())).setViewHolder(new TreeParentHolder(TestActivity.this));
             mTrees.add(p);
         }
 
@@ -438,7 +437,7 @@ public class TestActivity extends AppCompatActivity {
         tView.setDefaultAnimation(true);
 //        tView.setUse2dScroll(true);
         tView.setDefaultContainerStyle(R.style.TreeNodeStyleDivided, true);
-        tView.setDefaultViewHolder(ArrowExpandHolder.class);
+        tView.setDefaultViewHolder(TreeParentHolder.class);
 //        tView.setDefaultNodeClickListener(DBResourceActivity.this);
         tView.setUseAutoToggle(true);
 
@@ -459,12 +458,12 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private String getPid(TreeNode node) {
-        ArrowExpandHolder.IconTreeItem value = (ArrowExpandHolder.IconTreeItem) node.getValue();
+        TreeParentHolder.IconTreeItem value = (TreeParentHolder.IconTreeItem) node.getValue();
         return value.pid;
     }
 
     private String getId(TreeNode node) {
-        ArrowExpandHolder.IconTreeItem value = (ArrowExpandHolder.IconTreeItem) node.getValue();
+        TreeParentHolder.IconTreeItem value = (TreeParentHolder.IconTreeItem) node.getValue();
         return value.id;
     }
 }

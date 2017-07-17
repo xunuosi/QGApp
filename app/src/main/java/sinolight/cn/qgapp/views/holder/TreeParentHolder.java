@@ -14,24 +14,24 @@ import sinolight.cn.qgapp.R;
  * Created by Bogdan Melnychuk on 2/15/15, modified by Szigeti Peter 2/2/16.
  * Icon + TextView 最简树View
  */
-public class ArrowExpandHolder extends TreeNode.BaseNodeViewHolder<ArrowExpandHolder.IconTreeItem> {
+public class TreeParentHolder extends TreeNode.BaseNodeViewHolder<TreeParentHolder.IconTreeItem> {
     private TextView tvValue;
     private ImageView arrowView;
 
-    public ArrowExpandHolder(Context context) {
+    public TreeParentHolder(Context context) {
         super(context);
     }
 
     @Override
-    public View createNodeView(final TreeNode node, ArrowExpandHolder.IconTreeItem value) {
+    public View createNodeView(final TreeNode node, TreeParentHolder.IconTreeItem value) {
         final LayoutInflater inflater = LayoutInflater.from(context);
-        final View view = inflater.inflate(R.layout.layout_selectable_header, null, false);
+        final View view = inflater.inflate(R.layout.layout_tree_parent, null, false);
 
-        tvValue = (TextView) view.findViewById(R.id.node_value);
+        tvValue = (TextView) view.findViewById(R.id.tree_parent_node_value);
         tvValue.setText(value.name);
 
 
-        arrowView = (ImageView) view.findViewById(R.id.arrow_icon);
+        arrowView = (ImageView) view.findViewById(R.id.tree_parent_arrow_icon);
         arrowView.setPadding(20,10,10,10);
         if (node.isLeaf()) {
             arrowView.setVisibility(View.GONE);

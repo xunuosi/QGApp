@@ -20,6 +20,11 @@
         <activity android:name=".views.activity.HomeActivity"
                   android:screenOrientation="portrait"
                   android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".views.activity.DBaseDetailActivity"
             android:screenOrientation="portrait"/>
@@ -35,11 +40,7 @@
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateVisible"/>
         <activity android:name=".views.activity.TestActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
