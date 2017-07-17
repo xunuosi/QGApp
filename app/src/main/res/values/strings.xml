@@ -26,6 +26,7 @@
     <string name="text_hot_article">热门文章</string>
     <string name="text_author">作者：</string>
     <string name="text_resource">来源：</string>
+    <string name="text_publish_time">出版时间：</string>
     <!--DBDetail Home-->
     <string name="text_line_book">图书\nBooks</string>
     <string name="text_line_article">文章\nArticles</string>
@@ -86,6 +87,4 @@
     <string name="toolbar_knowledge_title">行业知识库</string>
     <!--Attention-->
     <string name="attention_data_refresh_error">数据刷新错误，请检查网络或下拉重新刷新数据!</string>
-
-
 </resources>

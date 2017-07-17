@@ -100,6 +100,10 @@
     <style name="kf_text_info" parent="hf_article_text_content"/>
     <!--DBDetail Activity-->
     <style name="db_detail_text" parent="hf_standard_text"/>
+    <!--DBRes Activity-->
+    <style name="db_res_text_title" parent="hf_article_text_title"/>
+    <style name="db_res_text_content" parent="hf_article_text_content"/>
+    <style name="db_res_text_info" parent="hf_article_text_info"/>
     <!--PopMenu-->
     <style name="TRM_ANIM_STYLE">
         <item name="android:windowEnterAnimation">@anim/trm_popup_enter</item>

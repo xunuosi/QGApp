@@ -80,7 +80,7 @@ public class KnowledgePresenter extends BasePresenter<IKnowledgeFragmentView, Ht
     }
 
     public void init2Show() {
-        model.getDataBaseWithCache(
+        model.getKDBWithCache(
                 databaseObserver,
                 AppHelper.getInstance().getCurrentToken(),
                 1,

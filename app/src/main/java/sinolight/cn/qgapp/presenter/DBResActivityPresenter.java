@@ -11,10 +11,15 @@ import java.util.List;
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.adapter.KDBResAdapter;
+import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
+import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
+import sinolight.cn.qgapp.data.http.entity.PageEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
+import sinolight.cn.qgapp.utils.KDBResDataMapper;
 import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.views.holder.TreeParentHolder;
 import sinolight.cn.qgapp.views.holder.TreeChildHolder;
@@ -29,14 +34,25 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
     private static final String TAG = "DBResActivityPresenter";
     private Context mContext;
     private String dbType;
+    private String dbId;
     private AppContants.DataBase.Res resType;
     private List<DBResTypeEntity> mTreeTypeList;
     private List<TreeNode> mTreeNodes;
     private List<TreeNode> mRoot;
     private List<TreeNode> mTrees;
     private final TreeNode root = TreeNode.root();
+    // 获取资源列表
+    private String key = null;
+    private String themeType = null;
+    private int page = 1;
+    private static final int SIZE = 10;
 
-    private HttpSubscriber<List<DBResTypeEntity>> mDBResTypeObserver = new HttpSubscriber<>(new OnResultCallBack<List<DBResTypeEntity>>() {
+    private List<KDBResData> mDatas;
+    private List<BookEntity> bookDatas;
+    private KDBResAdapter mAdapter;
+
+    private HttpSubscriber<List<DBResTypeEntity>> mDBResTypeObserver = new HttpSubscriber<>(
+            new OnResultCallBack<List<DBResTypeEntity>>() {
 
         @Override
         public void onSuccess(List<DBResTypeEntity> dbResTypeEntities) {
@@ -47,9 +63,60 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
 
         @Override
         public void onError(int code, String errorMsg) {
-            L.d(TAG, "hotPicsObserver code:" + code + ",errorMsg:" + errorMsg);
+            L.d(TAG, "mDBResTypeObserver code:" + code + ",errorMsg:" + errorMsg);
+            showErrorToast(R.string.attention_data_refresh_error);
         }
     });
+
+    private HttpSubscriber<PageEntity<List<BookEntity>>> mBookObserver = new HttpSubscriber<>(
+            new OnResultCallBack<PageEntity<List<BookEntity>>>() {
+
+        @Override
+        public void onSuccess(PageEntity<List<BookEntity>> PageEntity) {
+            bookDatas = PageEntity.getData();
+            transformKDBResData(AppContants.DataBase.Res.RES_BOOK);
+        }
+
+        @Override
+        public void onError(int code, String errorMsg) {
+            L.d(TAG, "mBookObserver code:" + code + ",errorMsg:" + errorMsg);
+            showErrorToast(R.string.attention_data_refresh_error);
+        }
+    });
+
+    private void transformKDBResData(AppContants.DataBase.Res resType) {
+        switch (resType) {
+            case RES_BOOK:
+                mDatas = KDBResDataMapper.transformBookDatas(bookDatas, KDBResAdapter.TYPE_BOOK, false);
+                break;
+            case RES_STANDARD:
+
+                break;
+            case RES_ARTICLE:
+
+                break;
+            case RES_IMG:
+
+                break;
+            case RES_DIC:
+
+                break;
+            case RES_INDUSTRY:
+
+                break;
+        }
+
+        showWithData();
+    }
+
+    private void showWithData() {
+        if (mAdapter == null) {
+            mAdapter = new KDBResAdapter(mContext, mDatas);
+            view().showListView(mAdapter);
+        } else {
+            mAdapter.setData(mDatas);
+        }
+    }
 
     /**
      * 处理数据的方法用于TreeMenu的建立
@@ -115,6 +182,9 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
     @Override
     public void clear() {
         mDBResTypeObserver.unSubscribe();
+        if (mBookObserver != null) {
+            mBookObserver.unSubscribe();
+        }
         unbindView();
     }
 
@@ -122,6 +192,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         if (intent != null) {
             resType = (AppContants.DataBase.Res) intent.getSerializableExtra(AppContants.DataBase.KEY_RES_TYPE);
             dbType = intent.getStringExtra(AppContants.DataBase.KEY_TYPE);
+            dbId = intent.getStringExtra(AppContants.DataBase.KEY_ID);
             showWithResType();
         }
     }
@@ -130,6 +201,17 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         switch (resType) {
             case RES_BOOK:
                 view().initShow(mContext.getString(R.string.text_book));
+                // 请求资源数据
+                model.getKDBBookListWithCache(
+                        mBookObserver,
+                        AppHelper.getInstance().getCurrentToken(),
+                        dbId,
+                        themeType,
+                        key,
+                        page,
+                        SIZE,
+                        false
+                );
                 break;
             case RES_STANDARD:
                 view().initShow(mContext.getString(R.string.text_standard));
@@ -148,18 +230,24 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 break;
         }
         // 请求分类数据
-        model.getDBResTypeWithCache(
+        model.getKDBResTypeWithCache(
                 mDBResTypeObserver,
                 AppHelper.getInstance().getCurrentToken(),
                 dbType,
                 false);
+
     }
 
     public void popTreeMenu() {
-        root.addChildren(mTreeNodes);
-        view().popTreeMenu(root);
+        if (mTreeNodes != null && mTreeNodes.size() != 0) {
+            root.addChildren(mTreeNodes);
+            view().popTreeMenu(root);
+        } else {
+            showErrorToast(R.string.attention_data_refresh_error);
+        }
     }
 
-
-
+    private void showErrorToast(int resId) {
+        view().showToast(resId);
+    }
 }

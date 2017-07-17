@@ -1,6 +1,7 @@
 package sinolight.cn.qgapp.data.http;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 
@@ -26,6 +27,7 @@ import sinolight.cn.qgapp.data.http.api.ApiService;
 import sinolight.cn.qgapp.data.http.cache.CacheProvider;
 import sinolight.cn.qgapp.data.http.entity.ArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
+import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
@@ -134,15 +136,23 @@ public class HttpManager {
         toSubscribe(cacheProvider.getNewsArticle(mApiService.getNewsArticle(token),new EvictProvider(update)), subscriber);
     }
 
-    public void getDataBaseWithCache(Observer<PageEntity<List<DataBaseBean>>> subscriber, String token, int page, int size, boolean update) {
-        toSubscribe(cacheProvider.getDataBase(
-                mApiService.getDataBase(token,page,size),
+    public void getKDBWithCache(Observer<PageEntity<List<DataBaseBean>>> subscriber, String token, int page, int size, boolean update) {
+        toSubscribe(cacheProvider.getKnowledgeDataBase(
+                mApiService.getKnowledgeDataBase(token,page,size),
                 new EvictProvider(update)), subscriber);
     }
 
-    public void getDBResTypeWithCache(Observer<List<DBResTypeEntity>> subscriber, String token, String type, boolean update) {
-        toSubscribe(cacheProvider.getDBResType(
-                mApiService.getDBResType(token,type),
+    public void getKDBResTypeWithCache(Observer<List<DBResTypeEntity>> subscriber, String token, String type, boolean update) {
+        toSubscribe(cacheProvider.getKDBResType(
+                mApiService.getKDBResType(token,type),
+                new EvictProvider(update)), subscriber);
+    }
+
+    public void getKDBBookListWithCache(Observer<PageEntity<List<BookEntity>>> subscriber, String token,
+                                        @Nullable String dbId, @Nullable String type, @Nullable String key,
+                                        int page, int size, boolean update) {
+        toSubscribe(cacheProvider.getKDBBookList(
+                mApiService.getKDBBookList(token,dbId,type,key, page, size),
                 new EvictProvider(update)), subscriber);
     }
 //    public void getDatasNoCache(Observer<TestBean> subscriber, int pno, int ps, String dtype) {

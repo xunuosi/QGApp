@@ -4,23 +4,31 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
-
+import com.yanyusong.y_divideritemdecoration.Y_Divider;
+import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder;
+import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.dagger.component.DaggerDBResActivityComponent;
 import sinolight.cn.qgapp.dagger.module.DBResActivityModule;
 import sinolight.cn.qgapp.presenter.DBResActivityPresenter;
+import sinolight.cn.qgapp.views.fragment.KnowledgeFragment;
 import sinolight.cn.qgapp.views.holder.TreeParentHolder;
 import sinolight.cn.qgapp.views.view.IDBResActivityView;
 import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
@@ -30,12 +38,17 @@ import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
  * 行业库资源的Activity
  */
 
-public class DBResourceActivity extends BaseActivity implements IDBResActivityView,TreeNode.TreeNodeClickListener {
+public class DBResourceActivity extends BaseActivity implements IDBResActivityView, TreeNode.TreeNodeClickListener {
     private static final String TAG = "DBResourceActivity";
-    private static final String NAME = "xns";
 
     private TopRightMenu mTopRightMenu;
     private AndroidTreeView tView;
+    private RecyclerView.LayoutManager mLayoutManager;
+
+    @BindView(R.id.swipe_target)
+    RecyclerView mSwipeTarget;
+    @BindView(R.id.swipe_db_res)
+    SwipeToLoadLayout mSwipeDbRes;
     @Inject
     Context mContext;
     @Inject
@@ -64,7 +77,10 @@ public class DBResourceActivity extends BaseActivity implements IDBResActivityVi
 
     @Override
     protected void initViews() {
-
+        mLayoutManager = new LinearLayoutManager(DBResourceActivity.this, LinearLayoutManager.VERTICAL, false);
+        mSwipeTarget.setLayoutManager(mLayoutManager);
+        mSwipeTarget.setHasFixedSize(true);
+        mSwipeTarget.addItemDecoration(new DBResourceActivity.LinearDivider(mContext));
     }
 
     @Override
@@ -133,8 +149,40 @@ public class DBResourceActivity extends BaseActivity implements IDBResActivityVi
     }
 
     @Override
+    public void showToast(int msgId) {
+        String msg = getString(msgId);
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showListView(KDBResAdapter adapter) {
+        mSwipeTarget.setAdapter(adapter);
+    }
+
+    @Override
     public void onClick(TreeNode node, Object value) {
         TreeParentHolder.IconTreeItem item = (TreeParentHolder.IconTreeItem) value;
         Toast.makeText(mContext, "onClick:" + item.id, Toast.LENGTH_SHORT).show();
+    }
+
+    private class LinearDivider extends Y_DividerItemDecoration {
+        private Context context;
+
+        public LinearDivider(Context context) {
+            super(context);
+            this.context = context;
+        }
+
+        @Override
+        public Y_Divider getDivider(int itemPosition) {
+            Y_Divider divider = null;
+            divider = new Y_DividerBuilder()
+                    .setLeftSideLine(false, ContextCompat.getColor(context, R.color.color_transparent_all), 0.5f, 0, 0)
+                    .setBottomSideLine(true, ContextCompat.getColor(context, R.color.color_bottom_divider), 0.5f, 0, 0)
+                    .setRightSideLine(false, ContextCompat.getColor(context, R.color.color_transparent_all), 0.5f, 0, 0)
+                    .setTopSideLine(false, ContextCompat.getColor(context, R.color.color_transparent_all), 0.5f, 0, 0)
+                    .create();
+            return divider;
+        }
     }
 }

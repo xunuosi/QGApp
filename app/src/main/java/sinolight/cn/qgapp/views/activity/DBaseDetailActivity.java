@@ -23,7 +23,7 @@ import sinolight.cn.qgapp.utils.ScreenUtil;
 
 /**
  * Created by xns on 2017/7/10.
- * 行业库详情界面
+ * 知识库详情界面
  */
 
 public class DBaseDetailActivity extends BaseActivity {
@@ -159,6 +159,7 @@ public class DBaseDetailActivity extends BaseActivity {
 
     private void gotoResActivity(AppContants.DataBase.Res resType) {
         Intent intent = DBResourceActivity.getCallIntent(mContext);
+        intent.putExtra(AppContants.DataBase.KEY_ID, dbId);
         intent.putExtra(AppContants.DataBase.KEY_RES_TYPE, resType);
         intent.putExtra(AppContants.DataBase.KEY_TYPE, dbType.getType());
         startActivity(intent);

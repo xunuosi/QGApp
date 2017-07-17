@@ -10,6 +10,7 @@ import retrofit2.http.POST;
 import sinolight.cn.qgapp.data.bean.DataBaseBean;
 import sinolight.cn.qgapp.data.http.entity.ArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
+import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
@@ -139,7 +140,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("db/doIndustryDB")
-    Observable<ResultEntity<PageEntity<List<DataBaseBean>>>> getDataBase(
+    Observable<ResultEntity<PageEntity<List<DataBaseBean>>>> getKnowledgeDataBase(
             @Field("token") String token,
             @Field("page") int page,
             @Field("size") int size
@@ -153,8 +154,30 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("theme/doThemeInfo")
-    Observable<ResultEntity<List<DBResTypeEntity>>> getDBResType(
+    Observable<ResultEntity<List<DBResTypeEntity>>> getKDBResType(
             @Field("token") String token,
             @Field("type") String type
+    );
+
+    /**
+     * 知识库-某一知识库-图书列表
+     * @param token
+     * @param token
+     * @param dbid
+     * @param themeType
+     * @param key
+     * @param page
+     * @param size
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("db/doBookList")
+    Observable<ResultEntity<PageEntity<List<BookEntity>>>> getKDBBookList(
+            @Field("token") String token,
+            @Field("dbid") String dbid,
+            @Field("themeType") String themeType,
+            @Field("key") String key,
+            @Field("page") int page,
+            @Field("size") int size
     );
 }
