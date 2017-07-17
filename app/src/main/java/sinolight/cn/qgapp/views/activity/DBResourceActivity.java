@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
+import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
@@ -28,7 +31,7 @@ import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.dagger.component.DaggerDBResActivityComponent;
 import sinolight.cn.qgapp.dagger.module.DBResActivityModule;
 import sinolight.cn.qgapp.presenter.DBResActivityPresenter;
-import sinolight.cn.qgapp.views.fragment.KnowledgeFragment;
+import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.views.holder.TreeParentHolder;
 import sinolight.cn.qgapp.views.view.IDBResActivityView;
 import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
@@ -38,7 +41,8 @@ import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
  * 行业库资源的Activity
  */
 
-public class DBResourceActivity extends BaseActivity implements IDBResActivityView, TreeNode.TreeNodeClickListener {
+public class DBResourceActivity extends BaseActivity implements
+        IDBResActivityView, TreeNode.TreeNodeClickListener, OnRefreshListener, OnLoadMoreListener {
     private static final String TAG = "DBResourceActivity";
 
     private TopRightMenu mTopRightMenu;
@@ -81,6 +85,10 @@ public class DBResourceActivity extends BaseActivity implements IDBResActivityVi
         mSwipeTarget.setLayoutManager(mLayoutManager);
         mSwipeTarget.setHasFixedSize(true);
         mSwipeTarget.addItemDecoration(new DBResourceActivity.LinearDivider(mContext));
+
+        mSwipeDbRes.setRefreshing(true);
+        mSwipeDbRes.setOnRefreshListener(DBResourceActivity.this);
+        mSwipeDbRes.setOnLoadMoreListener(DBResourceActivity.this);
     }
 
     @Override
@@ -97,6 +105,17 @@ public class DBResourceActivity extends BaseActivity implements IDBResActivityVi
                 .dBResActivityModule(new DBResActivityModule(this))
                 .build()
                 .inject(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mSwipeDbRes.isRefreshing()) {
+            mSwipeDbRes.setRefreshing(false);
+        }
+        if (mSwipeDbRes.isLoadingMore()) {
+            mSwipeDbRes.setLoadingMore(false);
+        }
     }
 
     @Override
@@ -160,9 +179,61 @@ public class DBResourceActivity extends BaseActivity implements IDBResActivityVi
     }
 
     @Override
+    public void showRefreshing(boolean enable) {
+        if (enable) {
+            mSwipeDbRes.post(new Runnable() {
+                @Override
+                public void run() {
+                    mSwipeDbRes.setRefreshing(true);
+                }
+            });
+        } else {
+            mSwipeDbRes.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void showLoadMoreing(boolean enable) {
+        if (!mSwipeDbRes.isLoadMoreEnabled()) {
+            return;
+        }
+        if (enable) {
+            mSwipeDbRes.post(new Runnable() {
+                @Override
+                public void run() {
+                    mSwipeDbRes.setLoadingMore(true);
+                }
+            });
+        } else {
+            mSwipeDbRes.setLoadingMore(false);
+        }
+    }
+
+    @Override
+    public void hasMoreData(boolean hasMore) {
+        if (mSwipeDbRes.isLoadingMore()) {
+            showLoadMoreing(false);
+        }
+        mSwipeDbRes.setLoadMoreEnabled(hasMore);
+    }
+
+    @Override
     public void onClick(TreeNode node, Object value) {
         TreeParentHolder.IconTreeItem item = (TreeParentHolder.IconTreeItem) value;
         Toast.makeText(mContext, "onClick:" + item.id, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onLoadMore() {
+        // 正在加载数据时禁止加载更多数据
+        if (!mSwipeDbRes.isLoadingMore()) {
+            mPresenter.loadMore();
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.refreshView();
     }
 
     private class LinearDivider extends Y_DividerItemDecoration {

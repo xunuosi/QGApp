@@ -2,6 +2,7 @@ package sinolight.cn.qgapp.presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 
 import com.unnamed.b.atv.model.TreeNode;
 
@@ -11,6 +12,7 @@ import java.util.List;
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.adapter.HomeAdapter;
 import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.HttpManager;
@@ -42,14 +44,17 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
     private List<TreeNode> mTrees;
     private final TreeNode root = TreeNode.root();
     // 获取资源列表
-    private String key = null;
-    private String themeType = null;
     private int page = 1;
     private static final int SIZE = 10;
+    // 获取当前资源列表的总数
+    private int count = 0;
+    // 判断当前操作是否为加载更多数据
+    private boolean action_more = false;
 
     private List<KDBResData> mDatas;
     private List<BookEntity> bookDatas;
     private KDBResAdapter mAdapter;
+
 
     private HttpSubscriber<List<DBResTypeEntity>> mDBResTypeObserver = new HttpSubscriber<>(
             new OnResultCallBack<List<DBResTypeEntity>>() {
@@ -65,6 +70,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         public void onError(int code, String errorMsg) {
             L.d(TAG, "mDBResTypeObserver code:" + code + ",errorMsg:" + errorMsg);
             showErrorToast(R.string.attention_data_refresh_error);
+
         }
     });
 
@@ -73,6 +79,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
 
         @Override
         public void onSuccess(PageEntity<List<BookEntity>> PageEntity) {
+            count = PageEntity.getCount();
             bookDatas = PageEntity.getData();
             transformKDBResData(AppContants.DataBase.Res.RES_BOOK);
         }
@@ -85,9 +92,10 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
     });
 
     private void transformKDBResData(AppContants.DataBase.Res resType) {
+        List<KDBResData> list = null;
         switch (resType) {
             case RES_BOOK:
-                mDatas = KDBResDataMapper.transformBookDatas(bookDatas, KDBResAdapter.TYPE_BOOK, false);
+                list = KDBResDataMapper.transformBookDatas(bookDatas, KDBResAdapter.TYPE_BOOK, false);
                 break;
             case RES_STANDARD:
 
@@ -105,6 +113,12 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
 
                 break;
         }
+        //
+        if (action_more) {
+            mDatas.addAll(list);
+        } else {
+            mDatas = list;
+        }
 
         showWithData();
     }
@@ -116,6 +130,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         } else {
             mAdapter.setData(mDatas);
         }
+        closeRefreshing();
     }
 
     /**
@@ -144,6 +159,8 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         mRoot = createTree(AppContants.DataBase.TREE_PID, mTrees);
         TreeNode treeNode = mRoot.get(0);
         mTreeNodes = treeNode.getChildren();
+
+        closeRefreshing();
     }
 
     public List<TreeNode> createTree(String pid, List<TreeNode> treeRes) {
@@ -193,11 +210,11 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
             resType = (AppContants.DataBase.Res) intent.getSerializableExtra(AppContants.DataBase.KEY_RES_TYPE);
             dbType = intent.getStringExtra(AppContants.DataBase.KEY_TYPE);
             dbId = intent.getStringExtra(AppContants.DataBase.KEY_ID);
-            showWithResType();
+            initData2Show();
         }
     }
 
-    private void showWithResType() {
+    private void initData2Show() {
         switch (resType) {
             case RES_BOOK:
                 view().initShow(mContext.getString(R.string.text_book));
@@ -206,8 +223,8 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                         mBookObserver,
                         AppHelper.getInstance().getCurrentToken(),
                         dbId,
-                        themeType,
-                        key,
+                        null,
+                        null,
                         page,
                         SIZE,
                         false
@@ -238,6 +255,41 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
 
     }
 
+    private void loadMoreData(@Nullable String key,@Nullable String themeType) {
+        switch (resType) {
+            case RES_BOOK:
+                view().initShow(mContext.getString(R.string.text_book));
+                // 请求资源数据
+                model.getKDBBookListWithCache(
+                        mBookObserver,
+                        AppHelper.getInstance().getCurrentToken(),
+                        dbId,
+                        key,
+                        themeType,
+                        page,
+                        SIZE,
+                        false
+                );
+                break;
+            case RES_STANDARD:
+                view().initShow(mContext.getString(R.string.text_standard));
+                break;
+            case RES_ARTICLE:
+                view().initShow(mContext.getString(R.string.text_article));
+                break;
+            case RES_IMG:
+                view().initShow(mContext.getString(R.string.text_img));
+                break;
+            case RES_DIC:
+                view().initShow(mContext.getString(R.string.text_dictionary));
+                break;
+            case RES_INDUSTRY:
+                view().initShow(mContext.getString(R.string.text_analysis));
+                break;
+        }
+
+    }
+
     public void popTreeMenu() {
         if (mTreeNodes != null && mTreeNodes.size() != 0) {
             root.addChildren(mTreeNodes);
@@ -247,7 +299,43 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         }
     }
 
+    private void closeRefreshing() {
+        if (checkData()) {
+            view().showRefreshing(false);
+        }
+    }
+
     private void showErrorToast(int resId) {
         view().showToast(resId);
+        view().showRefreshing(false);
+    }
+
+    /**
+     * 验证是否获取完数据
+     * @return
+     */
+    private boolean checkData() {
+        return (mTreeNodes != null &&
+                mDatas !=null
+        );
+    }
+
+    public void refreshView() {
+        // 恢复页初始值
+        page = 1;
+        initData2Show();
+    }
+
+    public void loadMore() {
+        if (mDatas!=null && mDatas.size() < count) {
+            // 有更多数据可以加载
+            page++;
+
+        } else if (mDatas != null && mDatas.size() >= count) {
+            // 无更多数据加载
+            view().hasMoreData(false);
+        } else {
+            view().hasMoreData(false);
+        }
     }
 }

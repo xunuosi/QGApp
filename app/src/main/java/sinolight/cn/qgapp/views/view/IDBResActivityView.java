@@ -18,4 +18,10 @@ public interface IDBResActivityView {
     void showToast(int msgId);
 
     void showListView(KDBResAdapter adapter);
+
+    void showRefreshing(boolean enable);
+
+    void showLoadMoreing(boolean enable);
+
+    void hasMoreData(boolean hasMore);
 }

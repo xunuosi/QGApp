@@ -361,7 +361,6 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
 
     private void closeLoading() {
         if (checkData()) {
-            L.d(TAG, "isLoaded" + ",homeDatas:" + homeDatas.toString());
             mHomeAdapter = new HomeAdapter(mContext, homeDatas);
             view().showLoading(false);
             view().showView(mHomeAdapter);
