@@ -29,9 +29,8 @@
         <activity android:name=".views.activity.DBaseDetailActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".views.activity.DBResourceActivity"
-                  android:screenOrientation="portrait">
-
-            </activity>
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateHidden" />
         <activity android:name=".views.activity.LoginActivity"
                   android:screenOrientation="portrait"
                   android:launchMode="singleTask"
