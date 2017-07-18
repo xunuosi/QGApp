@@ -44,8 +44,8 @@
         android:layout_marginTop="0dp"
         android:text="@string/text_reco_words"
         style="@style/hf_banner_title_text"
-        app:layout_constraintLeft_toLeftOf="@+id/item_hot_imgs_banner"
-        app:layout_constraintTop_toTopOf="@+id/item_hot_imgs_banner"/>
+        app:layout_constraintLeft_toLeftOf="@+id/item_rec_words_banner"
+        app:layout_constraintTop_toTopOf="@+id/item_rec_words_banner"/>
 
 
 </android.support.constraint.ConstraintLayout>
