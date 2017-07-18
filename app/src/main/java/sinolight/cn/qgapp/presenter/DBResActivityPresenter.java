@@ -113,10 +113,10 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
 
                 break;
         }
-        //
+        // Load More Action
         if (action_more) {
             mDatas.addAll(list);
-        } else {
+        } else {// Refresh Action
             mDatas = list;
         }
 
@@ -255,10 +255,14 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
 
     }
 
-    private void loadMoreData(@Nullable String key,@Nullable String themeType) {
+    /**
+     * 带参数的请求数据方法
+     * @param key
+     * @param themeType
+     */
+    private void loadDataWithPara(@Nullable String key,@Nullable String themeType) {
         switch (resType) {
             case RES_BOOK:
-                view().initShow(mContext.getString(R.string.text_book));
                 // 请求资源数据
                 model.getKDBBookListWithCache(
                         mBookObserver,
@@ -272,19 +276,15 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 );
                 break;
             case RES_STANDARD:
-                view().initShow(mContext.getString(R.string.text_standard));
+
                 break;
             case RES_ARTICLE:
-                view().initShow(mContext.getString(R.string.text_article));
                 break;
             case RES_IMG:
-                view().initShow(mContext.getString(R.string.text_img));
                 break;
             case RES_DIC:
-                view().initShow(mContext.getString(R.string.text_dictionary));
                 break;
             case RES_INDUSTRY:
-                view().initShow(mContext.getString(R.string.text_analysis));
                 break;
         }
 
@@ -323,14 +323,18 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
     public void refreshView() {
         // 恢复页初始值
         page = 1;
+        // Action is refresh data
+        action_more = false;
         initData2Show();
     }
 
-    public void loadMore() {
+    public void loadMore(@Nullable String key,@Nullable String themeType) {
         if (mDatas!=null && mDatas.size() < count) {
             // 有更多数据可以加载
             page++;
-
+            // Action load more data
+            action_more = true;
+            loadDataWithPara(key, themeType);
         } else if (mDatas != null && mDatas.size() >= count) {
             // 无更多数据加载
             view().hasMoreData(false);

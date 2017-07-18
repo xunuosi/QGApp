@@ -170,4 +170,8 @@ public class TopRightMenu {
         }
     }
 
+    public boolean isShowing() {
+        return mPopupWindow.isShowing();
+    }
+
 }

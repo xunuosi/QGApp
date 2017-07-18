@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,6 +32,7 @@ import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.dagger.component.DaggerDBResActivityComponent;
 import sinolight.cn.qgapp.dagger.module.DBResActivityModule;
 import sinolight.cn.qgapp.presenter.DBResActivityPresenter;
+import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.views.holder.TreeParentHolder;
 import sinolight.cn.qgapp.views.view.IDBResActivityView;
 import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
@@ -156,6 +158,8 @@ public class DBResourceActivity extends BaseActivity implements
             tView.setDefaultViewHolder(TreeParentHolder.class);
             tView.setDefaultNodeClickListener(DBResourceActivity.this);
             tView.setUseAutoToggle(true);
+        } else {
+            tView.collapseAll();
         }
         if (mTopRightMenu == null) {
             mTopRightMenu = new TopRightMenu(DBResourceActivity.this, tView.getView());
@@ -169,6 +173,7 @@ public class DBResourceActivity extends BaseActivity implements
                     .showAsDropDown(ivMenu, -225, 0);
         } else {
             mTopRightMenu.showAsDropDown(ivMenu, -225, 0);
+
         }
     }
 
@@ -226,14 +231,15 @@ public class DBResourceActivity extends BaseActivity implements
     public void onClick(TreeNode node, Object value) {
         TreeParentHolder.IconTreeItem item = (TreeParentHolder.IconTreeItem) value;
         themeType = item.id;
+
     }
 
     @Override
     public void onLoadMore() {
+        L.d(TAG, "loadMore");
         // 正在加载数据时禁止加载更多数据
-        if (!mSwipeDbRes.isLoadingMore()) {
-            mPresenter.loadMore(mEtDbDetailSearch.getText().toString().trim(), themeType);
-        }
+        mPresenter.loadMore(mEtDbDetailSearch.getText().toString().trim(), themeType);
+
     }
 
     @Override
