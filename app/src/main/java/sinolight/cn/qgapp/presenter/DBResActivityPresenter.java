@@ -121,7 +121,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
             });
 
     private void transformKDBResData(AppContants.DataBase.Res resType) {
-        List<KDBResData> list = null;
+        List<KDBResData> list = new ArrayList<>();
         switch (resType) {
             case RES_BOOK:
                 list = KDBResDataMapper.transformBookDatas(bookDatas, KDBResAdapter.TYPE_BOOK, false);
@@ -159,7 +159,12 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         } else {
             mAdapter.setData(mDatas);
         }
-        closeRefreshing();
+        if (action_more) {
+            view().showLoadMoreing(false);
+        } else {
+            closeRefreshing();
+        }
+
     }
 
     /**
@@ -251,29 +256,27 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
             case RES_BOOK:
                 view().initShow(mContext.getString(R.string.text_book));
                 // 请求资源数据
-                model.getKDBBookListWithCache(
+                model.getKDBBookListNoCache(
                         mBookObserver,
                         AppHelper.getInstance().getCurrentToken(),
                         dbId,
                         null,
                         null,
                         page,
-                        SIZE,
-                        false
+                        SIZE
                 );
                 break;
             case RES_STANDARD:
                 view().initShow(mContext.getString(R.string.text_standard));
                 // 请求资源数据
-                model.getKDBStdListWithCache(
+                model.getKDBStdListNoCache(
                         mStandObserver,
                         AppHelper.getInstance().getCurrentToken(),
                         dbId,
                         null,
                         null,
                         page,
-                        SIZE,
-                        false
+                        SIZE
                 );
                 break;
             case RES_ARTICLE:
@@ -308,28 +311,26 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         switch (resType) {
             case RES_BOOK:
                 // 请求资源数据
-                model.getKDBBookListWithCache(
+                model.getKDBBookListNoCache(
                         mBookObserver,
                         AppHelper.getInstance().getCurrentToken(),
                         dbId,
                         key,
                         themeType,
                         page,
-                        SIZE,
-                        false
+                        SIZE
                 );
                 break;
             case RES_STANDARD:
                 // 请求资源数据
-                model.getKDBStdListWithCache(
+                model.getKDBStdListNoCache(
                         mStandObserver,
                         AppHelper.getInstance().getCurrentToken(),
                         dbId,
                         key,
                         themeType,
                         page,
-                        SIZE,
-                        false
+                        SIZE
                 );
                 break;
             case RES_ARTICLE:
@@ -379,6 +380,8 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         page = 1;
         // Action is refresh data
         action_more = false;
+        // Setting LoadMore is true
+        view().hasMoreData(true);
         initData2Show();
     }
 

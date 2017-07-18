@@ -1,19 +1,13 @@
 package sinolight.cn.qgapp.adapter;
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-
+import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.views.holder.ResBookHolder;
@@ -34,7 +28,8 @@ public class KDBResAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public KDBResAdapter(Context context, List<KDBResData> resData) {
         this.mContext = context;
-        this.mData = resData;
+        this.mData = new ArrayList<>();
+        mData.addAll(resData);
         mInflater = LayoutInflater.from(mContext);
     }
 
@@ -58,6 +53,9 @@ public class KDBResAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case TYPE_BOOK:
                 ((ResBookHolder) holder).setData(mData.get(position));
                 break;
+            case TYPE_STANDARD:
+                ((ResStandardHolder) holder).setData(mData.get(position));
+                break;
         }
     }
 
@@ -75,17 +73,7 @@ public class KDBResAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if (mData != null) {
             mData.clear();
             mData.addAll(data);
-        } else {
-            mData = data;
         }
         notifyDataSetChanged();
-    }
-
-    static class ViewHolder {
-
-
-        ViewHolder(View view) {
-
-        }
     }
 }

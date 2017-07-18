@@ -149,21 +149,18 @@ public class HttpManager {
                 new EvictProvider(update)), subscriber);
     }
 
-    public void getKDBBookListWithCache(Observer<PageEntity<List<BookEntity>>> subscriber, String token,
+    public void getKDBBookListNoCache(Observer<PageEntity<List<BookEntity>>> subscriber, String token,
                                         @Nullable String dbId, @Nullable String type, @Nullable String key,
-                                        int page, int size, boolean update) {
-        toSubscribe(cacheProvider.getKDBBookList(
-                mApiService.getKDBBookList(token,dbId,type,key, page, size),
-                new EvictProvider(update)), subscriber);
+                                        int page, int size) {
+        toSubscribe(mApiService.getKDBBookList(token,dbId,type,key, page, size), subscriber);
     }
 
-    public void getKDBStdListWithCache(Observer<PageEntity<List<ResStandardEntity>>> subscriber, String token,
+    public void getKDBStdListNoCache(Observer<PageEntity<List<ResStandardEntity>>> subscriber, String token,
                                        @Nullable String dbId, @Nullable String type, @Nullable String key,
-                                       int page, int size, boolean update) {
-        toSubscribe(cacheProvider.getKDBStdList(
-                mApiService.getKDBStdList(token,dbId,type,key, page, size),
-                new EvictProvider(update)), subscriber);
+                                       int page, int size) {
+        toSubscribe(mApiService.getKDBStdList(token,dbId,type,key, page, size), subscriber);
     }
+
 //    public void getDatasNoCache(Observer<TestBean> subscriber, int pno, int ps, String dtype) {
 //        toSubscribe(mApiService.getDatas(pno, ps,dtype), subscriber);
 //    }
