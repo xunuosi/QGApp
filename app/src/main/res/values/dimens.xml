@@ -53,4 +53,6 @@
     <dimen name="db_res_book_icon_width">118dp</dimen>
     <dimen name="db_res_book_icon_height">166dp</dimen>
     <dimen name="db_res_book_root_height">206dp</dimen>
+    <dimen name="db_res_article_icon_width">100dp</dimen>
+    <dimen name="db_res_article_icon_height">100dp</dimen>
 </resources>

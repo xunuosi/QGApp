@@ -1,11 +1,15 @@
 package sinolight.cn.qgapp.utils;
 
+import android.support.annotation.Nullable;
 import android.util.SparseArray;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
+import sinolight.cn.qgapp.data.http.entity.ResArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.ResStandardEntity;
 
 /**
@@ -60,6 +64,35 @@ public class KDBResDataMapper {
             resDataCollection = new ArrayList<>();
             for (ResStandardEntity bean : beans) {
                 resDataCollection.add(transformStandData(bean,adapterType,isSpan));
+            }
+            mKDBResDataMap.put(adapterType, resDataCollection);
+            return resDataCollection;
+        }
+        return null;
+    }
+
+    private static KDBResData transformArticleData(ResArticleEntity bean, int adapterType, boolean isSpan) {
+        if (bean == null) {
+            throw new IllegalArgumentException("Cannot transform a null value");
+        }
+        final KDBResData<ResArticleEntity> resData = new KDBResData<>();
+        resData.setItemType(adapterType);
+        resData.setSpan(isSpan);
+        resData.setLocal(false);
+        resData.setData(bean);
+        return resData;
+    }
+
+    public static List<KDBResData> transformArticleDatas(List<ResArticleEntity> beans, @Nullable int adapterType, boolean isSpan) {
+        List<KDBResData> resDataCollection;
+        if (beans != null && !beans.isEmpty()) {
+            resDataCollection = new ArrayList<>();
+            for (ResArticleEntity bean : beans) {
+                if (bean.getCover() != null) {
+                    resDataCollection.add(transformArticleData(bean, KDBResAdapter.TYPE_ARTICLE_ICON, isSpan));
+                } else {
+                    resDataCollection.add(transformArticleData(bean, KDBResAdapter.TYPE_ARTICLE, isSpan));
+                }
             }
             mKDBResDataMap.put(adapterType, resDataCollection);
             return resDataCollection;

@@ -15,6 +15,7 @@ import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
 import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
+import sinolight.cn.qgapp.data.http.entity.ResArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.ResStandardEntity;
 import sinolight.cn.qgapp.data.http.entity.ResultEntity;
 import sinolight.cn.qgapp.data.http.entity.StandardEntity;
@@ -200,6 +201,29 @@ public interface ApiService {
             @Field("dbid") String dbid,
             @Field("themeType") String themeType,
             @Field("key") String key,
+            @Field("page") int page,
+            @Field("size") int size
+    );
+
+    /**
+     * 知识库/资源库-某一知识库-文章or知识库/百科库-行业分析列表
+     * @param token
+     * @param dbid
+     * @param themeType
+     * @param key
+     * @param type:0 文章，1 行业分析
+     * @param page
+     * @param size
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("db/doIndustryAnalysisList")
+    Observable<ResultEntity<PageEntity<List<ResArticleEntity>>>> getKDBIndustryAnalysisList(
+            @Field("token") String token,
+            @Field("dbid") String dbid,
+            @Field("themeType") String themeType,
+            @Field("key") String key,
+            @Field("type") int type,
             @Field("page") int page,
             @Field("size") int size
     );

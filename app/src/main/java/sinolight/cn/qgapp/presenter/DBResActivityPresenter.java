@@ -20,6 +20,7 @@ import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
+import sinolight.cn.qgapp.data.http.entity.ResArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.ResStandardEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.KDBResDataMapper;
@@ -35,6 +36,9 @@ import sinolight.cn.qgapp.views.view.IDBResActivityView;
 
 public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, HttpManager> {
     private static final String TAG = "DBResActivityPresenter";
+    private static final int TYPE_ARTICLE = 0;
+    private static final int TYPE_INDUSTRY = 1;
+
     private Context mContext;
     private String dbType;
     private String dbId;
@@ -55,6 +59,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
     private List<KDBResData> mDatas;
     private List<BookEntity> bookDatas;
     private List<ResStandardEntity> standDatas;
+    private List<ResArticleEntity> articleDatas;
     private KDBResAdapter mAdapter;
 
 
@@ -120,6 +125,28 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 }
             });
 
+    private HttpSubscriber<PageEntity<List<ResArticleEntity>>> mArticleObserver = new HttpSubscriber<>(
+            new OnResultCallBack<PageEntity<List<ResArticleEntity>>>() {
+
+                @Override
+                public void onSuccess(PageEntity<List<ResArticleEntity>> PageEntity) {
+                    if (PageEntity != null) {
+                        count = PageEntity.getCount();
+                        articleDatas = PageEntity.getData();
+                        transformKDBResData(AppContants.DataBase.Res.RES_ARTICLE);
+                    } else {
+                        view().showRefreshing(false);
+                    }
+                }
+
+                @Override
+                public void onError(int code, String errorMsg) {
+                    L.d(TAG, "mArticleObserver code:" + code + ",errorMsg:" + errorMsg);
+                    showErrorToast(R.string.attention_data_refresh_error);
+                    view().showRefreshing(false);
+                }
+            });
+
     private void transformKDBResData(AppContants.DataBase.Res resType) {
         List<KDBResData> list = new ArrayList<>();
         switch (resType) {
@@ -130,7 +157,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 list = KDBResDataMapper.transformStandDatas(standDatas, KDBResAdapter.TYPE_STANDARD, false);
                 break;
             case RES_ARTICLE:
-
+                list = KDBResDataMapper.transformArticleDatas(articleDatas, 0, false);
                 break;
             case RES_IMG:
 
@@ -239,6 +266,9 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         if (mStandObserver != null) {
             mStandObserver.unSubscribe();
         }
+        if (mArticleObserver != null) {
+            mArticleObserver.unSubscribe();
+        }
         unbindView();
     }
 
@@ -281,6 +311,16 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 break;
             case RES_ARTICLE:
                 view().initShow(mContext.getString(R.string.text_article));
+                model.getKDBIndustryAnalysisListNoCache(
+                        mArticleObserver,
+                        AppHelper.getInstance().getCurrentToken(),
+                        dbId,
+                        null,
+                        null,
+                        TYPE_ARTICLE,
+                        page,
+                        SIZE
+                );
                 break;
             case RES_IMG:
                 view().initShow(mContext.getString(R.string.text_img));
@@ -315,8 +355,8 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                         mBookObserver,
                         AppHelper.getInstance().getCurrentToken(),
                         dbId,
-                        key,
                         themeType,
+                        key,
                         page,
                         SIZE
                 );
@@ -327,13 +367,23 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                         mStandObserver,
                         AppHelper.getInstance().getCurrentToken(),
                         dbId,
-                        key,
                         themeType,
+                        key,
                         page,
                         SIZE
                 );
                 break;
             case RES_ARTICLE:
+                model.getKDBIndustryAnalysisListNoCache(
+                        mArticleObserver,
+                        AppHelper.getInstance().getCurrentToken(),
+                        dbId,
+                        themeType,
+                        key,
+                        TYPE_ARTICLE,
+                        page,
+                        SIZE
+                );
                 break;
             case RES_IMG:
                 break;

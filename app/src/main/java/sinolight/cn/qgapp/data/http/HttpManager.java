@@ -32,6 +32,7 @@ import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
 import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
+import sinolight.cn.qgapp.data.http.entity.ResArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.ResStandardEntity;
 import sinolight.cn.qgapp.data.http.entity.ResultEntity;
 import sinolight.cn.qgapp.data.http.entity.StandardEntity;
@@ -159,6 +160,12 @@ public class HttpManager {
                                        @Nullable String dbId, @Nullable String type, @Nullable String key,
                                        int page, int size) {
         toSubscribe(mApiService.getKDBStdList(token,dbId,type,key, page, size), subscriber);
+    }
+
+    public void getKDBIndustryAnalysisListNoCache(Observer<PageEntity<List<ResArticleEntity>>> subscriber,
+                                                  String token, @Nullable String dbId, @Nullable String themeType,
+                                                  @Nullable String key, int type, int page, int size) {
+        toSubscribe(mApiService.getKDBIndustryAnalysisList(token,dbId,themeType,key, type, page, size), subscriber);
     }
 
 //    public void getDatasNoCache(Observer<TestBean> subscriber, int pno, int ps, String dtype) {
