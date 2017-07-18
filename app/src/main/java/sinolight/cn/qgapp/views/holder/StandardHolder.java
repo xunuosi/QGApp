@@ -54,8 +54,8 @@ public class StandardHolder extends RecyclerView.ViewHolder {
     }
 
     private void bindData() {
-        ImageUtil.frescoShowImageByResId(App.getContext(),
-                mHomeData.getResId(),
+        ImageUtil.frescoShowImageByUri(App.getContext(),
+                mHomeData.getUrl(),
                 mIvItemStandard,
                 width,
                 height);

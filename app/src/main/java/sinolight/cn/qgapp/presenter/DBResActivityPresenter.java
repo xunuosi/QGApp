@@ -20,6 +20,7 @@ import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
+import sinolight.cn.qgapp.data.http.entity.ResStandardEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.KDBResDataMapper;
 import sinolight.cn.qgapp.utils.L;
@@ -53,6 +54,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
 
     private List<KDBResData> mDatas;
     private List<BookEntity> bookDatas;
+    private List<ResStandardEntity> standDatas;
     private KDBResAdapter mAdapter;
 
 
@@ -96,6 +98,28 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         }
     });
 
+    private HttpSubscriber<PageEntity<List<ResStandardEntity>>> mStandObserver = new HttpSubscriber<>(
+            new OnResultCallBack<PageEntity<List<ResStandardEntity>>>() {
+
+                @Override
+                public void onSuccess(PageEntity<List<ResStandardEntity>> PageEntity) {
+                    if (PageEntity != null) {
+                        count = PageEntity.getCount();
+                        standDatas = PageEntity.getData();
+                        transformKDBResData(AppContants.DataBase.Res.RES_STANDARD);
+                    } else {
+                        view().showRefreshing(false);
+                    }
+                }
+
+                @Override
+                public void onError(int code, String errorMsg) {
+                    L.d(TAG, "mStandObserver code:" + code + ",errorMsg:" + errorMsg);
+                    showErrorToast(R.string.attention_data_refresh_error);
+                    view().showRefreshing(false);
+                }
+            });
+
     private void transformKDBResData(AppContants.DataBase.Res resType) {
         List<KDBResData> list = null;
         switch (resType) {
@@ -103,7 +127,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 list = KDBResDataMapper.transformBookDatas(bookDatas, KDBResAdapter.TYPE_BOOK, false);
                 break;
             case RES_STANDARD:
-
+                list = KDBResDataMapper.transformStandDatas(standDatas, KDBResAdapter.TYPE_STANDARD, false);
                 break;
             case RES_ARTICLE:
 
@@ -207,6 +231,9 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         if (mBookObserver != null) {
             mBookObserver.unSubscribe();
         }
+        if (mStandObserver != null) {
+            mStandObserver.unSubscribe();
+        }
         unbindView();
     }
 
@@ -237,6 +264,17 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 break;
             case RES_STANDARD:
                 view().initShow(mContext.getString(R.string.text_standard));
+                // 请求资源数据
+                model.getKDBStdListWithCache(
+                        mStandObserver,
+                        AppHelper.getInstance().getCurrentToken(),
+                        dbId,
+                        null,
+                        null,
+                        page,
+                        SIZE,
+                        false
+                );
                 break;
             case RES_ARTICLE:
                 view().initShow(mContext.getString(R.string.text_article));
@@ -282,7 +320,17 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 );
                 break;
             case RES_STANDARD:
-
+                // 请求资源数据
+                model.getKDBStdListWithCache(
+                        mStandObserver,
+                        AppHelper.getInstance().getCurrentToken(),
+                        dbId,
+                        key,
+                        themeType,
+                        page,
+                        SIZE,
+                        false
+                );
                 break;
             case RES_ARTICLE:
                 break;

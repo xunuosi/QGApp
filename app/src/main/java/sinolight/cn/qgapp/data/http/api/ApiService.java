@@ -15,6 +15,7 @@ import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
 import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
+import sinolight.cn.qgapp.data.http.entity.ResStandardEntity;
 import sinolight.cn.qgapp.data.http.entity.ResultEntity;
 import sinolight.cn.qgapp.data.http.entity.StandardEntity;
 import sinolight.cn.qgapp.data.http.entity.TokenEntity;
@@ -173,6 +174,28 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("db/doBookList")
     Observable<ResultEntity<PageEntity<List<BookEntity>>>> getKDBBookList(
+            @Field("token") String token,
+            @Field("dbid") String dbid,
+            @Field("themeType") String themeType,
+            @Field("key") String key,
+            @Field("page") int page,
+            @Field("size") int size
+    );
+
+    /**
+     * 知识库-某一知识库-标准列表
+     * @param token
+     * @param token
+     * @param dbid
+     * @param themeType
+     * @param key
+     * @param page
+     * @param size
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("db/doStdList")
+    Observable<ResultEntity<PageEntity<List<ResStandardEntity>>>> getKDBStdList(
             @Field("token") String token,
             @Field("dbid") String dbid,
             @Field("themeType") String themeType,

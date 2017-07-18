@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
+import sinolight.cn.qgapp.data.http.entity.ResStandardEntity;
 
 /**
  * Created by xns on 2017/7/5.
@@ -34,6 +35,31 @@ public class KDBResDataMapper {
             resDataCollection = new ArrayList<>();
             for (BookEntity bean : beans) {
                 resDataCollection.add(transformBookData(bean,adapterType,isSpan));
+            }
+            mKDBResDataMap.put(adapterType, resDataCollection);
+            return resDataCollection;
+        }
+        return null;
+    }
+
+    private static KDBResData transformStandData(ResStandardEntity bean, int adapterType, boolean isSpan) {
+        if (bean == null) {
+            throw new IllegalArgumentException("Cannot transform a null value");
+        }
+        final KDBResData<ResStandardEntity> resData = new KDBResData<>();
+        resData.setItemType(adapterType);
+        resData.setSpan(isSpan);
+        resData.setLocal(false);
+        resData.setData(bean);
+        return resData;
+    }
+
+    public static List<KDBResData> transformStandDatas(List<ResStandardEntity> beans, int adapterType, boolean isSpan) {
+        List<KDBResData> resDataCollection;
+        if (beans != null && !beans.isEmpty()) {
+            resDataCollection = new ArrayList<>();
+            for (ResStandardEntity bean : beans) {
+                resDataCollection.add(transformStandData(bean,adapterType,isSpan));
             }
             mKDBResDataMap.put(adapterType, resDataCollection);
             return resDataCollection;
