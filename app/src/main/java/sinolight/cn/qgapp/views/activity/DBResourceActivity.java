@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +31,6 @@ import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.dagger.component.DaggerDBResActivityComponent;
 import sinolight.cn.qgapp.dagger.module.DBResActivityModule;
 import sinolight.cn.qgapp.presenter.DBResActivityPresenter;
-import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.views.holder.TreeParentHolder;
 import sinolight.cn.qgapp.views.view.IDBResActivityView;
 import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
@@ -48,6 +47,7 @@ public class DBResourceActivity extends BaseActivity implements
     private TopRightMenu mTopRightMenu;
     private AndroidTreeView tView;
     private RecyclerView.LayoutManager mLayoutManager;
+    private String themeType;
 
     @BindView(R.id.swipe_target)
     RecyclerView mSwipeTarget;
@@ -61,6 +61,8 @@ public class DBResourceActivity extends BaseActivity implements
     ImageView ivMenu;
     @BindView(R.id.tv_title)
     TextView tvTitle;
+    @BindView(R.id.et_db_detail_search)
+    EditText mEtDbDetailSearch;
 
     public static Intent getCallIntent(Context context) {
         return new Intent(context, DBResourceActivity.class);
@@ -84,7 +86,7 @@ public class DBResourceActivity extends BaseActivity implements
         mLayoutManager = new LinearLayoutManager(DBResourceActivity.this, LinearLayoutManager.VERTICAL, false);
         mSwipeTarget.setLayoutManager(mLayoutManager);
         mSwipeTarget.setHasFixedSize(true);
-        mSwipeTarget.addItemDecoration(new DBResourceActivity.LinearDivider(mContext));
+        mSwipeTarget.addItemDecoration(new LinearDivider(mContext));
 
         mSwipeDbRes.setRefreshing(true);
         mSwipeDbRes.setOnRefreshListener(DBResourceActivity.this);
@@ -124,7 +126,7 @@ public class DBResourceActivity extends BaseActivity implements
         mPresenter.clear();
     }
 
-    @OnClick({R.id.im_back_arrow, R.id.iv_menu})
+    @OnClick({R.id.im_back_arrow, R.id.iv_menu, R.id.iv_db_detail_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.im_back_arrow:
@@ -132,6 +134,9 @@ public class DBResourceActivity extends BaseActivity implements
                 break;
             case R.id.iv_menu:
                 mPresenter.popTreeMenu();
+                break;
+            case R.id.iv_db_detail_search:
+
                 break;
         }
     }
@@ -220,21 +225,25 @@ public class DBResourceActivity extends BaseActivity implements
     @Override
     public void onClick(TreeNode node, Object value) {
         TreeParentHolder.IconTreeItem item = (TreeParentHolder.IconTreeItem) value;
-        Toast.makeText(mContext, "onClick:" + item.id, Toast.LENGTH_SHORT).show();
+        themeType = item.id;
     }
 
     @Override
     public void onLoadMore() {
         // 正在加载数据时禁止加载更多数据
         if (!mSwipeDbRes.isLoadingMore()) {
-            mPresenter.loadMore();
+            mPresenter.loadMore(mEtDbDetailSearch.getText().toString().trim(), themeType);
         }
     }
 
     @Override
     public void onRefresh() {
+        // Refresh data clear all of condition
+        mEtDbDetailSearch.setText(null);
+        themeType = null;
         mPresenter.refreshView();
     }
+
 
     private class LinearDivider extends Y_DividerItemDecoration {
         private Context context;
