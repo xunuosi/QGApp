@@ -360,7 +360,7 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
     }
 
     private void closeLoading() {
-        if (checkData()) {
+        if (checkData() && view() != null) {
             mHomeAdapter = new HomeAdapter(mContext, homeDatas);
             view().showLoading(false);
             view().showView(mHomeAdapter);

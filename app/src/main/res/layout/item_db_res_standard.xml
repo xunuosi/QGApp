@@ -4,13 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/hf_standard_root"
+    android:id="@+id/db_res_standard_root"
     android:layout_width="match_parent"
     android:layout_height="@dimen/hf_item_standard_root_height"
     android:background="@color/color_white">
 
     <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/iv_item_standard"
+        android:id="@+id/iv_db_res_item_standard"
         android:layout_width="@dimen/hf_item_standard_img_width"
         android:layout_height="@dimen/hf_item_standard_img_height"
         android:layout_marginBottom="0dp"
@@ -23,12 +23,12 @@
         fresco:actualImageScaleType="fitCenter"/>
 
     <TextView
-        android:id="@+id/tv_hf_stand_item_title"
+        android:id="@+id/tv_db_res_item_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/text_title_holder"
         style="@style/hf_standard_title_text"
-        app:layout_constraintLeft_toRightOf="@+id/iv_item_standard"
+        app:layout_constraintLeft_toRightOf="@+id/iv_db_res_item_standard"
         android:layout_marginLeft="18dp"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="30dp"
@@ -39,7 +39,7 @@
         android:ellipsize="end"/>
 
     <TextView
-        android:id="@+id/tv_hf_stand_item_num"
+        android:id="@+id/tv_db_res_item_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="18dp"
@@ -47,24 +47,24 @@
         android:text="@string/text_content_holder"
         style="@style/hf_standard_text"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toRightOf="@+id/iv_item_standard"
+        app:layout_constraintLeft_toRightOf="@+id/iv_db_res_item_standard"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_hf_stand_item_title"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_db_res_item_title"/>
 
     <TextView
-        android:id="@+id/tv_hf_stand_item_time"
+        android:id="@+id/tv_db_res_item_time"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="18dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="0dp"
-        android:text="@string/text_content_holder"
+        android:text="@string/text_e_time_holder"
         style="@style/hf_standard_text"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toRightOf="@+id/iv_item_standard"
+        app:layout_constraintLeft_toRightOf="@+id/iv_db_res_item_standard"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_hf_stand_item_num"
+        app:layout_constraintTop_toBottomOf="@+id/tv_db_res_item_num"
         app:layout_constraintVertical_bias="0.163"
         fresco:layout_constraintBottom_toBottomOf="parent"/>
 </android.support.constraint.ConstraintLayout>

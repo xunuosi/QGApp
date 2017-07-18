@@ -57,7 +57,7 @@ public class KnowledgePresenter extends BasePresenter<IKnowledgeFragmentView, Ht
     }
 
     private void closeLoading() {
-        if (checkData()) {
+        if (checkData() && view() != null) {
             mKnowledgeAdapter = new KnowledgeAdapter(mContext, mDataInternet);
             view().showLoading(false);
             view().showView(mKnowledgeAdapter);

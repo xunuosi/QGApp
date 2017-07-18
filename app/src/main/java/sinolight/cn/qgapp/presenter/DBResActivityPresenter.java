@@ -70,7 +70,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         public void onError(int code, String errorMsg) {
             L.d(TAG, "mDBResTypeObserver code:" + code + ",errorMsg:" + errorMsg);
             showErrorToast(R.string.attention_data_refresh_error);
-
+            view().showRefreshing(false);
         }
     });
 
@@ -79,15 +79,20 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
 
         @Override
         public void onSuccess(PageEntity<List<BookEntity>> PageEntity) {
-            count = PageEntity.getCount();
-            bookDatas = PageEntity.getData();
-            transformKDBResData(AppContants.DataBase.Res.RES_BOOK);
+            if (PageEntity != null) {
+                count = PageEntity.getCount();
+                bookDatas = PageEntity.getData();
+                transformKDBResData(AppContants.DataBase.Res.RES_BOOK);
+            } else {
+                view().showRefreshing(false);
+            }
         }
 
         @Override
         public void onError(int code, String errorMsg) {
             L.d(TAG, "mBookObserver code:" + code + ",errorMsg:" + errorMsg);
             showErrorToast(R.string.attention_data_refresh_error);
+            view().showRefreshing(false);
         }
     });
 
@@ -260,7 +265,8 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
      * @param key
      * @param themeType
      */
-    private void loadDataWithPara(@Nullable String key,@Nullable String themeType) {
+    public void loadDataWithPara(@Nullable String key,@Nullable String themeType,boolean isMore) {
+        action_more = isMore;
         switch (resType) {
             case RES_BOOK:
                 // 请求资源数据
@@ -333,8 +339,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
             // 有更多数据可以加载
             page++;
             // Action load more data
-            action_more = true;
-            loadDataWithPara(key, themeType);
+            loadDataWithPara(key, themeType, true);
         } else if (mDatas != null && mDatas.size() >= count) {
             // 无更多数据加载
             view().hasMoreData(false);

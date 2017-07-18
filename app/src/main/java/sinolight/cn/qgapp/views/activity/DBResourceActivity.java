@@ -9,8 +9,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +45,7 @@ import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
  */
 
 public class DBResourceActivity extends BaseActivity implements
-        IDBResActivityView, TreeNode.TreeNodeClickListener, OnRefreshListener, OnLoadMoreListener {
+        IDBResActivityView, TreeNode.TreeNodeClickListener, OnRefreshListener, OnLoadMoreListener, PopupWindow.OnDismissListener {
     private static final String TAG = "DBResourceActivity";
 
     private TopRightMenu mTopRightMenu;
@@ -173,7 +175,9 @@ public class DBResourceActivity extends BaseActivity implements
                     .showAsDropDown(ivMenu, -225, 0);
         } else {
             mTopRightMenu.showAsDropDown(ivMenu, -225, 0);
-
+        }
+        if (mTopRightMenu.getPopView() != null) {
+            mTopRightMenu.getPopView().setOnDismissListener(DBResourceActivity.this);
         }
     }
 
@@ -231,7 +235,7 @@ public class DBResourceActivity extends BaseActivity implements
     public void onClick(TreeNode node, Object value) {
         TreeParentHolder.IconTreeItem item = (TreeParentHolder.IconTreeItem) value;
         themeType = item.id;
-
+        Toast.makeText(mContext, "你选择了:" + item.name + "分类", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -248,6 +252,23 @@ public class DBResourceActivity extends BaseActivity implements
         mEtDbDetailSearch.setText(null);
         themeType = null;
         mPresenter.refreshView();
+    }
+
+    /**
+     * PopMenu dismiss call back
+     */
+    @Override
+    public void onDismiss() {
+        // recover window Alpha
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = 1.0f;
+        getWindow().setAttributes(lp);
+        // Request themeType Data
+        mPresenter.loadDataWithPara(
+                mEtDbDetailSearch.getText().toString().trim(),
+                themeType,
+                false
+        );
     }
 
 

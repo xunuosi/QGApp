@@ -27,6 +27,8 @@
     <string name="text_author">作者：</string>
     <string name="text_resource">来源：</string>
     <string name="text_publish_time">出版时间：</string>
+    <string name="text_standard_num">标准标号：%1$s</string>
+    <string name="text_e_time">实施时间：%1$s</string>
     <!--DBDetail Home-->
     <string name="text_line_book">图书\nBooks</string>
     <string name="text_line_article">文章\nArticles</string>
@@ -73,6 +75,7 @@
     <string name="text_title_holder">GB 5009.2–2016 食品安全国家标准食品中钙的测定</string>
     <string name="text_book_title_holder">现代服装经典版型设计</string>
     <string name="text_content_holder">标准标号：NSBD–00–00</string>
+    <string name="text_e_time_holder">实施时间：2020–12–12</string>
     <string name="text_technics_beautiful">工艺美术之美</string>
     <string name="text_hot_pics">热门图集</string>
     <string name="text_reco_words">推荐词条</string>

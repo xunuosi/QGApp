@@ -174,4 +174,10 @@ public class TopRightMenu {
         return mPopupWindow.isShowing();
     }
 
+    public PopupWindow getPopView() {
+        if (mPopupWindow != null) {
+            return mPopupWindow;
+        }
+        return null;
+    }
 }

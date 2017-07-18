@@ -23,6 +23,8 @@ public class StandardHolder extends RecyclerView.ViewHolder {
     private HomeData mHomeData;
     private int width;
     private int height;
+    private String standardNum;
+    private String exTime;
     @BindView(R.id.iv_item_standard)
     SimpleDraweeView mIvItemStandard;
     @BindView(R.id.tv_hf_stand_item_title)
@@ -41,6 +43,7 @@ public class StandardHolder extends RecyclerView.ViewHolder {
                 App.getContext().getResources().getDisplayMetrics().density);
         height = (int) (App.getContext().getResources().getDimensionPixelOffset(R.dimen.hf_item_standard_img_height) /
                 App.getContext().getResources().getDisplayMetrics().density);
+
     }
 
     public void setData(HomeData homeData) {
@@ -57,7 +60,13 @@ public class StandardHolder extends RecyclerView.ViewHolder {
                 width,
                 height);
         mTvHfStandItemTitle.setText(mHomeData.getTitle());
-        mTvHfStandItemNum.setText(mHomeData.getStdno());
-        mTvHfStandItemTime.setText(mHomeData.getImdate());
+
+        String stanFormat = App.getContext().getString(R.string.text_standard_num);
+        standardNum = String.format(stanFormat, mHomeData.getStdno());
+        mTvHfStandItemNum.setText(standardNum);
+
+        String exTimeFormat = App.getContext().getString(R.string.text_e_time);
+        exTime = String.format(exTimeFormat, mHomeData.getImdate());
+        mTvHfStandItemTime.setText(exTime);
     }
 }
