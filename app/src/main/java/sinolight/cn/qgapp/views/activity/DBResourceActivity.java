@@ -141,7 +141,11 @@ public class DBResourceActivity extends BaseActivity implements
                 mPresenter.popTreeMenu();
                 break;
             case R.id.iv_db_detail_search:
-
+                mPresenter.loadDataWithPara(
+                        mEtDbDetailSearch.getText().toString().trim(),
+                        themeType,
+                        false
+                );
                 break;
         }
     }
