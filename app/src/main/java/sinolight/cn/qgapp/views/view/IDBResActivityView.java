@@ -24,4 +24,6 @@ public interface IDBResActivityView {
     void showLoadMoreing(boolean enable);
 
     void hasMoreData(boolean hasMore);
+
+    void showTab(boolean enable);
 }

@@ -360,6 +360,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 break;
             case RES_DIC:
                 view().initShow(mContext.getString(R.string.text_dictionary));
+                view().showTab(true);
                 break;
             case RES_INDUSTRY:
                 view().initShow(mContext.getString(R.string.text_analysis));
