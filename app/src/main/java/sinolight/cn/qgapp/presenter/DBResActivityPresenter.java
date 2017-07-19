@@ -554,11 +554,11 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
     public void tabWordShow(int position, @Nullable String key) {
         switch (position) {
             case 0:
-                dicType = TYPE_ALL_DIC;
+                dicType = TYPE_RECO_DIC;
                 loadDataWithPara(key, null, false);
                 break;
             case 1:
-                dicType = TYPE_RECO_DIC;
+                dicType = TYPE_ALL_DIC;
                 loadDataWithPara(key, null, false);
                 break;
         }

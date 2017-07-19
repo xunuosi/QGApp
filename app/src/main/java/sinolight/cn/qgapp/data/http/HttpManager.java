@@ -178,7 +178,7 @@ public class HttpManager {
 
     public void getKDBWordListNoCache(Observer<PageEntity<List<ResWordEntity>>> subscriber, String token,
                                        @Nullable String dbId, int type, @Nullable String key, int page, int size) {
-        toSubscribe(mApiService.getKDBWordList(token,dbId,key,type, page, size), subscriber);
+        toSubscribe(mApiService.getKDBWordList(token,"5f5f7c1e-2d7f-4570-a639-a5c4bae75378",key,type, page, size), subscriber);
     }
 
     public void getCode(Observer<VCodeEntity> subscriber, String time) {
