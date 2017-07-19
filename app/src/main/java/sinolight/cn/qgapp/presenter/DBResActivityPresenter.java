@@ -23,6 +23,7 @@ import sinolight.cn.qgapp.data.http.entity.PageEntity;
 import sinolight.cn.qgapp.data.http.entity.ResArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.ResImgEntity;
 import sinolight.cn.qgapp.data.http.entity.ResStandardEntity;
+import sinolight.cn.qgapp.data.http.entity.ResWordEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.KDBResDataMapper;
 import sinolight.cn.qgapp.utils.L;
@@ -39,7 +40,10 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
     private static final String TAG = "DBResActivityPresenter";
     private static final int TYPE_ARTICLE = 0;
     private static final int TYPE_INDUSTRY = 1;
+    private static final int TYPE_RECO_DIC = 0;
+    private static final int TYPE_ALL_DIC = 1;
 
+    private int dicType = TYPE_RECO_DIC;
     private Context mContext;
     private String dbType;
     private String dbId;
@@ -62,6 +66,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
     private List<ResStandardEntity> standDatas;
     private List<ResArticleEntity> articleDatas;
     private List<ResImgEntity> imgDatas;
+    private List<ResWordEntity> wordDatas;
     private KDBResAdapter mAdapter;
 
 
@@ -171,6 +176,28 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 }
             });
 
+    private HttpSubscriber<PageEntity<List<ResWordEntity>>> mWordObserver = new HttpSubscriber<>(
+            new OnResultCallBack<PageEntity<List<ResWordEntity>>>() {
+
+                @Override
+                public void onSuccess(PageEntity<List<ResWordEntity>> PageEntity) {
+                    if (PageEntity != null) {
+                        count = PageEntity.getCount();
+                        wordDatas = PageEntity.getData();
+                        transformKDBResData(AppContants.DataBase.Res.RES_DIC);
+                    } else {
+                        view().showRefreshing(false);
+                    }
+                }
+
+                @Override
+                public void onError(int code, String errorMsg) {
+                    L.d(TAG, "mWordObserver code:" + code + ",errorMsg:" + errorMsg);
+                    showErrorToast(R.string.attention_data_refresh_error);
+                    view().showRefreshing(false);
+                }
+            });
+
     private void transformKDBResData(AppContants.DataBase.Res resType) {
         List<KDBResData> list = new ArrayList<>();
         switch (resType) {
@@ -187,7 +214,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 list = KDBResDataMapper.transformImgDatas(imgDatas, KDBResAdapter.TYPE_IMG, false);
                 break;
             case RES_DIC:
-
+                list = KDBResDataMapper.transformDicDatas(wordDatas, KDBResAdapter.TYPE_WORD, false);
                 break;
             case RES_INDUSTRY:
 
@@ -293,6 +320,12 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         if (mArticleObserver != null) {
             mArticleObserver.unSubscribe();
         }
+        if (mImgObserver != null) {
+            mImgObserver.unSubscribe();
+        }
+        if (mWordObserver != null) {
+            mWordObserver.unSubscribe();
+        }
         unbindView();
     }
 
@@ -361,6 +394,16 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
             case RES_DIC:
                 view().initShow(mContext.getString(R.string.text_dictionary));
                 view().showTab(true);
+                view().showFooterView(true, String.valueOf(count));
+                model.getKDBWordListNoCache(
+                        mWordObserver,
+                        AppHelper.getInstance().getCurrentToken(),
+                        dbId,
+                        dicType,
+                        null,
+                        page,
+                        SIZE
+                );
                 break;
             case RES_INDUSTRY:
                 view().initShow(mContext.getString(R.string.text_analysis));
@@ -432,6 +475,16 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 );
                 break;
             case RES_DIC:
+                // 请求资源数据
+                model.getKDBWordListNoCache(
+                        mWordObserver,
+                        AppHelper.getInstance().getCurrentToken(),
+                        dbId,
+                        dicType,
+                        key,
+                        page,
+                        SIZE
+                );
                 break;
             case RES_INDUSTRY:
                 break;
@@ -491,5 +544,24 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         } else {
             view().hasMoreData(false);
         }
+    }
+
+    /**
+     * Word Res tab change
+     *
+     * @param position
+     */
+    public void tabWordShow(int position, @Nullable String key) {
+        switch (position) {
+            case 0:
+                dicType = TYPE_ALL_DIC;
+                loadDataWithPara(key, null, false);
+                break;
+            case 1:
+                dicType = TYPE_RECO_DIC;
+                loadDataWithPara(key, null, false);
+                break;
+        }
+
     }
 }

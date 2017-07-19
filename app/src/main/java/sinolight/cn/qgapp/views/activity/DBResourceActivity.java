@@ -34,7 +34,6 @@ import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.dagger.component.DaggerDBResActivityComponent;
 import sinolight.cn.qgapp.dagger.module.DBResActivityModule;
 import sinolight.cn.qgapp.presenter.DBResActivityPresenter;
-import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.views.holder.TreeParentHolder;
 import sinolight.cn.qgapp.views.view.IDBResActivityView;
 import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
@@ -45,7 +44,8 @@ import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
  */
 
 public class DBResourceActivity extends BaseActivity implements
-        IDBResActivityView, TreeNode.TreeNodeClickListener, OnRefreshListener, OnLoadMoreListener, PopupWindow.OnDismissListener {
+        IDBResActivityView, TreeNode.TreeNodeClickListener, OnRefreshListener, OnLoadMoreListener,
+        PopupWindow.OnDismissListener, TabLayout.OnTabSelectedListener {
     private static final String TAG = "DBResourceActivity";
 
     private TopRightMenu mTopRightMenu;
@@ -69,7 +69,8 @@ public class DBResourceActivity extends BaseActivity implements
     EditText mEtDbDetailSearch;
     @BindView(R.id.tab_db_res)
     TabLayout mTabDbRes;
-
+    @BindView(R.id.tv_count_db_res)
+    TextView mTvCountDbRes;
 
     public static Intent getCallIntent(Context context) {
         return new Intent(context, DBResourceActivity.class);
@@ -91,8 +92,9 @@ public class DBResourceActivity extends BaseActivity implements
     @Override
     protected void initViews() {
         // init TabLayout
-        mTabDbRes.addTab(mTabDbRes.newTab().setText(R.string.text_reco_words),true);
+        mTabDbRes.addTab(mTabDbRes.newTab().setText(R.string.text_reco_words), true);
         mTabDbRes.addTab(mTabDbRes.newTab().setText(R.string.text_all_word));
+        mTabDbRes.addOnTabSelectedListener(DBResourceActivity.this);
 
         mLayoutManager = new LinearLayoutManager(DBResourceActivity.this, LinearLayoutManager.VERTICAL, false);
         mSwipeTarget.setLayoutManager(mLayoutManager);
@@ -256,6 +258,21 @@ public class DBResourceActivity extends BaseActivity implements
         }
     }
 
+    /**
+     * 显示词条页脚信息
+     * @param enable
+     * @param msg
+     */
+    @Override
+    public void showFooterView(boolean enable, String msg) {
+        if (enable) {
+            mTvCountDbRes.setText(String.format(getString(R.string.text_word_count), msg));
+            mTvCountDbRes.setVisibility(View.VISIBLE);
+        } else {
+            mTvCountDbRes.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     public void onClick(TreeNode node, Object value) {
         TreeParentHolder.IconTreeItem item = (TreeParentHolder.IconTreeItem) value;
@@ -265,7 +282,6 @@ public class DBResourceActivity extends BaseActivity implements
 
     @Override
     public void onLoadMore() {
-        L.d(TAG, "loadMore");
         // 正在加载数据时禁止加载更多数据
         mPresenter.loadMore(mEtDbDetailSearch.getText().toString().trim(), themeType);
 
@@ -294,6 +310,24 @@ public class DBResourceActivity extends BaseActivity implements
                 themeType,
                 false
         );
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        mPresenter.tabWordShow(
+                tab.getPosition(),
+                mEtDbDetailSearch.getText().toString().trim()
+                );
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 
 

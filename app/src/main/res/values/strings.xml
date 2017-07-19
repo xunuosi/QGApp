@@ -27,8 +27,10 @@
     <string name="text_author">作者：</string>
     <string name="text_resource">来源：</string>
     <string name="text_publish_time">出版时间：</string>
+    <string name="text_resource_format">来源：%1$s</string>
     <string name="text_standard_num">标准标号：%1$s</string>
     <string name="text_e_time">实施时间：%1$s</string>
+    <string name="text_word_count">共：%1$s条</string>
     <string name="text_hot_pics">热门图集</string>
     <string name="text_reco_words">推荐词条</string>
     <string name="text_all_word">全部词条</string>
@@ -91,4 +93,5 @@
     <string name="toolbar_knowledge_title">行业知识库</string>
     <!--Attention-->
     <string name="attention_data_refresh_error">数据刷新错误，请检查网络或下拉重新刷新数据!</string>
+    <string name="text_word_footer_holder">共10000条</string>
 </resources>

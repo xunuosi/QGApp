@@ -114,7 +114,6 @@ public class RecoWordsHolder extends RecyclerView.ViewHolder implements
 
     @Override
     public void onPageSelected(int position) {
-        L.d(TAG, "position:" + position);
         // 9条数据 position变化范围：1-10，其中到10的时候直接又变成1需要特殊处理
         if (position == titles.size() + 1) {
             return;

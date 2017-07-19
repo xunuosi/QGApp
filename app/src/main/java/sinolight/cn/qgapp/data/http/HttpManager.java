@@ -35,6 +35,7 @@ import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
 import sinolight.cn.qgapp.data.http.entity.ResArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.ResImgEntity;
 import sinolight.cn.qgapp.data.http.entity.ResStandardEntity;
+import sinolight.cn.qgapp.data.http.entity.ResWordEntity;
 import sinolight.cn.qgapp.data.http.entity.ResultEntity;
 import sinolight.cn.qgapp.data.http.entity.StandardEntity;
 import sinolight.cn.qgapp.data.http.entity.TokenEntity;
@@ -172,7 +173,12 @@ public class HttpManager {
     public void getKDBdoPicListNoCache(Observer<PageEntity<List<ResImgEntity>>> subscriber, String token,
                                        @Nullable String dbId, @Nullable String themeType,
                                        @Nullable String key, int page, int size) {
-        toSubscribe(mApiService.getKDBdoPicList(token,dbId,themeType,key, page, size), subscriber);
+        toSubscribe(mApiService.getKDBPicList(token,dbId,themeType,key, page, size), subscriber);
+    }
+
+    public void getKDBWordListNoCache(Observer<PageEntity<List<ResWordEntity>>> subscriber, String token,
+                                       @Nullable String dbId, int type, @Nullable String key, int page, int size) {
+        toSubscribe(mApiService.getKDBWordList(token,dbId,key,type, page, size), subscriber);
     }
 
     public void getCode(Observer<VCodeEntity> subscriber, String time) {

@@ -12,6 +12,7 @@ import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.ResArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.ResImgEntity;
 import sinolight.cn.qgapp.data.http.entity.ResStandardEntity;
+import sinolight.cn.qgapp.data.http.entity.ResWordEntity;
 
 /**
  * Created by xns on 2017/7/5.
@@ -119,6 +120,31 @@ public class KDBResDataMapper {
             resDataCollection = new ArrayList<>();
             for (ResImgEntity bean : beans) {
                 resDataCollection.add(transformImgData(bean, adapterType, isSpan));
+            }
+            mKDBResDataMap.put(adapterType, resDataCollection);
+            return resDataCollection;
+        }
+        return null;
+    }
+
+    private static KDBResData transformDicData(ResWordEntity bean, int adapterType, boolean isSpan) {
+        if (bean == null) {
+            throw new IllegalArgumentException("Cannot transform a null value");
+        }
+        final KDBResData<ResWordEntity> resData = new KDBResData<>();
+        resData.setItemType(adapterType);
+        resData.setSpan(isSpan);
+        resData.setLocal(false);
+        resData.setData(bean);
+        return resData;
+    }
+
+    public static List<KDBResData> transformDicDatas(List<ResWordEntity> beans, int adapterType, boolean isSpan) {
+        List<KDBResData> resDataCollection;
+        if (beans != null && !beans.isEmpty()) {
+            resDataCollection = new ArrayList<>();
+            for (ResWordEntity bean : beans) {
+                resDataCollection.add(transformDicData(bean, adapterType, isSpan));
             }
             mKDBResDataMap.put(adapterType, resDataCollection);
             return resDataCollection;

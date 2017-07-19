@@ -18,6 +18,7 @@ import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
 import sinolight.cn.qgapp.data.http.entity.ResArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.ResImgEntity;
 import sinolight.cn.qgapp.data.http.entity.ResStandardEntity;
+import sinolight.cn.qgapp.data.http.entity.ResWordEntity;
 import sinolight.cn.qgapp.data.http.entity.ResultEntity;
 import sinolight.cn.qgapp.data.http.entity.StandardEntity;
 import sinolight.cn.qgapp.data.http.entity.TokenEntity;
@@ -241,11 +242,32 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("db/doPicInfo")
-    Observable<ResultEntity<PageEntity<List<ResImgEntity>>>> getKDBdoPicList(
+    Observable<ResultEntity<PageEntity<List<ResImgEntity>>>> getKDBPicList(
             @Field("token") String token,
             @Field("dbid") String dbid,
             @Field("themeType") String themeType,
             @Field("key") String key,
+            @Field("page") int page,
+            @Field("size") int size
+    );
+
+    /**
+     * 识库/资源库-某一知识库-词典（推荐词条/全部词条）列表
+     * @param token
+     * @param dbid
+     * @param type:0 推荐词条，1 全部词条
+     * @param key
+     * @param page
+     * @param size
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("db/doEntryList")
+    Observable<ResultEntity<PageEntity<List<ResWordEntity>>>> getKDBWordList(
+            @Field("token") String token,
+            @Field("dbid") String dbid,
+            @Field("key") String key,
+            @Field("type") int type,
             @Field("page") int page,
             @Field("size") int size
     );

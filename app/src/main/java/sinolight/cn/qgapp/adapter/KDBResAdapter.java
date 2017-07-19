@@ -6,8 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.facebook.drawee.view.SimpleDraweeView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +20,7 @@ import sinolight.cn.qgapp.views.holder.ResArticleWithPicHolder;
 import sinolight.cn.qgapp.views.holder.ResBookHolder;
 import sinolight.cn.qgapp.views.holder.ResImgHolder;
 import sinolight.cn.qgapp.views.holder.ResStandardHolder;
+import sinolight.cn.qgapp.views.holder.ResWordHolder;
 
 /**
  * Created by xns on 2017/7/17..
@@ -34,6 +34,7 @@ public class KDBResAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     // 无图片时候的类型
     public static final int TYPE_ARTICLE = 3;
     public static final int TYPE_IMG = 4;
+    public static final int TYPE_WORD = 5;
 
     private Context mContext;
     private LayoutInflater mInflater;
@@ -65,6 +66,9 @@ public class KDBResAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case TYPE_IMG:
                 holder = new ResImgHolder(mInflater.inflate(R.layout.item_db_res_img, parent, false));
                 break;
+            case TYPE_WORD:
+                holder = new ResWordHolder(mInflater.inflate(R.layout.item_db_res_word, parent, false));
+                break;
         }
         return holder;
     }
@@ -87,6 +91,9 @@ public class KDBResAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     break;
                 case TYPE_IMG:
                     ((ResImgHolder) holder).setData(mData.get(position));
+                    break;
+                case TYPE_WORD:
+                    ((ResWordHolder) holder).setData(mData.get(position), position);
                     break;
             }
         } catch (ClassCastException e) {
