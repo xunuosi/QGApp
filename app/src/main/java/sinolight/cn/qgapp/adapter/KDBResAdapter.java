@@ -1,19 +1,25 @@
 package sinolight.cn.qgapp.adapter;
 
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.views.holder.ResArticleHolder;
 import sinolight.cn.qgapp.views.holder.ResArticleWithPicHolder;
 import sinolight.cn.qgapp.views.holder.ResBookHolder;
+import sinolight.cn.qgapp.views.holder.ResImgHolder;
 import sinolight.cn.qgapp.views.holder.ResStandardHolder;
 
 /**
@@ -27,6 +33,7 @@ public class KDBResAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public static final int TYPE_ARTICLE_ICON = 2;
     // 无图片时候的类型
     public static final int TYPE_ARTICLE = 3;
+    public static final int TYPE_IMG = 4;
 
     private Context mContext;
     private LayoutInflater mInflater;
@@ -55,25 +62,35 @@ public class KDBResAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case TYPE_ARTICLE_ICON:
                 holder = new ResArticleWithPicHolder(mInflater.inflate(R.layout.item_icon_article, parent, false));
                 break;
+            case TYPE_IMG:
+                holder = new ResImgHolder(mInflater.inflate(R.layout.item_db_res_img, parent, false));
+                break;
         }
         return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        switch (getItemViewType(position)) {
-            case TYPE_BOOK:
-                ((ResBookHolder) holder).setData(mData.get(position));
-                break;
-            case TYPE_STANDARD:
-                ((ResStandardHolder) holder).setData(mData.get(position));
-                break;
-            case TYPE_ARTICLE:
-                ((ResArticleHolder) holder).setData(mData.get(position));
-                break;
-            case TYPE_ARTICLE_ICON:
-                ((ResArticleWithPicHolder) holder).setData(mData.get(position));
-                break;
+        try {
+            switch (getItemViewType(position)) {
+                case TYPE_BOOK:
+                    ((ResBookHolder) holder).setData(mData.get(position));
+                    break;
+                case TYPE_STANDARD:
+                    ((ResStandardHolder) holder).setData(mData.get(position));
+                    break;
+                case TYPE_ARTICLE:
+                    ((ResArticleHolder) holder).setData(mData.get(position));
+                    break;
+                case TYPE_ARTICLE_ICON:
+                    ((ResArticleWithPicHolder) holder).setData(mData.get(position));
+                    break;
+                case TYPE_IMG:
+                    ((ResImgHolder) holder).setData(mData.get(position));
+                    break;
+            }
+        } catch (ClassCastException e) {
+            e.printStackTrace();
         }
     }
 
@@ -94,4 +111,5 @@ public class KDBResAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
         notifyDataSetChanged();
     }
+
 }

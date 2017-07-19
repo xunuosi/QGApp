@@ -21,6 +21,7 @@ import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
 import sinolight.cn.qgapp.data.http.entity.ResArticleEntity;
+import sinolight.cn.qgapp.data.http.entity.ResImgEntity;
 import sinolight.cn.qgapp.data.http.entity.ResStandardEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.KDBResDataMapper;
@@ -60,6 +61,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
     private List<BookEntity> bookDatas;
     private List<ResStandardEntity> standDatas;
     private List<ResArticleEntity> articleDatas;
+    private List<ResImgEntity> imgDatas;
     private KDBResAdapter mAdapter;
 
 
@@ -111,7 +113,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                     if (PageEntity != null) {
                         count = PageEntity.getCount();
                         standDatas = PageEntity.getData();
-                        transformKDBResData(AppContants.DataBase.Res.RES_STANDARD);
+                        transformKDBResData(AppContants.DataBase.Res.RES_IMG);
                     } else {
                         view().showRefreshing(false);
                     }
@@ -147,6 +149,28 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 }
             });
 
+    private HttpSubscriber<PageEntity<List<ResImgEntity>>> mImgObserver = new HttpSubscriber<>(
+            new OnResultCallBack<PageEntity<List<ResImgEntity>>>() {
+
+                @Override
+                public void onSuccess(PageEntity<List<ResImgEntity>> PageEntity) {
+                    if (PageEntity != null) {
+                        count = PageEntity.getCount();
+                        imgDatas = PageEntity.getData();
+                        transformKDBResData(AppContants.DataBase.Res.RES_ARTICLE);
+                    } else {
+                        view().showRefreshing(false);
+                    }
+                }
+
+                @Override
+                public void onError(int code, String errorMsg) {
+                    L.d(TAG, "mImgObserver code:" + code + ",errorMsg:" + errorMsg);
+                    showErrorToast(R.string.attention_data_refresh_error);
+                    view().showRefreshing(false);
+                }
+            });
+
     private void transformKDBResData(AppContants.DataBase.Res resType) {
         List<KDBResData> list = new ArrayList<>();
         switch (resType) {
@@ -160,7 +184,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 list = KDBResDataMapper.transformArticleDatas(articleDatas, 0, false);
                 break;
             case RES_IMG:
-
+                list = KDBResDataMapper.transformImgDatas(imgDatas, KDBResAdapter.TYPE_IMG, false);
                 break;
             case RES_DIC:
 
@@ -324,6 +348,15 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 break;
             case RES_IMG:
                 view().initShow(mContext.getString(R.string.text_img));
+                model.getKDBdoPicListNoCache(
+                        mImgObserver,
+                        AppHelper.getInstance().getCurrentToken(),
+                        dbId,
+                        null,
+                        null,
+                        page,
+                        SIZE
+                );
                 break;
             case RES_DIC:
                 view().initShow(mContext.getString(R.string.text_dictionary));
@@ -386,6 +419,16 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 );
                 break;
             case RES_IMG:
+                // 请求资源数据
+                model.getKDBdoPicListNoCache(
+                        mImgObserver,
+                        AppHelper.getInstance().getCurrentToken(),
+                        dbId,
+                        themeType,
+                        key,
+                        page,
+                        SIZE
+                );
                 break;
             case RES_DIC:
                 break;

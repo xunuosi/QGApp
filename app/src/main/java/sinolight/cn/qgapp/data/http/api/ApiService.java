@@ -16,6 +16,7 @@ import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
 import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
 import sinolight.cn.qgapp.data.http.entity.ResArticleEntity;
+import sinolight.cn.qgapp.data.http.entity.ResImgEntity;
 import sinolight.cn.qgapp.data.http.entity.ResStandardEntity;
 import sinolight.cn.qgapp.data.http.entity.ResultEntity;
 import sinolight.cn.qgapp.data.http.entity.StandardEntity;
@@ -224,6 +225,27 @@ public interface ApiService {
             @Field("themeType") String themeType,
             @Field("key") String key,
             @Field("type") int type,
+            @Field("page") int page,
+            @Field("size") int size
+    );
+
+    /**
+     * 知识库-图片列表信息
+     * @param token
+     * @param dbid
+     * @param themeType
+     * @param key
+     * @param page
+     * @param size
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("db/doPicInfo")
+    Observable<ResultEntity<PageEntity<List<ResImgEntity>>>> getKDBdoPicList(
+            @Field("token") String token,
+            @Field("dbid") String dbid,
+            @Field("themeType") String themeType,
+            @Field("key") String key,
             @Field("page") int page,
             @Field("size") int size
     );

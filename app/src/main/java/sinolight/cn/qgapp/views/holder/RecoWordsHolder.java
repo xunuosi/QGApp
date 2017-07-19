@@ -63,14 +63,16 @@ public class RecoWordsHolder extends RecyclerView.ViewHolder implements
 
     private void transformData() {
         datas = mHomeData.getDatas();
+        imgList = new ArrayList();
+        titles = new ArrayList<>();
         if (datas == null || datas.isEmpty()) {
-            imgList = new ArrayList();
             imgList.add(R.drawable.recwords_bg);
             imgList.add(R.drawable.recwords_bg);
             imgList.add(R.drawable.recwords_bg);
+            titles.add(mTvRecWordsBannerCenterTitle.getText().toString());
+            titles.add(mTvRecWordsBannerCenterTitle.getText().toString());
+            titles.add(mTvRecWordsBannerCenterTitle.getText().toString());
         } else {
-            imgList = new ArrayList();
-            titles = new ArrayList<>();
             for (RecommendEntity bean : datas) {
                 titles.add(bean.getTitle());
                 imgList.add(R.drawable.recwords_bg);

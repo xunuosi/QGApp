@@ -33,6 +33,7 @@ import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
 import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
 import sinolight.cn.qgapp.data.http.entity.ResArticleEntity;
+import sinolight.cn.qgapp.data.http.entity.ResImgEntity;
 import sinolight.cn.qgapp.data.http.entity.ResStandardEntity;
 import sinolight.cn.qgapp.data.http.entity.ResultEntity;
 import sinolight.cn.qgapp.data.http.entity.StandardEntity;
@@ -168,9 +169,11 @@ public class HttpManager {
         toSubscribe(mApiService.getKDBIndustryAnalysisList(token,dbId,themeType,key, type, page, size), subscriber);
     }
 
-//    public void getDatasNoCache(Observer<TestBean> subscriber, int pno, int ps, String dtype) {
-//        toSubscribe(mApiService.getDatas(pno, ps,dtype), subscriber);
-//    }
+    public void getKDBdoPicListNoCache(Observer<PageEntity<List<ResImgEntity>>> subscriber, String token,
+                                       @Nullable String dbId, @Nullable String themeType,
+                                       @Nullable String key, int page, int size) {
+        toSubscribe(mApiService.getKDBdoPicList(token,dbId,themeType,key, page, size), subscriber);
+    }
 
     public void getCode(Observer<VCodeEntity> subscriber, String time) {
         toSubscribe(mApiService.getCode(time), subscriber);
