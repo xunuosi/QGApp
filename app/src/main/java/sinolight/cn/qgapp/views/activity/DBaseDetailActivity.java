@@ -14,7 +14,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.dagger.component.DaggerActivityComponent;
@@ -94,7 +93,8 @@ public class DBaseDetailActivity extends BaseActivity {
 
     private void showBanner(int imgId) {
         int width = ScreenUtil.getScreenWidth2Dp(mContext);
-        int height = (int) App.getContext().getResources().getDimension(R.dimen.db_detail_img_height);
+        int height = (int) (getResources().getDimension(R.dimen.db_detail_img_height)
+                / getResources().getDisplayMetrics().density);
         ImageUtil.frescoShowImageByResId(
                 mContext,
                 imgId,

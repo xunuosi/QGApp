@@ -8,16 +8,16 @@ package sinolight.cn.qgapp.data.http.entity;
 public class PageEntity<T> {
     private T data;
     private int page;
-    private int siez;
+    private int size;
     private int count;
 
     public PageEntity() {
     }
 
-    public PageEntity(T data, int page, int siez, int count) {
+    public PageEntity(T data, int page, int size, int count) {
         this.data = data;
         this.page = page;
-        this.siez = siez;
+        this.size = size;
         this.count = count;
     }
 
@@ -38,11 +38,11 @@ public class PageEntity<T> {
     }
 
     public int getSiez() {
-        return siez;
+        return size;
     }
 
     public void setSiez(int siez) {
-        this.siez = siez;
+        this.size = siez;
     }
 
     public int getCount() {
@@ -58,7 +58,7 @@ public class PageEntity<T> {
         return "PageEntity{" +
                 "data=" + data +
                 ", page=" + page +
-                ", siez=" + siez +
+                ", siez=" + size +
                 ", count=" + count +
                 '}';
     }
