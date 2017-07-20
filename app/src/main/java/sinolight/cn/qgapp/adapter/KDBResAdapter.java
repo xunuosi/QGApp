@@ -35,6 +35,9 @@ public class KDBResAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public static final int TYPE_ARTICLE = 3;
     public static final int TYPE_IMG = 4;
     public static final int TYPE_WORD = 5;
+    public static final int TYPE_INDUSTRY_ICON = 6;
+    // 无图片时候的类型
+    public static final int TYPE_INDUSTRY = 7;
 
     private Context mContext;
     private LayoutInflater mInflater;
@@ -69,6 +72,12 @@ public class KDBResAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case TYPE_WORD:
                 holder = new ResWordHolder(mInflater.inflate(R.layout.item_db_res_word, parent, false));
                 break;
+            case TYPE_INDUSTRY:
+                holder = new ResArticleHolder(mInflater.inflate(R.layout.item_hot_article, parent, false));
+                break;
+            case TYPE_INDUSTRY_ICON:
+                holder = new ResArticleWithPicHolder(mInflater.inflate(R.layout.item_icon_article, parent, false));
+                break;
         }
         return holder;
     }
@@ -84,16 +93,22 @@ public class KDBResAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     ((ResStandardHolder) holder).setData(mData.get(position));
                     break;
                 case TYPE_ARTICLE:
-                    ((ResArticleHolder) holder).setData(mData.get(position));
+                    ((ResArticleHolder) holder).setData(mData.get(position),ResArticleHolder.TYPE_ARTICLE);
                     break;
                 case TYPE_ARTICLE_ICON:
-                    ((ResArticleWithPicHolder) holder).setData(mData.get(position));
+                    ((ResArticleWithPicHolder) holder).setData(mData.get(position),ResArticleWithPicHolder.TYPE_ARTICLE);
                     break;
                 case TYPE_IMG:
                     ((ResImgHolder) holder).setData(mData.get(position));
                     break;
                 case TYPE_WORD:
                     ((ResWordHolder) holder).setData(mData.get(position), position);
+                    break;
+                case TYPE_INDUSTRY:
+                    ((ResArticleHolder) holder).setData(mData.get(position), ResArticleHolder.TYPE_INDUSTRY);
+                    break;
+                case TYPE_INDUSTRY_ICON:
+                    ((ResArticleWithPicHolder) holder).setData(mData.get(position),ResArticleWithPicHolder.TYPE_INDUSTRY);
                     break;
             }
         } catch (ClassCastException e) {

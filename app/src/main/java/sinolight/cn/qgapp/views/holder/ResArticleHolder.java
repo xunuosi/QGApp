@@ -22,6 +22,10 @@ import sinolight.cn.qgapp.utils.L;
 
 public class ResArticleHolder extends RecyclerView.ViewHolder {
     private static final String TAG = "ResArticleHolder";
+    public static final int TYPE_ARTICLE = 0;
+    public static final int TYPE_INDUSTRY = 1;
+
+    private int holderType;
     private ResArticleEntity data;
     @BindView(R.id.tv_item_article_title)
     TextView mTvItemArticleTitle;
@@ -40,9 +44,12 @@ public class ResArticleHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, layout);
     }
 
-    public void setData(KDBResData<ResArticleEntity> resData) {
+    public void setData(KDBResData<ResArticleEntity> resData,int holderType) {
         data = resData.getData();
-        bindData();
+        this.holderType = holderType;
+        if (data != null) {
+            bindData();
+        }
     }
 
     private void bindData() {
@@ -56,7 +63,12 @@ public class ResArticleHolder extends RecyclerView.ViewHolder {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.item_hf_article_root:
-                L.d(TAG, "onClick:" + data.getName());
+                if (holderType == TYPE_ARTICLE) {
+                    // Go to Article detail
+                    L.d(TAG, "onClick:" + data.getName());
+                } else if (holderType == TYPE_INDUSTRY) {
+                    // go to Industry detail
+                }
                 break;
         }
     }

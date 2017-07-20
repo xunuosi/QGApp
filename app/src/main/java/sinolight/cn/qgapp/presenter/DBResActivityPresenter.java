@@ -235,7 +235,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 view().showFooterView(true, String.valueOf(count));
                 break;
             case RES_INDUSTRY:
-
+                list = KDBResDataMapper.transformArticleDatas(articleDatas, 0, false);
                 break;
         }
         // Load More Action
@@ -425,6 +425,16 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 break;
             case RES_INDUSTRY:
                 view().initShow(mContext.getString(R.string.text_analysis));
+                model.getKDBIndustryAnalysisListNoCache(
+                        mArticleObserver,
+                        AppHelper.getInstance().getCurrentToken(),
+                        dbId,
+                        null,
+                        null,
+                        TYPE_INDUSTRY,
+                        page,
+                        SIZE
+                );
                 break;
         }
         // 请求分类数据
@@ -505,6 +515,16 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 );
                 break;
             case RES_INDUSTRY:
+                model.getKDBIndustryAnalysisListNoCache(
+                        mArticleObserver,
+                        AppHelper.getInstance().getCurrentToken(),
+                        dbId,
+                        themeType,
+                        key,
+                        TYPE_INDUSTRY,
+                        page,
+                        SIZE
+                );
                 break;
         }
 

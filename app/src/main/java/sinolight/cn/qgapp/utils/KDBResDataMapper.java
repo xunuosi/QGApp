@@ -85,7 +85,24 @@ public class KDBResDataMapper {
         return resData;
     }
 
-    public static List<KDBResData> transformArticleDatas(List<ResArticleEntity> beans, @Nullable int adapterType, boolean isSpan) {
+    public static List<KDBResData> transformArticleDatas(List<ResArticleEntity> beans, int adapterType, boolean isSpan) {
+        List<KDBResData> resDataCollection;
+        if (beans != null && !beans.isEmpty()) {
+            resDataCollection = new ArrayList<>();
+            for (ResArticleEntity bean : beans) {
+                if (bean.getCover() != null) {
+                    resDataCollection.add(transformArticleData(bean, KDBResAdapter.TYPE_ARTICLE_ICON, isSpan));
+                } else {
+                    resDataCollection.add(transformArticleData(bean, KDBResAdapter.TYPE_ARTICLE, isSpan));
+                }
+            }
+            mKDBResDataMap.put(adapterType, resDataCollection);
+            return resDataCollection;
+        }
+        return null;
+    }
+
+    public static List<KDBResData> transformIndustryDatas(List<ResArticleEntity> beans, int adapterType, boolean isSpan) {
         List<KDBResData> resDataCollection;
         if (beans != null && !beans.isEmpty()) {
             resDataCollection = new ArrayList<>();

@@ -24,6 +24,9 @@ import sinolight.cn.qgapp.utils.L;
 
 public class ResArticleWithPicHolder extends RecyclerView.ViewHolder {
     private static final String TAG = "ResArticleWithPicHolder";
+    public static final int TYPE_ARTICLE = 0;
+    public static final int TYPE_INDUSTRY = 1;
+    private int holderType;
     private ResArticleEntity data;
     private int width;
     private int height;
@@ -51,9 +54,12 @@ public class ResArticleWithPicHolder extends RecyclerView.ViewHolder {
                 App.getContext().getResources().getDisplayMetrics().density);
     }
 
-    public void setData(KDBResData<ResArticleEntity> resData) {
+    public void setData(KDBResData<ResArticleEntity> resData, int holderType) {
         data = resData.getData();
-        bindData();
+        this.holderType = holderType;
+        if (data != null) {
+            bindData();
+        }
     }
 
     private void bindData() {
@@ -75,7 +81,11 @@ public class ResArticleWithPicHolder extends RecyclerView.ViewHolder {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.item_icon_article_root:
-                L.d(TAG, "onClick:" + data.getName());
+                if (holderType == TYPE_ARTICLE) {
+                    L.d(TAG, "onClick:" + data.getName());
+                } else if (holderType == TYPE_INDUSTRY) {
+
+                }
                 break;
         }
     }
