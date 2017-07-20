@@ -11,6 +11,7 @@ import sinolight.cn.qgapp.data.bean.DataBaseBean;
 import sinolight.cn.qgapp.data.http.entity.ArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
+import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
@@ -270,5 +271,18 @@ public interface ApiService {
             @Field("type") int type,
             @Field("page") int page,
             @Field("size") int size
+    );
+
+    /**
+     * 知识库-图书详情信息
+     * @param token
+     * @param id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("db/doBookInfo")
+    Observable<ResultEntity<List<BookInfoEntity>>> getKDBBookInfo(
+            @Field("token") String token,
+            @Field("id") String id
     );
 }

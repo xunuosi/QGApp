@@ -13,6 +13,7 @@ import sinolight.cn.qgapp.data.bean.DataBaseBean;
 import sinolight.cn.qgapp.data.http.entity.ArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
+import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
@@ -63,4 +64,8 @@ public interface CacheProvider {
             Observable<ResultEntity<List<DBResTypeEntity>>> oRepos,
             EvictProvider evictDynamicKey);
 
+    @LifeCache(duration = 5, timeUnit = TimeUnit.MINUTES)
+    Observable<ResultEntity<List<BookInfoEntity>>> getKDBBookInfo(
+            Observable<ResultEntity<List<BookInfoEntity>>> oRepos,
+            EvictProvider evictDynamicKey);
 }

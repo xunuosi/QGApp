@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 
+import org.greenrobot.greendao.annotation.Id;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -28,6 +30,7 @@ import sinolight.cn.qgapp.data.http.cache.CacheProvider;
 import sinolight.cn.qgapp.data.http.entity.ArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
+import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
@@ -179,6 +182,11 @@ public class HttpManager {
     public void getKDBWordListNoCache(Observer<PageEntity<List<ResWordEntity>>> subscriber, String token,
                                        @Nullable String dbId, int type, @Nullable String key, int page, int size) {
         toSubscribe(mApiService.getKDBWordList(token,"5f5f7c1e-2d7f-4570-a639-a5c4bae75378",key,type, page, size), subscriber);
+    }
+
+    public void getKDBBookInfoWithCache(Observer<List<BookInfoEntity>> subscriber, String token, String dbid, boolean update) {
+        toSubscribe(cacheProvider.getKDBBookInfo(
+                mApiService.getKDBBookInfo(token, dbid), new EvictProvider(update)), subscriber);
     }
 
     public void getCode(Observer<VCodeEntity> subscriber, String time) {
