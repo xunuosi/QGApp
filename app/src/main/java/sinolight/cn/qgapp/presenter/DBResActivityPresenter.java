@@ -31,6 +31,8 @@ import sinolight.cn.qgapp.views.holder.TreeParentHolder;
 import sinolight.cn.qgapp.views.holder.TreeChildHolder;
 import sinolight.cn.qgapp.views.view.IDBResActivityView;
 
+import static sinolight.cn.qgapp.AppContants.DataBase.Res.RES_DIC;
+
 /**
  * Created by xns on 2017/6/29.
  * DBResActivity Presenter
@@ -184,7 +186,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                     if (PageEntity != null) {
                         count = PageEntity.getCount();
                         wordDatas = PageEntity.getData();
-                        transformKDBResData(AppContants.DataBase.Res.RES_DIC);
+                        transformKDBResData(RES_DIC);
                     } else {
                         view().showRefreshing(false);
                     }
@@ -195,8 +197,23 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                     L.d(TAG, "mWordObserver code:" + code + ",errorMsg:" + errorMsg);
                     showErrorToast(R.string.attention_data_refresh_error);
                     view().showRefreshing(false);
+                    // if data is not obtained,you need clear data show empty.
+                    clearData();
                 }
             });
+
+    /**
+     * clear data display empty
+     */
+    private void clearData() {
+        if (mAdapter != null) {
+            mAdapter.setData(new ArrayList<KDBResData>());
+        }
+        if (resType.equals(RES_DIC)) {
+            count = 0;
+            view().showFooterView(true, String.valueOf(count));
+        }
+    }
 
     private void transformKDBResData(AppContants.DataBase.Res resType) {
         List<KDBResData> list = new ArrayList<>();
@@ -215,6 +232,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 break;
             case RES_DIC:
                 list = KDBResDataMapper.transformDicDatas(wordDatas, KDBResAdapter.TYPE_WORD, false);
+                view().showFooterView(true, String.valueOf(count));
                 break;
             case RES_INDUSTRY:
 
@@ -493,6 +511,10 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
     }
 
     public void popTreeMenu() {
+        // if Res dictionary don`t PopMenu
+        if (resType.equals(RES_DIC)) {
+            return;
+        }
         if (mTreeNodes != null && mTreeNodes.size() != 0) {
             root.addChildren(mTreeNodes);
             view().popTreeMenu(root);

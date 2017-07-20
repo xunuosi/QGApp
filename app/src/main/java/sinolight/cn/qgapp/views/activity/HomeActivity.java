@@ -94,7 +94,8 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
                         AppHelper.getInstance().getCurrentUserName(),
                         AppHelper.getInstance().getCurrentPW());
             } else {
-                // TODO: 2017/7/5  
+                // Go to LoginActivity
+                startActivity(LoginActivity.getCallIntent(mContext));
             } 
         }
     }
