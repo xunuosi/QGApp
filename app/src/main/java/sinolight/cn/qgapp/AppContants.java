@@ -60,4 +60,8 @@ public interface AppContants {
             }
         }
     }
+
+    interface Resource {
+        String RES_ID = "res_id";
+    }
 }

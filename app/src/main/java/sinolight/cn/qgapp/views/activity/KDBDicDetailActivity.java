@@ -32,6 +32,7 @@ public class KDBDicDetailActivity extends BaseActivity implements IKDBDicDetailA
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         this.initializeInjector();
         super.onCreate(savedInstanceState);
+        mPresenter.init2show(getIntent());
     }
 
     @Override

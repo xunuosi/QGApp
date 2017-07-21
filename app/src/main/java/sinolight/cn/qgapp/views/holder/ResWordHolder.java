@@ -1,5 +1,6 @@
 package sinolight.cn.qgapp.views.holder;
 
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,10 +10,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import sinolight.cn.qgapp.App;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.entity.ResWordEntity;
 import sinolight.cn.qgapp.utils.L;
+import sinolight.cn.qgapp.views.activity.KDBDicDetailActivity;
 
 /**
  * Created by xns on 2017/7/19.
@@ -59,7 +62,10 @@ public class ResWordHolder extends RecyclerView.ViewHolder {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.root_db_res_dic:
-                L.d(TAG, "onClick:" + mData.getName());
+                Intent callIntent = KDBDicDetailActivity.getCallIntent(App.getContext());
+                callIntent.putExtra(AppContants.Resource.RES_ID, mData.getId());
+                callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                App.getContext().startActivity(callIntent);
                 break;
         }
     }
