@@ -32,6 +32,7 @@ import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
+import sinolight.cn.qgapp.data.http.entity.DicInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
 import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
@@ -187,6 +188,11 @@ public class HttpManager {
     public void getKDBBookInfoWithCache(Observer<List<BookInfoEntity>> subscriber, String token, String dbid, boolean update) {
         toSubscribe(cacheProvider.getKDBBookInfo(
                 mApiService.getKDBBookInfo(token, dbid), new EvictProvider(update)), subscriber);
+    }
+
+    public void getKDBEntryInfoWithCache(Observer<List<DicInfoEntity>> subscriber, String token, String id, boolean update) {
+        toSubscribe(cacheProvider.getKDBEntryInfo(
+                mApiService.getKDBEntryInfo(token, id), new EvictProvider(update)), subscriber);
     }
 
     public void getCode(Observer<VCodeEntity> subscriber, String time) {

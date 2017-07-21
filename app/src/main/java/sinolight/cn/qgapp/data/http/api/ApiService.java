@@ -13,6 +13,7 @@ import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
+import sinolight.cn.qgapp.data.http.entity.DicInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
 import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
@@ -282,6 +283,19 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("db/doBookInfo")
     Observable<ResultEntity<List<BookInfoEntity>>> getKDBBookInfo(
+            @Field("token") String token,
+            @Field("id") String id
+    );
+
+    /**
+     * 知识库-词条详情信息
+     * @param token
+     * @param id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("db/doEntryInfo")
+    Observable<ResultEntity<List<DicInfoEntity>>> getKDBEntryInfo(
             @Field("token") String token,
             @Field("id") String id
     );
