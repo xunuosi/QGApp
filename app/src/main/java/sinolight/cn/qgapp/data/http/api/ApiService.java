@@ -295,7 +295,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("db/doEntryInfo")
-    Observable<ResultEntity<List<DicInfoEntity>>> getKDBEntryInfo(
+    Observable<ResultEntity<DicInfoEntity>> getKDBEntryInfo(
             @Field("token") String token,
             @Field("id") String id
     );

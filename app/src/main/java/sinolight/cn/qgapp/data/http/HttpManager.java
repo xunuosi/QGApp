@@ -190,9 +190,8 @@ public class HttpManager {
                 mApiService.getKDBBookInfo(token, dbid), new EvictProvider(update)), subscriber);
     }
 
-    public void getKDBEntryInfoWithCache(Observer<List<DicInfoEntity>> subscriber, String token, String id, boolean update) {
-        toSubscribe(cacheProvider.getKDBEntryInfo(
-                mApiService.getKDBEntryInfo(token, id), new EvictProvider(update)), subscriber);
+    public void getKDBEntryInfoNoCache(Observer<DicInfoEntity> subscriber, String token, String id) {
+        toSubscribe(mApiService.getKDBEntryInfo(token, id), subscriber);
     }
 
     public void getCode(Observer<VCodeEntity> subscriber, String time) {

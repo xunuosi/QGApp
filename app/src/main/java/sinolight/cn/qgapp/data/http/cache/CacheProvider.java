@@ -70,8 +70,4 @@ public interface CacheProvider {
             Observable<ResultEntity<List<BookInfoEntity>>> oRepos,
             EvictProvider evictDynamicKey);
 
-    @LifeCache(duration = 5, timeUnit = TimeUnit.MINUTES)
-    Observable<ResultEntity<List<DicInfoEntity>>> getKDBEntryInfo(
-            Observable<ResultEntity<List<DicInfoEntity>>> oRepos,
-            EvictProvider evictDynamicKey);
 }
