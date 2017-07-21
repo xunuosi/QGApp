@@ -129,13 +129,23 @@
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">center_vertical</item>
     </style>
-    <!--KDB Pic Detail Activity-->
-    <style name="kdb_pic_detail_text_title">
+    <!--KDB Dic Detail Activity-->
+    <style name="kdb_dic_detail_text_title">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/color_selected_bottom_text</item>
     </style>
-    <style name="kdb_pic_detail_text_info" parent="hf_standard_text"/>
-    <style name="kdb_pic_detail_text_content" parent="hf_standard_text">
+    <style name="kdb_dic_detail_text_info" parent="hf_standard_text"/>
+    <style name="kdb_dic_detail_text_content" parent="hf_standard_text">
         <item name="android:textSize">16sp</item>
+    </style>
+    <!--KDB Book Detail Activity-->
+    <style name="kdb_book_detail_text_title">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/color_home_text</item>
+    </style>
+    <style name="my_RatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/rating_bg</item>
+        <item name="android:minHeight">20dp</item>
+        <item name="android:maxHeight">20dp</item>
     </style>
 </resources>

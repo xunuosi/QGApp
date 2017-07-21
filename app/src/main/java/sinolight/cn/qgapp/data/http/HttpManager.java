@@ -185,9 +185,8 @@ public class HttpManager {
         toSubscribe(mApiService.getKDBWordList(token,"5f5f7c1e-2d7f-4570-a639-a5c4bae75378",key,type, page, size), subscriber);
     }
 
-    public void getKDBBookInfoWithCache(Observer<List<BookInfoEntity>> subscriber, String token, String dbid, boolean update) {
-        toSubscribe(cacheProvider.getKDBBookInfo(
-                mApiService.getKDBBookInfo(token, dbid), new EvictProvider(update)), subscriber);
+    public void getKDBBookInfoNoCache(Observer<List<BookInfoEntity>> subscriber, String token, String id) {
+        toSubscribe(mApiService.getKDBBookInfo(token, id), subscriber);
     }
 
     public void getKDBEntryInfoNoCache(Observer<DicInfoEntity> subscriber, String token, String id) {

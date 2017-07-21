@@ -27,6 +27,7 @@
     <string name="text_author">作者：</string>
     <string name="text_resource">来源：</string>
     <string name="text_publish_time">出版时间：</string>
+    <string name="text_author_format">作者：%1$s</string>
     <string name="text_resource_format">来源：%1$s</string>
     <string name="text_standard_num">标准标号：%1$s</string>
     <string name="text_e_time">实施时间：%1$s</string>

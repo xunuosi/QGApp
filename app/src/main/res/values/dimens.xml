@@ -58,9 +58,12 @@
     <dimen name="db_res_img_icon_height">150dp</dimen>
     <dimen name="db_res_word_root_height">65dp</dimen>
 
-    <!--KDBPicDetail Activity-->
-    <dimen name="kdb_pic_detail_cover_width">132dp</dimen>
-    <dimen name="kdb_pic_detail_cover_height">88dp</dimen>
+    <!--KDBDicDetail Activity-->
+    <dimen name="kdb_dic_detail_cover_width">132dp</dimen>
+    <dimen name="kdb_dic_detail_cover_height">88dp</dimen>
+    <!--KDB BookDetail Activity-->
+    <dimen name="kdb_book_detail_cover_width">102dp</dimen>
+    <dimen name="kdb_book_detail_cover_height">142dp</dimen>
 
     <!--Resource DataBase-->
     <!--Resource Fragment-->

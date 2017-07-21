@@ -139,6 +139,7 @@ public class KDBDicDetailActivity extends BaseActivity implements IKDBDicDetailA
                 finish();
                 break;
             case R.id.iv_collect:
+                // // TODO: 2017/7/21 Collect function undetermined 
                 break;
         }
     }
