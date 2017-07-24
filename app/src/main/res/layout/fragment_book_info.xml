@@ -60,7 +60,9 @@
             android:id="@+id/tv_book_fragment_isn"
             style="@style/book_fragment_text"
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
+            android:lines="2"
+            android:ellipsize="end"
             android:layout_marginEnd="32dp"
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
@@ -99,11 +101,13 @@
             android:id="@+id/tv_book_fragment_classification_info"
             style="@style/book_fragment_blue_text"
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
             android:layout_marginRight="32dp"
             android:layout_marginTop="8dp"
-            android:text="TextView"
+            android:lines="2"
+            android:ellipsize="end"
+            android:text="111111111111111111111111111111111111111111"
             app:layout_constraintLeft_toRightOf="@+id/tv_book_fragment_classification_holder"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_book_fragment_isn"/>
@@ -121,7 +125,7 @@
             android:text="@string/text_page_num_format"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_book_fragment_classification_holder"/>
+            app:layout_constraintTop_toBottomOf="@+id/tv_book_fragment_classification_info"/>
 
         <TextView
             android:id="@+id/tv_book_fragment_page_size"

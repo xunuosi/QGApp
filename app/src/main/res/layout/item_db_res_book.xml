@@ -27,12 +27,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:text="@string/text_database_food"
         android:lines="2"
         style="@style/db_res_text_title"
         app:layout_constraintLeft_toRightOf="@+id/iv_item_db_res"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_item_db_res"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.0"/>
@@ -64,16 +64,16 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/text_author"
-        android:lines="2"
+        android:lines="1"
         android:ellipsize="end"
         style="@style/db_res_text_info"
         android:layout_marginLeft="0dp"
         app:layout_constraintLeft_toLeftOf="@+id/tv_item_db_res_info"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/tv_item_db_res_info"
-        app:layout_constraintRight_toLeftOf="@+id/db_res_guideline"
-        android:layout_marginRight="0dp"
-        app:layout_constraintHorizontal_bias="0.0"/>
+        android:layout_marginRight="8dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <TextView
         android:id="@+id/tv_item_db_res_time"
@@ -81,11 +81,13 @@
         android:layout_height="wrap_content"
         android:text="@string/text_publish_time"
         style="@style/db_res_text_info"
-        app:layout_constraintLeft_toRightOf="@+id/tv_item_db_res_author"
-        android:layout_marginLeft="0dp"
-        app:layout_constraintTop_toTopOf="@+id/tv_item_db_res_author"
-        android:layout_marginTop="0dp"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_db_res_author"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_item_db_res_author"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"/>
 
 </android.support.constraint.ConstraintLayout>

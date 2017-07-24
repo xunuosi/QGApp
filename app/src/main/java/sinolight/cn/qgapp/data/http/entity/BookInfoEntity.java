@@ -1,11 +1,14 @@
 package sinolight.cn.qgapp.data.http.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by xns on 2017/7/20.
  * 图书详情Entity
  */
 
-public class BookInfoEntity {
+public class BookInfoEntity implements Parcelable {
     private String id;
     private String name;
     private String cover;
@@ -30,6 +33,36 @@ public class BookInfoEntity {
 
     public BookInfoEntity() {
     }
+
+    protected BookInfoEntity(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        cover = in.readString();
+        versionprint = in.readString();
+        page = in.readInt();
+        printtime = in.readString();
+        issuedate = in.readString();
+        issuedept = in.readString();
+        author = in.readString();
+        format = in.readString();
+        zzformat = in.readString();
+        isbn = in.readString();
+        classification = in.readString();
+        abs = in.readString();
+        catalog = in.readString();
+    }
+
+    public static final Creator<BookInfoEntity> CREATOR = new Creator<BookInfoEntity>() {
+        @Override
+        public BookInfoEntity createFromParcel(Parcel in) {
+            return new BookInfoEntity(in);
+        }
+
+        @Override
+        public BookInfoEntity[] newArray(int size) {
+            return new BookInfoEntity[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -149,5 +182,29 @@ public class BookInfoEntity {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(name);
+        parcel.writeString(cover);
+        parcel.writeString(versionprint);
+        parcel.writeInt(page);
+        parcel.writeString(printtime);
+        parcel.writeString(issuedate);
+        parcel.writeString(issuedept);
+        parcel.writeString(author);
+        parcel.writeString(format);
+        parcel.writeString(zzformat);
+        parcel.writeString(isbn);
+        parcel.writeString(classification);
+        parcel.writeString(abs);
+        parcel.writeString(catalog);
     }
 }

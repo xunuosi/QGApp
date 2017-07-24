@@ -168,9 +168,9 @@ public class KDBBookDetailActivity extends BaseActivity implements IKDBBookDetai
         mTvKdbBookPubTime.setText(formatStr(R.string.text_publish_time_format,bookData.getIssuedate()));
 
         mFragments = new ArrayList<>();
-        mFragments.add(BookInfoFragment.newInstance(BookInfoFragment.TYPE_BOOK_INFO));
-        mFragments.add(BookInfoFragment.newInstance(BookInfoFragment.TYPE_BOOK_INTRODUCTION));
-        mFragments.add(BookInfoFragment.newInstance(BookInfoFragment.TYPE_BOOK_TABLE_OF_CONTENTS));
+        mFragments.add(BookInfoFragment.newInstance(BookInfoFragment.TYPE_BOOK_INFO, bookData));
+        mFragments.add(BookInfoFragment.newInstance(BookInfoFragment.TYPE_BOOK_INTRODUCTION, bookData));
+        mFragments.add(BookInfoFragment.newInstance(BookInfoFragment.TYPE_BOOK_TABLE_OF_CONTENTS, bookData));
 
         mTabAdapter = new MyTabAdapter(getSupportFragmentManager(), mFragments, mTitles);
         mVpKdbBookDetail.setAdapter(mTabAdapter);
