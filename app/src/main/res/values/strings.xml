@@ -27,6 +27,8 @@
     <string name="text_author">作者：</string>
     <string name="text_resource">来源：</string>
     <string name="text_publish_time">出版时间：</string>
+    <string name="text_publish_time_format">出版时间：%1$s</string>
+    <string name="text_publish_name_format">出版社：%1$s</string>
     <string name="text_author_format">作者：%1$s</string>
     <string name="text_resource_format">来源：%1$s</string>
     <string name="text_standard_num">标准标号：%1$s</string>
@@ -40,6 +42,11 @@
     <string name="text_cn_name_format">中文名称：%1$s</string>
     <string name="text_en_name_format">英文名称：%1$s</string>
     <string name="text_two_empty_format">\u3000\u3000%1$s</string>
+    <string name="text_score_format">%1$s个评分</string>
+    <string name="text_book_info">图书信息</string>
+    <string name="text_introduction">简介</string>
+    <string name="text_table_of_contents">目录</string>
+    <string name="text_read">在线阅读</string>
     <!--DBDetail Home-->
     <string name="text_line_book">图书\nBooks</string>
     <string name="text_line_article">文章\nArticles</string>

@@ -148,4 +148,5 @@
         <item name="android:minHeight">20dp</item>
         <item name="android:maxHeight">20dp</item>
     </style>
+    <style name="kdb_book_detail_text_book_info" parent="hf_standard_text"/>
 </resources>
