@@ -65,4 +65,5 @@ public interface AppContants {
         String RES_ID = "res_id";
         String RES_NAME = "res_name";
     }
+
 }

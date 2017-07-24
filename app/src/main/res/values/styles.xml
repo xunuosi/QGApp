@@ -161,4 +161,5 @@
     <style name="book_fragment_blue_text" parent="book_fragment_text">
         <item name="android:textColor">@color/color_login_blue</item>
     </style>
+    <style name="book_fragment_content_text" parent="book_fragment_text"/>
 </resources>
