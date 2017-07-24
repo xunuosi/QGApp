@@ -1,5 +1,6 @@
 package sinolight.cn.qgapp.views.holder;
 
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,11 +11,15 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import sinolight.cn.qgapp.App;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.utils.ImageUtil;
+import sinolight.cn.qgapp.utils.L;
+import sinolight.cn.qgapp.views.activity.KDBBookDetailActivity;
 
 /**
  * Created by xns on 2017/7/17.
@@ -71,6 +76,18 @@ public class ResBookHolder extends RecyclerView.ViewHolder {
             mTvItemDbResInfo.setText(mData.getAbs());
             mTvItemDbResAuthor.setText(String.valueOf(labelAuthor + mData.getAuthor()));
             mTvItemDbResTime.setText(String.valueOf(labelTime + mData.getDate()));
+        }
+    }
+
+    @OnClick({R.id.item_db_res_icon_root})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.item_db_res_icon_root:
+                Intent callIntent = KDBBookDetailActivity.getCallIntent(App.getContext());
+                callIntent.putExtra(AppContants.Resource.RES_ID, mData.getId());
+                callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                App.getContext().startActivity(callIntent);
+                break;
         }
     }
 }

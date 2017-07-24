@@ -12,4 +12,6 @@ public interface IKDBDicDetailActivityView {
     void showRefreshing(boolean enable);
 
     void init2Show(DicInfoEntity dicData);
+
+    void showErrorToast(int msgId);
 }

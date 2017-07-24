@@ -3,36 +3,35 @@ package sinolight.cn.qgapp.presenter;
 import android.content.Context;
 import android.content.Intent;
 
-
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
-import sinolight.cn.qgapp.data.http.entity.DicInfoEntity;
+import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.L;
-import sinolight.cn.qgapp.views.view.IKDBDicDetailActivityView;
+import sinolight.cn.qgapp.views.view.IKDBBookDetailActivityView;
 
 /**
  * Created by xns on 2017/6/29.
  * KDBDicActivity Presenter
  */
 
-public class KDBDicActivityPresenter extends BasePresenter<IKDBDicDetailActivityView, HttpManager> {
-    private static final String TAG = "KDBDicActivityPresenter";
+public class KDBBookActivityPresenter extends BasePresenter<IKDBBookDetailActivityView, HttpManager> {
+    private static final String TAG = "KDBBookActivityPresenter";
 
     private Context mContext;
     private String resId;
-    private DicInfoEntity dicData;
+    private BookInfoEntity bookData;
 
-    private HttpSubscriber<DicInfoEntity> mDicObserver = new HttpSubscriber<>(
-            new OnResultCallBack<DicInfoEntity>() {
+    private HttpSubscriber<BookInfoEntity> mBookObserver = new HttpSubscriber<>(
+            new OnResultCallBack<BookInfoEntity>() {
 
                 @Override
-                public void onSuccess(DicInfoEntity dicInfoEntity) {
-                    if (dicInfoEntity != null) {
-                        dicData = dicInfoEntity;
+                public void onSuccess(BookInfoEntity bookInfoEntity) {
+                    if (bookInfoEntity != null) {
+                        bookData = bookInfoEntity;
                         showView();
                     }
                 }
@@ -45,7 +44,7 @@ public class KDBDicActivityPresenter extends BasePresenter<IKDBDicDetailActivity
             });
 
     private void showView() {
-        view().init2Show(dicData);
+        view().init2Show(bookData);
     }
 
     private void showError() {
@@ -57,7 +56,7 @@ public class KDBDicActivityPresenter extends BasePresenter<IKDBDicDetailActivity
         view().showErrorToast(msgId);
     }
 
-    public KDBDicActivityPresenter(Context context, IKDBDicDetailActivityView view) {
+    public KDBBookActivityPresenter(Context context, IKDBBookDetailActivityView view) {
         mContext = context;
         bindView(view);
         setModel(HttpManager.getInstance());
@@ -70,7 +69,7 @@ public class KDBDicActivityPresenter extends BasePresenter<IKDBDicDetailActivity
 
     @Override
     public void clear() {
-        mDicObserver.unSubscribe();
+
         unbindView();
     }
 
@@ -78,9 +77,10 @@ public class KDBDicActivityPresenter extends BasePresenter<IKDBDicDetailActivity
         if (intent != null) {
             view().showRefreshing(true);
             resId = intent.getStringExtra(AppContants.Resource.RES_ID);
+
             // Load data
-            model.getKDBEntryInfoNoCache(
-                    mDicObserver,
+            model.getKDBBookInfoNoCache(
+                    mBookObserver,
                     AppHelper.getInstance().getCurrentToken(),
                     resId
             );

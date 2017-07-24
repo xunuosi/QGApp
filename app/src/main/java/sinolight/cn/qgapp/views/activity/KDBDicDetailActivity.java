@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -65,6 +66,12 @@ public class KDBDicDetailActivity extends BaseActivity implements IKDBDicDetailA
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.clear();
+    }
+
+    @Override
     public int setLayoutId() {
         return R.layout.activity_kdb_dic_detail;
     }
@@ -112,9 +119,9 @@ public class KDBDicDetailActivity extends BaseActivity implements IKDBDicDetailA
         mTvKdbDicDetailSource.setText(String.format(formatRESname, dicData.getSource()));
 
         if (dicData.isPicflag()) {
-            int width = (int) (App.getContext().getResources().getDimensionPixelOffset(R.dimen.kdb_pic_detail_cover_width) /
+            int width = (int) (App.getContext().getResources().getDimensionPixelOffset(R.dimen.kdb_dic_detail_cover_width) /
                     App.getContext().getResources().getDisplayMetrics().density);
-            int height = (int) (App.getContext().getResources().getDimensionPixelOffset(R.dimen.kdb_pic_detail_cover_height) /
+            int height = (int) (App.getContext().getResources().getDimensionPixelOffset(R.dimen.kdb_dic_detail_cover_height) /
                     App.getContext().getResources().getDisplayMetrics().density);
             ImageUtil.frescoShowImageByUri(
                     KDBDicDetailActivity.this,
@@ -129,6 +136,12 @@ public class KDBDicDetailActivity extends BaseActivity implements IKDBDicDetailA
         mTvKdbDicDetailInfo.setText(String.format(formatContent, dicData.getContent()));
 
         this.showRefreshing(false);
+    }
+
+    @Override
+    public void showErrorToast(int msgId) {
+        String msg = getString(msgId);
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 
 

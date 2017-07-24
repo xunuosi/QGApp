@@ -143,10 +143,22 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/color_home_text</item>
     </style>
-    <style name="my_RatingBar" parent="@android:style/Widget.RatingBar">
+    <style name="my_RatingBar" parent="@android:style/Widget.Material.RatingBar.Small">
         <item name="android:progressDrawable">@drawable/rating_bg</item>
-        <item name="android:minHeight">20dp</item>
-        <item name="android:maxHeight">20dp</item>
+        <item name="android:minHeight">16dp</item>
+        <item name="android:maxHeight">16dp</item>
+    </style>
+    <style name="RatingBar" parent="Theme.AppCompat">
+            <item name="colorControlNormal">@color/color_login_blue</item>
+            <item name="colorControlActivated">@color/google_red</item>
     </style>
     <style name="kdb_book_detail_text_book_info" parent="hf_standard_text"/>
+    <style name="book_fragment_text">
+        <item name="android:textColor">@color/color_hf_article_info_text</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="book_fragment_blue_text" parent="book_fragment_text">
+        <item name="android:textColor">@color/color_login_blue</item>
+    </style>
 </resources>

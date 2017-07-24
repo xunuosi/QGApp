@@ -12,6 +12,11 @@ public class BookInfoEntity {
     private String versionprint;
     private int page;
     private String printtime;
+    // 出版时间
+    private String issuedate;
+    // 出版社
+    private String issuedept;
+    private String author;
     // 开本
     private String format;
     // 包装

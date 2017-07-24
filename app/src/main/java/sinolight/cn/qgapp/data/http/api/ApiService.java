@@ -282,7 +282,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("db/doBookInfo")
-    Observable<ResultEntity<List<BookInfoEntity>>> getKDBBookInfo(
+    Observable<ResultEntity<BookInfoEntity>> getKDBBookInfo(
             @Field("token") String token,
             @Field("id") String id
     );

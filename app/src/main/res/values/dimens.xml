@@ -62,9 +62,10 @@
     <dimen name="kdb_dic_detail_cover_width">132dp</dimen>
     <dimen name="kdb_dic_detail_cover_height">88dp</dimen>
     <!--KDB BookDetail Activity-->
-    <dimen name="kdb_book_detail_cover_width">102dp</dimen>
+    <dimen name="kdb_book_detail_cover_width">112dp</dimen>
     <dimen name="kdb_book_detail_cover_height">152dp</dimen>
-
+    <!--Book Fragment-->
+    <dimen name="book_fragment_text_view_height">30dp</dimen>
     <!--Resource DataBase-->
     <!--Resource Fragment-->
     <dimen name="rf_tablayout_height">44dp</dimen>
