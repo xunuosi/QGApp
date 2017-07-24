@@ -126,4 +126,28 @@ public class BookInfoEntity {
     public void setCatalog(String catalog) {
         this.catalog = catalog;
     }
+
+    public String getIssuedate() {
+        return issuedate;
+    }
+
+    public void setIssuedate(String issuedate) {
+        this.issuedate = issuedate;
+    }
+
+    public String getIssuedept() {
+        return issuedept;
+    }
+
+    public void setIssuedept(String issuedept) {
+        this.issuedept = issuedept;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 }

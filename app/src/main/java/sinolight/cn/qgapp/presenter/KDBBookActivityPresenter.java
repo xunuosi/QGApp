@@ -6,6 +6,7 @@ import android.content.Intent;
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.adapter.MyTabAdapter;
 import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
 import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;

@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -15,17 +17,22 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.adapter.MyTabAdapter;
 import sinolight.cn.qgapp.dagger.component.DaggerKDBBookActivityComponent;
 import sinolight.cn.qgapp.dagger.module.KDBBookActivityModule;
 import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
 import sinolight.cn.qgapp.presenter.KDBBookActivityPresenter;
 import sinolight.cn.qgapp.utils.ImageUtil;
+import sinolight.cn.qgapp.views.fragment.BookInfoFragment;
 import sinolight.cn.qgapp.views.view.IKDBBookDetailActivityView;
 
 /**
@@ -65,6 +72,10 @@ public class KDBBookDetailActivity extends BaseActivity implements IKDBBookDetai
     @BindView(R.id.vp_kdb_book_detail)
     ViewPager mVpKdbBookDetail;
 
+    private MyTabAdapter mTabAdapter;
+    private List<Fragment> mFragments;
+    private List<String> mTitles = new ArrayList<>();
+
     public static Intent getCallIntent(Context context) {
         return new Intent(context, KDBBookDetailActivity.class);
     }
@@ -83,7 +94,9 @@ public class KDBBookDetailActivity extends BaseActivity implements IKDBBookDetai
 
     @Override
     protected void initViews() {
-
+        mTitles.add(getString(R.string.text_book_info));
+        mTitles.add(getString(R.string.text_introduction));
+        mTitles.add(getString(R.string.text_table_of_contents));
     }
 
     @Override
@@ -150,5 +163,22 @@ public class KDBBookDetailActivity extends BaseActivity implements IKDBBookDetai
                 );
         mTvKdbBookTitle.setText(bookData.getName());
 
+        mTvKdbBookAuthor.setText(formatStr(R.string.text_author_format,bookData.getAuthor()));
+        mTvKdbBookPubName.setText(formatStr(R.string.text_publish_name_format,bookData.getIssuedept()));
+        mTvKdbBookPubTime.setText(formatStr(R.string.text_publish_time_format,bookData.getIssuedate()));
+
+        mFragments = new ArrayList<>();
+        mFragments.add(BookInfoFragment.newInstance());
+        mFragments.add(BookInfoFragment.newInstance());
+        mFragments.add(BookInfoFragment.newInstance());
+
+        mTabAdapter = new MyTabAdapter(getSupportFragmentManager(), mFragments, mTitles);
+        mVpKdbBookDetail.setAdapter(mTabAdapter);
+        mTlKdbBookDetail.setupWithViewPager(mVpKdbBookDetail);
+    }
+
+    private String formatStr(int baseStrId, String child) {
+        String local = getString(baseStrId);
+        return String.format(local, child);
     }
 }
