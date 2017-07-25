@@ -43,6 +43,7 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
     private static final String TAG = "HomeActivity";
     private NavigationController mNavigationController;
     private UserComponent userComponent;
+    private boolean isLogined;
     // 标志位表示当前是否为HomeFragment
     private boolean isHomeFragment = false;
     private HttpSubscriber loginObserver = new HttpSubscriber(new OnResultCallBack<TokenEntity>() {
@@ -88,7 +89,7 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
         checkAppPermission();
         Intent intent = getIntent();
         if (intent != null) {
-            boolean isLogined = intent.getBooleanExtra(AppContants.Account.IS_LOGINED, false);
+            isLogined = intent.getBooleanExtra(AppContants.Account.IS_LOGINED, false);
             if (isLogined) {
                 HttpManager.getInstance().login(loginObserver, 
                         AppHelper.getInstance().getCurrentUserName(),
@@ -159,8 +160,11 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
                         break;
                     case 3:
                         isHomeFragment = false;
-//                        replaceFragment(R.id.home_activity_container, mUserFragment);
-                        startActivity(LoginActivity.getCallIntent(mContext));
+                        if (isLogined) {
+                            replaceFragment(R.id.home_activity_container, mUserFragment);
+                        } else {
+                            startActivity(LoginActivity.getCallIntent(mContext));
+                        }
                         break;
                 }
             }

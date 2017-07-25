@@ -45,4 +45,6 @@
     <color name="un_press_color">#9C27B0</color>
     <!--Knowledge DataBase-->
     <color name="color_orange">#f2c342</color>
+    <!--My Center-->
+    <color name="color_my_center_tag">#6c6c6c</color>
 </resources>

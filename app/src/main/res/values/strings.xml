@@ -60,6 +60,11 @@
     <string name="text_std_scope">试用范围</string>
     <string name="text_user_name_format">%1$s，您好！</string>
     <string name="text_user_home">个人主页</string>
+    <string name="text_my_res_database">我的资源库</string>
+    <string name="text_my_collect">我的收藏</string>
+    <string name="text_sys_setting">系统设置</string>
+    <string name="text_help">帮助与反馈</string>
+    <string name="text_change_account">切换账号</string>
     <!--DBDetail Home-->
     <string name="text_line_book">图书\nBooks</string>
     <string name="text_line_article">文章\nArticles</string>

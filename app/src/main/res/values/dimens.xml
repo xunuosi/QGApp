@@ -71,7 +71,8 @@
     <dimen name="rf_tablayout_height">44dp</dimen>
 
     <!--My Center Fragment-->
-    <dimen name="my_fragment_toolbar_height">251dp</dimen>
-    <dimen name="my_fragment_head_height">192dp</dimen>
+    <dimen name="my_fragment_toolbar_height">201dp</dimen>
+    <dimen name="my_fragment_head_height">142dp</dimen>
+    <dimen name="my_fragment_line_height">62dp</dimen>
     <dimen name="my_fragment_head_img_size">93dp</dimen>
 </resources>
