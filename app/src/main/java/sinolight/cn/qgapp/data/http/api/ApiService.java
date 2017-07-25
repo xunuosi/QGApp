@@ -234,7 +234,7 @@ public interface ApiService {
     );
 
     /**
-     * 知识库-图集列表
+     * 资源库-图集列表
      * @param token
      * @param key
      * @param page

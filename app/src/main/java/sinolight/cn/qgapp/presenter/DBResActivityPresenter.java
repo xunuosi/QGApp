@@ -399,9 +399,11 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 break;
             case RES_IMG:
                 view().initShow(mContext.getString(R.string.text_img));
-                model.getKDBdoPicListNoCache(
+                model.getKDBdoPicInfoNoCache(
                         mImgObserver,
                         AppHelper.getInstance().getCurrentToken(),
+                        dbId,
+                        null,
                         null,
                         page,
                         SIZE
@@ -490,9 +492,11 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 break;
             case RES_IMG:
                 // 请求资源数据
-                model.getKDBdoPicListNoCache(
+                model.getKDBdoPicInfoNoCache(
                         mImgObserver,
                         AppHelper.getInstance().getCurrentToken(),
+                        dbId,
+                        themeType,
                         key,
                         page,
                         SIZE

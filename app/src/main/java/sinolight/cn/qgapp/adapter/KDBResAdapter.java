@@ -88,10 +88,10 @@ public class KDBResAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     ((ResStandardHolder) holder).setData(mData.get(position));
                     break;
                 case TYPE_ARTICLE:
-                    ((ResArticleHolder) holder).setData(mData.get(position),ResArticleHolder.TYPE_ARTICLE);
+                    ((ResArticleHolder) holder).setData(mData.get(position), ResArticleHolder.TYPE_ARTICLE);
                     break;
                 case TYPE_ARTICLE_ICON:
-                    ((ResArticleWithPicHolder) holder).setData(mData.get(position),ResArticleWithPicHolder.TYPE_ARTICLE);
+                    ((ResArticleWithPicHolder) holder).setData(mData.get(position), ResArticleWithPicHolder.TYPE_ARTICLE);
                     break;
                 case TYPE_IMG:
                     ((ResImgHolder) holder).setData(mData.get(position));
@@ -103,7 +103,7 @@ public class KDBResAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     ((ResArticleHolder) holder).setData(mData.get(position), ResArticleHolder.TYPE_INDUSTRY);
                     break;
                 case TYPE_INDUSTRY_ICON:
-                    ((ResArticleWithPicHolder) holder).setData(mData.get(position),ResArticleWithPicHolder.TYPE_INDUSTRY);
+                    ((ResArticleWithPicHolder) holder).setData(mData.get(position), ResArticleWithPicHolder.TYPE_INDUSTRY);
                     break;
             }
         } catch (ClassCastException e) {
@@ -128,5 +128,4 @@ public class KDBResAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
         notifyDataSetChanged();
     }
-
 }

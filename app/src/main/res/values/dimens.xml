@@ -55,7 +55,7 @@
     <dimen name="db_res_book_root_height">206dp</dimen>
     <dimen name="db_res_article_icon_width">100dp</dimen>
     <dimen name="db_res_article_icon_height">100dp</dimen>
-    <dimen name="db_res_img_icon_height">150dp</dimen>
+    <dimen name="db_res_img_icon_height">225dp</dimen>
     <dimen name="db_res_word_root_height">65dp</dimen>
 
     <!--KDBDicDetail Activity-->

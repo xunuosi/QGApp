@@ -3,6 +3,8 @@ package sinolight.cn.qgapp.views.holder;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -27,6 +29,10 @@ public class ResImgHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.iv_db_res_img)
     SimpleDraweeView mIvDbResImg;
+    @BindView(R.id.tv_db_res_img_title)
+    TextView mTvDbResImgTitle;
+    @BindView(R.id.iv_db_res_img_collect)
+    ImageView mIvDbResImgCollect;
     @BindView(R.id.db_res_img_root)
     ConstraintLayout mDbResImgRoot;
 
@@ -57,12 +63,14 @@ public class ResImgHolder extends RecyclerView.ViewHolder {
                 width,
                 height
         );
+
+        mTvDbResImgTitle.setText(mData.getName());
     }
 
-    @OnClick({R.id.db_res_img_root})
+    @OnClick({R.id.iv_db_res_img_collect})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.db_res_img_root:
+            case R.id.iv_db_res_img_collect:
                 L.d(TAG, "onClick:" + mData.getName());
                 break;
         }
