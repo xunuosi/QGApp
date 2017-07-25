@@ -179,4 +179,15 @@
         <item name="android:textSize">16sp</item>
         <item name="android:gravity">center_vertical</item>
     </style>
+    <!--User Home-->
+    <style name="user_home_text_gray">
+        <item name="android:textColor">@color/color_hf_article_content_text</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="user_home_text_black">
+        <item name="android:textColor">@color/color_hf_stad_title_text</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
 </resources>

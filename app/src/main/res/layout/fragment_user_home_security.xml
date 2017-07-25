@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_home_bg">
+
+    <LinearLayout
+        android:id="@+id/root_user_home_origin_pw"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/my_fragment_line_height"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/color_white"
+        android:gravity="center_vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_user_home_origin_pw_holder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_origin_pw"
+            style="@style/user_home_text_gray"
+            android:layout_marginStart="16dp"/>
+
+        <EditText
+            android:id="@+id/et_user_home_origin_pw"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            style="@style/register_edit_text"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"/>
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_origin_pw_indicator"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginEnd="16dp"
+            fresco:actualImageScaleType="fitCenter"
+            fresco:placeholderImage="@drawable/arrow_right_gray"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/empty_view4"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/color_bottom_divider"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/root_user_home_origin_pw"/>
+
+    <LinearLayout
+        android:id="@+id/root_user_home_new_pw"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/my_fragment_line_height"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/color_white"
+        android:gravity="center_vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/empty_view4">
+
+        <TextView
+            android:id="@+id/tv_user_home_new_pw_holder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_new_pw"
+            style="@style/user_home_text_gray"
+            android:layout_marginStart="16dp"/>
+
+        <EditText
+            android:id="@+id/et_user_home_new_pw"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            style="@style/register_edit_text"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"/>
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_new_pw_indicator"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginEnd="16dp"
+            fresco:actualImageScaleType="fitCenter"
+            fresco:placeholderImage="@drawable/arrow_right_gray"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/empty_view5"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/color_bottom_divider"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/root_user_home_new_pw"/>
+
+    <LinearLayout
+        android:id="@+id/root_user_home_confirm_pw"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/my_fragment_line_height"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/color_white"
+        android:gravity="center_vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/empty_view5">
+
+        <TextView
+            android:id="@+id/tv_user_home_confirm_pw_holder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_confirm_password"
+            style="@style/user_home_text_gray"
+            android:layout_marginStart="16dp"/>
+
+        <EditText
+            android:id="@+id/et_user_confirm_new_pw"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            style="@style/register_edit_text"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"/>
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_confirm_pw_indicator"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginEnd="16dp"
+            fresco:actualImageScaleType="fitCenter"
+            fresco:placeholderImage="@drawable/arrow_right_gray"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_confirm_submit"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/root_user_home_confirm_pw"
+        android:layout_marginRight="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:background="@drawable/btn_bg_white"
+        android:textColor="@color/color_my_center_tag"/>
+
+</android.support.constraint.ConstraintLayout>

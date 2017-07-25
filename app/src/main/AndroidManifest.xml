@@ -50,6 +50,10 @@
                   android:screenOrientation="portrait">
 
         </activity>
+        <activity android:name=".views.activity.UserHomeActivity"
+                  android:screenOrientation="portrait">
+
+        </activity>
         <activity android:name=".views.activity.TestActivity"/>
     </application>
 
