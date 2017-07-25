@@ -136,7 +136,11 @@ public class KDBBookDetailActivity extends BaseActivity implements IKDBBookDetai
 
     @Override
     public void showRefreshing(boolean enable) {
-
+        if (enable) {
+            mLoadingRoot.setVisibility(View.VISIBLE);
+        } else {
+            mLoadingRoot.setVisibility(View.GONE);
+        }
     }
 
     @Override

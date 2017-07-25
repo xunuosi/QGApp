@@ -8,44 +8,43 @@ import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
-import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
+import sinolight.cn.qgapp.data.http.entity.StdInfoEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.L;
-import sinolight.cn.qgapp.views.view.IKDBBookDetailActivityView;
+import sinolight.cn.qgapp.views.view.IKDBStdDetailActivityView;
 
 /**
  * Created by xns on 2017/6/29.
  * KDBDicActivity Presenter
  */
 
-public class KDBBookActivityPresenter extends BasePresenter<IKDBBookDetailActivityView, HttpManager> {
+public class KDBStdActivityPresenter extends BasePresenter<IKDBStdDetailActivityView, HttpManager> {
     private static final String TAG = "KDBBookActivityPresenter";
 
     private Context mContext;
     private String resId;
-    private BookInfoEntity bookData;
+    private StdInfoEntity stdData;
 
-    private HttpSubscriber<BookInfoEntity> mBookObserver = new HttpSubscriber<>(
-            new OnResultCallBack<BookInfoEntity>() {
+    private HttpSubscriber<StdInfoEntity> mStdObserver = new HttpSubscriber<>(
+            new OnResultCallBack<StdInfoEntity>() {
 
                 @Override
-                public void onSuccess(BookInfoEntity bookInfoEntity) {
-                    if (bookInfoEntity != null) {
-                        bookData = bookInfoEntity;
+                public void onSuccess(StdInfoEntity stdInfoEntity) {
+                    if (stdInfoEntity != null) {
+                        stdData = stdInfoEntity;
                         showView();
                     }
-                    view().showRefreshing(false);
                 }
 
                 @Override
                 public void onError(int code, String errorMsg) {
-                    L.d(TAG, "mDBResTypeObserver code:" + code + ",errorMsg:" + errorMsg);
+                    L.d(TAG, "mStdObserver code:" + code + ",errorMsg:" + errorMsg);
                     showError();
                 }
             });
 
     private void showView() {
-        view().init2Show(bookData);
+        view().init2Show(stdData);
     }
 
     private void showError() {
@@ -57,7 +56,7 @@ public class KDBBookActivityPresenter extends BasePresenter<IKDBBookDetailActivi
         view().showErrorToast(msgId);
     }
 
-    public KDBBookActivityPresenter(Context context, IKDBBookDetailActivityView view) {
+    public KDBStdActivityPresenter(Context context, IKDBStdDetailActivityView view) {
         mContext = context;
         bindView(view);
         setModel(HttpManager.getInstance());
@@ -71,7 +70,7 @@ public class KDBBookActivityPresenter extends BasePresenter<IKDBBookDetailActivi
     @Override
     public void clear() {
         view().showRefreshing(false);
-        mBookObserver.unSubscribe();
+        mStdObserver.unSubscribe();
         unbindView();
     }
 
@@ -81,8 +80,8 @@ public class KDBBookActivityPresenter extends BasePresenter<IKDBBookDetailActivi
             resId = intent.getStringExtra(AppContants.Resource.RES_ID);
 
             // Load data
-            model.getKDBBookInfoNoCache(
-                    mBookObserver,
+            model.getKDBStdInfoNoCache(
+                    mStdObserver,
                     AppHelper.getInstance().getCurrentToken(),
                     resId
             );

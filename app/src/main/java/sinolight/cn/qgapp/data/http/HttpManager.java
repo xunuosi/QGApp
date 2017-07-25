@@ -42,6 +42,7 @@ import sinolight.cn.qgapp.data.http.entity.ResStandardEntity;
 import sinolight.cn.qgapp.data.http.entity.ResWordEntity;
 import sinolight.cn.qgapp.data.http.entity.ResultEntity;
 import sinolight.cn.qgapp.data.http.entity.StandardEntity;
+import sinolight.cn.qgapp.data.http.entity.StdInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.TokenEntity;
 import sinolight.cn.qgapp.data.http.entity.VCodeEntity;
 import sinolight.cn.qgapp.data.http.exception.ApiException;
@@ -175,9 +176,14 @@ public class HttpManager {
     }
 
     public void getKDBdoPicListNoCache(Observer<PageEntity<List<ResImgEntity>>> subscriber, String token,
+                                       @Nullable String key, int page, int size) {
+        toSubscribe(mApiService.getKDBPicList(token, key, page, size), subscriber);
+    }
+
+    public void getKDBdoPicInfoNoCache(Observer<PageEntity<List<ResImgEntity>>> subscriber, String token,
                                        @Nullable String dbId, @Nullable String themeType,
                                        @Nullable String key, int page, int size) {
-        toSubscribe(mApiService.getKDBPicList(token,dbId,themeType,key, page, size), subscriber);
+        toSubscribe(mApiService.getKDBPicInfo(token,dbId,themeType,key, page, size), subscriber);
     }
 
     public void getKDBWordListNoCache(Observer<PageEntity<List<ResWordEntity>>> subscriber, String token,
@@ -187,6 +193,10 @@ public class HttpManager {
 
     public void getKDBBookInfoNoCache(Observer<BookInfoEntity> subscriber, String token, String id) {
         toSubscribe(mApiService.getKDBBookInfo(token, id), subscriber);
+    }
+
+    public void getKDBStdInfoNoCache(Observer<StdInfoEntity> subscriber, String token, String id) {
+        toSubscribe(mApiService.getKDBStdInfo(token, id), subscriber);
     }
 
     public void getKDBEntryInfoNoCache(Observer<DicInfoEntity> subscriber, String token, String id) {

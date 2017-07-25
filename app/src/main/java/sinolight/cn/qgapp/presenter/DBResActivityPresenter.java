@@ -402,8 +402,6 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 model.getKDBdoPicListNoCache(
                         mImgObserver,
                         AppHelper.getInstance().getCurrentToken(),
-                        dbId,
-                        null,
                         null,
                         page,
                         SIZE
@@ -495,8 +493,6 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 model.getKDBdoPicListNoCache(
                         mImgObserver,
                         AppHelper.getInstance().getCurrentToken(),
-                        dbId,
-                        themeType,
                         key,
                         page,
                         SIZE

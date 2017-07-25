@@ -23,6 +23,7 @@ import sinolight.cn.qgapp.data.http.entity.ResStandardEntity;
 import sinolight.cn.qgapp.data.http.entity.ResWordEntity;
 import sinolight.cn.qgapp.data.http.entity.ResultEntity;
 import sinolight.cn.qgapp.data.http.entity.StandardEntity;
+import sinolight.cn.qgapp.data.http.entity.StdInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.TokenEntity;
 import sinolight.cn.qgapp.data.http.entity.VCodeEntity;
 
@@ -233,6 +234,23 @@ public interface ApiService {
     );
 
     /**
+     * 知识库-图集列表
+     * @param token
+     * @param key
+     * @param page
+     * @param size
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("db/doPicList")
+    Observable<ResultEntity<PageEntity<List<ResImgEntity>>>> getKDBPicList(
+            @Field("token") String token,
+            @Field("key") String key,
+            @Field("page") int page,
+            @Field("size") int size
+    );
+
+    /**
      * 知识库-图片列表信息
      * @param token
      * @param dbid
@@ -244,7 +262,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("db/doPicInfo")
-    Observable<ResultEntity<PageEntity<List<ResImgEntity>>>> getKDBPicList(
+    Observable<ResultEntity<PageEntity<List<ResImgEntity>>>> getKDBPicInfo(
             @Field("token") String token,
             @Field("dbid") String dbid,
             @Field("themeType") String themeType,
@@ -283,6 +301,19 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("db/doBookInfo")
     Observable<ResultEntity<BookInfoEntity>> getKDBBookInfo(
+            @Field("token") String token,
+            @Field("id") String id
+    );
+
+    /**
+     * 知识库-标准详情信息
+     * @param token
+     * @param id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("db/doStdInfo")
+    Observable<ResultEntity<StdInfoEntity>> getKDBStdInfo(
             @Field("token") String token,
             @Field("id") String id
     );
