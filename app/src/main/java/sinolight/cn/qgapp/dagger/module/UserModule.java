@@ -14,6 +14,7 @@ import sinolight.cn.qgapp.data.bean.LocalDataBean;
 import sinolight.cn.qgapp.presenter.HomeFragmentPresenter;
 import sinolight.cn.qgapp.presenter.KnowledgePresenter;
 import sinolight.cn.qgapp.presenter.RegisterActivityPresenter;
+import sinolight.cn.qgapp.presenter.UserFragmentPresenter;
 
 /**
  * Created by xns on 2017/6/2.
@@ -36,4 +37,9 @@ public class UserModule {
         return new KnowledgePresenter(context);
     }
 
+    @Provides
+    @PerActivity
+    UserFragmentPresenter provideUserFragmentPresenter(Context context) {
+        return new UserFragmentPresenter(context);
+    }
 }

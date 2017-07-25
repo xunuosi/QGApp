@@ -16,6 +16,7 @@ import sinolight.cn.qgapp.data.http.entity.TokenEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.utils.SharedPfUtil;
+import sinolight.cn.qgapp.views.activity.HomeActivity;
 import sinolight.cn.qgapp.views.view.ILoginActivityView;
 
 /**
@@ -37,9 +38,7 @@ public class LoginActivityPresenter extends BasePresenter<ILoginActivityView, Da
             AppHelper.getInstance().setCurrentUserName(userName);
             AppHelper.getInstance().setCurrentToken(token);
             AppHelper.getInstance().setCurrentPW(pwd);
-
-            view().showLoading(false);
-            view().showToastMsg(R.string.text_login_success);
+            showSuccess();
         }
 
         @Override
@@ -49,6 +48,13 @@ public class LoginActivityPresenter extends BasePresenter<ILoginActivityView, Da
             Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
         }
     });
+
+    private void showSuccess() {
+        view().showLoading(false);
+        view().showToastMsg(R.string.text_login_success);
+        // Go to HomeActivity
+        view().gotoActivity(HomeActivity.getCallIntent(mContext));
+    }
 
     public LoginActivityPresenter(ILoginActivityView view, DaoSession daoSession, Context context) {
         mContext = context;

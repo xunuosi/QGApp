@@ -127,4 +127,9 @@ public class LoginActivity extends BaseActivity implements ILoginActivityView {
         mBtnLogin.setEnabled(!enable);
         mBtnRegister.setEnabled(!enable);
     }
+
+    @Override
+    public void gotoActivity(Intent callIntent) {
+        startActivity(callIntent);
+    }
 }

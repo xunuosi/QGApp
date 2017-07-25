@@ -44,6 +44,7 @@ import sinolight.cn.qgapp.data.http.entity.ResultEntity;
 import sinolight.cn.qgapp.data.http.entity.StandardEntity;
 import sinolight.cn.qgapp.data.http.entity.StdInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.TokenEntity;
+import sinolight.cn.qgapp.data.http.entity.UserEntity;
 import sinolight.cn.qgapp.data.http.entity.VCodeEntity;
 import sinolight.cn.qgapp.data.http.exception.ApiException;
 import sinolight.cn.qgapp.data.http.parser.GsonTSpeaker;
@@ -201,6 +202,12 @@ public class HttpManager {
 
     public void getKDBEntryInfoNoCache(Observer<DicInfoEntity> subscriber, String token, String id) {
         toSubscribe(mApiService.getKDBEntryInfo(token, id), subscriber);
+    }
+
+    public void getUserInfoWithCache(Observer<UserEntity> subscriber, String token, String user, boolean update) {
+        toSubscribe(cacheProvider.getUserInfo(
+                mApiService.getUserInfo(token,user),
+                new EvictProvider(update)), subscriber);
     }
 
     public void getCode(Observer<VCodeEntity> subscriber, String time) {

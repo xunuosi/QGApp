@@ -25,6 +25,7 @@ import sinolight.cn.qgapp.data.http.entity.ResultEntity;
 import sinolight.cn.qgapp.data.http.entity.StandardEntity;
 import sinolight.cn.qgapp.data.http.entity.StdInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.TokenEntity;
+import sinolight.cn.qgapp.data.http.entity.UserEntity;
 import sinolight.cn.qgapp.data.http.entity.VCodeEntity;
 
 
@@ -329,5 +330,18 @@ public interface ApiService {
     Observable<ResultEntity<DicInfoEntity>> getKDBEntryInfo(
             @Field("token") String token,
             @Field("id") String id
+    );
+
+    /**
+     * 个人中心-个人资料
+     * @param token
+     * @param user
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("account/doUserInfo")
+    Observable<ResultEntity<UserEntity>> getUserInfo(
+            @Field("token") String token,
+            @Field("user") String user
     );
 }

@@ -22,6 +22,7 @@ import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
 import sinolight.cn.qgapp.data.http.entity.ResStandardEntity;
 import sinolight.cn.qgapp.data.http.entity.ResultEntity;
 import sinolight.cn.qgapp.data.http.entity.StandardEntity;
+import sinolight.cn.qgapp.data.http.entity.UserEntity;
 
 public interface CacheProvider {
 
@@ -65,4 +66,8 @@ public interface CacheProvider {
             Observable<ResultEntity<List<DBResTypeEntity>>> oRepos,
             EvictProvider evictDynamicKey);
 
+    @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
+    Observable<ResultEntity<UserEntity>> getUserInfo(
+            Observable<ResultEntity<UserEntity>> oRepos,
+            EvictProvider evictDynamicKey);
 }

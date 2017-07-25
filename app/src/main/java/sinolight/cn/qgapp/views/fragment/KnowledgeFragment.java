@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -29,7 +28,6 @@ import sinolight.cn.qgapp.adapter.KnowledgeAdapter;
 import sinolight.cn.qgapp.dagger.HasComponent;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
 import sinolight.cn.qgapp.presenter.KnowledgePresenter;
-import sinolight.cn.qgapp.utils.MyItemDivider;
 import sinolight.cn.qgapp.views.view.IKnowledgeFragmentView;
 
 /**
