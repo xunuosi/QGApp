@@ -162,4 +162,15 @@
         <item name="android:textColor">@color/color_login_blue</item>
     </style>
     <style name="book_fragment_content_text" parent="book_fragment_text"/>
+    <!--My Center Fragment-->
+    <style name="my_center_fragment_head_text">
+        <item name="android:textColor">@color/color_white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="my_center_fragment_head_indicator">
+        <item name="android:textColor">@color/color_white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
 </resources>

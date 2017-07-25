@@ -56,6 +56,10 @@
     <string name="text_page_size_format">开本：%1$s</string>
     <string name="text_package_style_format">包装：%1$s</string>
     <string name="text_from_format">出自：%1$s</string>
+    <string name="text_std_info">标准信息</string>
+    <string name="text_std_scope">试用范围</string>
+    <string name="text_user_name_format">%1$s，您好！</string>
+    <string name="text_user_home">个人主页</string>
     <!--DBDetail Home-->
     <string name="text_line_book">图书\nBooks</string>
     <string name="text_line_article">文章\nArticles</string>

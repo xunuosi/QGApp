@@ -10,18 +10,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.dagger.component.DaggerKDBStdActivityComponent;
 import sinolight.cn.qgapp.dagger.module.KDBStdActivityModule;
 import sinolight.cn.qgapp.data.http.entity.StdInfoEntity;
 import sinolight.cn.qgapp.presenter.KDBStdActivityPresenter;
+import sinolight.cn.qgapp.utils.ImageUtil;
 import sinolight.cn.qgapp.views.view.IKDBStdDetailActivityView;
 
 /**
@@ -55,6 +61,8 @@ public class KDBStdDetailActivity extends BaseActivity implements IKDBStdDetailA
     @BindView(R.id.tv_kdb_std_from)
     TextView mTvKdbStdFrom;
 
+    private List<String> mTitles = new ArrayList<>();
+
     public static Intent getCallIntent(Context context) {
         return new Intent(context, KDBStdDetailActivity.class);
     }
@@ -80,7 +88,9 @@ public class KDBStdDetailActivity extends BaseActivity implements IKDBStdDetailA
 
     @Override
     protected void initViews() {
-
+        mTitles.add(getString(R.string.text_std_info));
+        mTitles.add(getString(R.string.text_std_scope));
+        mTitles.add(getString(R.string.text_table_of_contents));
     }
 
     @Override
@@ -110,18 +120,39 @@ public class KDBStdDetailActivity extends BaseActivity implements IKDBStdDetailA
 
     @Override
     public void showErrorToast(int msgId) {
-
+        String msg = getString(msgId);
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void init2Show(StdInfoEntity stdData) {
+        mTvTitle.setText(stdData.getName());
 
+        int width = (int) (App.getContext().getResources().getDimensionPixelOffset(R.dimen.kdb_book_detail_cover_width) /
+                App.getContext().getResources().getDisplayMetrics().density);
+        int height = (int) (App.getContext().getResources().getDimensionPixelOffset(R.dimen.kdb_book_detail_cover_height) /
+                App.getContext().getResources().getDisplayMetrics().density);
+        ImageUtil.frescoShowImageByUri(
+                mContext,
+                stdData.getCover(),
+                mIvKdbStdCover,
+                width,
+                height
+        );
+        mTvKdbStdTitle.setText(stdData.getName());
+        mTvKdbStdPubName.setText(formatStr(R.string.text_publish_name_format,stdData.getImdate()));
+    }
+
+    private String formatStr(int baseStrId, String child) {
+        String local = getString(baseStrId);
+        return String.format(local, child);
     }
 
     @OnClick({R.id.im_back_arrow, R.id.iv_collect, R.id.btn_kdb_std_read})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.im_back_arrow:
+                finish();
                 break;
             case R.id.iv_collect:
                 break;

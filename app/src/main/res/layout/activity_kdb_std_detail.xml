@@ -55,6 +55,8 @@
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:gravity="center"
+                android:lines="1"
+                android:ellipsize="end"
                 android:text="@string/app_name"/>
 
             <ImageView
@@ -237,11 +239,9 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/frameLayout"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/kdb_book_empty_view"
-        app:layout_constraintVertical_bias="0.0"/>
+        app:layout_constraintTop_toBottomOf="@+id/kdb_std_empty_view"/>
 
 
     <View
@@ -267,11 +267,11 @@
         android:layout_marginBottom="8dp"/>
 
     <View
-        android:id="@+id/kdb_book_empty_view"
+        android:id="@+id/kdb_std_empty_view"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="@color/color_bottom_divider"
-        app:layout_constraintTop_toBottomOf="@+id/tl_kdb_book_detail"
+        app:layout_constraintTop_toBottomOf="@+id/tl_kdb_std_detail"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 </android.support.constraint.ConstraintLayout>

@@ -1,11 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-        <TextView
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_my_center"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/my_fragment_toolbar_height"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="user"
-            android:gravity="center"/>
-</LinearLayout>
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_my_center_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/root_my_center"
+                android:text="@string/app_name"
+                android:lines="1"
+                android:ellipsize="end"
+                android:gravity="center"
+                style="@style/tool_bar"/>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/root_my_center"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/my_fragment_head_height"
+                android:background="@drawable/user_center_bg"
+                android:layout_alignParentBottom="true">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/iv_my_fragment_ivator"
+                    android:layout_width="@dimen/my_fragment_head_img_size"
+                    android:layout_height="@dimen/my_fragment_head_img_size"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    fresco:actualImageScaleType="fitCenter"
+                    fresco:placeholderImage="@drawable/avator_holder"
+                    fresco:roundAsCircle="true"/>
+
+                <View
+                    android:id="@+id/empty_view1"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@color/color_white"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline22"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintLeft_toLeftOf="@+id/guideline23"
+                    app:layout_constraintRight_toRightOf="parent"/>
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline22"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.66"/>
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline23"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.31"/>
+
+                <TextView
+                    android:id="@+id/tv_my_fragment_head_name"
+                    style="@style/my_center_fragment_head_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
+                    android:text="@string/text_user_name_format"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline22"
+                    app:layout_constraintLeft_toLeftOf="@+id/guideline23"
+                    app:layout_constraintRight_toLeftOf="@+id/guideline24"/>
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.74"/>
+
+                <TextView
+                    android:id="@+id/tv_my_fragment_user_home"
+                    style="@style/my_center_fragment_head_indicator"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="8dp"
+                    android:text="@string/text_user_home"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline22"
+                    app:layout_constraintLeft_toLeftOf="@+id/guideline24"
+                    app:layout_constraintRight_toLeftOf="@+id/iv_my_fragment_head_indicator"/>
+
+                <ImageView
+                    android:id="@+id/iv_my_fragment_head_indicator"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="16dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/arrow_white_right"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline22"
+                    app:layout_constraintLeft_toRightOf="@+id/tv_my_fragment_user_home"
+                    app:layout_constraintRight_toRightOf="parent"/>
+            </android.support.constraint.ConstraintLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+</android.support.constraint.ConstraintLayout>
