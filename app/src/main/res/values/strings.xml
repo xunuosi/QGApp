@@ -102,6 +102,7 @@
     <string name="text_register_success">用户注册成功</string>
     <!--Msg-->
     <string name="text_user_empty">用户名为空</string>
+    <string name="text_new_pwd_empty">新密码为空</string>
     <string name="text_email_empty">邮箱为空</string>
     <string name="text_pwd_empty">密码为空</string>
     <string name="text_old_pwd_empty">原密码为空</string>
@@ -135,5 +136,4 @@
     <!--Attention-->
     <string name="attention_data_refresh_error">数据刷新错误，请检查网络或下拉重新刷新数据!</string>
     <string name="text_word_footer_holder">共10000条</string>
-    <string name="text_new_pwd_empty">新密码为空</string>
 </resources>
