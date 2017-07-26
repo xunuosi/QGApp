@@ -19,12 +19,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.dagger.HasComponent;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
 import sinolight.cn.qgapp.data.http.entity.UserEntity;
 import sinolight.cn.qgapp.presenter.UserFragmentPresenter;
 import sinolight.cn.qgapp.views.activity.LoginActivity;
+import sinolight.cn.qgapp.views.activity.UserHomeActivity;
 import sinolight.cn.qgapp.views.view.IUserFragmentView;
 
 /**
@@ -102,6 +104,7 @@ public class UserFragment extends BaseFragment implements IUserFragmentView {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_my_fragment_user_home:
+                mPresenter.gotoUserHomeActivity();
                 break;
             case R.id.root_my_center_res:
                 break;

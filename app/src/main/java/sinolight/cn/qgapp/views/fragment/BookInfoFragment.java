@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
 
@@ -41,7 +39,6 @@ public class BookInfoFragment extends ResBaseFragment {
      * BookIntroduction View
      */
     private TextView mTvBookIntroduction;
-    Unbinder unbinder;
 
     private int mType;
     private BookInfoEntity mBookData;
@@ -70,15 +67,12 @@ public class BookInfoFragment extends ResBaseFragment {
         switch (mType) {
             case TYPE_BOOK_INFO:
                 layoutId = R.layout.fragment_book_info;
-                unbinder = ButterKnife.bind(this, inflater.inflate(layoutId, container, false));
                 break;
             case TYPE_BOOK_INTRODUCTION:
                 layoutId = R.layout.fragment_book_introduction;
-                unbinder = ButterKnife.bind(this, inflater.inflate(layoutId, container, false));
                 break;
             case TYPE_BOOK_TABLE_OF_CONTENTS:
                 layoutId = R.layout.fragment_book_info;
-                unbinder = ButterKnife.bind(this, inflater.inflate(layoutId, container, false));
                 break;
         }
 
@@ -166,7 +160,5 @@ public class BookInfoFragment extends ResBaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
-
     }
 }

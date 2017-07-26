@@ -34,8 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="16dp"
-            android:layout_weight="1"
-            android:text="@string/app_name"/>
+            android:layout_weight="1"/>
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_my_center_res_indicator"
@@ -74,8 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="16dp"
-            android:layout_weight="1"
-            android:text="@string/app_name"/>
+            android:layout_weight="1"/>
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_my_center_setting_indicator"
@@ -125,8 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="16dp"
-            android:layout_weight="1"
-            android:text="@string/app_name"/>
+            android:layout_weight="1"/>
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_my_center_help_indicator"

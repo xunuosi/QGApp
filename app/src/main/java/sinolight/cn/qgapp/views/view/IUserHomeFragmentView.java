@@ -13,6 +13,9 @@ public interface IUserHomeFragmentView {
 
     void showErrorToast(int msgId);
 
+    void showErrorToast(String msg);
+
     void init2Show(UserEntity userData);
 
+    void clear();
 }

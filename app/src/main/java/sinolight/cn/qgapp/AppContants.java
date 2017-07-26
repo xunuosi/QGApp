@@ -66,4 +66,8 @@ public interface AppContants {
         String RES_NAME = "res_name";
     }
 
+    interface User {
+        String USER_BEAN = "user_bean";
+    }
+
 }

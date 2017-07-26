@@ -210,6 +210,11 @@ public class HttpManager {
                 new EvictProvider(update)), subscriber);
     }
 
+    public void changePwdNoCache(Observer<Object> subscriber, String token, String oldPwd, String newPwd,
+                                 String reNewPwd, String user) {
+        toSubscribe(mApiService.changePwd(token, oldPwd, newPwd, reNewPwd, user), subscriber);
+    }
+
     public void getCode(Observer<VCodeEntity> subscriber, String time) {
         toSubscribe(mApiService.getCode(time), subscriber);
     }

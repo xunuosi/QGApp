@@ -344,4 +344,24 @@ public interface ApiService {
             @Field("token") String token,
             @Field("user") String user
     );
+
+    /**
+     * 个人中心-修改密码
+     * @param token
+     * @param oldPwd
+     * @param newPwd
+     * @param reNewPwd
+     * @param user
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("account/changePwd")
+    Observable<ResultEntity<Object>> changePwd(
+            @Field("token") String token,
+            @Field("oldPwd") String oldPwd,
+            @Field("newPwd") String newPwd,
+            @Field("reNewPwd") String reNewPwd,
+            @Field("user") String user
+
+    );
 }
