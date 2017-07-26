@@ -28,7 +28,7 @@ import sinolight.cn.qgapp.views.view.IDBResMaterialFragmentView;
  * 热门素材Fragment
  */
 
-public class DBResMaterialFragment extends BaseFragment implements IDBResMaterialFragmentView {
+public class DBResMaterialFragment extends BaseLazyLoadFragment implements IDBResMaterialFragmentView {
     private static final String TAG = "DBResMaterialFragment";
     @Inject
     DBResMaterialPresenter mPresenter;
@@ -68,7 +68,6 @@ public class DBResMaterialFragment extends BaseFragment implements IDBResMateria
     public void onStart() {
         super.onStart();
         L.d(TAG,"onStart");
-        mPresenter.init2Show();
     }
 
     @Override
@@ -76,6 +75,15 @@ public class DBResMaterialFragment extends BaseFragment implements IDBResMateria
         super.onResume();
         L.d(TAG,"onResume");
 
+    }
+
+    @Override
+    protected void lazyLoad() {
+        L.d(TAG, "lazyLoad");
+        if (!isVisible) {
+            return;
+        }
+        mPresenter.init2Show();
     }
 
     @Override
