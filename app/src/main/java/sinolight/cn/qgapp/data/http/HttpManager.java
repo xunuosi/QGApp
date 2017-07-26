@@ -33,6 +33,7 @@ import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.DicInfoEntity;
+import sinolight.cn.qgapp.data.http.entity.MaterialEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
 import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
@@ -189,7 +190,7 @@ public class HttpManager {
 
     public void getKDBWordListNoCache(Observer<PageEntity<List<ResWordEntity>>> subscriber, String token,
                                        @Nullable String dbId, int type, @Nullable String key, int page, int size) {
-        toSubscribe(mApiService.getKDBWordList(token,"5f5f7c1e-2d7f-4570-a639-a5c4bae75378",key,type, page, size), subscriber);
+        toSubscribe(mApiService.getKDBWordList(token, dbId, key, type, page, size), subscriber);
     }
 
     public void getKDBBookInfoNoCache(Observer<BookInfoEntity> subscriber, String token, String id) {
@@ -208,6 +209,11 @@ public class HttpManager {
         toSubscribe(cacheProvider.getUserInfo(
                 mApiService.getUserInfo(token,user),
                 new EvictProvider(update)), subscriber);
+    }
+
+    public void getHotMenuWithCache(Observer<List<MaterialEntity>> subscriber, String token, boolean update) {
+        toSubscribe(cacheProvider.getHotMenu(
+                mApiService.getHotMenu(token), new EvictProvider(update)), subscriber);
     }
 
     public void changePwdNoCache(Observer<Object> subscriber, String token, String oldPwd, String newPwd,

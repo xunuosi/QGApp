@@ -72,6 +72,7 @@
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">left</item>
     </style>
+
     <style name="hf_nb_text">
         <item name="android:textColor">@color/color_home_text</item>
         <item name="android:textSize">16sp</item>
@@ -97,12 +98,15 @@
     </style>
     <!--KnowledgeFragment-->
     <style name="kf_text_title" parent="hf_article_text_title"/>
+
     <style name="kf_text_info" parent="hf_article_text_content"/>
     <!--DBDetail Activity-->
     <style name="db_detail_text" parent="hf_standard_text"/>
     <!--DBRes Activity-->
     <style name="db_res_text_title" parent="hf_article_text_title"/>
+
     <style name="db_res_text_content" parent="hf_article_text_content"/>
+
     <style name="db_res_text_info" parent="hf_article_text_info"/>
     <!--PopMenu-->
     <style name="TRM_ANIM_STYLE">
@@ -124,6 +128,7 @@
         <item name="android:textSize">16sp</item>
         <item name="android:gravity">center_vertical</item>
     </style>
+
     <style name="db_res_word_text_info">
         <item name="android:textColor">@color/color_login_gray</item>
         <item name="android:textSize">14sp</item>
@@ -134,7 +139,9 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/color_selected_bottom_text</item>
     </style>
+
     <style name="kdb_dic_detail_text_info" parent="hf_standard_text"/>
+
     <style name="kdb_dic_detail_text_content" parent="hf_standard_text">
         <item name="android:textSize">16sp</item>
     </style>
@@ -143,24 +150,30 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/color_home_text</item>
     </style>
+
     <style name="my_RatingBar" parent="@android:style/Widget.Material.RatingBar.Small">
         <item name="android:progressDrawable">@drawable/rating_bg</item>
         <item name="android:minHeight">16dp</item>
         <item name="android:maxHeight">16dp</item>
     </style>
+
     <style name="RatingBar" parent="Theme.AppCompat">
-            <item name="colorControlNormal">@color/color_login_blue</item>
-            <item name="colorControlActivated">@color/google_red</item>
+        <item name="colorControlNormal">@color/color_login_blue</item>
+        <item name="colorControlActivated">@color/google_red</item>
     </style>
+
     <style name="kdb_book_detail_text_book_info" parent="hf_standard_text"/>
+
     <style name="book_fragment_text">
         <item name="android:textColor">@color/color_hf_article_info_text</item>
         <item name="android:textSize">18sp</item>
         <item name="android:gravity">center_vertical</item>
     </style>
+
     <style name="book_fragment_blue_text" parent="book_fragment_text">
         <item name="android:textColor">@color/color_login_blue</item>
     </style>
+
     <style name="book_fragment_content_text" parent="book_fragment_text"/>
     <!--My Center Fragment-->
     <style name="my_center_fragment_head_text">
@@ -168,6 +181,7 @@
         <item name="android:textSize">18sp</item>
         <item name="android:gravity">center_vertical</item>
     </style>
+
     <style name="my_center_fragment_head_indicator">
         <item name="android:textColor">@color/color_white</item>
         <item name="android:textSize">14sp</item>
@@ -185,9 +199,30 @@
         <item name="android:textSize">16sp</item>
         <item name="android:gravity">center_vertical</item>
     </style>
+
     <style name="user_home_text_black">
         <item name="android:textColor">@color/color_hf_stad_title_text</item>
         <item name="android:textSize">16sp</item>
         <item name="android:gravity">center_vertical</item>
+    </style>
+    <!--Res DataBase-->
+    <style name="dbres_text_blue">
+        <item name="android:textColor">@color/color_text_blue</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center_vertical|right</item>
+    </style>
+
+    <style name="dbres_text_title" parent="hf_article_text_title">
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="dbres_text_content" parent="dbres_text_title">
+        <item name="android:textColor">@color/color_common_indicator</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="dbres_text_indicator" parent="dbres_text_title">
+        <item name="android:textColor">@color/color_common_content</item>
+        <item name="android:textSize">14sp</item>
     </style>
 </resources>

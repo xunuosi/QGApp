@@ -14,6 +14,7 @@ import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.DicInfoEntity;
+import sinolight.cn.qgapp.data.http.entity.MaterialEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
 import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
@@ -363,5 +364,11 @@ public interface ApiService {
             @Field("reNewPwd") String reNewPwd,
             @Field("user") String user
 
+    );
+
+    @FormUrlEncoded
+    @POST("res/doHotMenu")
+    Observable<ResultEntity<List<MaterialEntity>>> getHotMenu(
+            @Field("token") String token
     );
 }

@@ -47,4 +47,8 @@
     <color name="color_orange">#f2c342</color>
     <!--My Center-->
     <color name="color_my_center_tag">#6c6c6c</color>
+    <!--Res DataBase-->
+    <color name="color_text_blue">#2b7cd3</color>
+    <color name="color_common_content">#585858</color>
+    <color name="color_common_indicator">#808080</color>
 </resources>

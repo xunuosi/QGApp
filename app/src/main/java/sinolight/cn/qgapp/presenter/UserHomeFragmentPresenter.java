@@ -7,12 +7,8 @@ import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
-import sinolight.cn.qgapp.data.http.entity.UserEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.L;
-import sinolight.cn.qgapp.utils.TextFormatUtil;
-import sinolight.cn.qgapp.views.activity.LoginActivity;
-import sinolight.cn.qgapp.views.view.IUserFragmentView;
 import sinolight.cn.qgapp.views.view.IUserHomeFragmentView;
 
 /**

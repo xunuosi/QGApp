@@ -75,4 +75,10 @@
     <dimen name="my_fragment_head_height">142dp</dimen>
     <dimen name="my_fragment_line_height">62dp</dimen>
     <dimen name="my_fragment_head_img_size">93dp</dimen>
+    <!--Res DataBase-->
+    <!--Material-->
+    <dimen name="resdb_materail_root_height">162dp</dimen>
+    <dimen name="resdb_materail_title_height">58dp</dimen>
+    <dimen name="resdb_materail_cover_width">132dp</dimen>
+    <dimen name="resdb_materail_cover_height">108dp</dimen>
 </resources>
