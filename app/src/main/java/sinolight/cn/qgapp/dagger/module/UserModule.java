@@ -7,6 +7,7 @@ import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
 import sinolight.cn.qgapp.dagger.PerActivity;
+import sinolight.cn.qgapp.presenter.DBResArticlePresenter;
 import sinolight.cn.qgapp.presenter.DBResMaterialPresenter;
 import sinolight.cn.qgapp.presenter.HomeFragmentPresenter;
 import sinolight.cn.qgapp.presenter.KnowledgePresenter;
@@ -50,5 +51,11 @@ public class UserModule {
     @PerActivity
     DBResMaterialPresenter provideDBResMaterialPresenter(Context context) {
         return new DBResMaterialPresenter(context);
+    }
+
+    @Provides
+    @PerActivity
+    DBResArticlePresenter provideDBResArticlePresenter(Context context) {
+        return new DBResArticlePresenter(context);
     }
 }

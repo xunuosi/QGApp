@@ -138,4 +138,5 @@
     <!--Attention-->
     <string name="attention_data_refresh_error">数据刷新错误，请检查网络或下拉重新刷新数据!</string>
     <string name="text_word_footer_holder">共10000条</string>
+    <string name="text_tree_menu_loading">分类列表获取中......</string>
 </resources>

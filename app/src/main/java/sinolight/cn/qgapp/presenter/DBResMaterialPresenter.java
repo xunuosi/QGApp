@@ -143,6 +143,7 @@ public class DBResMaterialPresenter extends BasePresenter<IDBResMaterialFragment
     @Override
     public void clear() {
         materialObserver.unSubscribe();
+        articleObserver.unSubscribe();
         KDBResDataMapper.reset();
         mDatas.clear();
         unbindView();

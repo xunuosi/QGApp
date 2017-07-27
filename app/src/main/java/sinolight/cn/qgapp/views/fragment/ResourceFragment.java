@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import com.unnamed.b.atv.view.AndroidTreeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ import butterknife.Unbinder;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.adapter.MyTabAdapter;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
+import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
 
 /**
  * Created by xns on 2017/6/29.
@@ -44,6 +46,9 @@ public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSel
     private MyTabAdapter mTabAdapter;
     private List<Fragment> mFragments;
     private List<String> mTitles = new ArrayList<>();
+    // TreeMenu
+    private TopRightMenu mTopRightMenu;
+    private AndroidTreeView tView;
 
     public static ResourceFragment newInstance() {
         return new ResourceFragment();
@@ -116,9 +121,15 @@ public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSel
             case R.id.iv_toolbar_search:
                 break;
             case R.id.iv_menu:
+                popTreeMenu();
                 break;
         }
     }
+
+    private void popTreeMenu() {
+        ((DBResArticleFragment) mFragments.get(1)).popTreeMenu(mIvMenu);
+    }
+
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
