@@ -27,15 +27,17 @@ public class DBResTitleHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.iv_item_dbres_ct_indicator2)
     SimpleDraweeView mIvItemDbresCtIndicator2;
     private String titleName;
+    private int typeTitle;
 
     public DBResTitleHolder(View layout) {
         super(layout);
         ButterKnife.bind(this, layout);
     }
 
-    public void setData(KDBResData<String> data) {
+    public void setData(KDBResData<String> data, int typeTitle) {
         if (data != null) {
             titleName = data.getData();
+            this.typeTitle = typeTitle;
             bindData();
         }
     }

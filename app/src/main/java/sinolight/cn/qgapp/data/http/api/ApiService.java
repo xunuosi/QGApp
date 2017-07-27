@@ -12,6 +12,7 @@ import sinolight.cn.qgapp.data.http.entity.ArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
+import sinolight.cn.qgapp.data.http.entity.DBResArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.DicInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.MaterialEntity;
@@ -366,9 +367,25 @@ public interface ApiService {
 
     );
 
+    /**
+     * 资源库-热门素材
+     * @param token
+     * @return
+     */
     @FormUrlEncoded
     @POST("res/doHotMenu")
     Observable<ResultEntity<List<MaterialEntity>>> getHotMenu(
+            @Field("token") String token
+    );
+
+    /**
+     * 资源库-热门文章
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("res/doHotArticle")
+    Observable<ResultEntity<List<DBResArticleEntity>>> getHotArticle(
             @Field("token") String token
     );
 }

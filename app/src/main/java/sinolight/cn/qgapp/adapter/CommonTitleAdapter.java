@@ -1,22 +1,16 @@
 package sinolight.cn.qgapp.adapter;
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.KDBResData;
+import sinolight.cn.qgapp.views.holder.DBResHotArticleHolder;
 import sinolight.cn.qgapp.views.holder.DBResMaterialHolder;
 import sinolight.cn.qgapp.views.holder.DBResTitleHolder;
 
@@ -26,9 +20,10 @@ import sinolight.cn.qgapp.views.holder.DBResTitleHolder;
  */
 
 public class CommonTitleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    public static final int TYPE_TITLE = 0;
+    public static final int TYPE_MATERIAL_TITLE = 0;
     public static final int TYPE_MATERIAL = 1;
-    public static final int TYPE_ARTICLE = 2;
+    public static final int TYPE_ARTICLE_TITLE = 2;
+    public static final int TYPE_ARTICLE = 3;
 
     private Context mContext;
     private LayoutInflater mInflater;
@@ -45,14 +40,17 @@ public class CommonTitleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holder = null;
         switch (viewType) {
-            case TYPE_TITLE:
+            case TYPE_MATERIAL_TITLE:
                 holder = new DBResTitleHolder(mInflater.inflate(R.layout.item_dbres_common_title, parent, false));
                 break;
             case TYPE_MATERIAL:
                 holder = new DBResMaterialHolder(mInflater.inflate(R.layout.item_material, parent, false));
                 break;
+            case TYPE_ARTICLE_TITLE:
+                holder = new DBResTitleHolder(mInflater.inflate(R.layout.item_dbres_common_title, parent, false));
+                break;
             case TYPE_ARTICLE:
-
+                holder = new DBResHotArticleHolder(mInflater.inflate(R.layout.item_db_res_hot_article, parent, false));
                 break;
         }
         return holder;
@@ -61,13 +59,17 @@ public class CommonTitleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (getItemViewType(position)) {
-            case TYPE_TITLE:
-                ((DBResTitleHolder) holder).setData(mData.get(position));
+            case TYPE_MATERIAL_TITLE:
+                ((DBResTitleHolder) holder).setData(mData.get(position), TYPE_MATERIAL_TITLE);
                 break;
             case TYPE_MATERIAL:
                 ((DBResMaterialHolder) holder).setData(mData.get(position));
                 break;
+            case TYPE_ARTICLE_TITLE:
+                ((DBResTitleHolder) holder).setData(mData.get(position), TYPE_ARTICLE_TITLE);
+                break;
             case TYPE_ARTICLE:
+                ((DBResHotArticleHolder) holder).setData(mData.get(position));
                 break;
         }
     }
@@ -89,5 +91,4 @@ public class CommonTitleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
         notifyDataSetChanged();
     }
-
 }

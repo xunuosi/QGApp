@@ -12,6 +12,7 @@ import sinolight.cn.qgapp.adapter.CommonTitleAdapter;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
+import sinolight.cn.qgapp.data.http.entity.DBResArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.MaterialEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.KDBResDataMapper;
@@ -31,6 +32,7 @@ public class DBResMaterialPresenter extends BasePresenter<IDBResMaterialFragment
     private Context mContext;
     private List<KDBResData> mDatas = new ArrayList<>();
     private List<MaterialEntity> materialDatas;
+    private List<DBResArticleEntity> articelDatas;
     private CommonTitleAdapter mAdapter;
 
     private HttpSubscriber materialObserver = new HttpSubscriber(new OnResultCallBack<List<MaterialEntity>>() {
@@ -39,7 +41,24 @@ public class DBResMaterialPresenter extends BasePresenter<IDBResMaterialFragment
         public void onSuccess(List<MaterialEntity> materialEntities) {
             if (materialEntities != null && materialEntities.size() != 0) {
                 materialDatas = materialEntities;
-                insertTitle(TYPE_MATERIAL, CommonTitleAdapter.TYPE_MATERIAL);
+                transformKDBResData(CommonTitleAdapter.TYPE_MATERIAL);
+            }
+        }
+
+        @Override
+        public void onError(int code, String errorMsg) {
+            L.d(TAG, "userObserver code:" + code + ",errorMsg:" + errorMsg);
+            showError();
+        }
+    });
+
+    private HttpSubscriber articleObserver = new HttpSubscriber(new OnResultCallBack<List<DBResArticleEntity>>() {
+
+        @Override
+        public void onSuccess(List<DBResArticleEntity> dbResArticleEntities) {
+            if (dbResArticleEntities != null && dbResArticleEntities.size() != 0) {
+                articelDatas = dbResArticleEntities;
+                transformKDBResData(CommonTitleAdapter.TYPE_ARTICLE);
             }
         }
 
@@ -53,41 +72,54 @@ public class DBResMaterialPresenter extends BasePresenter<IDBResMaterialFragment
     /**
      * Insert specify title
      * @param titleType
-     * @param adapterType
      */
-    private void insertTitle(int titleType, int adapterType) {
+    private void insertTitle(int titleType) {
         switch (titleType) {
             case TYPE_MATERIAL:
-                mDatas.add(KDBResDataMapper.transformTitleData(mContext.getString(R.string.text_hot_material), CommonTitleAdapter.TYPE_TITLE, false));
+                mDatas.add(KDBResDataMapper.transformTitleData(
+                        mContext.getString(R.string.text_hot_material),
+                        CommonTitleAdapter.TYPE_MATERIAL_TITLE,
+                        false));
                 break;
             case TYPE_ARTICLE:
-                mDatas.add(KDBResDataMapper.transformTitleData(mContext.getString(R.string.text_hot_article), CommonTitleAdapter.TYPE_TITLE, false));
+                mDatas.add(KDBResDataMapper.transformTitleData(
+                        mContext.getString(R.string.text_hot_article),
+                        CommonTitleAdapter.TYPE_ARTICLE_TITLE,
+                        false));
+                getHotArticle();
                 break;
         }
 
-        transformKDBResData(adapterType);
     }
 
     private void transformKDBResData(int adapterType) {
         switch (adapterType) {
             case CommonTitleAdapter.TYPE_MATERIAL:
                 mDatas.addAll(KDBResDataMapper.transformMaterialDatas(materialDatas, adapterType, false));
+                insertTitle(TYPE_ARTICLE);
                 break;
             case CommonTitleAdapter.TYPE_ARTICLE:
-
+                mDatas.addAll(KDBResDataMapper.transformHotArticleDatas(articelDatas, adapterType, false));
+                showSuccess();
                 break;
         }
+    }
 
-        showSuccess();
+    private void getHotArticle() {
+        model.getHotArticleWithCache(
+                articleObserver,
+                AppHelper.getInstance().getCurrentToken(),
+                false
+        );
     }
 
     private void showSuccess() {
         if (mAdapter == null) {
             mAdapter = new CommonTitleAdapter(App.getContext(), mDatas);
-            view().init2Show(mAdapter);
         } else {
             mAdapter.setData(mDatas);
         }
+        view().init2Show(mAdapter);
     }
 
     private void showError() {
@@ -112,10 +144,13 @@ public class DBResMaterialPresenter extends BasePresenter<IDBResMaterialFragment
     public void clear() {
         materialObserver.unSubscribe();
         KDBResDataMapper.reset();
+        mDatas.clear();
         unbindView();
     }
 
     public void init2Show() {
+        mDatas.clear();
+        insertTitle(TYPE_MATERIAL);
         model.getHotMenuWithCache(
                 materialObserver,
                 AppHelper.getInstance().getCurrentToken(),
