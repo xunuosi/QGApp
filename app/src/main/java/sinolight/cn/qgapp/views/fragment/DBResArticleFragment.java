@@ -219,11 +219,15 @@ public class DBResArticleFragment extends BaseFragment implements IDBResArticleF
 
     @Override
     public void onLoadMore() {
-
+        // 正在加载数据时禁止加载更多数据
+//        mPresenter.loadMore(mEtDbDetailSearch.getText().toString().trim(), themeType);
     }
 
     @Override
     public void onRefresh() {
+        // Refresh data clear all of condition
+//        mEtDbDetailSearch.setText(null);
+        themeType = null;
         mPresenter.refreshView();
     }
 

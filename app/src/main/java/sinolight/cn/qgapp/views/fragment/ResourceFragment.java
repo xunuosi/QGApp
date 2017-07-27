@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,11 @@ import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
  */
 
 public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSelectedListener {
+    private static final int TYPE_MATERIAL_FRAGMENT = 0;
+    private static final int TYPE_ARTICLE_FRAGMENT = 1;
+    private static final int TYPE_PIC_FRAGMENT = 2;
+    private static final int TYPE_VIDEO_FRAGMENT = 3;
+
     @BindView(R.id.et_toolbar_search)
     EditText mEtToolbarSearch;
     @BindView(R.id.tool_bar_rf)
@@ -119,11 +125,25 @@ public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSel
                 getActivity().onBackPressed();
                 break;
             case R.id.iv_toolbar_search:
+                getSearchData();
                 break;
             case R.id.iv_menu:
                 popTreeMenu();
                 break;
         }
+    }
+
+    private void getSearchData() {
+        if (checkSearchElement()) {
+
+            return;
+        } else {
+
+        }
+    }
+
+    private boolean checkSearchElement() {
+        return TextUtils.isEmpty(mEtToolbarSearch.getText().toString().trim());
     }
 
     private void popTreeMenu() {
@@ -135,12 +155,12 @@ public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSel
     public void onTabSelected(TabLayout.Tab tab) {
         int position = tab.getPosition();
         switch (position) {
-            case 0:
-            case 2:
-            case 3:
+            case TYPE_MATERIAL_FRAGMENT:
+            case TYPE_PIC_FRAGMENT:
+            case TYPE_VIDEO_FRAGMENT:
                 mIvMenu.setVisibility(View.GONE);
                 break;
-            case 1:
+            case TYPE_ARTICLE_FRAGMENT:
                 mIvMenu.setVisibility(View.VISIBLE);
                 break;
         }
