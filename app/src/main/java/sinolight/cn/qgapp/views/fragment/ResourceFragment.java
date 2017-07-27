@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ import sinolight.cn.qgapp.dagger.component.UserComponent;
  * 资源库首页
  */
 
-public class ResourceFragment extends BaseFragment {
+public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSelectedListener {
     @BindView(R.id.et_toolbar_search)
     EditText mEtToolbarSearch;
     @BindView(R.id.tool_bar_rf)
@@ -37,6 +38,8 @@ public class ResourceFragment extends BaseFragment {
     @BindView(R.id.vp_rf)
     ViewPager mVpRf;
     Unbinder unbinder;
+    @BindView(R.id.iv_menu)
+    ImageView mIvMenu;
 
     private MyTabAdapter mTabAdapter;
     private List<Fragment> mFragments;
@@ -90,6 +93,7 @@ public class ResourceFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         mVpRf.setAdapter(mTabAdapter);
         mTabLayout.setupWithViewPager(mVpRf);
+        mTabLayout.addOnTabSelectedListener(this);
     }
 
     @Override
@@ -103,7 +107,7 @@ public class ResourceFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.im_search_back_arrow, R.id.iv_toolbar_search})
+    @OnClick({R.id.im_search_back_arrow, R.id.iv_toolbar_search, R.id.iv_menu})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.im_search_back_arrow:
@@ -111,6 +115,33 @@ public class ResourceFragment extends BaseFragment {
                 break;
             case R.id.iv_toolbar_search:
                 break;
+            case R.id.iv_menu:
+                break;
         }
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        int position = tab.getPosition();
+        switch (position) {
+            case 0:
+            case 2:
+            case 3:
+                mIvMenu.setVisibility(View.GONE);
+                break;
+            case 1:
+                mIvMenu.setVisibility(View.VISIBLE);
+                break;
+        }
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 }
