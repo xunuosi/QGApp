@@ -7,24 +7,22 @@ import com.unnamed.b.atv.model.TreeNode;
 import java.util.ArrayList;
 import java.util.List;
 
-import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
-import sinolight.cn.qgapp.adapter.CommonTitleAdapter;
+import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
-import sinolight.cn.qgapp.data.http.entity.DBResArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
-import sinolight.cn.qgapp.data.http.entity.MaterialEntity;
+import sinolight.cn.qgapp.data.http.entity.PageEntity;
+import sinolight.cn.qgapp.data.http.entity.ResArticleEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.KDBResDataMapper;
 import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.views.holder.TreeChildHolder;
 import sinolight.cn.qgapp.views.holder.TreeParentHolder;
 import sinolight.cn.qgapp.views.view.IDBResArticleFragmentView;
-import sinolight.cn.qgapp.views.view.IDBResMaterialFragmentView;
 
 /**
  * Created by xns on 2017/7/8.
@@ -33,15 +31,78 @@ import sinolight.cn.qgapp.views.view.IDBResMaterialFragmentView;
 
 public class DBResArticlePresenter extends BasePresenter<IDBResArticleFragmentView, HttpManager>{
     private static final String TAG = "DBResArticlePresenter";
-
+    private static final int TYPE_ARTICLE = 0;
     private Context mContext;
-    private List<KDBResData> mDatas = new ArrayList<>();
 
     private List<DBResTypeEntity> mTreeTypeList;
     private List<TreeNode> mTreeNodes;
     private List<TreeNode> mRoot;
     private List<TreeNode> mTrees;
     private final TreeNode root = TreeNode.root();
+
+    // 获取资源列表
+    private int page = 1;
+    private static final int SIZE = 10;
+    // 获取当前资源列表的总数
+    private int count = 0;
+    // 判断当前操作是否为加载更多数据
+    private boolean action_more = false;
+
+    private List<KDBResData> mDatas = new ArrayList<>();
+    private List<ResArticleEntity> articleDatas;
+    private KDBResAdapter mAdapter;
+
+    private HttpSubscriber<PageEntity<List<ResArticleEntity>>> mArticleObserver = new HttpSubscriber<>(
+            new OnResultCallBack<PageEntity<List<ResArticleEntity>>>() {
+
+                @Override
+                public void onSuccess(PageEntity<List<ResArticleEntity>> PageEntity) {
+                    if (PageEntity != null) {
+                        count = PageEntity.getCount();
+                        articleDatas = PageEntity.getData();
+                        transformKDBResData();
+                    } else {
+                        view().showRefreshing(false);
+                    }
+                }
+
+                @Override
+                public void onError(int code, String errorMsg) {
+                    L.d(TAG, "mArticleObserver code:" + code + ",errorMsg:" + errorMsg);
+                    showErrorToast(R.string.attention_data_refresh_error);
+                    view().showRefreshing(false);
+                }
+            });
+
+    private void transformKDBResData() {
+        List<KDBResData> list = new ArrayList<>();
+        list = KDBResDataMapper.transformArticleDatas(articleDatas, 0, false);
+        // Load More Action
+        if (action_more) {
+            mDatas.addAll(list);
+        } else {// Refresh Action
+            mDatas = list;
+        }
+
+        showSuccess();
+    }
+
+    private void showSuccess() {
+        if (mAdapter == null) {
+            mAdapter = new KDBResAdapter(mContext, mDatas);
+        } else {
+            mAdapter.setData(mDatas);
+        }
+        view().init2Show(mAdapter);
+
+        if (action_more) {
+            view().showLoadMoreing(false);
+        } else {
+            view().showRefreshing(false);
+        }
+    }
+
+
 
     private HttpSubscriber<List<DBResTypeEntity>> mDBResTypeObserver = new HttpSubscriber<>(
             new OnResultCallBack<List<DBResTypeEntity>>() {
@@ -130,15 +191,6 @@ public class DBResArticlePresenter extends BasePresenter<IDBResArticleFragmentVi
         }
     }
 
-    private void transformKDBResData(int adapterType) {
-
-    }
-
-
-    private void showSuccess() {
-
-    }
-
     private void showError() {
         showErrorToast(R.string.attention_data_refresh_error);
     }
@@ -174,6 +226,31 @@ public class DBResArticlePresenter extends BasePresenter<IDBResArticleFragmentVi
             );
         }
 
+        initArticleData();
+    }
+
+    private void initArticleData() {
+        mDatas.clear();
+        model.getKDBIndustryAnalysisListNoCache(
+                mArticleObserver,
+                AppHelper.getInstance().getCurrentToken(),
+                null,
+                null,
+                null,
+                TYPE_ARTICLE,
+                page,
+                SIZE
+        );
+    }
+
+    public void refreshView() {
+        // 恢复页初始值
+        page = 1;
+        // Action is refresh data
+        action_more = false;
+        // Setting LoadMore is true
+        view().hasMoreData(true);
+        initArticleData();
     }
 
 }

@@ -25,7 +25,7 @@
     <dimen name="hf_item_nb_width">132dp</dimen>
     <dimen name="hf_item_nb_iv_height">185dp</dimen>
 
-    <dimen name="hf_item_article_root_height">175dp</dimen>
+    <dimen name="hf_item_article_root_height">180dp</dimen>
     <dimen name="hf_item_article_indicator_width">8dp</dimen>
     <dimen name="hf_item_article_indicator_height">9dp</dimen>
     <!--KnowledgeFragment-->

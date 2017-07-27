@@ -18,7 +18,7 @@ public abstract class BaseFragment extends Fragment {
      * @param message An string representing a message to be shown.
      */
     protected void showToastMessage(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     protected abstract UserComponent getComponent();
