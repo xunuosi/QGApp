@@ -70,7 +70,6 @@ public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSel
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initData();
     }
 
     private void initData() {
@@ -99,6 +98,7 @@ public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSel
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View fragmentView = inflater.inflate(R.layout.fragment_resource, container, false);
         unbinder = ButterKnife.bind(this, fragmentView);
+        initData();
         return fragmentView;
     }
 
@@ -110,6 +110,12 @@ public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSel
         mTabLayout.addOnTabSelectedListener(this);
 
         mVpRf.addOnPageChangeListener(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mFragments.clear();
     }
 
     @Override

@@ -120,9 +120,12 @@ public class DBResMaterialPresenter extends BasePresenter<IDBResMaterialFragment
             mAdapter.setData(mDatas);
         }
         view().init2Show(mAdapter);
+
+        view().showRefreshing(false);
     }
 
     private void showError() {
+        view().showRefreshing(false);
         showErrorToast(R.string.attention_data_refresh_error);
     }
 

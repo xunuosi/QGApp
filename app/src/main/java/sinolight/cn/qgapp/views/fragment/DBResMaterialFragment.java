@@ -11,7 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
+import com.aspsine.swipetoloadlayout.OnRefreshListener;
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.yanyusong.y_divideritemdecoration.Y_Divider;
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder;
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration;
@@ -33,13 +34,15 @@ import sinolight.cn.qgapp.views.view.IDBResMaterialFragmentView;
  * 热门素材Fragment
  */
 
-public class DBResMaterialFragment extends BaseLazyLoadFragment implements IDBResMaterialFragmentView {
+public class DBResMaterialFragment extends BaseLazyLoadFragment implements IDBResMaterialFragmentView, OnRefreshListener {
     private static final String TAG = "DBResMaterialFragment";
     @Inject
     DBResMaterialPresenter mPresenter;
-    @BindView(R.id.rv_dbres_material)
+    @BindView(R.id.swipe_target)
     RecyclerView mRvDbresMaterial;
     Unbinder unbinder;
+    @BindView(R.id.swipe_db_res_material)
+    SwipeToLoadLayout mSwipeDbResMaterial;
     private LinearLayoutManager mLayoutManager;
 
     public static DBResMaterialFragment newInstance() {
@@ -71,6 +74,8 @@ public class DBResMaterialFragment extends BaseLazyLoadFragment implements IDBRe
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRvDbresMaterial.setLayoutManager(mLayoutManager);
         mRvDbresMaterial.addItemDecoration(new LinearDivider(getActivity()));
+        mSwipeDbResMaterial.setOnRefreshListener(this);
+        this.showRefreshing(true);
     }
 
     @Override
@@ -122,6 +127,25 @@ public class DBResMaterialFragment extends BaseLazyLoadFragment implements IDBRe
     @Override
     public void gotoActivity(Intent callIntent) {
 
+    }
+
+    @Override
+    public void showRefreshing(boolean enable) {
+        if (enable) {
+            mSwipeDbResMaterial.post(new Runnable() {
+                @Override
+                public void run() {
+                    mSwipeDbResMaterial.setRefreshing(true);
+                }
+            });
+        } else {
+            mSwipeDbResMaterial.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.init2Show();
     }
 
     private class LinearDivider extends Y_DividerItemDecoration {

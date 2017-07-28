@@ -17,4 +17,6 @@ public interface IDBResMaterialFragmentView {
     void init2Show(CommonTitleAdapter adapter);
 
     void gotoActivity(Intent callIntent);
+
+    void showRefreshing(boolean enable);
 }

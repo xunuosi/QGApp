@@ -44,7 +44,7 @@ import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
  */
 
 public class DBResArticleFragment extends BaseFragment implements IDBResArticleFragmentView, TreeNode.TreeNodeClickListener,
-        PopupWindow.OnDismissListener,OnRefreshListener, OnLoadMoreListener {
+        PopupWindow.OnDismissListener, OnRefreshListener, OnLoadMoreListener {
     @Inject
     DBResArticlePresenter mPresenter;
     @BindView(R.id.swipe_target)
