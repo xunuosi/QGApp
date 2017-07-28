@@ -101,6 +101,11 @@ public class DBResMaterialFragment extends BaseLazyLoadFragment implements IDBRe
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         mPresenter.clear();
     }
 

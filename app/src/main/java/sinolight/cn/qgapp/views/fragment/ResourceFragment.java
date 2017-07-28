@@ -31,7 +31,8 @@ import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
  * 资源库首页
  */
 
-public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSelectedListener {
+public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener {
+
     private static final int TYPE_MATERIAL_FRAGMENT = 0;
     private static final int TYPE_ARTICLE_FRAGMENT = 1;
     private static final int TYPE_PIC_FRAGMENT = 2;
@@ -55,6 +56,8 @@ public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSel
     // TreeMenu
     private TopRightMenu mTopRightMenu;
     private AndroidTreeView tView;
+    // Record current fragment of type
+    private int currentType;
 
     public static ResourceFragment newInstance() {
         return new ResourceFragment();
@@ -105,6 +108,8 @@ public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSel
         mVpRf.setAdapter(mTabAdapter);
         mTabLayout.setupWithViewPager(mVpRf);
         mTabLayout.addOnTabSelectedListener(this);
+
+        mVpRf.addOnPageChangeListener(this);
     }
 
     @Override
@@ -135,10 +140,24 @@ public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSel
 
     private void getSearchData() {
         if (checkSearchElement()) {
-
+            showToastMessage(getString(R.string.text_search_data_empty));
             return;
         } else {
+            transferData(mEtToolbarSearch.getText().toString().trim());
+        }
+    }
 
+    private void transferData(String searchData) {
+        switch (currentType) {
+            case TYPE_MATERIAL_FRAGMENT:
+                break;
+            case TYPE_ARTICLE_FRAGMENT:
+                ((DBResArticleFragment)mFragments.get(TYPE_ARTICLE_FRAGMENT)).transferSearchData(searchData);
+                break;
+            case TYPE_PIC_FRAGMENT:
+                break;
+            case TYPE_VIDEO_FRAGMENT:
+                break;
         }
     }
 
@@ -173,6 +192,26 @@ public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSel
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        currentType = position;
+        resetState();
+    }
+
+    private void resetState() {
+        mEtToolbarSearch.setText(null);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
 
     }
 }

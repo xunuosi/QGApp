@@ -1,6 +1,7 @@
 package sinolight.cn.qgapp.presenter;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import com.unnamed.b.atv.model.TreeNode;
 
@@ -253,4 +254,37 @@ public class DBResArticlePresenter extends BasePresenter<IDBResArticleFragmentVi
         initArticleData();
     }
 
+    /**
+     * 带参数的请求数据方法
+     * @param key
+     * @param themeType
+     * @param isMore:是否为加载更多的操作
+     */
+    public void loadDataWithPara(@Nullable String key, @Nullable String themeType, boolean isMore) {
+        action_more = isMore;
+        model.getKDBIndustryAnalysisListNoCache(
+                mArticleObserver,
+                AppHelper.getInstance().getCurrentToken(),
+                null,
+                themeType,
+                key,
+                TYPE_ARTICLE,
+                page,
+                SIZE
+        );
+    }
+
+    public void loadMore(String key, String themeType) {
+        if (mDatas!= null && mDatas.size() < count) {
+            // 有更多数据可以加载
+            page++;
+            // Action load more data
+            loadDataWithPara(key, themeType, true);
+        } else if (mDatas != null && mDatas.size() >= count) {
+            // 无更多数据加载
+            view().hasMoreData(false);
+        } else {
+            view().hasMoreData(false);
+        }
+    }
 }

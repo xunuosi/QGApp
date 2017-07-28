@@ -575,7 +575,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
     }
 
     public void loadMore(@Nullable String key,@Nullable String themeType) {
-        if (mDatas!=null && mDatas.size() < count) {
+        if (mDatas!= null && mDatas.size() < count) {
             // 有更多数据可以加载
             page++;
             // Action load more data

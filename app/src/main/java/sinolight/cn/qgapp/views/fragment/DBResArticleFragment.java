@@ -30,7 +30,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.R;
-import sinolight.cn.qgapp.adapter.CommonTitleAdapter;
 import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.dagger.HasComponent;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
@@ -59,6 +58,7 @@ public class DBResArticleFragment extends BaseFragment implements IDBResArticleF
 
     private RecyclerView.LayoutManager mLayoutManager;
     private String themeType;
+    private String searchData;
 
     public static DBResArticleFragment newInstance() {
         return new DBResArticleFragment();
@@ -159,7 +159,10 @@ public class DBResArticleFragment extends BaseFragment implements IDBResArticleF
 
     @Override
     public void hasMoreData(boolean hasMore) {
-
+        if (mSwipeDbResArticle.isLoadingMore()) {
+            showLoadMoreing(false);
+        }
+        mSwipeDbResArticle.setLoadMoreEnabled(hasMore);
     }
 
     public void popTreeMenu(View target) {
@@ -202,6 +205,7 @@ public class DBResArticleFragment extends BaseFragment implements IDBResArticleF
         lp.alpha = 1.0f;
         getActivity().getWindow().setAttributes(lp);
         // Request themeType Data
+        mPresenter.loadDataWithPara(searchData, themeType, false);
     }
 
     @Override
@@ -218,9 +222,15 @@ public class DBResArticleFragment extends BaseFragment implements IDBResArticleF
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.clear();
+    }
+
+    @Override
     public void onLoadMore() {
         // 正在加载数据时禁止加载更多数据
-//        mPresenter.loadMore(mEtDbDetailSearch.getText().toString().trim(), themeType);
+        mPresenter.loadMore(searchData, themeType);
     }
 
     @Override
@@ -228,7 +238,17 @@ public class DBResArticleFragment extends BaseFragment implements IDBResArticleF
         // Refresh data clear all of condition
 //        mEtDbDetailSearch.setText(null);
         themeType = null;
+        searchData = null;
         mPresenter.refreshView();
+    }
+
+    /**
+     * Get Parent Fragment transfer searchData
+     * @param searchData
+     */
+    public void transferSearchData(String searchData) {
+        this.searchData = searchData;
+        mPresenter.loadDataWithPara(this.searchData, themeType, false);
     }
 
     private class LinearDivider extends Y_DividerItemDecoration {
