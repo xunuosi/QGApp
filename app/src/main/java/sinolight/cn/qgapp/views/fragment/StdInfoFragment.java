@@ -14,20 +14,21 @@ import android.widget.TextView;
 
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
+import sinolight.cn.qgapp.data.http.entity.StdInfoEntity;
 
 import static android.text.Html.FROM_HTML_MODE_COMPACT;
 
 /**
  * Created by xns on 2017/7/24.
- * 知识库图书信息界面
+ * 知识库标准信息界面
  */
 
-public class BookInfoFragment extends ResBaseFragment {
+public class StdInfoFragment extends ResBaseFragment {
     private static final String TYPE_KEY = "sinolight.cn.qgapp.views.fragment.BookInfoFragment_TYPE";
     private static final String DATA_KEY = "sinolight.cn.qgapp.views.fragment.BookInfoFragment_DATA";
-    public static final int TYPE_BOOK_INFO = 0;
-    public static final int TYPE_BOOK_INTRODUCTION = 1;
-    public static final int TYPE_BOOK_TABLE_OF_CONTENTS = 2;
+    public static final int TYPE_STD_INFO = 0;
+    public static final int TYPE_STD_INTRODUCTION = 1;
+    public static final int TYPE_STD_TABLE_OF_CONTENTS = 2;
     /**
      * BookInfo View
      */
@@ -47,14 +48,14 @@ public class BookInfoFragment extends ResBaseFragment {
     private TextView mTvTableOfContent;
 
     private int mType;
-    private BookInfoEntity mBookData;
+    private StdInfoEntity mStdData;
 
 
-    public static BookInfoFragment newInstance(int type, BookInfoEntity bookData) {
-        BookInfoFragment fragment = new BookInfoFragment();
+    public static StdInfoFragment newInstance(int type, StdInfoEntity stdData) {
+        StdInfoFragment fragment = new StdInfoFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(TYPE_KEY, type);
-        bundle.putParcelable(DATA_KEY, bookData);
+        bundle.putParcelable(DATA_KEY, stdData);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -63,7 +64,7 @@ public class BookInfoFragment extends ResBaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mType = getArguments().getInt(TYPE_KEY, 0);
-        mBookData = getArguments().getParcelable(DATA_KEY);
+        mStdData = getArguments().getParcelable(DATA_KEY);
     }
 
     @Nullable
@@ -71,13 +72,13 @@ public class BookInfoFragment extends ResBaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         int layoutId = 0;
         switch (mType) {
-            case TYPE_BOOK_INFO:
+            case TYPE_STD_INFO:
                 layoutId = R.layout.fragment_book_info;
                 break;
-            case TYPE_BOOK_INTRODUCTION:
+            case TYPE_STD_INTRODUCTION:
                 layoutId = R.layout.fragment_book_introduction;
                 break;
-            case TYPE_BOOK_TABLE_OF_CONTENTS:
+            case TYPE_STD_TABLE_OF_CONTENTS:
                 layoutId = R.layout.fragment_table_of_content;
                 break;
         }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -23,11 +24,13 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.adapter.MyTabAdapter;
 import sinolight.cn.qgapp.dagger.component.DaggerKDBStdActivityComponent;
 import sinolight.cn.qgapp.dagger.module.KDBStdActivityModule;
 import sinolight.cn.qgapp.data.http.entity.StdInfoEntity;
 import sinolight.cn.qgapp.presenter.KDBStdActivityPresenter;
 import sinolight.cn.qgapp.utils.ImageUtil;
+import sinolight.cn.qgapp.views.fragment.StdInfoFragment;
 import sinolight.cn.qgapp.views.view.IKDBStdDetailActivityView;
 
 /**
@@ -62,6 +65,8 @@ public class KDBStdDetailActivity extends BaseActivity implements IKDBStdDetailA
     TextView mTvKdbStdFrom;
 
     private List<String> mTitles = new ArrayList<>();
+    private MyTabAdapter mTabAdapter;
+    private List<Fragment> mFragments;
 
     public static Intent getCallIntent(Context context) {
         return new Intent(context, KDBStdDetailActivity.class);
@@ -140,7 +145,17 @@ public class KDBStdDetailActivity extends BaseActivity implements IKDBStdDetailA
                 height
         );
         mTvKdbStdTitle.setText(stdData.getName());
-        mTvKdbStdPubName.setText(formatStr(R.string.text_publish_name_format,stdData.getImdate()));
+        mTvKdbStdPubName.setText(formatStr(R.string.text_publish_name_format, stdData.getImdate()));
+        mTvKdbStdPubTime.setText(formatStr(R.string.text_publish_time_format, stdData.getIssuedate()));
+
+        mFragments = new ArrayList<>();
+        mFragments.add(StdInfoFragment.newInstance(StdInfoFragment.TYPE_STD_INFO, stdData));
+        mFragments.add(StdInfoFragment.newInstance(StdInfoFragment.TYPE_STD_INTRODUCTION, stdData));
+        mFragments.add(StdInfoFragment.newInstance(StdInfoFragment.TYPE_STD_TABLE_OF_CONTENTS, stdData));
+
+        mTabAdapter = new MyTabAdapter(getSupportFragmentManager(), mFragments, mTitles);
+        mVpKdbStdDetail.setAdapter(mTabAdapter);
+        mTlKdbStdDetail.setupWithViewPager(mVpKdbStdDetail);
     }
 
     private String formatStr(int baseStrId, String child) {

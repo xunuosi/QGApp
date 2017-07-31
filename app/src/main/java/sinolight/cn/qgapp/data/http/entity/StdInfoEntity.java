@@ -1,11 +1,14 @@
 package sinolight.cn.qgapp.data.http.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by xns on 2017/7/25.
  * Standard data info entity
  */
 
-public class StdInfoEntity {
+public class StdInfoEntity implements Parcelable {
     private String id;
     private String name;
     private String cover;
@@ -27,6 +30,52 @@ public class StdInfoEntity {
 
     public StdInfoEntity() {
     }
+
+    protected StdInfoEntity(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        cover = in.readString();
+        stdno = in.readString();
+        restdno = in.readString();
+        issuedate = in.readString();
+        imdate = in.readString();
+        dept = in.readString();
+        classification = in.readString();
+        scope = in.readString();
+        catalog = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(cover);
+        dest.writeString(stdno);
+        dest.writeString(restdno);
+        dest.writeString(issuedate);
+        dest.writeString(imdate);
+        dest.writeString(dept);
+        dest.writeString(classification);
+        dest.writeString(scope);
+        dest.writeString(catalog);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<StdInfoEntity> CREATOR = new Creator<StdInfoEntity>() {
+        @Override
+        public StdInfoEntity createFromParcel(Parcel in) {
+            return new StdInfoEntity(in);
+        }
+
+        @Override
+        public StdInfoEntity[] newArray(int size) {
+            return new StdInfoEntity[size];
+        }
+    };
 
     public String getId() {
         return id;
