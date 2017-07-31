@@ -87,6 +87,12 @@ public class DBResPicFragment extends BaseFragment implements IDBResPicFragmentV
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.clear();
+    }
+
+    @Override
     public void onRefresh() {
         mPresenter.init2Show();
     }

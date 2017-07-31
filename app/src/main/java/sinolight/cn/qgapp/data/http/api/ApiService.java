@@ -15,6 +15,7 @@ import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResPicEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
+import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
 import sinolight.cn.qgapp.data.http.entity.DicInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.MaterialEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
@@ -398,6 +399,17 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("res/doHotPic")
     Observable<ResultEntity<List<DBResPicEntity>>> getHotPic(
+            @Field("token") String token
+    );
+
+    /**
+     * 资源库-热门视频
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("res/doHotVideo")
+    Observable<ResultEntity<List<DBResVideoEntity>>> getHotVideo(
             @Field("token") String token
     );
 }

@@ -34,6 +34,7 @@ import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResPicEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
+import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
 import sinolight.cn.qgapp.data.http.entity.DicInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.MaterialEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
@@ -226,6 +227,11 @@ public class HttpManager {
     public void getHotPicWithCache(Observer<List<DBResPicEntity>> subscriber, String token, boolean update) {
         toSubscribe(cacheProvider.getHotPic(
                 mApiService.getHotPic(token), new EvictProvider(update)), subscriber);
+    }
+
+    public void getHotVideoWithCache(Observer<List<DBResVideoEntity>> subscriber, String token, boolean update) {
+        toSubscribe(cacheProvider.getHotVideo(
+                mApiService.getHotVideo(token), new EvictProvider(update)), subscriber);
     }
 
     public void changePwdNoCache(Observer<Object> subscriber, String token, String oldPwd, String newPwd,

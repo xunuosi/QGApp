@@ -10,6 +10,7 @@ import sinolight.cn.qgapp.dagger.PerActivity;
 import sinolight.cn.qgapp.presenter.DBResArticlePresenter;
 import sinolight.cn.qgapp.presenter.DBResMaterialPresenter;
 import sinolight.cn.qgapp.presenter.DBResPicPresenter;
+import sinolight.cn.qgapp.presenter.DBResVideoPresenter;
 import sinolight.cn.qgapp.presenter.HomeFragmentPresenter;
 import sinolight.cn.qgapp.presenter.KnowledgePresenter;
 import sinolight.cn.qgapp.presenter.UserFragmentPresenter;
@@ -64,5 +65,11 @@ public class UserModule {
     @PerActivity
     DBResPicPresenter provideDBResPicPresenter(Context context) {
         return new DBResPicPresenter(context);
+    }
+
+    @Provides
+    @PerActivity
+    DBResVideoPresenter provideDBResVideoPresenter(Context context) {
+        return new DBResVideoPresenter(context);
     }
 }

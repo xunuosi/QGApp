@@ -8,6 +8,7 @@ import sinolight.cn.qgapp.data.http.entity.DBResArticleEntity;
 import sinolight.cn.qgapp.views.fragment.DBResArticleFragment;
 import sinolight.cn.qgapp.views.fragment.DBResMaterialFragment;
 import sinolight.cn.qgapp.views.fragment.DBResPicFragment;
+import sinolight.cn.qgapp.views.fragment.DBResVideoFragment;
 import sinolight.cn.qgapp.views.fragment.HomeFragment;
 import sinolight.cn.qgapp.views.fragment.KnowledgeFragment;
 import sinolight.cn.qgapp.views.fragment.UserFragment;
@@ -35,4 +36,7 @@ public interface UserComponent extends ActivityComponent {
     void inject(DBResArticleFragment dbResArticleFragment);
 
     void inject(DBResPicFragment dbResPicFragment);
+
+    void inject(DBResVideoFragment dbResVideoFragment);
+
 }
