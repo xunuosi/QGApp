@@ -164,7 +164,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                     if (PageEntity != null) {
                         count = PageEntity.getCount();
                         imgDatas = PageEntity.getData();
-                        transformKDBResData(AppContants.DataBase.Res.RES_ARTICLE);
+                        transformKDBResData(AppContants.DataBase.Res.RES_IMG);
                     } else {
                         view().showRefreshing(false);
                     }

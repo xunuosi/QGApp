@@ -11,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
-import com.unnamed.b.atv.view.AndroidTreeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +22,6 @@ import butterknife.Unbinder;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.adapter.MyTabAdapter;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
-import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
 
 /**
  * Created by xns on 2017/6/29.
@@ -32,11 +29,6 @@ import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
  */
 
 public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener {
-
-    private static final int TYPE_MATERIAL_FRAGMENT = 0;
-    private static final int TYPE_ARTICLE_FRAGMENT = 1;
-    private static final int TYPE_PIC_FRAGMENT = 2;
-    private static final int TYPE_VIDEO_FRAGMENT = 3;
 
     @BindView(R.id.et_toolbar_search)
     EditText mEtToolbarSearch;
@@ -47,17 +39,10 @@ public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSel
     @BindView(R.id.vp_rf)
     ViewPager mVpRf;
     Unbinder unbinder;
-    @BindView(R.id.iv_menu)
-    ImageView mIvMenu;
 
     private MyTabAdapter mTabAdapter;
     private List<Fragment> mFragments;
     private List<String> mTitles = new ArrayList<>();
-    // TreeMenu
-    private TopRightMenu mTopRightMenu;
-    private AndroidTreeView tView;
-    // Record current fragment of type
-    private int currentType;
 
     public static ResourceFragment newInstance() {
         return new ResourceFragment();
@@ -129,7 +114,7 @@ public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSel
         unbinder.unbind();
     }
 
-    @OnClick({R.id.im_search_back_arrow, R.id.iv_toolbar_search, R.id.iv_menu})
+    @OnClick({R.id.im_search_back_arrow, R.id.iv_toolbar_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.im_search_back_arrow:
@@ -137,9 +122,6 @@ public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSel
                 break;
             case R.id.iv_toolbar_search:
                 getSearchData();
-                break;
-            case R.id.iv_menu:
-                popTreeMenu();
                 break;
         }
     }
@@ -149,21 +131,7 @@ public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSel
             showToastMessage(getString(R.string.text_search_data_empty));
             return;
         } else {
-            transferData(mEtToolbarSearch.getText().toString().trim());
-        }
-    }
-
-    private void transferData(String searchData) {
-        switch (currentType) {
-            case TYPE_MATERIAL_FRAGMENT:
-                break;
-            case TYPE_ARTICLE_FRAGMENT:
-                ((DBResArticleFragment)mFragments.get(TYPE_ARTICLE_FRAGMENT)).transferSearchData(searchData);
-                break;
-            case TYPE_PIC_FRAGMENT:
-                break;
-            case TYPE_VIDEO_FRAGMENT:
-                break;
+            // TODO: 2017/7/31
         }
     }
 
@@ -171,24 +139,9 @@ public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSel
         return TextUtils.isEmpty(mEtToolbarSearch.getText().toString().trim());
     }
 
-    private void popTreeMenu() {
-        ((DBResArticleFragment) mFragments.get(1)).popTreeMenu(mIvMenu);
-    }
-
-
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        int position = tab.getPosition();
-        switch (position) {
-            case TYPE_MATERIAL_FRAGMENT:
-            case TYPE_PIC_FRAGMENT:
-            case TYPE_VIDEO_FRAGMENT:
-                mIvMenu.setVisibility(View.GONE);
-                break;
-            case TYPE_ARTICLE_FRAGMENT:
-                mIvMenu.setVisibility(View.VISIBLE);
-                break;
-        }
+
     }
 
     @Override
@@ -208,7 +161,6 @@ public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSel
 
     @Override
     public void onPageSelected(int position) {
-        currentType = position;
         resetState();
     }
 

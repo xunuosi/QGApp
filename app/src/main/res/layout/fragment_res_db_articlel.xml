@@ -35,9 +35,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <include
-            android:id="@id/swipe_load_more_footer"
-            layout="@layout/layout_google_hook_footer"/>
     </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
 
 </android.support.constraint.ConstraintLayout>

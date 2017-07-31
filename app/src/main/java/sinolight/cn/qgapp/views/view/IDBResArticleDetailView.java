@@ -3,7 +3,6 @@ package sinolight.cn.qgapp.views.view;
 
 import android.content.Intent;
 
-import sinolight.cn.qgapp.adapter.CommonTitleAdapter;
 import sinolight.cn.qgapp.adapter.KDBResAdapter;
 
 /**
@@ -11,14 +10,17 @@ import sinolight.cn.qgapp.adapter.KDBResAdapter;
  * 资源库文章标签页 View层接口
  */
 
-public interface IDBResArticleFragmentView {
+public interface IDBResArticleDetailView {
 
     void showErrorToast(int msgId);
 
-    void init2Show(CommonTitleAdapter adapter);
+    void init2Show(KDBResAdapter adapter);
 
     void gotoActivity(Intent callIntent);
 
     void showRefreshing(boolean enable);
 
+    void showLoadMoreing(boolean enable);
+
+    void hasMoreData(boolean hasMore);
 }

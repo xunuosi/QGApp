@@ -10,15 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.PopupWindow;
-import android.widget.Toast;
-
-import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
-import com.unnamed.b.atv.model.TreeNode;
-import com.unnamed.b.atv.view.AndroidTreeView;
 import com.yanyusong.y_divideritemdecoration.Y_Divider;
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder;
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration;
@@ -28,23 +21,19 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.R;
-import sinolight.cn.qgapp.adapter.KDBResAdapter;
+import sinolight.cn.qgapp.adapter.CommonTitleAdapter;
 import sinolight.cn.qgapp.dagger.HasComponent;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
 import sinolight.cn.qgapp.presenter.DBResArticlePresenter;
-import sinolight.cn.qgapp.views.holder.TreeParentHolder;
 import sinolight.cn.qgapp.views.view.IDBResArticleFragmentView;
-import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
 
 /**
  * Created by xns on 2017/7/26.
  * 热门素材Fragment
  */
 
-public class DBResArticleFragment extends BaseFragment implements IDBResArticleFragmentView, TreeNode.TreeNodeClickListener,
-        PopupWindow.OnDismissListener, OnRefreshListener, OnLoadMoreListener {
+public class DBResArticleFragment extends BaseFragment implements IDBResArticleFragmentView, OnRefreshListener {
     @Inject
     DBResArticlePresenter mPresenter;
     @BindView(R.id.swipe_target)
@@ -52,13 +41,8 @@ public class DBResArticleFragment extends BaseFragment implements IDBResArticleF
     @BindView(R.id.swipe_db_res_article)
     SwipeToLoadLayout mSwipeDbResArticle;
     Unbinder unbinder;
-    // TreeMenu
-    private TopRightMenu mTopRightMenu;
-    private AndroidTreeView tView;
 
     private RecyclerView.LayoutManager mLayoutManager;
-    private String themeType;
-    private String searchData;
 
     public static DBResArticleFragment newInstance() {
         return new DBResArticleFragment();
@@ -94,7 +78,6 @@ public class DBResArticleFragment extends BaseFragment implements IDBResArticleF
 
         mSwipeDbResArticle.setRefreshing(true);
         mSwipeDbResArticle.setOnRefreshListener(this);
-        mSwipeDbResArticle.setOnLoadMoreListener(this);
     }
 
     @Override
@@ -115,7 +98,7 @@ public class DBResArticleFragment extends BaseFragment implements IDBResArticleF
     }
 
     @Override
-    public void init2Show(KDBResAdapter adapter) {
+    public void init2Show(CommonTitleAdapter adapter) {
         if (mSwipeTarget.getAdapter() == null) {
             mSwipeTarget.setAdapter(adapter);
         }
@@ -141,81 +124,6 @@ public class DBResArticleFragment extends BaseFragment implements IDBResArticleF
     }
 
     @Override
-    public void showLoadMoreing(boolean enable) {
-        if (!mSwipeDbResArticle.isLoadMoreEnabled()) {
-            return;
-        }
-        if (enable) {
-            mSwipeDbResArticle.post(new Runnable() {
-                @Override
-                public void run() {
-                    mSwipeDbResArticle.setLoadingMore(true);
-                }
-            });
-        } else {
-            mSwipeDbResArticle.setLoadingMore(false);
-        }
-    }
-
-    @Override
-    public void hasMoreData(boolean hasMore) {
-        if (mSwipeDbResArticle.isLoadingMore()) {
-            showLoadMoreing(false);
-        }
-        mSwipeDbResArticle.setLoadMoreEnabled(hasMore);
-    }
-
-    public void popTreeMenu(View target) {
-        TreeNode treeRoot = mPresenter.popTreeMenu();
-        if (treeRoot != null) {
-            if (tView == null) {
-                tView = new AndroidTreeView(getActivity(), treeRoot);
-//                tView.setDefaultAnimation(true);
-//                tView.setUse2dScroll(true);
-                tView.setDefaultContainerStyle(R.style.TreeNodeStyleDivided, true);
-                tView.setDefaultViewHolder(TreeParentHolder.class);
-                tView.setDefaultNodeClickListener(this);
-                tView.setUseAutoToggle(true);
-            }
-            if (mTopRightMenu == null) {
-                mTopRightMenu = new TopRightMenu(getActivity(), tView.getView());
-                mTopRightMenu
-                        .setHeight(850)     //默认高度480
-                        .setWidth(450)      //默认宽度wrap_content
-                        .showIcon(true)     //显示菜单图标，默认为true
-                        .dimBackground(true)           //背景变暗，默认为true
-                        .needAnimationStyle(true)   //显示动画，默认为true
-                        .setAnimationStyle(R.style.TRM_ANIM_STYLE)  //默认为R.style.TRM_ANIM_STYLE
-                        .showAsDropDown(target, -225, 0);
-            } else {
-                mTopRightMenu.showAsDropDown(target, -225, 0);
-            }
-            if (mTopRightMenu.getPopView() != null) {
-                mTopRightMenu.getPopView().setOnDismissListener(this);
-            }
-        } else {
-            showToastMessage(getString(R.string.text_tree_menu_loading));
-        }
-    }
-
-    @Override
-    public void onDismiss() {
-        // recover window Alpha
-        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-        lp.alpha = 1.0f;
-        getActivity().getWindow().setAttributes(lp);
-        // Request themeType Data
-        mPresenter.loadDataWithPara(searchData, themeType, false);
-    }
-
-    @Override
-    public void onClick(TreeNode node, Object value) {
-        TreeParentHolder.IconTreeItem item = (TreeParentHolder.IconTreeItem) value;
-        themeType = item.id;
-        Toast.makeText(App.getContext(), "你选择了:" + item.name + "分类", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
@@ -228,27 +136,8 @@ public class DBResArticleFragment extends BaseFragment implements IDBResArticleF
     }
 
     @Override
-    public void onLoadMore() {
-        // 正在加载数据时禁止加载更多数据
-        mPresenter.loadMore(searchData, themeType);
-    }
-
-    @Override
     public void onRefresh() {
-        // Refresh data clear all of condition
-//        mEtDbDetailSearch.setText(null);
-        themeType = null;
-        searchData = null;
         mPresenter.refreshView();
-    }
-
-    /**
-     * Get Parent Fragment transfer searchData
-     * @param searchData
-     */
-    public void transferSearchData(String searchData) {
-        this.searchData = searchData;
-        mPresenter.loadDataWithPara(this.searchData, themeType, false);
     }
 
     private class LinearDivider extends Y_DividerItemDecoration {

@@ -15,6 +15,7 @@ import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResArticleEntity;
+import sinolight.cn.qgapp.data.http.entity.DBResPicEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.DicInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.MaterialEntity;
@@ -80,6 +81,11 @@ public interface CacheProvider {
 
     @LifeCache(duration = 5, timeUnit = TimeUnit.MINUTES)
     Observable<ResultEntity<List<DBResArticleEntity>>> getHotArticle(
+            Observable<ResultEntity<List<DBResArticleEntity>>> oRepos,
+            EvictProvider evictDynamicKey);
+
+    @LifeCache(duration = 5, timeUnit = TimeUnit.MINUTES)
+    Observable<ResultEntity<List<DBResPicEntity>>> getHotPic(
             Observable<ResultEntity<List<DBResArticleEntity>>> oRepos,
             EvictProvider evictDynamicKey);
 }

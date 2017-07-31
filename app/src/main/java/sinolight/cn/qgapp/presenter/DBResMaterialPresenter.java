@@ -27,7 +27,6 @@ import sinolight.cn.qgapp.views.view.IDBResMaterialFragmentView;
 public class DBResMaterialPresenter extends BasePresenter<IDBResMaterialFragmentView, HttpManager>{
     private static final String TAG = "DBResMaterialPresenter";
     private static final int TYPE_MATERIAL = 0;
-    private static final int TYPE_ARTICLE = 1;
 
     private Context mContext;
     private List<KDBResData> mDatas = new ArrayList<>();
@@ -52,23 +51,6 @@ public class DBResMaterialPresenter extends BasePresenter<IDBResMaterialFragment
         }
     });
 
-    private HttpSubscriber articleObserver = new HttpSubscriber(new OnResultCallBack<List<DBResArticleEntity>>() {
-
-        @Override
-        public void onSuccess(List<DBResArticleEntity> dbResArticleEntities) {
-            if (dbResArticleEntities != null && dbResArticleEntities.size() != 0) {
-                articelDatas = dbResArticleEntities;
-                transformKDBResData(CommonTitleAdapter.TYPE_ARTICLE);
-            }
-        }
-
-        @Override
-        public void onError(int code, String errorMsg) {
-            L.d(TAG, "userObserver code:" + code + ",errorMsg:" + errorMsg);
-            showError();
-        }
-    });
-
     /**
      * Insert specify title
      * @param titleType
@@ -81,13 +63,6 @@ public class DBResMaterialPresenter extends BasePresenter<IDBResMaterialFragment
                         CommonTitleAdapter.TYPE_MATERIAL_TITLE,
                         false));
                 break;
-            case TYPE_ARTICLE:
-                mDatas.add(KDBResDataMapper.transformTitleData(
-                        mContext.getString(R.string.text_hot_article),
-                        CommonTitleAdapter.TYPE_ARTICLE_TITLE,
-                        false));
-                getHotArticle();
-                break;
         }
 
     }
@@ -96,21 +71,9 @@ public class DBResMaterialPresenter extends BasePresenter<IDBResMaterialFragment
         switch (adapterType) {
             case CommonTitleAdapter.TYPE_MATERIAL:
                 mDatas.addAll(KDBResDataMapper.transformMaterialDatas(materialDatas, adapterType, false));
-                insertTitle(TYPE_ARTICLE);
-                break;
-            case CommonTitleAdapter.TYPE_ARTICLE:
-                mDatas.addAll(KDBResDataMapper.transformHotArticleDatas(articelDatas, adapterType, false));
                 showSuccess();
                 break;
         }
-    }
-
-    private void getHotArticle() {
-        model.getHotArticleWithCache(
-                articleObserver,
-                AppHelper.getInstance().getCurrentToken(),
-                false
-        );
     }
 
     private void showSuccess() {
@@ -146,7 +109,6 @@ public class DBResMaterialPresenter extends BasePresenter<IDBResMaterialFragment
     @Override
     public void clear() {
         materialObserver.unSubscribe();
-        articleObserver.unSubscribe();
         KDBResDataMapper.reset();
         mDatas.clear();
         unbindView();
