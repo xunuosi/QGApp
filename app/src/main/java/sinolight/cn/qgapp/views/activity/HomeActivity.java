@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -33,6 +35,7 @@ import sinolight.cn.qgapp.data.http.entity.TokenEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.utils.PermissionListener;
+import sinolight.cn.qgapp.views.fragment.BaseFragment;
 import sinolight.cn.qgapp.views.fragment.HomeFragment;
 import sinolight.cn.qgapp.views.fragment.KnowledgeFragment;
 import sinolight.cn.qgapp.views.fragment.ResourceFragment;
@@ -77,6 +80,8 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
     PageBottomTabLayout bottomTab;
     @BindView(R.id.home_activity_container)
     FrameLayout mHomeActivityContainer;
+
+    private BaseFragment currentFragment;
 
     public static Intent getCallIntent(Context context) {
         return new Intent(context, HomeActivity.class);
@@ -138,8 +143,11 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
                 .addItem(newItem(R.drawable.tab_user, R.drawable.tab_user_pre, getString(R.string.bottomBar_user)))
                 .build();
 
-        addFragment(R.id.home_activity_container, mHomeFragment);
-        isHomeFragment = true;
+        if (!mHomeFragment.isAdded()) {
+            addFragment(R.id.home_activity_container, mHomeFragment);
+            isHomeFragment = true;
+            currentFragment = mHomeFragment;
+        }
         mNavigationController.setSelect(0);
 
         mNavigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
@@ -148,20 +156,20 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
                 //选中时触发
                 switch (index) {
                     case 0:
-                        replaceFragment(R.id.home_activity_container, mHomeFragment);
+                        clickHomeFragment();
                         break;
                     case 1:
                         isHomeFragment = false;
-                        replaceFragment(R.id.home_activity_container, mKnowledgeFragment);
+                        clickKnowledgeFragment();
                         break;
                     case 2:
                         isHomeFragment = false;
-                        replaceFragment(R.id.home_activity_container, mResourceFragment);
+                        clickResourceFragment();
                         break;
                     case 3:
                         isHomeFragment = false;
                         if (isLogined) {
-                            replaceFragment(R.id.home_activity_container, mUserFragment);
+                            clickUserFragment();
                         } else {
                             startActivity(LoginActivity.getCallIntent(mContext));
                         }
@@ -175,6 +183,22 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
 
             }
         });
+    }
+
+    private void clickUserFragment() {
+        addOrShowFragment(getSupportFragmentManager().beginTransaction(), mUserFragment);
+    }
+
+    private void clickResourceFragment() {
+        addOrShowFragment(getSupportFragmentManager().beginTransaction(), mResourceFragment);
+    }
+
+    private void clickKnowledgeFragment() {
+        addOrShowFragment(getSupportFragmentManager().beginTransaction(), mKnowledgeFragment);
+    }
+
+    private void clickHomeFragment() {
+        addOrShowFragment(getSupportFragmentManager().beginTransaction(), mHomeFragment);
     }
 
     //创建一个Item
@@ -212,7 +236,7 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
     public void onBackPressed() {
         if (!isHomeFragment) {
             mNavigationController.setSelect(0);
-            replaceFragment(R.id.home_activity_container, mHomeFragment);
+            clickHomeFragment();
             isHomeFragment = true;
         } else {
             super.onBackPressed();
@@ -222,5 +246,23 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
     @Override
     public UserComponent getComponent() {
         return userComponent;
+    }
+
+    /**
+     * 添加或者显示 fragment
+     *
+     * @param transaction
+     * @param fragment
+     */
+    private void addOrShowFragment(FragmentTransaction transaction, Fragment fragment) {
+        if (currentFragment == fragment)
+            return;
+
+        if (!fragment.isAdded()) { // 如果当前fragment未被添加，则添加到Fragment管理器中
+            transaction.hide(currentFragment).add(R.id.home_activity_container, fragment).commit();
+        } else {
+            transaction.hide(currentFragment).show(fragment).commit();
+        }
+        currentFragment = (BaseFragment) fragment;
     }
 }
