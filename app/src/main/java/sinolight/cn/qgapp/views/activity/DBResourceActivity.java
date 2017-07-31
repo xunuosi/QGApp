@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -101,7 +102,6 @@ public class DBResourceActivity extends BaseActivity implements
         mSwipeTarget.setHasFixedSize(true);
         mSwipeTarget.addItemDecoration(new LinearDivider(mContext));
 
-        mSwipeDbRes.setRefreshing(true);
         mSwipeDbRes.setOnRefreshListener(DBResourceActivity.this);
         mSwipeDbRes.setOnLoadMoreListener(DBResourceActivity.this);
     }
@@ -146,15 +146,25 @@ public class DBResourceActivity extends BaseActivity implements
                 finish();
                 break;
             case R.id.iv_menu:
-                mPresenter.popTreeMenu();
+                popTreeMenu();
                 break;
             case R.id.iv_db_detail_search:
-                mPresenter.loadDataWithPara(
-                        mEtDbDetailSearch.getText().toString().trim(),
-                        themeType,
-                        false
-                );
+                searchData();
                 break;
+        }
+    }
+
+    private void searchData() {
+        if (TextUtils.isEmpty(mEtDbDetailSearch.getText().toString().trim())) {
+            showToast(R.string.text_search_data_empty);
+            return;
+        } else {
+            mPresenter.loadDataWithPara(
+                    mEtDbDetailSearch.getText().toString().trim(),
+                    themeType,
+                    false,
+                    true
+            );
         }
     }
 
@@ -164,33 +174,36 @@ public class DBResourceActivity extends BaseActivity implements
     }
 
     @Override
-    public void popTreeMenu(TreeNode root) {
-        if (tView == null) {
-            tView = new AndroidTreeView(DBResourceActivity.this, root);
-            tView.setDefaultAnimation(true);
-//        tView.setUse2dScroll(true);
-            tView.setDefaultContainerStyle(R.style.TreeNodeStyleDivided, true);
-            tView.setDefaultViewHolder(TreeParentHolder.class);
-            tView.setDefaultNodeClickListener(DBResourceActivity.this);
-            tView.setUseAutoToggle(true);
+    public void popTreeMenu() {
+        TreeNode treeRoot = mPresenter.popTreeMenu();
+        if (treeRoot != null) {
+            if (tView == null) {
+                tView = new AndroidTreeView(this, treeRoot);
+//                tView.setDefaultAnimation(true);
+//                tView.setUse2dScroll(true);
+                tView.setDefaultContainerStyle(R.style.TreeNodeStyleDivided, true);
+                tView.setDefaultViewHolder(TreeParentHolder.class);
+                tView.setDefaultNodeClickListener(this);
+                tView.setUseAutoToggle(true);
+            }
+            if (mTopRightMenu == null) {
+                mTopRightMenu = new TopRightMenu(this, tView.getView());
+                mTopRightMenu
+                        .setHeight(850)     //默认高度480
+                        .setWidth(450)      //默认宽度wrap_content
+                        .showIcon(true)     //显示菜单图标，默认为true
+                        .dimBackground(true)           //背景变暗，默认为true
+                        .needAnimationStyle(true)   //显示动画，默认为true
+                        .setAnimationStyle(R.style.TRM_ANIM_STYLE)  //默认为R.style.TRM_ANIM_STYLE
+                        .showAsDropDown(ivMenu, -225, 0);
+            } else {
+                mTopRightMenu.showAsDropDown(ivMenu, -225, 0);
+            }
+            if (mTopRightMenu.getPopView() != null) {
+                mTopRightMenu.getPopView().setOnDismissListener(this);
+            }
         } else {
-            tView.collapseAll();
-        }
-        if (mTopRightMenu == null) {
-            mTopRightMenu = new TopRightMenu(DBResourceActivity.this, tView.getView());
-            mTopRightMenu
-                    .setHeight(850)     //默认高度480
-                    .setWidth(450)      //默认宽度wrap_content
-                    .showIcon(true)     //显示菜单图标，默认为true
-                    .dimBackground(true)           //背景变暗，默认为true
-                    .needAnimationStyle(true)   //显示动画，默认为true
-                    .setAnimationStyle(R.style.TRM_ANIM_STYLE)  //默认为R.style.TRM_ANIM_STYLE
-                    .showAsDropDown(ivMenu, -225, 0);
-        } else {
-            mTopRightMenu.showAsDropDown(ivMenu, -225, 0);
-        }
-        if (mTopRightMenu.getPopView() != null) {
-            mTopRightMenu.getPopView().setOnDismissListener(DBResourceActivity.this);
+            showToast(R.string.text_tree_menu_loading);
         }
     }
 
@@ -273,6 +286,17 @@ public class DBResourceActivity extends BaseActivity implements
         }
     }
 
+    /**
+     * Hide popTreeMenuView
+     * @param isHide
+     */
+    @Override
+    public void hideTreeMenu(boolean isHide) {
+        if (isHide) {
+            ivMenu.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     public void onClick(TreeNode node, Object value) {
         TreeParentHolder.IconTreeItem item = (TreeParentHolder.IconTreeItem) value;
@@ -308,7 +332,8 @@ public class DBResourceActivity extends BaseActivity implements
         mPresenter.loadDataWithPara(
                 mEtDbDetailSearch.getText().toString().trim(),
                 themeType,
-                false
+                false,
+                true
         );
     }
 

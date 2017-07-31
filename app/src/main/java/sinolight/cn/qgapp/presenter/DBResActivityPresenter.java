@@ -62,8 +62,9 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
     private int count = 0;
     // 判断当前操作是否为加载更多数据
     private boolean action_more = false;
+    private boolean action_search = false;
 
-    private List<KDBResData> mDatas;
+    private List<KDBResData> mDatas = new ArrayList<>();
     private List<BookEntity> bookDatas;
     private List<ResStandardEntity> standDatas;
     private List<ResArticleEntity> articleDatas;
@@ -78,15 +79,19 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         @Override
         public void onSuccess(List<DBResTypeEntity> dbResTypeEntities) {
             mTreeTypeList = dbResTypeEntities;
-            disposeData();
-
+            // Create new thread to load TreeMenu
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    disposeData();
+                }
+            }).start();
         }
 
         @Override
         public void onError(int code, String errorMsg) {
             L.d(TAG, "mDBResTypeObserver code:" + code + ",errorMsg:" + errorMsg);
-            showErrorToast(R.string.attention_data_refresh_error);
-            view().showRefreshing(false);
+            showError();
         }
     });
 
@@ -107,8 +112,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         @Override
         public void onError(int code, String errorMsg) {
             L.d(TAG, "mBookObserver code:" + code + ",errorMsg:" + errorMsg);
-            showErrorToast(R.string.attention_data_refresh_error);
-            view().showRefreshing(false);
+            showError();
         }
     });
 
@@ -120,7 +124,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                     if (PageEntity != null) {
                         count = PageEntity.getCount();
                         standDatas = PageEntity.getData();
-                        transformKDBResData(AppContants.DataBase.Res.RES_IMG);
+                        transformKDBResData(AppContants.DataBase.Res.RES_STANDARD);
                     } else {
                         view().showRefreshing(false);
                     }
@@ -129,8 +133,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 @Override
                 public void onError(int code, String errorMsg) {
                     L.d(TAG, "mStandObserver code:" + code + ",errorMsg:" + errorMsg);
-                    showErrorToast(R.string.attention_data_refresh_error);
-                    view().showRefreshing(false);
+                    showError();
                 }
             });
 
@@ -151,8 +154,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 @Override
                 public void onError(int code, String errorMsg) {
                     L.d(TAG, "mArticleObserver code:" + code + ",errorMsg:" + errorMsg);
-                    showErrorToast(R.string.attention_data_refresh_error);
-                    view().showRefreshing(false);
+                    showError();
                 }
             });
 
@@ -173,8 +175,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 @Override
                 public void onError(int code, String errorMsg) {
                     L.d(TAG, "mImgObserver code:" + code + ",errorMsg:" + errorMsg);
-                    showErrorToast(R.string.attention_data_refresh_error);
-                    view().showRefreshing(false);
+                    showError();
                 }
             });
 
@@ -195,10 +196,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 @Override
                 public void onError(int code, String errorMsg) {
                     L.d(TAG, "mWordObserver code:" + code + ",errorMsg:" + errorMsg);
-                    showErrorToast(R.string.attention_data_refresh_error);
-                    view().showRefreshing(false);
-                    // if data is not obtained,you need clear data show empty.
-                    clearData();
+                    showError();
                 }
             });
 
@@ -207,12 +205,23 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
      */
     private void clearData() {
         if (mAdapter != null) {
-            mAdapter.setData(new ArrayList<KDBResData>());
+            mAdapter.setData(mDatas);
         }
         if (resType.equals(RES_DIC)) {
             count = 0;
             view().showFooterView(true, String.valueOf(count));
         }
+    }
+
+    private void showError() {
+        view().showRefreshing(false);
+        if (action_search) {
+            showErrorToast(R.string.attention_data_is_empty);
+        } else {
+            showErrorToast(R.string.attention_data_refresh_error);
+        }
+        // if data is not obtained,you need clear data show empty.
+        clearData();
     }
 
     private void transformKDBResData(AppContants.DataBase.Res resType) {
@@ -289,8 +298,6 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         mRoot = createTree(AppContants.DataBase.TREE_PID, mTrees);
         TreeNode treeNode = mRoot.get(0);
         mTreeNodes = treeNode.getChildren();
-
-        closeRefreshing();
     }
 
     public List<TreeNode> createTree(String pid, List<TreeNode> treeRes) {
@@ -328,7 +335,9 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
 
     @Override
     public void clear() {
-        mDBResTypeObserver.unSubscribe();
+        if (mDBResTypeObserver != null) {
+            mDBResTypeObserver.unSubscribe();
+        }
         if (mBookObserver != null) {
             mBookObserver.unSubscribe();
         }
@@ -344,6 +353,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         if (mWordObserver != null) {
             mWordObserver.unSubscribe();
         }
+        KDBResDataMapper.reset();
         unbindView();
     }
 
@@ -351,8 +361,13 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         if (intent != null) {
             resType = (AppContants.DataBase.Res) intent.getSerializableExtra(AppContants.DataBase.KEY_RES_TYPE);
             dbType = intent.getStringExtra(AppContants.DataBase.KEY_TYPE);
+            // if Res dictionary don`t PopMenu
+            if (resType.equals(RES_DIC)) {
+                view().hideTreeMenu(true);
+            }
             dbId = intent.getStringExtra(AppContants.DataBase.KEY_ID);
-            initData2Show();
+            view().showRefreshing(true);
+
         }
     }
 
@@ -437,12 +452,14 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 );
                 break;
         }
-        // 请求分类数据
-        model.getKDBResTypeWithCache(
-                mDBResTypeObserver,
-                AppHelper.getInstance().getCurrentToken(),
-                dbType,
-                false);
+        // if Res dictionary don`t PopMenu
+        if (!resType.equals(RES_DIC)) {
+            // 请求分类数据
+            model.getKDBResTypeNoCache(
+                    mDBResTypeObserver,
+                    AppHelper.getInstance().getCurrentToken(),
+                    dbType);
+        }
 
     }
 
@@ -451,8 +468,13 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
      * @param key
      * @param themeType
      */
-    public void loadDataWithPara(@Nullable String key,@Nullable String themeType,boolean isMore) {
+    public void loadDataWithPara(@Nullable String key, @Nullable String themeType, boolean isMore, boolean isSearch) {
         action_more = isMore;
+        action_search = isSearch;
+        // If not load more data, need clear data.
+        if (!isMore) {
+            mDatas.clear();
+        }
         switch (resType) {
             case RES_BOOK:
                 // 请求资源数据
@@ -530,16 +552,12 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
 
     }
 
-    public void popTreeMenu() {
-        // if Res dictionary don`t PopMenu
-        if (resType.equals(RES_DIC)) {
-            return;
-        }
+    public TreeNode popTreeMenu() {
         if (mTreeNodes != null && mTreeNodes.size() != 0) {
             root.addChildren(mTreeNodes);
-            view().popTreeMenu(root);
+            return root;
         } else {
-            showErrorToast(R.string.attention_data_refresh_error);
+            return null;
         }
     }
 
@@ -559,9 +577,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
      * @return
      */
     private boolean checkData() {
-        return (mTreeNodes != null &&
-                mDatas !=null
-        );
+        return mDatas !=null;
     }
 
     public void refreshView() {
@@ -569,8 +585,10 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         page = 1;
         // Action is refresh data
         action_more = false;
+        action_search = false;
         // Setting LoadMore is true
         view().hasMoreData(true);
+        mDatas.clear();
         initData2Show();
     }
 
@@ -579,7 +597,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
             // 有更多数据可以加载
             page++;
             // Action load more data
-            loadDataWithPara(key, themeType, true);
+            loadDataWithPara(key, themeType, true, false);
         } else if (mDatas != null && mDatas.size() >= count) {
             // 无更多数据加载
             view().hasMoreData(false);
@@ -597,11 +615,11 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         switch (position) {
             case 0:
                 dicType = TYPE_RECO_DIC;
-                loadDataWithPara(key, null, false);
+                loadDataWithPara(key, null, false, false);
                 break;
             case 1:
                 dicType = TYPE_ALL_DIC;
-                loadDataWithPara(key, null, false);
+                loadDataWithPara(key, null, false, false);
                 break;
         }
 

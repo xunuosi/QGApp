@@ -156,10 +156,8 @@ public class HttpManager {
                 new EvictProvider(update)), subscriber);
     }
 
-    public void getKDBResTypeWithCache(Observer<List<DBResTypeEntity>> subscriber, String token, String type, boolean update) {
-        toSubscribe(cacheProvider.getKDBResType(
-                mApiService.getKDBResType(token,type),
-                new EvictProvider(update)), subscriber);
+    public void getKDBResTypeNoCache(Observer<List<DBResTypeEntity>> subscriber, String token, String type) {
+        toSubscribe(mApiService.getKDBResType(token,type), subscriber);
     }
 
     public void getKDBBookListNoCache(Observer<PageEntity<List<BookEntity>>> subscriber, String token,

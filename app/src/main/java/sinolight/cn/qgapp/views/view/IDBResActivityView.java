@@ -1,6 +1,5 @@
 package sinolight.cn.qgapp.views.view;
 
-import com.unnamed.b.atv.model.TreeNode;
 
 import sinolight.cn.qgapp.adapter.KDBResAdapter;
 
@@ -13,7 +12,7 @@ public interface IDBResActivityView {
 
     void initShow(String title);
 
-    void popTreeMenu(TreeNode root);
+    void popTreeMenu();
 
     void showToast(int msgId);
 
@@ -28,4 +27,6 @@ public interface IDBResActivityView {
     void showTab(boolean enable);
 
     void showFooterView(boolean enable, String msg);
+
+    void hideTreeMenu(boolean isHide);
 }
