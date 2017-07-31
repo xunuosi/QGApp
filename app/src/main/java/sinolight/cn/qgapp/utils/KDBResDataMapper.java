@@ -10,6 +10,7 @@ import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResArticleEntity;
+import sinolight.cn.qgapp.data.http.entity.DBResPicEntity;
 import sinolight.cn.qgapp.data.http.entity.MaterialEntity;
 import sinolight.cn.qgapp.data.http.entity.ResArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.ResImgEntity;
@@ -226,6 +227,31 @@ public class KDBResDataMapper {
             resDataCollection = new ArrayList<>();
             for (ResWordEntity bean : beans) {
                 resDataCollection.add(transformDicData(bean, adapterType, isSpan));
+            }
+            mKDBResDataMap.put(adapterType, resDataCollection);
+            return resDataCollection;
+        }
+        return null;
+    }
+
+    private static KDBResData transformPicData(DBResPicEntity bean, int adapterType, boolean isSpan) {
+        if (bean == null) {
+            throw new IllegalArgumentException("Cannot transform a null value");
+        }
+        final KDBResData<DBResPicEntity> resData = new KDBResData<>();
+        resData.setItemType(adapterType);
+        resData.setSpan(isSpan);
+        resData.setLocal(false);
+        resData.setData(bean);
+        return resData;
+    }
+
+    public static List<KDBResData> transformPicDatas(List<DBResPicEntity> beans, int adapterType, boolean isSpan) {
+        List<KDBResData> resDataCollection;
+        if (beans != null && !beans.isEmpty()) {
+            resDataCollection = new ArrayList<>();
+            for (DBResPicEntity bean : beans) {
+                resDataCollection.add(transformPicData(bean, adapterType, isSpan));
             }
             mKDBResDataMap.put(adapterType, resDataCollection);
             return resDataCollection;

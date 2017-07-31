@@ -13,6 +13,7 @@ import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
 import sinolight.cn.qgapp.data.http.entity.DBResArticleEntity;
+import sinolight.cn.qgapp.data.http.entity.DBResPicEntity;
 import sinolight.cn.qgapp.data.http.entity.MaterialEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.KDBResDataMapper;
@@ -31,34 +32,16 @@ public class DBResPicPresenter extends BasePresenter<IDBResPicFragmentView, Http
 
     private Context mContext;
     private List<KDBResData> mDatas = new ArrayList<>();
-    private List<MaterialEntity> materialDatas;
-    private List<DBResArticleEntity> articelDatas;
+    private List<DBResPicEntity> picDatas;
     private CommonTitleAdapter mAdapter;
 
-    private HttpSubscriber materialObserver = new HttpSubscriber(new OnResultCallBack<List<MaterialEntity>>() {
+    private HttpSubscriber picObserver = new HttpSubscriber(new OnResultCallBack<List<DBResPicEntity>>() {
 
         @Override
-        public void onSuccess(List<MaterialEntity> materialEntities) {
-            if (materialEntities != null && materialEntities.size() != 0) {
-                materialDatas = materialEntities;
-                transformKDBResData(CommonTitleAdapter.TYPE_MATERIAL);
-            }
-        }
-
-        @Override
-        public void onError(int code, String errorMsg) {
-            L.d(TAG, "userObserver code:" + code + ",errorMsg:" + errorMsg);
-            showError();
-        }
-    });
-
-    private HttpSubscriber articleObserver = new HttpSubscriber(new OnResultCallBack<List<DBResArticleEntity>>() {
-
-        @Override
-        public void onSuccess(List<DBResArticleEntity> dbResArticleEntities) {
-            if (dbResArticleEntities != null && dbResArticleEntities.size() != 0) {
-                articelDatas = dbResArticleEntities;
-                transformKDBResData(CommonTitleAdapter.TYPE_ARTICLE);
+        public void onSuccess(List<DBResPicEntity> picEntities) {
+            if (picEntities != null && picEntities.size() != 0) {
+                picDatas = picEntities;
+                transformKDBResData(CommonTitleAdapter.TYPE_PIC);
             }
         }
 
@@ -78,7 +61,7 @@ public class DBResPicPresenter extends BasePresenter<IDBResPicFragmentView, Http
             case TYPE_PIC:
                 mDatas.add(KDBResDataMapper.transformTitleData(
                         mContext.getString(R.string.text_hot_pic),
-                        CommonTitleAdapter.TYPE_MATERIAL_TITLE,
+                        CommonTitleAdapter.TYPE_PIC_TITLE,
                         false));
                 break;
         }
@@ -87,18 +70,11 @@ public class DBResPicPresenter extends BasePresenter<IDBResPicFragmentView, Http
 
     private void transformKDBResData(int adapterType) {
         switch (adapterType) {
-            case CommonTitleAdapter.TYPE_MATERIAL:
-                mDatas.addAll(KDBResDataMapper.transformMaterialDatas(materialDatas, adapterType, false));
+            case CommonTitleAdapter.TYPE_PIC:
+                mDatas.addAll(KDBResDataMapper.transformPicDatas(picDatas, adapterType, false));
+                showSuccess();
                 break;
         }
-    }
-
-    private void getHotArticle() {
-        model.getHotArticleWithCache(
-                articleObserver,
-                AppHelper.getInstance().getCurrentToken(),
-                false
-        );
     }
 
     private void showSuccess() {
@@ -133,8 +109,7 @@ public class DBResPicPresenter extends BasePresenter<IDBResPicFragmentView, Http
 
     @Override
     public void clear() {
-        materialObserver.unSubscribe();
-        articleObserver.unSubscribe();
+        picObserver.unSubscribe();
         KDBResDataMapper.reset();
         mDatas.clear();
         unbindView();
@@ -143,8 +118,8 @@ public class DBResPicPresenter extends BasePresenter<IDBResPicFragmentView, Http
     public void init2Show() {
         mDatas.clear();
         insertTitle(TYPE_PIC);
-        model.getHotMenuWithCache(
-                materialObserver,
+        model.getHotPicWithCache(
+                picObserver,
                 AppHelper.getInstance().getCurrentToken(),
                 false);
     }

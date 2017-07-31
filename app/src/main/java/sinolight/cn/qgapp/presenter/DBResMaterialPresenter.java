@@ -31,7 +31,6 @@ public class DBResMaterialPresenter extends BasePresenter<IDBResMaterialFragment
     private Context mContext;
     private List<KDBResData> mDatas = new ArrayList<>();
     private List<MaterialEntity> materialDatas;
-    private List<DBResArticleEntity> articelDatas;
     private CommonTitleAdapter mAdapter;
 
     private HttpSubscriber materialObserver = new HttpSubscriber(new OnResultCallBack<List<MaterialEntity>>() {

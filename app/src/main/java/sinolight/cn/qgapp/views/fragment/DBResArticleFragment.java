@@ -76,14 +76,14 @@ public class DBResArticleFragment extends BaseFragment implements IDBResArticleF
         mSwipeTarget.setHasFixedSize(true);
         mSwipeTarget.addItemDecoration(new LinearDivider(getContext()));
 
-        mSwipeDbResArticle.setRefreshing(true);
+        this.showRefreshing(true);
         mSwipeDbResArticle.setOnRefreshListener(this);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        mPresenter.init2Show();
+
     }
 
     @Override

@@ -81,7 +81,7 @@ public class DBResMaterialFragment extends BaseLazyLoadFragment implements IDBRe
     @Override
     public void onStart() {
         super.onStart();
-        mPresenter.init2Show();
+
     }
 
     @Override
@@ -116,12 +116,14 @@ public class DBResMaterialFragment extends BaseLazyLoadFragment implements IDBRe
 
     @Override
     public void showErrorToast(int msgId) {
-
+        showToastMessage(getString(msgId));
     }
 
     @Override
     public void init2Show(CommonTitleAdapter adapter) {
-        mRvDbresMaterial.setAdapter(adapter);
+        if (mRvDbresMaterial.getAdapter() == null) {
+            mRvDbresMaterial.setAdapter(adapter);
+        }
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import com.yanyusong.y_divideritemdecoration.Y_Divider;
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder;
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -23,6 +26,7 @@ import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.adapter.CommonTitleAdapter;
 import sinolight.cn.qgapp.dagger.HasComponent;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
+import sinolight.cn.qgapp.presenter.DBResPicPresenter;
 import sinolight.cn.qgapp.views.view.IDBResPicFragmentView;
 
 /**
@@ -32,11 +36,15 @@ import sinolight.cn.qgapp.views.view.IDBResPicFragmentView;
 
 public class DBResPicFragment extends BaseFragment implements IDBResPicFragmentView, OnRefreshListener {
 
+    @Inject
+    DBResPicPresenter mPresenter;
     @BindView(R.id.swipe_target)
     RecyclerView mSwipeTarget;
     @BindView(R.id.swipe_db_res_pic)
     SwipeToLoadLayout mSwipeDbResPic;
     Unbinder unbinder;
+
+    private LinearLayoutManager mLayoutManager;
 
     public static DBResPicFragment newInstance() {
         return new DBResPicFragment();
@@ -52,23 +60,47 @@ public class DBResPicFragment extends BaseFragment implements IDBResPicFragmentV
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        this.getComponent().inject(this);
+        mPresenter.bindView(this);
+        initView();
+    }
+
+    private void initView() {
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mSwipeTarget.setLayoutManager(mLayoutManager);
+        mSwipeTarget.addItemDecoration(new DBResPicFragment.LinearDivider(getActivity()));
+        mSwipeDbResPic.setOnRefreshListener(this);
+        this.showRefreshing(true);
+    }
+
+    @Override
     protected UserComponent getComponent() {
         return ((HasComponent<UserComponent>) getActivity()).getComponent();
     }
 
     @Override
-    public void onRefresh() {
+    public void onStart() {
+        super.onStart();
 
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.init2Show();
     }
 
     @Override
     public void showErrorToast(int msgId) {
-
+        showToastMessage(getString(msgId));
     }
 
     @Override
     public void init2Show(CommonTitleAdapter adapter) {
-
+        if (mSwipeTarget.getAdapter() == null) {
+            mSwipeTarget.setAdapter(adapter);
+        }
     }
 
     @Override
@@ -78,7 +110,16 @@ public class DBResPicFragment extends BaseFragment implements IDBResPicFragmentV
 
     @Override
     public void showRefreshing(boolean enable) {
-
+        if (enable) {
+            mSwipeDbResPic.post(new Runnable() {
+                @Override
+                public void run() {
+                    mSwipeDbResPic.setRefreshing(true);
+                }
+            });
+        } else {
+            mSwipeDbResPic.setRefreshing(false);
+        }
     }
 
     @Override

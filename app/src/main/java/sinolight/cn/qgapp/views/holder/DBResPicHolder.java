@@ -13,32 +13,32 @@ import butterknife.OnClick;
 import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.KDBResData;
-import sinolight.cn.qgapp.data.http.entity.MaterialEntity;
+import sinolight.cn.qgapp.data.http.entity.DBResPicEntity;
 import sinolight.cn.qgapp.utils.ImageUtil;
 import sinolight.cn.qgapp.utils.L;
 
 /**
  * Created by xns on 2017/7/17.
- * 资源库标题holder
+ * 资源库图片holder
  */
 
-public class DBResMaterialHolder extends RecyclerView.ViewHolder {
+public class DBResPicHolder extends RecyclerView.ViewHolder {
     private static final String TAG = "DBResMaterialHolder";
-    @BindView(R.id.iv_resdb_material)
-    SimpleDraweeView mIvResdbMaterial;
-    @BindView(R.id.tv_resdb_material_title)
-    TextView mTvResdbMaterialTitle;
-    @BindView(R.id.tv_resdb_material_info)
-    TextView mTvResdbMaterialInfo;
-    @BindView(R.id.tv_resdb_material_from)
-    TextView mTvResdbMaterialFrom;
-    @BindView(R.id.root_resdb_material)
-    ConstraintLayout mRootResdbMaterial;
-    private MaterialEntity mData;
+    @BindView(R.id.iv_resdb_pic)
+    SimpleDraweeView mIvResdbPic;
+    @BindView(R.id.tv_resdb_pic_title)
+    TextView mTvResdbPicTitle;
+    @BindView(R.id.tv_resdb_pic_info)
+    TextView mTvResdbPicInfo;
+    @BindView(R.id.tv_resdb_pic_from)
+    TextView mTvResdbPicFrom;
+    @BindView(R.id.root_db_res_hot_pic)
+    ConstraintLayout mRootDbResHotPic;
+    private DBResPicEntity mData;
     private int width;
     private int height;
 
-    public DBResMaterialHolder(View layout) {
+    public DBResPicHolder(View layout) {
         super(layout);
         ButterKnife.bind(this, layout);
         width = (int) (App.getContext().getResources().getDimensionPixelOffset(R.dimen.resdb_materail_cover_width) /
@@ -47,7 +47,7 @@ public class DBResMaterialHolder extends RecyclerView.ViewHolder {
                 App.getContext().getResources().getDisplayMetrics().density);
     }
 
-    public void setData(KDBResData<MaterialEntity> data) {
+    public void setData(KDBResData<DBResPicEntity> data) {
         if (data != null) {
             mData = data.getData();
             bindData();
@@ -58,14 +58,14 @@ public class DBResMaterialHolder extends RecyclerView.ViewHolder {
         ImageUtil.frescoShowImageByUri(
                 App.getContext(),
                 mData.getCover(),
-                mIvResdbMaterial,
+                mIvResdbPic,
                 width,
                 height
         );
 
-        mTvResdbMaterialTitle.setText(mData.getName());
-        mTvResdbMaterialInfo.setText(mData.getRemark());
-        mTvResdbMaterialFrom.setText(formatStr(R.string.text_from_format, mData.getSource()));
+        mTvResdbPicTitle.setText(mData.getName());
+        mTvResdbPicInfo.setText(mData.getAbs());
+        mTvResdbPicFrom.setText(formatStr(R.string.text_from_format, mData.getSource()));
     }
 
     private String formatStr(int baseStrId, String child) {
@@ -73,10 +73,10 @@ public class DBResMaterialHolder extends RecyclerView.ViewHolder {
         return String.format(local, child);
     }
 
-    @OnClick({R.id.root_resdb_material})
+    @OnClick({R.id.root_db_res_hot_pic})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.root_resdb_material:
+            case R.id.root_db_res_hot_pic:
                 L.d(TAG, "onClick:" + mData.getName());
                 break;
         }

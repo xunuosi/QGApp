@@ -10,6 +10,7 @@ public class DBResPicEntity {
     private String name;
     private String abs;
     private String cover;
+    private String source;
 
     public DBResPicEntity() {
     }
@@ -44,5 +45,13 @@ public class DBResPicEntity {
 
     public void setCover(String cover) {
         this.cover = cover;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 }
