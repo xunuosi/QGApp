@@ -153,7 +153,7 @@ public class BookInfoFragment extends ResBaseFragment {
 
     private String getVersionNum() {
         String str = mBookData.getVersionprint();
-        String[] arr = str.split(";");
+        String[] arr = str.split(":");
         if (arr[0] != null) {
             return arr[0];
         } else {
@@ -163,7 +163,7 @@ public class BookInfoFragment extends ResBaseFragment {
 
     private String getPrintNum() {
         String str = mBookData.getVersionprint();
-        String[] arr = str.split(";");
+        String[] arr = str.split(":");
         if (arr[1] != null) {
             return arr[1];
         } else {
