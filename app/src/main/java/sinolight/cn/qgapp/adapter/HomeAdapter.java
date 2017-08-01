@@ -149,5 +149,4 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private boolean isFullSpanType(int pos) {
         return homeDatas.get(pos).isSpan();
     }
-
 }

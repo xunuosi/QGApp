@@ -1,12 +1,15 @@
 package sinolight.cn.qgapp.views.holder;
 
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +29,13 @@ import sinolight.cn.qgapp.views.widget.FrescoLoader;
  * 首页顶部轮播图片
  */
 
-public class HomeHotPicsHolder extends RecyclerView.ViewHolder {
+public class HomeHotPicsHolder extends RecyclerView.ViewHolder implements
+        ViewPager.OnPageChangeListener,OnBannerListener {
     private static final String TAG = "HomeHotPicsHolder";
     private HomeData mHomeData;
+    List<BannerEntity> datas;
     private List imgList;
+    private List<String> titles;
     private int width;
     private int height;
 
@@ -37,6 +43,8 @@ public class HomeHotPicsHolder extends RecyclerView.ViewHolder {
     Banner mBannerHomeHead;
     @BindView(R.id.item_hot_imgs_root)
     ConstraintLayout mBannerHomeHeadRoot;
+    @BindView(R.id.tv_hot_imgs_banner_center_title)
+    TextView mTvHotImgsBannerCenterTitle;
 
     public HomeHotPicsHolder(View layout) {
         super(layout);
@@ -53,7 +61,7 @@ public class HomeHotPicsHolder extends RecyclerView.ViewHolder {
     }
 
     private void transformData() {
-        List<BannerEntity> datas = mHomeData.getDatas();
+        datas = mHomeData.getDatas();
         if (datas == null || datas.isEmpty()) {
             imgList = new ArrayList();
             imgList.add(R.drawable.hotpicture_bg);
@@ -61,8 +69,10 @@ public class HomeHotPicsHolder extends RecyclerView.ViewHolder {
             imgList.add(R.drawable.hotpicture_bg);
         } else {
             imgList = new ArrayList();
+            titles = new ArrayList<>();
             for (BannerEntity bean : datas) {
                 imgList.add(bean.getCover());
+                titles.add(bean.getTitle());
             }
         }
         bindData();
@@ -87,5 +97,33 @@ public class HomeHotPicsHolder extends RecyclerView.ViewHolder {
         mBannerHomeHead.setIndicatorGravity(BannerConfig.CENTER);
         //banner设置方法全部调用完毕时最后调用
         mBannerHomeHead.start();
+
+        mBannerHomeHead.setOnPageChangeListener(this);
+        mBannerHomeHead.setOnBannerListener(this);
+        mTvHotImgsBannerCenterTitle.setText(titles.get(0));
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        // 9条数据 position变化范围：1-10，其中到10的时候直接又变成1需要特殊处理
+        if (position == titles.size() + 1) {
+            return;
+        }
+        mTvHotImgsBannerCenterTitle.setText(titles.get(position - 1));
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    @Override
+    public void OnBannerClick(int position) {
+        L.d(TAG, "title:" + datas.get(position).getTitle());
     }
 }
