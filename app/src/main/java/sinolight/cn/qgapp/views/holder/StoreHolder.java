@@ -11,6 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import sinolight.cn.qgapp.App;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.HomeData;
 import sinolight.cn.qgapp.utils.ImageUtil;
@@ -58,12 +59,20 @@ public class StoreHolder extends RecyclerView.ViewHolder {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.store_hf_head_root:
-                onClickStoreType();
+                onClickStoreType(homeData.getHomeType());
                 break;
         }
     }
 
-    private void onClickStoreType() {
-        L.d(TAG, "type:" + homeData.getHomeType().getType());
+    private void onClickStoreType(AppContants.HomeStore.Type homeType) {
+        switch (homeType) {
+            case TYPE_DB_KNOWLEDGE:
+                onClickKnowledge();
+                break;
+        }
+    }
+
+    private void onClickKnowledge() {
+
     }
 }

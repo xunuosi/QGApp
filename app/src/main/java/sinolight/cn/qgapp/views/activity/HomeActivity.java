@@ -265,4 +265,12 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
         }
         currentFragment = (BaseFragment) fragment;
     }
+
+    public static void changeFragment(AppContants.HomeStore.Type type) {
+        switch (type) {
+            case TYPE_DB_KNOWLEDGE:
+
+                break;
+        }
+    }
 }
