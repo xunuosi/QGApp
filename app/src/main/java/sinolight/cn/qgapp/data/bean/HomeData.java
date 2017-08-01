@@ -2,6 +2,8 @@ package sinolight.cn.qgapp.data.bean;
 
 import java.util.List;
 
+import sinolight.cn.qgapp.AppContants;
+
 /**
  * Created by admin on 2017/7/4.
  * 首页数据的包装类
@@ -12,6 +14,10 @@ public class HomeData<T> {
     private String title;
     private String url;
     private int resId;
+    /**
+     * 首页Store的类型
+     */
+    private AppContants.HomeStore.Type homeType;
     /**
      * 是否为本地数据
      */
@@ -144,22 +150,11 @@ public class HomeData<T> {
         this.remark = remark;
     }
 
-    @Override
-    public String toString() {
-        return "HomeData{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", url='" + url + '\'' +
-                ", resId=" + resId +
-                ", isLocal=" + isLocal +
-                ", itemType=" + itemType +
-                ", isSpan=" + isSpan +
-                ", stdno='" + stdno + '\'' +
-                ", imdate='" + imdate + '\'' +
-                ", author='" + author + '\'' +
-                ", source='" + source + '\'' +
-                ", remark='" + remark + '\'' +
-                ", datas=" + datas +
-                '}';
+    public AppContants.HomeStore.Type getHomeType() {
+        return homeType;
+    }
+
+    public void setHomeType(AppContants.HomeStore.Type homeType) {
+        this.homeType = homeType;
     }
 }

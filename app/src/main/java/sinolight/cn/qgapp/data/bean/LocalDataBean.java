@@ -1,5 +1,7 @@
 package sinolight.cn.qgapp.data.bean;
 
+import sinolight.cn.qgapp.AppContants;
+
 /**
  * Created by xns on 2017/7/5.
  * 本地资源的实体类
@@ -8,6 +10,7 @@ package sinolight.cn.qgapp.data.bean;
 public class LocalDataBean {
     private int text;
     private int resId;
+    private AppContants.HomeStore.Type mHomeStoreType;
 
     public LocalDataBean() {
     }
@@ -27,4 +30,13 @@ public class LocalDataBean {
     public void setResId(int resId) {
         this.resId = resId;
     }
+
+    public AppContants.HomeStore.Type getHomeStoreType() {
+        return mHomeStoreType;
+    }
+
+    public void setHomeStoreType(AppContants.HomeStore.Type homeStoreType) {
+        mHomeStoreType = homeStoreType;
+    }
+
 }

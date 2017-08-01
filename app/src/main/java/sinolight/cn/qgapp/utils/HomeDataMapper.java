@@ -51,6 +51,36 @@ public class HomeDataMapper {
         return homedataCollection;
     }
 
+    public static HomeData transformStoreData(LocalDataBean bean, int adapterType, boolean isSpan) {
+        if (bean == null) {
+            throw new IllegalArgumentException("Cannot transform a null value");
+        }
+        final HomeData homeData = new HomeData();
+        homeData.setTitle(App.getContext().getString(bean.getText()));
+        homeData.setResId(bean.getResId());
+        homeData.setItemType(adapterType);
+        homeData.setHomeType(bean.getHomeStoreType());
+        homeData.setSpan(isSpan);
+        homeData.setLocal(true);
+        return homeData;
+    }
+
+    public static List<HomeData> transformStoreDatas(List<LocalDataBean> localDataBeans
+            ,int adapterType, boolean isSpan) {
+        List<HomeData> homedataCollection;
+
+        if (localDataBeans != null && !localDataBeans.isEmpty()) {
+            homedataCollection = new ArrayList<>();
+            for (LocalDataBean bean : localDataBeans) {
+                homedataCollection.add(transformStoreData(bean,adapterType,isSpan));
+            }
+        } else {
+            homedataCollection = Collections.emptyList();
+        }
+        homeDataMap.put(adapterType, homedataCollection);
+        return homedataCollection;
+    }
+
     public static HomeData transformArticleBean(ArticleEntity bean, int adapterType, boolean isSpan) {
         if (bean == null) {
             throw new IllegalArgumentException("Cannot transform a null value");

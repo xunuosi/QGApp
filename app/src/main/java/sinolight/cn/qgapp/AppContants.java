@@ -78,4 +78,24 @@ public interface AppContants {
         int TYPE_LIST_VIDEO = 2;
     }
 
+    /**
+     * 首页库的enum
+     */
+    interface HomeStore {
+        enum Type implements HomeStore {
+            TYPE_DB_KNOWLEDGE("行业知识库"), TYPE_DB_RES("资源库"), TYPE_DB_BAIKE("百科库"),
+            TYPE_DB_STANDARD("标准库"), TYPE_EBOOK("电子书城"), TYPE_MASTER("行业专家");
+
+            private final String type;
+
+            Type(String value) {
+                type = value;
+            }
+
+            public String getType() {
+                return type;
+            }
+        }
+    }
+
 }

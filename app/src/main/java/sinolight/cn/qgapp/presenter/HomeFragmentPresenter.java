@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.adapter.HomeAdapter;
@@ -47,6 +48,15 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
             R.drawable.store_icon_standard,
             R.drawable.store_icon_ebk,
             R.drawable.store_icon_master
+    };
+
+    private AppContants.HomeStore.Type[] homeStoreArr = {
+            AppContants.HomeStore.Type.TYPE_DB_KNOWLEDGE,
+            AppContants.HomeStore.Type.TYPE_DB_RES,
+            AppContants.HomeStore.Type.TYPE_DB_BAIKE,
+            AppContants.HomeStore.Type.TYPE_DB_STANDARD,
+            AppContants.HomeStore.Type.TYPE_EBOOK,
+            AppContants.HomeStore.Type.TYPE_MASTER
     };
 
     private int[] storeStrArr = {
@@ -307,6 +317,7 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
             LocalDataBean bean = new LocalDataBean();
             bean.setText(storeStrArr[i]);
             bean.setResId(storeImgArr[i]);
+            bean.setHomeStoreType(homeStoreArr[i]);
             mStoreDatas.add(bean);
         }
 
@@ -337,7 +348,7 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
                 homeDatas.addAll(HomeDataMapper.transformBannerEntitys(list, type, isSpan));
                 break;
             case HomeAdapter.TYPE_STORE:
-                homeDatas.addAll(HomeDataMapper.transformLocalDatas(list, type, isSpan));
+                homeDatas.addAll(HomeDataMapper.transformStoreDatas(list, type, isSpan));
                 break;
             case HomeAdapter.TYPE_HOT_PICS:
                 homeDatas.addAll(HomeDataMapper.transformBannerEntitys(list, type, isSpan));

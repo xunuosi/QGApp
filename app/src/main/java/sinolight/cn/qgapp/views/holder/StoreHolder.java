@@ -9,10 +9,12 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.HomeData;
 import sinolight.cn.qgapp.utils.ImageUtil;
+import sinolight.cn.qgapp.utils.L;
 
 /**
  * Created by admin on 2017/7/5.3
@@ -50,5 +52,18 @@ public class StoreHolder extends RecyclerView.ViewHolder {
                 width,
                 height);
         tvStore.setText(homeData.getTitle());
+    }
+
+    @OnClick({R.id.store_hf_head_root})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.store_hf_head_root:
+                onClickStoreType();
+                break;
+        }
+    }
+
+    private void onClickStoreType() {
+        L.d(TAG, "type:" + homeData.getHomeType().getType());
     }
 }
