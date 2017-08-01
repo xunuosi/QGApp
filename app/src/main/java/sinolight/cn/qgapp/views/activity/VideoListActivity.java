@@ -28,24 +28,24 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.adapter.VideoAdapter;
-import sinolight.cn.qgapp.dagger.component.DaggerVideoSetActivityComponent;
-import sinolight.cn.qgapp.dagger.module.VideoSetActivityModule;
-import sinolight.cn.qgapp.presenter.VideoListSetActivityPresenter;
-import sinolight.cn.qgapp.views.view.IVideoListSetActivityView;
+import sinolight.cn.qgapp.dagger.component.DaggerVideoListActivityComponent;
+import sinolight.cn.qgapp.dagger.module.VideoListActivityModule;
+import sinolight.cn.qgapp.presenter.VideoListActivityPresenter;
+import sinolight.cn.qgapp.views.view.IVideoListActivityView;
 
 /**
  * Created by xns on 2017/8/1.
  * 视频列表的Activity
  */
 
-public class VideoListSetActivity extends BaseActivity implements IVideoListSetActivityView,
+public class VideoListActivity extends BaseActivity implements IVideoListActivityView,
         OnRefreshListener, OnLoadMoreListener {
     private static final String TAG = "VideoListSetActivity";
 
     @Inject
     Context mContext;
     @Inject
-    VideoListSetActivityPresenter mPresenter;
+    VideoListActivityPresenter mPresenter;
     @BindView(R.id.tv_title)
     TextView mTvTitle;
     @BindView(R.id.iv_menu)
@@ -62,13 +62,14 @@ public class VideoListSetActivity extends BaseActivity implements IVideoListSetA
     private LinearLayoutManager mLayoutManager;
 
     public static Intent getCallIntent(Context context) {
-        return new Intent(context, VideoListSetActivity.class);
+        return new Intent(context, VideoListActivity.class);
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         this.initializeInjector();
         super.onCreate(savedInstanceState);
+        mPresenter.checkoutIntent(getIntent());
     }
 
     @Override
@@ -84,7 +85,7 @@ public class VideoListSetActivity extends BaseActivity implements IVideoListSetA
 
     @Override
     protected void initViews() {
-        mTvTitle.setText(R.string.text_video_set);
+        mTvTitle.setText(R.string.text_video_list);
         mIvMenu.setVisibility(View.GONE);
 
         mLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
@@ -92,26 +93,25 @@ public class VideoListSetActivity extends BaseActivity implements IVideoListSetA
         mSwipeTarget.setHasFixedSize(true);
         mSwipeTarget.addItemDecoration(new LinearDivider(mContext));
 
-        mSwipeVideoListSet.setOnRefreshListener(VideoListSetActivity.this);
-        mSwipeVideoListSet.setOnLoadMoreListener(VideoListSetActivity.this);
+        mSwipeVideoListSet.setOnRefreshListener(VideoListActivity.this);
+        mSwipeVideoListSet.setOnLoadMoreListener(VideoListActivity.this);
 
-        this.showRefreshing(true);
     }
 
     @Override
     protected void initData() {
-
+        DaggerVideoListActivityComponent
+                .builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(getActivityModule())
+                .videoListActivityModule(new VideoListActivityModule(this))
+                .build()
+                .inject(this);
     }
 
     @Override
     protected void initializeInjector() {
-        DaggerVideoSetActivityComponent
-                .builder()
-                .applicationComponent(getApplicationComponent())
-                .activityModule(getActivityModule())
-                .videoSetActivityModule(new VideoSetActivityModule(this))
-                .build()
-                .inject(this);
+
     }
 
     @OnClick({R.id.im_back_arrow, R.id.iv_video_list_set_search})

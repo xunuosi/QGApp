@@ -1,5 +1,6 @@
 package sinolight.cn.qgapp.views.holder;
 
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -17,6 +18,7 @@ import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
 import sinolight.cn.qgapp.utils.ImageUtil;
 import sinolight.cn.qgapp.utils.L;
+import sinolight.cn.qgapp.views.activity.VideoListActivity;
 
 /**
  * Created by xns on 2017/7/17.
@@ -66,9 +68,24 @@ public class DBResHotVideoHolder extends RecyclerView.ViewHolder {
                 bindVideoSetData();
                 break;
             case AppContants.Video.TYPE_LIST_VIDEO:
-
+                bindVideoListData();
                 break;
         }
+    }
+
+    private void bindVideoListData() {
+        ImageUtil.frescoShowImageByUri(
+                App.getContext(),
+                mData.getCover(),
+                mIvResdbPic,
+                width,
+                height
+        );
+
+        mTvResdbPicTitle.setText(mData.getName());
+        mTvResdbPicInfo.setText(mData.getAbs());
+        // hide text source
+        mTvResdbPicFrom.setVisibility(View.GONE);
     }
 
     private void bindVideoSetData() {
@@ -96,7 +113,8 @@ public class DBResHotVideoHolder extends RecyclerView.ViewHolder {
 
         mTvResdbPicTitle.setText(mData.getName());
         mTvResdbPicInfo.setText(mData.getAbs());
-        mTvResdbPicFrom.setText(formatStr(R.string.text_from_format, mData.getSource()));
+        // hide text source
+        mTvResdbPicFrom.setVisibility(View.GONE);
     }
 
     private String formatStr(int baseStrId, String child) {
@@ -108,8 +126,34 @@ public class DBResHotVideoHolder extends RecyclerView.ViewHolder {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.root_db_res_hot_pic:
-                L.d(TAG, "onClick:" + mData.getName());
+                onClickAction();
                 break;
         }
+    }
+
+    private void onClickAction() {
+        switch (type) {
+            case AppContants.Video.TYPE_SET_VIDEO:
+                onClickVideoSet();
+                break;
+            case AppContants.Video.TYPE_HOT_VIDEO:
+            case AppContants.Video.TYPE_LIST_VIDEO:
+                onClickPlayVideo();
+                break;
+        }
+    }
+
+    private void onClickPlayVideo() {
+
+    }
+
+    /**
+     * 点击视频集合
+     */
+    private void onClickVideoSet() {
+        Intent callIntent = VideoListActivity.getCallIntent(App.getContext());
+        callIntent.putExtra(AppContants.Video.SET_ID, mData.getId());
+        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        App.getContext().startActivity(callIntent);
     }
 }

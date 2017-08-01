@@ -210,6 +210,11 @@ public class HttpManager {
         toSubscribe(mApiService.getVideoLdbList(token, key, page, size), subscriber);
     }
 
+    public void getVideoListNoCache(Observer<PageEntity<List<DBResVideoEntity>>> subscriber, String token, String dbid,
+                                     String key, int page, int size) {
+        toSubscribe(mApiService.getVideoList(token, dbid, key, page, size), subscriber);
+    }
+
     public void getUserInfoWithCache(Observer<UserEntity> subscriber, String token, String user, boolean update) {
         toSubscribe(cacheProvider.getUserInfo(
                 mApiService.getUserInfo(token,user),

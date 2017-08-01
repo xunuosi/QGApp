@@ -4,15 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 
-import com.unnamed.b.atv.model.TreeNode;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
-import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.adapter.VideoAdapter;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.HttpManager;
@@ -22,17 +19,16 @@ import sinolight.cn.qgapp.data.http.entity.PageEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.KDBResDataMapper;
 import sinolight.cn.qgapp.utils.L;
+import sinolight.cn.qgapp.views.view.IVideoListActivityView;
 import sinolight.cn.qgapp.views.view.IVideoListSetActivityView;
-
-import static sinolight.cn.qgapp.AppContants.DataBase.Res.RES_DIC;
 
 /**
  * Created by xns on 2017/6/29.
- * VideoListSet Presenter
+ * VideoList Presenter
  */
 
-public class VideoListSetActivityPresenter extends BasePresenter<IVideoListSetActivityView, HttpManager> {
-    private static final String TAG = "VideoListSetActivityPresenter";
+public class VideoListActivityPresenter extends BasePresenter<IVideoListActivityView, HttpManager> {
+    private static final String TAG = "VideoListActivityPresenter";
     private Context mContext;
 
     private AppContants.DataBase.Res resType;
@@ -44,6 +40,8 @@ public class VideoListSetActivityPresenter extends BasePresenter<IVideoListSetAc
     // 判断当前操作是否为加载更多数据
     private boolean action_more = false;
     private boolean action_search = false;
+    // VideoParentID
+    private String videoSetID;
 
     private List<KDBResData> mDatas = new ArrayList<>();
     private List<DBResVideoEntity> videoDatas;
@@ -65,7 +63,7 @@ public class VideoListSetActivityPresenter extends BasePresenter<IVideoListSetAc
 
         @Override
         public void onError(int code, String errorMsg) {
-            L.d(TAG, "mBookObserver code:" + code + ",errorMsg:" + errorMsg);
+            L.d(TAG, "mVideoObserver code:" + code + ",errorMsg:" + errorMsg);
             showError();
         }
     });
@@ -94,7 +92,7 @@ public class VideoListSetActivityPresenter extends BasePresenter<IVideoListSetAc
         List<KDBResData> list = new ArrayList<>();
         switch (resType) {
             case RES_VIDEO:
-                list = KDBResDataMapper.transformVideoDatas(videoDatas, VideoAdapter.TYPE_VIDEO_SET, false);
+                list = KDBResDataMapper.transformVideoDatas(videoDatas, VideoAdapter.TYPE_VIDEO_LIST, false);
                 break;
         }
         // Load More Action
@@ -122,7 +120,7 @@ public class VideoListSetActivityPresenter extends BasePresenter<IVideoListSetAc
 
     }
 
-    public VideoListSetActivityPresenter(IVideoListSetActivityView view, Context context) {
+    public VideoListActivityPresenter(IVideoListActivityView view, Context context) {
         this.mContext = context;
         bindView(view);
         setModel(HttpManager.getInstance());
@@ -191,7 +189,6 @@ public class VideoListSetActivityPresenter extends BasePresenter<IVideoListSetAc
 
     public void refreshView() {
         init2Show(AppContants.DataBase.Res.RES_VIDEO);
-
     }
 
     public void loadMore(@Nullable String key) {
@@ -216,9 +213,10 @@ public class VideoListSetActivityPresenter extends BasePresenter<IVideoListSetAc
     }
 
     private void getData() {
-        model.getVideoLdbListNoCache(
+        model.getVideoListNoCache(
                 mVideoObserver,
                 AppHelper.getInstance().getCurrentToken(),
+                videoSetID,
                 null,
                 page,
                 SIZE
@@ -242,5 +240,14 @@ public class VideoListSetActivityPresenter extends BasePresenter<IVideoListSetAc
         action_search = false;
         mDatas.clear();
         count = 0;
+    }
+
+    public void checkoutIntent(Intent intent) {
+        if (intent == null) {
+            view().showRefreshing(false);
+        } else {
+            videoSetID = intent.getStringExtra(AppContants.Video.SET_ID);
+            view().showRefreshing(true);
+        }
     }
 }

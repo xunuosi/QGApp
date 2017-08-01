@@ -12,7 +12,6 @@ import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.views.holder.DBResHotVideoHolder;
-import sinolight.cn.qgapp.views.holder.DBResPicSetHolder;
 
 /**
  * Created by xns on 2017/7/26.

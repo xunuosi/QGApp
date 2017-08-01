@@ -54,6 +54,7 @@ public class DBResArticleFragment extends BaseFragment implements IDBResArticleF
         final View fragmentView = inflater.inflate(R.layout.fragment_res_db_articlel, container, false);
 
         unbinder = ButterKnife.bind(this, fragmentView);
+
         return fragmentView;
     }
 

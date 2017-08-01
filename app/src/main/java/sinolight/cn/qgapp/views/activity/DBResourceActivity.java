@@ -159,11 +159,9 @@ public class DBResourceActivity extends BaseActivity implements
             showToast(R.string.text_search_data_empty);
             return;
         } else {
-            mPresenter.loadDataWithPara(
+            mPresenter.searchData(
                     mEtDbDetailSearch.getText().toString().trim(),
-                    themeType,
-                    false,
-                    true
+                    themeType
             );
         }
     }

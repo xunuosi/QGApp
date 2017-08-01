@@ -624,4 +624,23 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         }
 
     }
+
+    public void searchData(String key, String themeType) {
+        resetState();
+        this.action_search = true;
+        this.loadDataWithPara(key, themeType, false, true);
+    }
+
+    /**
+     * 重置状态
+     */
+    @Override
+    protected void resetState() {
+        super.resetState();
+        page = 1;
+        action_more = false;
+        action_search = false;
+        mDatas.clear();
+        count = 0;
+    }
 }
