@@ -54,6 +54,7 @@
     <string name="text_print_time_format">印刷时间：%1$s</string>
     <string name="text_print_num_format">印次：%1$s</string>
     <string name="text_isn_format">国际标准号：%1$s</string>
+    <string name="text_isn_format2">标准号：%1$s</string>
     <string name="text_classification">所属分类：</string>
     <string name="text_page_num_format">页数：%1$s</string>
     <string name="text_page_size_format">开本：%1$s</string>
@@ -76,6 +77,7 @@
     <string name="text_person_info">个人资料</string>
     <string name="text_account_security">账户安全</string>
     <string name="text_get_all">查看全部</string>
+    <string name="text_publish_time_format2">发布日期：%1$S</string>
     <!--DBDetail Home-->
     <string name="text_line_book">图书\nBooks</string>
     <string name="text_line_article">文章\nArticles</string>
@@ -143,4 +145,7 @@
     <string name="text_word_footer_holder">共10000条</string>
     <string name="text_tree_menu_loading">分类列表获取中......</string>
     <string name="text_search_data_empty">搜索关键字为空</string>
+    <string name="text_execute_time_format">实施日期：%1$s</string>
+    <string name="text_pub_company_format">发布单位：%1$s</string>
+
 </resources>

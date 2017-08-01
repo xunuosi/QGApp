@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import sinolight.cn.qgapp.R;
-import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.StdInfoEntity;
 
 import static android.text.Html.FROM_HTML_MODE_COMPACT;
@@ -29,21 +28,22 @@ public class StdInfoFragment extends ResBaseFragment {
     public static final int TYPE_STD_INFO = 0;
     public static final int TYPE_STD_INTRODUCTION = 1;
     public static final int TYPE_STD_TABLE_OF_CONTENTS = 2;
+
     /**
      * BookInfo View
      */
-    private TextView mTvBookFragmentEditionNum;
-    private TextView mTvBookFragmentPrintTime;
-    private TextView mTvBookFragmentPrintNum;
-    private TextView mTvBookFragmentIsn;
-    private TextView mTvBookFragmentClassificationInfo;
-    private TextView mTvBookFragmentPageNum;
-    private TextView mTvBookFragmentPageSize;
-    private TextView mTvBookFragmentPackage;
+    private TextView mTvStdFragmentEditionNum;
+    private TextView mTvStdFragmentPubTime;
+    private TextView mTvStdFragmentExecuteTime;
+    private TextView mTvStdFragmentIsn;
+    private TextView mTvStdFragmentPubCompanyHolder;
+    private TextView mTvStdFragmentPageNum;
+    private TextView mTvStdFragmentPageSize;
+    private TextView mTvStdFragmentPackage;
     /**
      * BookIntroduction View
      */
-    private TextView mTvBookIntroduction;
+    private TextView mTvStdIntroduction;
     // 目录
     private TextView mTvTableOfContent;
 
@@ -73,10 +73,10 @@ public class StdInfoFragment extends ResBaseFragment {
         int layoutId = 0;
         switch (mType) {
             case TYPE_STD_INFO:
-                layoutId = R.layout.fragment_book_info;
+                layoutId = R.layout.fragment_std_info;
                 break;
             case TYPE_STD_INTRODUCTION:
-                layoutId = R.layout.fragment_book_introduction;
+                layoutId = R.layout.fragment_std_introduction;
                 break;
             case TYPE_STD_TABLE_OF_CONTENTS:
                 layoutId = R.layout.fragment_table_of_content;
@@ -90,34 +90,34 @@ public class StdInfoFragment extends ResBaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         switch (mType) {
-            case TYPE_BOOK_INFO:
-                bindBookInfo(view);
+            case TYPE_STD_INFO:
+                bindStdInfo(view);
                 break;
-            case TYPE_BOOK_INTRODUCTION:
-                bindBookIntroduction(view);
+            case TYPE_STD_INTRODUCTION:
+                bindStdIntroduction(view);
                 break;
-            case TYPE_BOOK_TABLE_OF_CONTENTS:
-                bindBookTableOfContent(view);
+            case TYPE_STD_TABLE_OF_CONTENTS:
+                bindStdTableOfContent(view);
                 break;
         }
 
     }
 
-    private void bindBookTableOfContent(View view) {
+    private void bindStdTableOfContent(View view) {
         mTvTableOfContent = view.findViewById(R.id.tv_table_of_content);
         // Fix issue ViewPager and TextView Scroll
-        mTvTableOfContent.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                mTvTableOfContent.getParent().requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
-        mTvTableOfContent.setMovementMethod(new ScrollingMovementMethod());
+//        mTvTableOfContent.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                mTvTableOfContent.getParent().requestDisallowInterceptTouchEvent(true);
+//                return false;
+//            }
+//        });
+//        mTvTableOfContent.setMovementMethod(new ScrollingMovementMethod());
         if (Build.VERSION.SDK_INT >= 24) {
-            mTvTableOfContent.setText(Html.fromHtml(mBookData.getCatalog(), FROM_HTML_MODE_COMPACT));
+            mTvTableOfContent.setText(Html.fromHtml(mStdData.getCatalog(), FROM_HTML_MODE_COMPACT));
         } else {
-            mTvTableOfContent.setText(Html.fromHtml(mBookData.getCatalog())); // or for older api
+            mTvTableOfContent.setText(Html.fromHtml(mStdData.getCatalog())); // or for older api
         }
 
     }
@@ -127,24 +127,24 @@ public class StdInfoFragment extends ResBaseFragment {
      *
      * @param view
      */
-    private void bindBookInfo(View view) {
-        mTvBookFragmentEditionNum = view.findViewById(R.id.tv_book_fragment_edition_num);
-        mTvBookFragmentPrintTime = view.findViewById(R.id.tv_book_fragment_print_time);
-        mTvBookFragmentPrintNum = view.findViewById(R.id.tv_book_fragment_print_num);
-        mTvBookFragmentIsn = view.findViewById(R.id.tv_book_fragment_isn);
-        mTvBookFragmentClassificationInfo = view.findViewById(R.id.tv_book_fragment_classification_info);
-        mTvBookFragmentPageNum = view.findViewById(R.id.tv_book_fragment_page_num);
-        mTvBookFragmentPageSize = view.findViewById(R.id.tv_book_fragment_page_size);
-        mTvBookFragmentPackage = view.findViewById(R.id.tv_book_fragment_package);
+    private void bindStdInfo(View view) {
+        mTvStdFragmentEditionNum = view.findViewById(R.id.tv_std_fragment_edition_num);
+        mTvStdFragmentPubTime = view.findViewById(R.id.tv_std_fragment_pub_time);
+        mTvStdFragmentExecuteTime = view.findViewById(R.id.tv_std_fragment_execute_time);
+        mTvStdFragmentIsn = view.findViewById(R.id.tv_std_fragment_isn);
+        mTvStdFragmentPubCompanyHolder = view.findViewById(R.id.tv_std_fragment_pub_company_holder);
+        mTvStdFragmentPageNum = view.findViewById(R.id.tv_std_fragment_page_num);
+        mTvStdFragmentPageSize = view.findViewById(R.id.tv_std_fragment_page_size);
+        mTvStdFragmentPackage = view.findViewById(R.id.tv_std_fragment_package);
 
-        mTvBookFragmentEditionNum.setText(formatStr(R.string.text_edition_num_format, getVersionNum()));
-        mTvBookFragmentPrintTime.setText(formatStr(R.string.text_print_time_format, mBookData.getPrinttime()));
-        mTvBookFragmentPrintNum.setText(formatStr(R.string.text_print_num_format, getPrintNum()));
-        mTvBookFragmentIsn.setText(formatStr(R.string.text_isn_format, mBookData.getIsbn()));
-        mTvBookFragmentClassificationInfo.setText(mBookData.getClassification());
-        mTvBookFragmentPageNum.setText(formatStr(R.string.text_page_num_format, String.valueOf(mBookData.getPage())));
-        mTvBookFragmentPageSize.setText(formatStr(R.string.text_page_size_format, mBookData.getFormat()));
-        mTvBookFragmentPackage.setText(formatStr(R.string.text_package_style_format, mBookData.getZzformat()));
+        mTvStdFragmentEditionNum.setText(formatStr(R.string.text_edition_num_format, getVersionNum()));
+        mTvStdFragmentPubTime.setText(formatStr(R.string.text_publish_time_format2, mStdData.getIssuedate()));
+        mTvStdFragmentExecuteTime.setText(formatStr(R.string.text_execute_time_format, mStdData.getImdate()));
+        mTvStdFragmentIsn.setText(formatStr(R.string.text_isn_format2, mStdData.getStdno()));
+        mTvStdFragmentPubCompanyHolder.setText(formatStr(R.string.text_pub_company_format, mStdData.getDept()));
+//        mTvStdFragmentPageNum.setText(formatStr(R.string.text_page_num_format, String.valueOf(mBookData.getPage())));
+//        mTvStdFragmentPageSize.setText(formatStr(R.string.text_page_size_format, mBookData.getFormat()));
+//        mTvStdFragmentPackage.setText(formatStr(R.string.text_package_style_format, mBookData.getZzformat()));
     }
 
     private String formatStr(int baseStrId, String child) {
@@ -153,14 +153,8 @@ public class StdInfoFragment extends ResBaseFragment {
     }
 
     private String getVersionNum() {
-        String str = mBookData.getVersionprint();
-        String[] arr = str.split(";");
-        return arr[0];
-    }
-
-    private String getPrintNum() {
-        String str = mBookData.getVersionprint();
-        String[] arr = str.split(";");
+        String str = mStdData.getImdate();
+        String[] arr = str.split("-");
         return arr[1];
     }
 
@@ -169,18 +163,18 @@ public class StdInfoFragment extends ResBaseFragment {
      *
      * @param view
      */
-    private void bindBookIntroduction(View view) {
-        mTvBookIntroduction = view.findViewById(R.id.tv_book_introduction);
-        // Fix issue ViewPager and TextView Scroll
-        mTvBookIntroduction.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                mTvBookIntroduction.getParent().requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
-        mTvBookIntroduction.setMovementMethod(new ScrollingMovementMethod());
-        mTvBookIntroduction.setText(formatStr(R.string.text_two_empty_format, mBookData.getAbs()));
+    private void bindStdIntroduction(View view) {
+        mTvStdIntroduction = view.findViewById(R.id.tv_std_introduction);
+//        // Fix issue ViewPager and TextView Scroll
+//        mTvBookIntroduction.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                mTvBookIntroduction.getParent().requestDisallowInterceptTouchEvent(true);
+//                return false;
+//            }
+//        });
+//        mTvBookIntroduction.setMovementMethod(new ScrollingMovementMethod());
+        mTvStdIntroduction.setText(formatStr(R.string.text_two_empty_format, mStdData.getScope()));
     }
 
     @Override

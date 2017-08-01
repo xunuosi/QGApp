@@ -105,14 +105,14 @@ public class BookInfoFragment extends ResBaseFragment {
     private void bindBookTableOfContent(View view) {
         mTvTableOfContent = view.findViewById(R.id.tv_table_of_content);
         // Fix issue ViewPager and TextView Scroll
-        mTvTableOfContent.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                mTvTableOfContent.getParent().requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
-        mTvTableOfContent.setMovementMethod(new ScrollingMovementMethod());
+//        mTvTableOfContent.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                mTvTableOfContent.getParent().requestDisallowInterceptTouchEvent(true);
+//                return false;
+//            }
+//        });
+//        mTvTableOfContent.setMovementMethod(new ScrollingMovementMethod());
         if (Build.VERSION.SDK_INT >= 24) {
             mTvTableOfContent.setText(Html.fromHtml(mBookData.getCatalog(), FROM_HTML_MODE_COMPACT));
         } else {
@@ -171,14 +171,14 @@ public class BookInfoFragment extends ResBaseFragment {
     private void bindBookIntroduction(View view) {
         mTvBookIntroduction = view.findViewById(R.id.tv_book_introduction);
         // Fix issue ViewPager and TextView Scroll
-        mTvBookIntroduction.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                mTvBookIntroduction.getParent().requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
-        mTvBookIntroduction.setMovementMethod(new ScrollingMovementMethod());
+//        mTvBookIntroduction.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                mTvBookIntroduction.getParent().requestDisallowInterceptTouchEvent(true);
+//                return false;
+//            }
+//        });
+//        mTvBookIntroduction.setMovementMethod(new ScrollingMovementMethod());
         mTvBookIntroduction.setText(formatStr(R.string.text_two_empty_format, mBookData.getAbs()));
     }
 

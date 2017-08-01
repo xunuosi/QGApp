@@ -44,6 +44,7 @@ public class KDBStdActivityPresenter extends BasePresenter<IKDBStdDetailActivity
             });
 
     private void showView() {
+        view().showRefreshing(false);
         view().init2Show(stdData);
     }
 
