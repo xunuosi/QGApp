@@ -81,4 +81,9 @@
     <dimen name="resdb_materail_title_height">58dp</dimen>
     <dimen name="resdb_materail_cover_width">132dp</dimen>
     <dimen name="resdb_materail_cover_height">108dp</dimen>
+
+    <!--Video-->
+    <dimen name="video_set_root_height">220dp</dimen>
+    <dimen name="video_set_img_height">204dp</dimen>
+    <dimen name="video_set_img_width">204dp</dimen>
 </resources>

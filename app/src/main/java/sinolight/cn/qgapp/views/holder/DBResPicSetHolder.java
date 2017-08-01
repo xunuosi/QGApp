@@ -1,6 +1,7 @@
 package sinolight.cn.qgapp.views.holder;
 
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -14,50 +15,50 @@ import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.adapter.CommonTitleAdapter;
+import sinolight.cn.qgapp.adapter.VideoAdapter;
 import sinolight.cn.qgapp.data.bean.KDBResData;
-import sinolight.cn.qgapp.utils.L;
+import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
 import sinolight.cn.qgapp.views.activity.DBResourceActivity;
-import sinolight.cn.qgapp.views.activity.VideoListSetActivity;
 
 /**
  * Created by xns on 2017/7/17.
- * 资源库标题holder
+ * 资源库图集/视频集的Holder
  */
 
-public class DBResTitleHolder extends RecyclerView.ViewHolder {
-    private static final String TAG = "DBResTitleHolder";
+public class DBResPicSetHolder<T> extends RecyclerView.ViewHolder {
+    private static final String TAG = "DBResPicSetHolder";
 
-    @BindView(R.id.tv_item_dbres_ct_title)
-    TextView mTvItemDbresCtTitle;
-    @BindView(R.id.tv_item_dbres_ct_get)
-    TextView mTvItemDbresCtGet;
-    @BindView(R.id.iv_item_dbres_ct_indicator2)
-    SimpleDraweeView mIvItemDbresCtIndicator2;
-    private String titleName;
+    @BindView(R.id.iv_pic_set)
+    SimpleDraweeView mIvPicSet;
+    @BindView(R.id.tv_pic_set_title)
+    TextView mTvPicSetTitle;
+    @BindView(R.id.root_pic_set)
+    ConstraintLayout mRootPicSet;
+    private T data;
     private int typeTitle;
 
-    public DBResTitleHolder(View layout) {
+    public DBResPicSetHolder(View layout) {
         super(layout);
         ButterKnife.bind(this, layout);
     }
 
-    public void setData(KDBResData<String> data, int typeTitle) {
+    public void setData(KDBResData<T> data, int typeTitle) {
         if (data != null) {
-            titleName = data.getData();
-            this.typeTitle = typeTitle;
-            bindData();
+            if (typeTitle == VideoAdapter.TYPE_VIDEO_SET) {
+                bindVideoSetData();
+            }
         }
     }
 
-    private void bindData() {
-        mTvItemDbresCtTitle.setText(titleName);
+    private void bindVideoSetData() {
+        DBResVideoEntity videoEntity = (DBResVideoEntity) data;
+        mTvPicSetTitle.setText(videoEntity.getName());
     }
 
-    @OnClick({R.id.tv_item_dbres_ct_get, R.id.iv_item_dbres_ct_indicator2})
+    @OnClick({R.id.root_pic_set})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.tv_item_dbres_ct_get:
-            case R.id.iv_item_dbres_ct_indicator2:
+            case R.id.root_pic_set:
                 gotoAllListActivity();
                 break;
         }
@@ -77,15 +78,13 @@ public class DBResTitleHolder extends RecyclerView.ViewHolder {
 
                 break;
             case CommonTitleAdapter.TYPE_VIDEO_TITLE:
-                gotoVideoSetActivity();
+                gotoVideoListActivity();
                 break;
         }
     }
 
-    private void gotoVideoSetActivity() {
-        Intent callIntent = VideoListSetActivity.getCallIntent(App.getContext());
-        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        App.getContext().startActivity(callIntent);
+    private void gotoVideoListActivity() {
+
     }
 
     private void gotoArticleListActivity() {

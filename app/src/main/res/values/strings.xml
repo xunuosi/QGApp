@@ -147,5 +147,6 @@
     <string name="text_search_data_empty">搜索关键字为空</string>
     <string name="text_execute_time_format">实施日期：%1$s</string>
     <string name="text_pub_company_format">发布单位：%1$s</string>
+    <string name="text_video_set">视频集合</string>
 
 </resources>

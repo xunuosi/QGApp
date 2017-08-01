@@ -412,4 +412,40 @@ public interface ApiService {
     Observable<ResultEntity<List<DBResVideoEntity>>> getHotVideo(
             @Field("token") String token
     );
+
+    /**
+     * 资源库-视频集列表
+     * @param token
+     * @param key
+     * @param page
+     * @param size
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("res/doVideoLdbList")
+    Observable<ResultEntity<PageEntity<List<DBResVideoEntity>>>> getVideoLdbList(
+            @Field("token") String token,
+            @Field("key") String key,
+            @Field("page") int page,
+            @Field("size") int size
+    );
+
+    /**
+     * 资源库-视频列表
+     * @param token
+     * @param dbid:视频集id
+     * @param key
+     * @param page
+     * @param size
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("res/doVideoList")
+    Observable<ResultEntity<PageEntity<List<DBResVideoEntity>>>> getVideoList(
+            @Field("token") String token,
+            @Field("dbid") String dbid,
+            @Field("key") String key,
+            @Field("page") int page,
+            @Field("size") int size
+    );
 }

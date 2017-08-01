@@ -11,9 +11,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import sinolight.cn.qgapp.App;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.KDBResData;
-import sinolight.cn.qgapp.data.http.entity.DBResPicEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
 import sinolight.cn.qgapp.utils.ImageUtil;
 import sinolight.cn.qgapp.utils.L;
@@ -38,6 +38,7 @@ public class DBResHotVideoHolder extends RecyclerView.ViewHolder {
     private DBResVideoEntity mData;
     private int width;
     private int height;
+    private int type;
 
     public DBResHotVideoHolder(View layout) {
         super(layout);
@@ -48,14 +49,43 @@ public class DBResHotVideoHolder extends RecyclerView.ViewHolder {
                 App.getContext().getResources().getDisplayMetrics().density);
     }
 
-    public void setData(KDBResData<DBResVideoEntity> data) {
+    public void setData(KDBResData<DBResVideoEntity> data, int type) {
         if (data != null) {
             mData = data.getData();
+            this.type = type;
             bindData();
         }
     }
 
     private void bindData() {
+        switch (type) {
+            case AppContants.Video.TYPE_HOT_VIDEO:
+                bindHotVideoHot();
+                break;
+            case AppContants.Video.TYPE_SET_VIDEO:
+                bindVideoSetData();
+                break;
+            case AppContants.Video.TYPE_LIST_VIDEO:
+
+                break;
+        }
+    }
+
+    private void bindVideoSetData() {
+        ImageUtil.frescoShowImageByUri(
+                App.getContext(),
+                mData.getCover(),
+                mIvResdbPic,
+                width,
+                height
+        );
+        mTvResdbPicTitle.setText(mData.getName());
+        mTvResdbPicInfo.setText(mData.getAbs());
+        // hide text source
+        mTvResdbPicFrom.setVisibility(View.GONE);
+    }
+
+    private void bindHotVideoHot() {
         ImageUtil.frescoShowImageByUri(
                 App.getContext(),
                 mData.getCover(),

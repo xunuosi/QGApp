@@ -47,7 +47,8 @@ public interface AppContants {
          */
         enum Res implements DataBase {
             RES_BOOK("1"), RES_STANDARD("2"), RES_ARTICLE("19"),
-            RES_IMG("12"), RES_DIC("22"), RES_INDUSTRY("32");
+            RES_IMG("12"), RES_DIC("22"), RES_INDUSTRY("32"),
+            RES_COOK("35"), RES_VIDEO("100");
 
             private final String type;
 
@@ -68,6 +69,12 @@ public interface AppContants {
 
     interface User {
         String USER_BEAN = "user_bean";
+    }
+
+    interface Video {
+        int TYPE_HOT_VIDEO = 0;
+        int TYPE_SET_VIDEO = 1;
+        int TYPE_LIST_VIDEO = 2;
     }
 
 }

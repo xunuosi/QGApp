@@ -206,6 +206,10 @@ public class HttpManager {
         toSubscribe(mApiService.getKDBEntryInfo(token, id), subscriber);
     }
 
+    public void getVideoLdbListNoCache(Observer<PageEntity<List<DBResVideoEntity>>> subscriber, String token, String key, int page, int size) {
+        toSubscribe(mApiService.getVideoLdbList(token, key, page, size), subscriber);
+    }
+
     public void getUserInfoWithCache(Observer<UserEntity> subscriber, String token, String user, boolean update) {
         toSubscribe(cacheProvider.getUserInfo(
                 mApiService.getUserInfo(token,user),

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.views.holder.DBResHotArticleHolder;
@@ -95,7 +96,7 @@ public class CommonTitleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 ((DBResTitleHolder) holder).setData(mData.get(position), TYPE_VIDEO_TITLE);
                 break;
             case TYPE_VIDEO:
-                ((DBResHotVideoHolder) holder).setData(mData.get(position));
+                ((DBResHotVideoHolder) holder).setData(mData.get(position), AppContants.Video.TYPE_HOT_VIDEO);
                 break;
         }
     }
