@@ -100,7 +100,7 @@ public class DBResArticleFragment extends BaseFragment implements IDBResArticleF
 
     @Override
     public void init2Show(CommonTitleAdapter adapter) {
-        if (mSwipeTarget.getAdapter() == null) {
+        if (mSwipeTarget != null && mSwipeTarget.getAdapter() == null) {
             mSwipeTarget.setAdapter(adapter);
         }
     }

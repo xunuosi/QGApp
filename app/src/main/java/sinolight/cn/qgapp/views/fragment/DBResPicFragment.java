@@ -54,7 +54,6 @@ public class DBResPicFragment extends BaseFragment implements IDBResPicFragmentV
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View fragmentView = inflater.inflate(R.layout.fragment_res_db_pic, container, false);
-
         unbinder = ButterKnife.bind(this, fragmentView);
         return fragmentView;
     }
@@ -104,7 +103,7 @@ public class DBResPicFragment extends BaseFragment implements IDBResPicFragmentV
 
     @Override
     public void init2Show(CommonTitleAdapter adapter) {
-        if (mSwipeTarget.getAdapter() == null) {
+        if (mSwipeTarget != null && mSwipeTarget.getAdapter() == null) {
             mSwipeTarget.setAdapter(adapter);
         }
     }

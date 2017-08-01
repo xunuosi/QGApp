@@ -121,7 +121,7 @@ public class DBResMaterialFragment extends BaseLazyLoadFragment implements IDBRe
 
     @Override
     public void init2Show(CommonTitleAdapter adapter) {
-        if (mRvDbresMaterial.getAdapter() == null) {
+        if (mRvDbresMaterial != null && mRvDbresMaterial.getAdapter() == null) {
             mRvDbresMaterial.setAdapter(adapter);
         }
     }
