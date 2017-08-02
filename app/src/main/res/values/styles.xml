@@ -237,4 +237,13 @@
         <item name="android:gravity">center_vertical|right</item>
         <item name="android:textSize">18sp</item>
     </style>
+    <!--ebook-->
+    <style name="ebook_item_price">
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">center_vertical|left</item>
+        <item name="android:color">@color/color_hf_article_info_text</item>
+    </style>
+    <style name="ebook_item_price_red" parent="ebook_item_price">
+        <item name="android:textColor">@color/color_red</item>
+    </style>
 </resources>

@@ -51,4 +51,6 @@
     <color name="color_text_blue">#2b7cd3</color>
     <color name="color_common_content">#585858</color>
     <color name="color_common_indicator">#808080</color>
+    <!--EBook-->
+    <color name="color_red">#b12525</color>
 </resources>
