@@ -150,5 +150,8 @@
     <string name="text_video_set">视频集合</string>
     <string name="text_video_list">视频列表</string>
     <string name="attention_exit_app">再按一次退出程序</string>
+    <string name="text_comprehensive">综合</string>
+    <string name="text_new_goods">新品</string>
+    <string name="text_price">价格</string>
 
 </resources>
