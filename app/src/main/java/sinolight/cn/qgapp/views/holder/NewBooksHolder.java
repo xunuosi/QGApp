@@ -1,6 +1,7 @@
 package sinolight.cn.qgapp.views.holder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,11 +16,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import sinolight.cn.qgapp.App;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.HomeData;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.utils.ImageUtil;
+import sinolight.cn.qgapp.views.activity.KDBBookDetailActivity;
 
 /**
  * Created by xns on 2017/7/5.
@@ -108,6 +112,7 @@ public class NewBooksHolder extends RecyclerView.ViewHolder {
         TextView mTvItemNb;
         @BindView(R.id.item_hf_new_book_root)
         ConstraintLayout mItemHfNewBookRoot;
+        private NewBookEntity mData;
 
         public NBItemHolder(View view) {
             super(view);
@@ -115,12 +120,30 @@ public class NewBooksHolder extends RecyclerView.ViewHolder {
         }
 
         public void bindData(NewBookEntity bean) {
+            mData = bean;
             if (bean.getId() != null) {
                 ImageUtil.frescoShowImageByUri(mContext, bean.getCover(), mIvItemNb, width, height);
                 mTvItemNb.setText(bean.getTitle());
             } else {
                 ImageUtil.frescoShowImageByResId(mContext, R.drawable.ic_book_holder, mIvItemNb, width, height);
             }
+        }
+
+        @OnClick({R.id.item_hf_new_book_root})
+        public void onViewClicked(View view) {
+            switch (view.getId()) {
+                case R.id.item_hf_new_book_root:
+                    // Go to Book Info read
+                    gotoBookInfo();
+                    break;
+            }
+        }
+
+        private void gotoBookInfo() {
+            Intent callIntent = KDBBookDetailActivity.getCallIntent(App.getContext());
+            callIntent.putExtra(AppContants.Resource.RES_ID, mData.getId());
+            callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            App.getContext().startActivity(callIntent);
         }
     }
 }
