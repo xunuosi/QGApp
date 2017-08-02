@@ -2,15 +2,20 @@ package sinolight.cn.qgapp.views.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.InputStream;
+import java.net.URL;
 
 import javax.inject.Inject;
 
@@ -102,11 +107,54 @@ import static android.text.Html.FROM_HTML_MODE_COMPACT;
     @Override
     public void showData(ReaderEntity readData) {
         mTvTitle.setText(readData.getTitle());
+
+        mTvReadContent.setText(inflateHtmlData(readData.getHtml()));
+    }
+
+    /**
+     * 解析html中包含的图片
+     * @param html
+     * @return
+     */
+    private Spanned inflateHtmlData(String html) {
+        Spanned sp = null;
         if (Build.VERSION.SDK_INT >= 24) {
-            mTvReadContent.setText(Html.fromHtml(readData.getHtml(), FROM_HTML_MODE_COMPACT));
+            sp = Html.fromHtml(html, FROM_HTML_MODE_COMPACT,new Html.ImageGetter() {
+                @Override
+                public Drawable getDrawable(String source) {
+                    InputStream is = null;
+                    try {
+                        is = (InputStream) new URL(source).getContent();
+                        Drawable d = Drawable.createFromStream(is, "src");
+                        d.setBounds(0, 0, d.getIntrinsicWidth(),
+                                d.getIntrinsicHeight());
+                        is.close();
+                        return d;
+                    } catch (Exception e) {
+                        return null;
+                    }
+                }
+            }, null);
         } else {
-            mTvReadContent.setText(Html.fromHtml(readData.getHtml())); // or for older api
+            sp = Html.fromHtml(html, new Html.ImageGetter() {
+                @Override
+                public Drawable getDrawable(String source) {
+                    InputStream is = null;
+                    try {
+                        is = (InputStream) new URL(source).getContent();
+                        Drawable d = Drawable.createFromStream(is, "src");
+                        d.setBounds(0, 0, d.getIntrinsicWidth(),
+                                d.getIntrinsicHeight());
+                        is.close();
+                        return d;
+                    } catch (Exception e) {
+                        return null;
+                    }
+                }
+            }, null);
         }
+
+        return sp;
     }
 
     @Override
