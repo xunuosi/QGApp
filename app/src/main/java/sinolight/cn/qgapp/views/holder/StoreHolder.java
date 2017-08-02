@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -69,10 +71,17 @@ public class StoreHolder extends RecyclerView.ViewHolder {
             case TYPE_DB_KNOWLEDGE:
                 onClickKnowledge();
                 break;
+            case TYPE_DB_RES:
+                onClickRes();
+                break;
         }
     }
 
-    private void onClickKnowledge() {
+    private void onClickRes() {
+        EventBus.getDefault().post(AppContants.HomeStore.Type.TYPE_DB_RES);
+    }
 
+    private void onClickKnowledge() {
+        EventBus.getDefault().post(AppContants.HomeStore.Type.TYPE_DB_KNOWLEDGE);
     }
 }

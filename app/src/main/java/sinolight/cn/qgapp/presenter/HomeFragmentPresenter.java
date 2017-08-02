@@ -124,8 +124,8 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
             L.d(TAG, "hotPicsObserver code:" + code + ",errorMsg:" + errorMsg);
             mHotPicsDatas = new ArrayList<>();
             transformHomeData(mHotPicsDatas, HomeAdapter.TYPE_HOT_PICS, true);
-            Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
             loadTitle(TYPE_STANDARD, HomeAdapter.TYPE_COMMON_TITLE, true);
+            showError(code,errorMsg);
         }
     });
 
@@ -143,8 +143,8 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
             L.d(TAG, "standardObserver code:" + code + ",errorMsg:" + errorMsg);
             mStandardDatas = new ArrayList<>();
             transformHomeData(mStandardDatas, HomeAdapter.TYPE_STANDARD, true);
-            Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
             loadRecoWordsData();
+            showError(code,errorMsg);
         }
     });
 
@@ -162,8 +162,8 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
             L.d(TAG, "recWordsObserver code:" + code + ",errorMsg:" + errorMsg);
             mRecoDatas = new ArrayList<>();
             transformHomeData(mRecoDatas, HomeAdapter.TYPE_BANNER_WORDS, true);
-            Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
             loadTitle(TYPE_NEW_BOOKS, HomeAdapter.TYPE_COMMON_TITLE, true);
+            showError(code,errorMsg);
         }
     });
 
@@ -181,8 +181,8 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
             L.d(TAG, "newBooksObserver code:" + code + ",errorMsg:" + errorMsg);
             mNewBooks = new ArrayList<>();
             transformHomeData(mNewBooks, HomeAdapter.TYPE_NEW_BOOKS, true);
-            Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
             loadTitle(TYPE_HOT_ARTICLE, HomeAdapter.TYPE_COMMON_TITLE, true);
+            showError(code,errorMsg);
         }
     });
 
@@ -199,9 +199,13 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
             L.d(TAG, "articleObserver code:" + code + ",errorMsg:" + errorMsg);
             mArticles = new ArrayList<>();
             transformHomeData(mArticles, HomeAdapter.TYPE_ARTICLE, true);
-            Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
+            showError(code,errorMsg);
         }
     });
+
+    private void showError(int code, String errorMsg) {
+
+    }
 
     /**
      * 加载Item分类标题的方法

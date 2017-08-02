@@ -62,14 +62,17 @@ public class HomeHotPicsHolder extends RecyclerView.ViewHolder implements
 
     private void transformData() {
         datas = mHomeData.getDatas();
+        imgList = new ArrayList();
+        titles = new ArrayList<>();
         if (datas == null || datas.isEmpty()) {
-            imgList = new ArrayList();
             imgList.add(R.drawable.hotpicture_bg);
             imgList.add(R.drawable.hotpicture_bg);
             imgList.add(R.drawable.hotpicture_bg);
+
+            titles.add(App.getContext().getString(R.string.text_technics_beautiful));
+            titles.add(App.getContext().getString(R.string.text_technics_beautiful));
+            titles.add(App.getContext().getString(R.string.text_technics_beautiful));
         } else {
-            imgList = new ArrayList();
-            titles = new ArrayList<>();
             for (BannerEntity bean : datas) {
                 imgList.add(bean.getCover());
                 titles.add(bean.getTitle());

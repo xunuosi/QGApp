@@ -10,6 +10,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,6 +48,11 @@ import sinolight.cn.qgapp.views.view.IHomeActivityView;
 
 public class HomeActivity extends BaseActivity implements PermissionListener, IHomeActivityView, HasComponent<UserComponent> {
     private static final String TAG = "HomeActivity";
+    private static final int FRAGMENT_HOME = 0;
+    private static final int FRAGMENT_KNOWLEDGE = 1;
+    private static final int FRAGMENT_RES = 2;
+    private static final int FRAGMENT_USER = 3;
+
     private NavigationController mNavigationController;
     private UserComponent userComponent;
     private boolean isLogined;
@@ -107,9 +116,20 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         loginObserver.unSubscribe();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     @Override
@@ -155,19 +175,16 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
             public void onSelected(int index, int old) {
                 //选中时触发
                 switch (index) {
-                    case 0:
+                    case FRAGMENT_HOME:
                         clickHomeFragment();
                         break;
-                    case 1:
-                        isHomeFragment = false;
+                    case FRAGMENT_KNOWLEDGE:
                         clickKnowledgeFragment();
                         break;
-                    case 2:
-                        isHomeFragment = false;
+                    case FRAGMENT_RES:
                         clickResourceFragment();
                         break;
-                    case 3:
-                        isHomeFragment = false;
+                    case FRAGMENT_USER:
                         if (isLogined) {
                             clickUserFragment();
                         } else {
@@ -186,18 +203,26 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
     }
 
     private void clickUserFragment() {
+        isHomeFragment = false;
+        mNavigationController.setSelect(FRAGMENT_USER);
         addOrShowFragment(getSupportFragmentManager().beginTransaction(), mUserFragment);
     }
 
     private void clickResourceFragment() {
+        isHomeFragment = false;
+        mNavigationController.setSelect(FRAGMENT_RES);
         addOrShowFragment(getSupportFragmentManager().beginTransaction(), mResourceFragment);
     }
 
     private void clickKnowledgeFragment() {
+        isHomeFragment = false;
+        mNavigationController.setSelect(FRAGMENT_KNOWLEDGE);
         addOrShowFragment(getSupportFragmentManager().beginTransaction(), mKnowledgeFragment);
     }
 
     private void clickHomeFragment() {
+        isHomeFragment = true;
+        mNavigationController.setSelect(FRAGMENT_HOME);
         addOrShowFragment(getSupportFragmentManager().beginTransaction(), mHomeFragment);
     }
 
@@ -266,10 +291,14 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
         currentFragment = (BaseFragment) fragment;
     }
 
-    public static void changeFragment(AppContants.HomeStore.Type type) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void changeFragment(AppContants.HomeStore.Type type) {
         switch (type) {
             case TYPE_DB_KNOWLEDGE:
-
+                clickKnowledgeFragment();
+                break;
+            case TYPE_DB_RES:
+                clickResourceFragment();
                 break;
         }
     }
