@@ -112,15 +112,17 @@ public class DBResArticleFragment extends BaseFragment implements IDBResArticleF
 
     @Override
     public void showRefreshing(boolean enable) {
-        if (enable) {
-            mSwipeDbResArticle.post(new Runnable() {
-                @Override
-                public void run() {
-                    mSwipeDbResArticle.setRefreshing(true);
-                }
-            });
-        } else {
-            mSwipeDbResArticle.setRefreshing(false);
+        if (mSwipeDbResArticle != null) {
+            if (enable) {
+                mSwipeDbResArticle.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeDbResArticle.setRefreshing(true);
+                    }
+                });
+            } else {
+                mSwipeDbResArticle.setRefreshing(false);
+            }
         }
     }
 

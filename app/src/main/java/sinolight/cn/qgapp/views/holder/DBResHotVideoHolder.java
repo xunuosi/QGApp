@@ -18,6 +18,7 @@ import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
 import sinolight.cn.qgapp.utils.ImageUtil;
 import sinolight.cn.qgapp.utils.L;
+import sinolight.cn.qgapp.views.activity.VideoInfoActivity;
 import sinolight.cn.qgapp.views.activity.VideoListActivity;
 
 /**
@@ -144,7 +145,10 @@ public class DBResHotVideoHolder extends RecyclerView.ViewHolder {
     }
 
     private void onClickPlayVideo() {
-
+        Intent callIntent = VideoInfoActivity.getCallIntent(App.getContext());
+        callIntent.putExtra(AppContants.Video.VIDEO_ID, mData.getId());
+        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        App.getContext().startActivity(callIntent);
     }
 
     /**

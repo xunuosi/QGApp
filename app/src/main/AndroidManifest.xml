@@ -64,6 +64,10 @@
                   android:windowSoftInputMode="stateHidden">
 
         </activity>
+        <activity android:name=".views.activity.VideoInfoActivity"
+                  android:screenOrientation="portrait">
+
+        </activity>
         <activity android:name=".views.activity.TestActivity"/>
     </application>
 

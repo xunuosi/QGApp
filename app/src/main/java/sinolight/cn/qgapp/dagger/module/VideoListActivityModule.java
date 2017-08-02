@@ -28,7 +28,7 @@ public class VideoListActivityModule {
 
     @Provides
     @PerActivity
-    VideoListActivityPresenter provideITMDetailPresenter(IVideoListActivityView view, Context context) {
+    VideoListActivityPresenter provideVideoListActivityPresenter(IVideoListActivityView view, Context context) {
         return new VideoListActivityPresenter(view, context);
     }
 

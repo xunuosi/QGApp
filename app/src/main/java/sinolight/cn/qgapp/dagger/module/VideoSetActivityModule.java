@@ -30,7 +30,7 @@ public class VideoSetActivityModule {
 
     @Provides
     @PerActivity
-    VideoListSetActivityPresenter provideITMDetailPresenter(IVideoListSetActivityView view, Context context) {
+    VideoListSetActivityPresenter provideVideoListSetActivityPresenter(IVideoListSetActivityView view, Context context) {
         return new VideoListSetActivityPresenter(view, context);
     }
 

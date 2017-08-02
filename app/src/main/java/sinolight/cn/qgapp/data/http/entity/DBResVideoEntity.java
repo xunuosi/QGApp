@@ -11,6 +11,8 @@ public class DBResVideoEntity {
     private String source;
     private String cover;
     private String abs;
+    // Video Url
+    private String video;
 
     public DBResVideoEntity() {
     }
@@ -53,5 +55,13 @@ public class DBResVideoEntity {
 
     public void setAbs(String abs) {
         this.abs = abs;
+    }
+
+    public String getVideo() {
+        return video;
+    }
+
+    public void setVideo(String video) {
+        this.video = video;
     }
 }

@@ -73,6 +73,7 @@ public interface AppContants {
 
     interface Video {
         String SET_ID = "video_set_id";
+        String VIDEO_ID = "video_id";
         int TYPE_HOT_VIDEO = 0;
         int TYPE_SET_VIDEO = 1;
         int TYPE_LIST_VIDEO = 2;

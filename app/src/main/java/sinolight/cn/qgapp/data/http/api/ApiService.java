@@ -448,4 +448,11 @@ public interface ApiService {
             @Field("page") int page,
             @Field("size") int size
     );
+
+    @FormUrlEncoded
+    @POST("res/doVideoInfo")
+    Observable<ResultEntity<DBResVideoEntity>> getVideoInfo(
+            @Field("token") String token,
+            @Field("id") String id
+    );
 }

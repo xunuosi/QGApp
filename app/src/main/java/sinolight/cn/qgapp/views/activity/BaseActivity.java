@@ -124,28 +124,29 @@ public abstract class BaseActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else {
+            // 魅族FlymeUI
+            try {
+                Window window = getWindow();
+                WindowManager.LayoutParams lp = window.getAttributes();
+                Field darkFlag = WindowManager.LayoutParams.class.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
+                Field meizuFlags = WindowManager.LayoutParams.class.getDeclaredField("meizuFlags");
+                darkFlag.setAccessible(true);
+                meizuFlags.setAccessible(true);
+                int bit = darkFlag.getInt(null);
+                int value = meizuFlags.getInt(lp);
+                if (dark) {
+                    value |= bit;
+                } else {
+                    value &= ~bit;
+                }
+                meizuFlags.setInt(lp, value);
+                window.setAttributes(lp);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
-        // 魅族FlymeUI
-        try {
-            Window window = getWindow();
-            WindowManager.LayoutParams lp = window.getAttributes();
-            Field darkFlag = WindowManager.LayoutParams.class.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
-            Field meizuFlags = WindowManager.LayoutParams.class.getDeclaredField("meizuFlags");
-            darkFlag.setAccessible(true);
-            meizuFlags.setAccessible(true);
-            int bit = darkFlag.getInt(null);
-            int value = meizuFlags.getInt(lp);
-            if (dark) {
-                value |= bit;
-            } else {
-                value &= ~bit;
-            }
-            meizuFlags.setInt(lp, value);
-            window.setAttributes(lp);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         // android6.0+系统
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (dark) {
