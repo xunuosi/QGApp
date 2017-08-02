@@ -109,7 +109,7 @@ public class DBResArticlePresenter extends BasePresenter<IDBResArticleFragmentVi
         switch (titleType) {
             case TYPE_ARTICLE:
                 mDatas.add(KDBResDataMapper.transformTitleData(
-                        mContext.getString(R.string.text_hot_material),
+                        mContext.getString(R.string.text_hot_article),
                         CommonTitleAdapter.TYPE_ARTICLE_TITLE,
                         false));
                 break;

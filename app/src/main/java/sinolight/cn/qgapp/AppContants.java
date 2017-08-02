@@ -79,6 +79,28 @@ public interface AppContants {
         int TYPE_LIST_VIDEO = 2;
     }
 
+    interface Read {
+        String READ_ID = "read_id";
+        String READ_NAME = "read_name";
+        String CHAPTERED_ID = "chaptered_id";
+        String READ_RES_TYPE = "read_res_type";
+
+        enum Type implements Read {
+            TYPE_BOOK("1"), TYPE_STAND("2"), TYPE_ARTICLE("19"),
+            TYPE_INDUSTRY("32");
+
+            private final String type;
+
+            Type(String value) {
+                type = value;
+            }
+
+            public String getType() {
+                return type;
+            }
+        }
+    }
+
     /**
      * 首页库的enum
      */

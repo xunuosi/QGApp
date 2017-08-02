@@ -149,5 +149,6 @@
     <string name="text_pub_company_format">发布单位：%1$s</string>
     <string name="text_video_set">视频集合</string>
     <string name="text_video_list">视频列表</string>
+    <string name="attention_exit_app">再按一次退出程序</string>
 
 </resources>

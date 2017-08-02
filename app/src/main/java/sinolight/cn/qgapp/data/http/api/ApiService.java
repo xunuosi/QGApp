@@ -20,6 +20,7 @@ import sinolight.cn.qgapp.data.http.entity.DicInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.MaterialEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
+import sinolight.cn.qgapp.data.http.entity.ReaderEntity;
 import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
 import sinolight.cn.qgapp.data.http.entity.ResArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.ResImgEntity;
@@ -449,10 +450,33 @@ public interface ApiService {
             @Field("size") int size
     );
 
+    /**
+     * 知识库-视频详情信息
+     * @param token
+     * @param id
+     * @return
+     */
     @FormUrlEncoded
     @POST("res/doVideoInfo")
     Observable<ResultEntity<DBResVideoEntity>> getVideoInfo(
             @Field("token") String token,
             @Field("id") String id
+    );
+
+    /**
+     * 知识库-在线阅读
+     * @param token
+     * @param restype
+     * @param resID
+     * @param chapterid
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("db/doReader")
+    Observable<ResultEntity<ReaderEntity>> doReader(
+            @Field("token") String token,
+            @Field("restype") String restype,
+            @Field("resid") String resID,
+            @Field("chapterid") String chapterid
     );
 }

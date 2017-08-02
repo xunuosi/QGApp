@@ -68,6 +68,11 @@
                   android:screenOrientation="portrait">
 
         </activity>
+
+        <activity android:name=".views.activity.ReadActivity"
+                  android:screenOrientation="portrait">
+
+        </activity>
         <activity android:name=".views.activity.TestActivity"/>
     </application>
 
