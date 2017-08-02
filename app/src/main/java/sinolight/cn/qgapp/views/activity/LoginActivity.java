@@ -3,7 +3,9 @@ package sinolight.cn.qgapp.views.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +20,7 @@ import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.dagger.component.DaggerLoginActivityComponent;
 import sinolight.cn.qgapp.dagger.module.LoginActivityModule;
 import sinolight.cn.qgapp.presenter.LoginActivityPresenter;
+import sinolight.cn.qgapp.utils.ActivityCollector;
 import sinolight.cn.qgapp.utils.ToastUtil;
 import sinolight.cn.qgapp.views.view.ILoginActivityView;
 
@@ -43,6 +46,8 @@ public class LoginActivity extends BaseActivity implements ILoginActivityView {
     Button mBtnRegister;
     @BindView(R.id.loading_root)
     RelativeLayout mLoadingRoot;
+
+    private boolean mIsExit;
 
 
     public static Intent getCallIntent(Context context) {
@@ -79,6 +84,25 @@ public class LoginActivity extends BaseActivity implements ILoginActivityView {
     @Override
     protected void initData() {
 
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mIsExit) {
+                ActivityCollector.closeApp();
+            } else {
+                this.showToastMsg(R.string.attention_exit_app);
+                mIsExit = true;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mIsExit = false;
+                    }
+                }, 2000);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

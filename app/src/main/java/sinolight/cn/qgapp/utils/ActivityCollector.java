@@ -28,4 +28,10 @@ public class ActivityCollector {
             return activityList.get(activityList.size() - 1);
         }
     }
+
+    public static void closeApp() {
+        for (Activity bean : activityList) {
+            bean.finish();
+        }
+    }
 }
