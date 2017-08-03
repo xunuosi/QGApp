@@ -15,7 +15,11 @@
         android:theme="@style/AppTheme" >
         <activity android:name=".views.activity.SplashActivity"
                   android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".views.activity.HomeActivity"
                   android:screenOrientation="portrait"
@@ -65,6 +69,11 @@
 
         </activity>
 
+        <activity android:name=".views.activity.ChapterActivity"
+                  android:screenOrientation="portrait">
+
+        </activity>
+
         <activity android:name=".views.activity.ReadActivity"
                   android:screenOrientation="portrait">
 
@@ -73,11 +82,7 @@
         <activity android:name=".views.activity.EBookActivity"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".views.activity.TestActivity"/>
     </application>

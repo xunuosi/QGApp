@@ -9,6 +9,7 @@ import java.util.List;
 import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
+import sinolight.cn.qgapp.data.http.entity.ChapterEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResPicEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
@@ -63,6 +64,30 @@ public class KDBResDataMapper {
         return null;
     }
 
+    private static KDBResData transformChapterData(ChapterEntity bean, int adapterType, boolean isSpan) {
+        if (bean == null) {
+            throw new IllegalArgumentException("Cannot transform a null value");
+        }
+        final KDBResData<ChapterEntity> resData = new KDBResData<>();
+        resData.setItemType(adapterType);
+        resData.setSpan(isSpan);
+        resData.setLocal(false);
+        resData.setData(bean);
+        return resData;
+    }
+
+    public static List<KDBResData> transformChapterDatas(List<ChapterEntity> beans, int adapterType, boolean isSpan) {
+        List<KDBResData> resDataCollection;
+        if (beans != null && !beans.isEmpty()) {
+            resDataCollection = new ArrayList<>();
+            for (ChapterEntity bean : beans) {
+                resDataCollection.add(transformChapterData(bean, adapterType, isSpan));
+            }
+            mKDBResDataMap.put(adapterType, resDataCollection);
+            return resDataCollection;
+        }
+        return null;
+    }
 
     private static KDBResData transformBookData(BookEntity bean, int adapterType, boolean isSpan) {
         if (bean == null) {

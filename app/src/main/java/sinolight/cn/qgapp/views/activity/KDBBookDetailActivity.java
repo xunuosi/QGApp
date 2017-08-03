@@ -25,6 +25,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 import sinolight.cn.qgapp.App;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.adapter.MyTabAdapter;
 import sinolight.cn.qgapp.dagger.component.DaggerKDBBookActivityComponent;
@@ -130,8 +131,13 @@ public class KDBBookDetailActivity extends BaseActivity implements IKDBBookDetai
             case R.id.iv_collect:
                 break;
             case R.id.btn_kdb_book_read:
+                gotoChapterActivity();
                 break;
         }
+    }
+
+    private void gotoChapterActivity() {
+        startActivity(mPresenter.gotoActivity());
     }
 
     @Override

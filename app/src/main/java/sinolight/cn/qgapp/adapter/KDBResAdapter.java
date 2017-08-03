@@ -10,6 +10,7 @@ import java.util.List;
 
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.KDBResData;
+import sinolight.cn.qgapp.views.holder.ChapterHolder;
 import sinolight.cn.qgapp.views.holder.ResArticleHolder;
 import sinolight.cn.qgapp.views.holder.ResArticleWithPicHolder;
 import sinolight.cn.qgapp.views.holder.ResBookHolder;
@@ -33,6 +34,7 @@ public class KDBResAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public static final int TYPE_INDUSTRY_ICON = 6;
     // 无图片时候的类型
     public static final int TYPE_INDUSTRY = 7;
+    public static final int TYPE_CHAPTER = 8;
 
     private Context mContext;
     private LayoutInflater mInflater;
@@ -73,6 +75,9 @@ public class KDBResAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case TYPE_INDUSTRY_ICON:
                 holder = new ResArticleWithPicHolder(mInflater.inflate(R.layout.item_icon_article, parent, false));
                 break;
+            case TYPE_CHAPTER:
+                holder = new ChapterHolder(mInflater.inflate(R.layout.item_chapter, parent, false));
+                break;
         }
         return holder;
     }
@@ -105,6 +110,9 @@ public class KDBResAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 case TYPE_INDUSTRY_ICON:
                     ((ResArticleWithPicHolder) holder).setData(mData.get(position), ResArticleWithPicHolder.TYPE_INDUSTRY);
                     break;
+                case TYPE_CHAPTER:
+                    ((ChapterHolder) holder).setData(mData.get(position));
+                    break;
             }
         } catch (ClassCastException e) {
             e.printStackTrace();
@@ -128,4 +136,5 @@ public class KDBResAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
         notifyDataSetChanged();
     }
+
 }

@@ -70,6 +70,7 @@ public class DBResPicFragment extends BaseFragment implements IDBResPicFragmentV
         mLayoutManager = new LinearLayoutManager(getActivity());
         mSwipeTarget.setLayoutManager(mLayoutManager);
         mSwipeTarget.addItemDecoration(new DBResPicFragment.LinearDivider(getActivity()));
+        mSwipeTarget.setHasFixedSize(true);
         mSwipeDbResPic.setOnRefreshListener(this);
         this.showRefreshing(true);
     }

@@ -1,5 +1,6 @@
 package sinolight.cn.qgapp.views.holder;
 
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -18,6 +19,7 @@ import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.HomeData;
 import sinolight.cn.qgapp.utils.ImageUtil;
 import sinolight.cn.qgapp.utils.L;
+import sinolight.cn.qgapp.views.activity.EBookActivity;
 
 /**
  * Created by admin on 2017/7/5.3
@@ -74,7 +76,25 @@ public class StoreHolder extends RecyclerView.ViewHolder {
             case TYPE_DB_RES:
                 onClickRes();
                 break;
+            case TYPE_DB_BAIKE:
+
+                break;
+            case TYPE_DB_STANDARD:
+
+                break;
+            case TYPE_EBOOK:
+                onClickEBook();
+                break;
+            case TYPE_MASTER:
+
+                break;
         }
+    }
+
+    private void onClickEBook() {
+        Intent callIntent = EBookActivity.getCallIntent(App.getContext());
+        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        App.getContext().startActivity(callIntent);
     }
 
     private void onClickRes() {

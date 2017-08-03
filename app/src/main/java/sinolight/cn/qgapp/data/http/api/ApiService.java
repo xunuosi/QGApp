@@ -12,6 +12,7 @@ import sinolight.cn.qgapp.data.http.entity.ArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
+import sinolight.cn.qgapp.data.http.entity.ChapterEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResPicEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
@@ -461,6 +462,21 @@ public interface ApiService {
     Observable<ResultEntity<DBResVideoEntity>> getVideoInfo(
             @Field("token") String token,
             @Field("id") String id
+    );
+
+    /**
+     * 知识库/资源库-图书/标准的章节目录
+     * @param token
+     * @param pid:图书/标准id
+     * @param type:1-图书，2-标准
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("db/doCatalogList")
+    Observable<ResultEntity<List<ChapterEntity>>> getCatalogList(
+            @Field("token") String token,
+            @Field("pid") String pid,
+            @Field("type") String type
     );
 
     /**

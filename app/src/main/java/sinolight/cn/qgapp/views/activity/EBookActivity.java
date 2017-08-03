@@ -1,6 +1,7 @@
 package sinolight.cn.qgapp.views.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -27,7 +28,6 @@ import butterknife.OnClick;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.dagger.component.DaggerEBookActivityComponent;
-import sinolight.cn.qgapp.dagger.module.DBResActivityModule;
 import sinolight.cn.qgapp.dagger.module.EBookActivityModule;
 import sinolight.cn.qgapp.presenter.EBookActivityPresenter;
 import sinolight.cn.qgapp.views.view.IEBookActivityView;
@@ -55,6 +55,10 @@ public class EBookActivity extends BaseActivity implements IEBookActivityView,
     SwipeToLoadLayout mSwipeEbook;
 
     private LinearLayoutManager mLayoutManager;
+
+    public static Intent getCallIntent(Context context) {
+        return new Intent(context, EBookActivity.class);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -131,6 +135,7 @@ public class EBookActivity extends BaseActivity implements IEBookActivityView,
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.im_search_back_arrow:
+                finish();
                 break;
             case R.id.iv_toolbar_search:
                 break;

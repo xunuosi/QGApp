@@ -3,6 +3,7 @@ package sinolight.cn.qgapp.presenter;
 import android.content.Context;
 import android.content.Intent;
 
+import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
@@ -11,6 +12,7 @@ import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
 import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.L;
+import sinolight.cn.qgapp.views.activity.ChapterActivity;
 import sinolight.cn.qgapp.views.view.IKDBBookDetailActivityView;
 
 /**
@@ -87,5 +89,13 @@ public class KDBBookActivityPresenter extends BasePresenter<IKDBBookDetailActivi
                     resId
             );
         }
+    }
+
+    public Intent gotoActivity() {
+        Intent callIntent = ChapterActivity.getCallIntent(mContext);
+        callIntent.putExtra(AppContants.Read.READ_ID, bookData.getId());
+        callIntent.putExtra(AppContants.Read.READ_NAME, bookData.getName());
+        callIntent.putExtra(AppContants.Read.READ_RES_TYPE, AppContants.Read.Type.TYPE_BOOK);
+        return callIntent;
     }
 }

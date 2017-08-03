@@ -31,6 +31,7 @@ import sinolight.cn.qgapp.data.http.entity.ArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
+import sinolight.cn.qgapp.data.http.entity.ChapterEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResPicEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
@@ -218,6 +219,10 @@ public class HttpManager {
 
     public void getVideoInfoNoCache(Observer<DBResVideoEntity> subscriber, String token, String id) {
         toSubscribe(mApiService.getVideoInfo(token, id), subscriber);
+    }
+
+    public void getCatalogListNoCache(Observer<List<ChapterEntity>> subscriber, String token, String pid, String type) {
+        toSubscribe(mApiService.getCatalogList(token, pid, type), subscriber);
     }
 
     public void doReadNoCache(Observer<ReaderEntity> subscriber, String token, String restype, String resId, String chapteredID) {

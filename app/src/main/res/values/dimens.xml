@@ -86,4 +86,7 @@
     <dimen name="video_set_root_height">220dp</dimen>
     <dimen name="video_set_img_height">204dp</dimen>
     <dimen name="video_set_img_width">204dp</dimen>
+    <!--Read Model-->
+    <!--Chapter-->
+    <dimen name="chapter_root_height">58dp</dimen>
 </resources>
