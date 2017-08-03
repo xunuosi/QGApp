@@ -61,17 +61,15 @@
 
     <TextView
         android:id="@+id/tv_item_ebook_price_holder"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="@string/text_price2"
-        android:lines="1"
-        android:ellipsize="end"
+        android:text="@string/text_price_two"
         style="@style/ebook_item_price"
         android:layout_marginLeft="0dp"
         app:layout_constraintLeft_toLeftOf="@+id/tv_item_ebook_info"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/tv_item_ebook_info"
-        app:layout_constraintRight_toLeftOf="@+id/guideline34"
+        app:layout_constraintRight_toLeftOf="@+id/tv_item_ebook_price"
         android:layout_marginRight="0dp"/>
 
     <android.support.constraint.Guideline
@@ -88,7 +86,7 @@
         style="@style/ebook_item_price_red"
         tools:text="$55.15"
         android:layout_marginLeft="0dp"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline34"
+        app:layout_constraintLeft_toRightOf="@+id/tv_item_ebook_price_holder"
         app:layout_constraintTop_toTopOf="@+id/tv_item_ebook_price_holder"
         android:layout_marginTop="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_item_ebook_price_holder"

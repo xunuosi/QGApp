@@ -213,7 +213,9 @@ public class DBResourceActivity extends BaseActivity implements
 
     @Override
     public void showListView(KDBResAdapter adapter) {
-        mSwipeTarget.setAdapter(adapter);
+        if (mSwipeTarget != null && mSwipeTarget.getAdapter() == null) {
+            mSwipeTarget.setAdapter(adapter);
+        }
     }
 
     @Override
@@ -306,7 +308,6 @@ public class DBResourceActivity extends BaseActivity implements
     public void onLoadMore() {
         // 正在加载数据时禁止加载更多数据
         mPresenter.loadMore(mEtDbDetailSearch.getText().toString().trim(), themeType);
-
     }
 
     @Override

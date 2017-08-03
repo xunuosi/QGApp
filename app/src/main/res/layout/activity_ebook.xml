@@ -22,7 +22,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <include layout="@layout/layout_search_toolbar"/>
+        <include layout="@layout/layout_search_toolbar_with_menu"/>
 
     </android.support.v7.widget.Toolbar>
 
@@ -70,7 +70,7 @@
             layout="@layout/layout_google_hook_header"/>
         <android.support.v7.widget.RecyclerView
             android:id="@id/swipe_target"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <include
             android:id="@id/swipe_load_more_footer"

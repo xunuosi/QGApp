@@ -18,6 +18,7 @@ import sinolight.cn.qgapp.data.http.entity.DBResPicEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
 import sinolight.cn.qgapp.data.http.entity.DicInfoEntity;
+import sinolight.cn.qgapp.data.http.entity.EBookEntity;
 import sinolight.cn.qgapp.data.http.entity.MaterialEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
@@ -494,5 +495,17 @@ public interface ApiService {
             @Field("restype") String restype,
             @Field("resid") String resID,
             @Field("chapterid") String chapterid
+    );
+
+    @FormUrlEncoded
+    @POST("ebook/doeBookList")
+    Observable<ResultEntity<PageEntity<List<EBookEntity>>>> getEBookList(
+            @Field("token") String token,
+            @Field("key") String key,
+            @Field("type") String type,
+            @Field("order") String order,
+            @Field("themeType") String themeType,
+            @Field("page") int page,
+            @Field("size") int size
     );
 }

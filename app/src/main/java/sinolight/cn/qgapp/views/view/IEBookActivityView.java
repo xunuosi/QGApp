@@ -24,9 +24,4 @@ public interface IEBookActivityView {
 
     void hasMoreData(boolean hasMore);
 
-    void showTab(boolean enable);
-
-    void showFooterView(boolean enable, String msg);
-
-    void hideTreeMenu(boolean isHide);
 }

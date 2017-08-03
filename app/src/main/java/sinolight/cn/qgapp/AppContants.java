@@ -121,4 +121,34 @@ public interface AppContants {
         }
     }
 
+    interface EBook {
+        enum SortType implements EBook {
+            SORT_COMPREHENSIVE("0"), SORT_NEWGOODS("1"), SORT_PRICE("2");
+
+            private final String type;
+
+            SortType(String value) {
+                type = value;
+            }
+
+            public String getType() {
+                return type;
+            }
+        }
+
+        enum SortOrder implements EBook {
+            SORT_POSITIVE("0"), SORT_REVERSE("1");
+
+            private final String type;
+
+            SortOrder(String value) {
+                type = value;
+            }
+
+            public String getType() {
+                return type;
+            }
+        }
+    }
+
 }
