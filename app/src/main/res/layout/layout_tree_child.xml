@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
@@ -27,5 +28,5 @@
         android:layout_toEndOf="@+id/tree_child_arrow_icon"
         android:textColor="@color/color_bottom_text"
         android:textSize="16sp"
-        android:text="@string/bottomBar_home"/>
+        tools:text="@string/bottomBar_home"/>
 </RelativeLayout>
