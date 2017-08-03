@@ -1,6 +1,7 @@
 package sinolight.cn.qgapp.views.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -66,7 +67,10 @@ public class SplashActivity extends BaseActivity {
                         }
                     }
                     //enter main screen
-                    startActivity(HomeActivity.getCallIntent(mContext).putExtra(AppContants.Account.IS_LOGINED, true));
+                    Intent callIntent = HomeActivity.getCallIntent(mContext);
+                    callIntent.putExtra(AppContants.Account.IS_LOGINED, true);
+                    callIntent.putExtra(AppContants.Account.IS_SPLASHACTIVITY, true);
+                    startActivity(callIntent);
                     finish();
                 } else {
                     try {

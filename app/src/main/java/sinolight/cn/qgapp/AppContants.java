@@ -16,6 +16,7 @@ public interface AppContants {
         String PASS_WORD = "account_pwd";
         String TOKEN = "account_token";
         String IS_LOGINED = "account_isLogined";
+        String IS_SPLASHACTIVITY = "account_isSplashActivity";
     }
 
     interface DataBase {

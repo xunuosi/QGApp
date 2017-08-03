@@ -56,6 +56,7 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
     private NavigationController mNavigationController;
     private UserComponent userComponent;
     private boolean isLogined;
+    private boolean isSplashActivity;
     // 标志位表示当前是否为HomeFragment
     private boolean isHomeFragment = false;
     private HttpSubscriber loginObserver = new HttpSubscriber(new OnResultCallBack<TokenEntity>() {
@@ -104,14 +105,17 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
         Intent intent = getIntent();
         if (intent != null) {
             isLogined = intent.getBooleanExtra(AppContants.Account.IS_LOGINED, false);
-            if (isLogined) {
-                HttpManager.getInstance().login(loginObserver, 
-                        AppHelper.getInstance().getCurrentUserName(),
-                        AppHelper.getInstance().getCurrentPW());
-            } else {
-                // Go to LoginActivity
-                startActivity(LoginActivity.getCallIntent(mContext));
-            } 
+            isSplashActivity = intent.getBooleanExtra(AppContants.Account.IS_SPLASHACTIVITY, false);
+            if (isSplashActivity) {
+                if (isLogined) {
+                    HttpManager.getInstance().login(loginObserver,
+                            AppHelper.getInstance().getCurrentUserName(),
+                            AppHelper.getInstance().getCurrentPW());
+                } else {
+                    // Go to LoginActivity
+                    startActivity(LoginActivity.getCallIntent(mContext));
+                }
+            }
         }
     }
 
