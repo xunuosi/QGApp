@@ -11,6 +11,7 @@ import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
 import sinolight.cn.qgapp.data.http.entity.StdInfoEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.L;
+import sinolight.cn.qgapp.views.activity.ChapterActivity;
 import sinolight.cn.qgapp.views.view.IKDBStdDetailActivityView;
 
 /**
@@ -87,5 +88,13 @@ public class KDBStdActivityPresenter extends BasePresenter<IKDBStdDetailActivity
                     resId
             );
         }
+    }
+
+    public Intent gotoActivity() {
+        Intent callIntent = ChapterActivity.getCallIntent(mContext);
+        callIntent.putExtra(AppContants.Read.READ_ID, stdData.getId());
+        callIntent.putExtra(AppContants.Read.READ_NAME, stdData.getName());
+        callIntent.putExtra(AppContants.Read.READ_RES_TYPE, AppContants.Read.Type.TYPE_STAND);
+        return callIntent;
     }
 }

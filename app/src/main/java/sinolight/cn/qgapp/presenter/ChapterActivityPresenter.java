@@ -63,7 +63,8 @@ public class ChapterActivityPresenter extends BasePresenter<IChapterActivityView
         List<KDBResData> list = new ArrayList<>();
         switch (resType) {
             case TYPE_BOOK:
-                list = KDBResDataMapper.transformChapterDatas(chapterDatas, KDBResAdapter.TYPE_CHAPTER, false);
+            case TYPE_STAND:
+                list = KDBResDataMapper.transformChapterDatas(chapterDatas, readID, KDBResAdapter.TYPE_CHAPTER, false);
                 break;
         }
 

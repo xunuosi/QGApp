@@ -172,7 +172,12 @@ public class KDBStdDetailActivity extends BaseActivity implements IKDBStdDetailA
             case R.id.iv_collect:
                 break;
             case R.id.btn_kdb_std_read:
+                gotoChapterActivity();
                 break;
         }
+    }
+
+    private void gotoChapterActivity() {
+        startActivity(mPresenter.gotoActivity());
     }
 }

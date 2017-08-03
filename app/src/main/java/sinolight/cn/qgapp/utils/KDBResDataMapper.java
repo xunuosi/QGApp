@@ -76,11 +76,13 @@ public class KDBResDataMapper {
         return resData;
     }
 
-    public static List<KDBResData> transformChapterDatas(List<ChapterEntity> beans, int adapterType, boolean isSpan) {
+    public static List<KDBResData> transformChapterDatas(List<ChapterEntity> beans, String pid, int adapterType, boolean isSpan) {
         List<KDBResData> resDataCollection;
         if (beans != null && !beans.isEmpty()) {
             resDataCollection = new ArrayList<>();
             for (ChapterEntity bean : beans) {
+                // Insert Pid
+                bean.setPid(pid);
                 resDataCollection.add(transformChapterData(bean, adapterType, isSpan));
             }
             mKDBResDataMap.put(adapterType, resDataCollection);
