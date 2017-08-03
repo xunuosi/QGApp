@@ -201,9 +201,9 @@ public class KDBResDataMapper {
             resDataCollection = new ArrayList<>();
             for (ResArticleEntity bean : beans) {
                 if (bean.getCover() != null) {
-                    resDataCollection.add(transformArticleData(bean, KDBResAdapter.TYPE_ARTICLE_ICON, isSpan));
+                    resDataCollection.add(transformArticleData(bean, KDBResAdapter.TYPE_INDUSTRY_ICON, isSpan));
                 } else {
-                    resDataCollection.add(transformArticleData(bean, KDBResAdapter.TYPE_ARTICLE, isSpan));
+                    resDataCollection.add(transformArticleData(bean, KDBResAdapter.TYPE_INDUSTRY, isSpan));
                 }
             }
             mKDBResDataMap.put(adapterType, resDataCollection);

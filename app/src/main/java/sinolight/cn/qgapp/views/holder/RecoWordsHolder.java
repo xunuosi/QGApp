@@ -1,5 +1,6 @@
 package sinolight.cn.qgapp.views.holder;
 
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
@@ -17,11 +18,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import sinolight.cn.qgapp.App;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.HomeData;
 import sinolight.cn.qgapp.data.http.entity.RecommendEntity;
-import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.utils.ScreenUtil;
+import sinolight.cn.qgapp.views.activity.KDBDicDetailActivity;
 import sinolight.cn.qgapp.views.widget.FrescoLoader;
 
 /**
@@ -128,6 +130,13 @@ public class RecoWordsHolder extends RecyclerView.ViewHolder implements
 
     @Override
     public void OnBannerClick(int position) {
-        L.d(TAG, "title:" + datas.get(position).getTitle());
+        gotoDicDetailActivity(position);
+    }
+
+    private void gotoDicDetailActivity(int position) {
+        Intent callIntent = KDBDicDetailActivity.getCallIntent(App.getContext());
+        callIntent.putExtra(AppContants.Resource.RES_ID, datas.get(position).getId());
+        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        App.getContext().startActivity(callIntent);
     }
 }

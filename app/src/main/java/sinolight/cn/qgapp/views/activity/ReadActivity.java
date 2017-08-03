@@ -35,7 +35,7 @@ import static android.text.Html.FROM_HTML_MODE_COMPACT;
  * ReadActivity
  */
 
-        public class ReadActivity extends BaseActivity implements IReadActivityView {
+public class ReadActivity extends BaseActivity implements IReadActivityView {
     @Inject
     Context mContext;
     @Inject
@@ -113,13 +113,14 @@ import static android.text.Html.FROM_HTML_MODE_COMPACT;
 
     /**
      * 解析html中包含的图片
+     *
      * @param html
      * @return
      */
     private Spanned inflateHtmlData(String html) {
         Spanned sp = null;
         if (Build.VERSION.SDK_INT >= 24) {
-            sp = Html.fromHtml(html, FROM_HTML_MODE_COMPACT,new Html.ImageGetter() {
+            sp = Html.fromHtml(html, FROM_HTML_MODE_COMPACT, new Html.ImageGetter() {
                 @Override
                 public Drawable getDrawable(String source) {
                     InputStream is = null;

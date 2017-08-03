@@ -1,5 +1,6 @@
 package sinolight.cn.qgapp.views.holder;
 
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,10 +10,13 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import sinolight.cn.qgapp.App;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.HomeData;
 import sinolight.cn.qgapp.utils.ImageUtil;
+import sinolight.cn.qgapp.views.activity.KDBStdDetailActivity;
 
 /**
  * Created by xns on 2017/7/6.
@@ -68,5 +72,17 @@ public class StandardHolder extends RecyclerView.ViewHolder {
         String exTimeFormat = App.getContext().getString(R.string.text_e_time);
         exTime = String.format(exTimeFormat, mHomeData.getImdate());
         mTvHfStandItemTime.setText(exTime);
+    }
+
+    @OnClick({R.id.hf_standard_root})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.hf_standard_root:
+                Intent callIntent = KDBStdDetailActivity.getCallIntent(App.getContext());
+                callIntent.putExtra(AppContants.Resource.RES_ID, mHomeData.getId());
+                callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                App.getContext().startActivity(callIntent);
+                break;
+        }
     }
 }

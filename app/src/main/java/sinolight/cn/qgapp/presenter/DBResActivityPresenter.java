@@ -158,6 +158,27 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 }
             });
 
+    private HttpSubscriber<PageEntity<List<ResArticleEntity>>> mIndustryObserver = new HttpSubscriber<>(
+            new OnResultCallBack<PageEntity<List<ResArticleEntity>>>() {
+
+                @Override
+                public void onSuccess(PageEntity<List<ResArticleEntity>> PageEntity) {
+                    if (PageEntity != null) {
+                        count = PageEntity.getCount();
+                        articleDatas = PageEntity.getData();
+                        transformKDBResData(AppContants.DataBase.Res.RES_INDUSTRY);
+                    } else {
+                        view().showRefreshing(false);
+                    }
+                }
+
+                @Override
+                public void onError(int code, String errorMsg) {
+                    L.d(TAG, "mArticleObserver code:" + code + ",errorMsg:" + errorMsg);
+                    showError();
+                }
+            });
+
     private HttpSubscriber<PageEntity<List<ResImgEntity>>> mImgObserver = new HttpSubscriber<>(
             new OnResultCallBack<PageEntity<List<ResImgEntity>>>() {
 
@@ -244,7 +265,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 view().showFooterView(true, String.valueOf(count));
                 break;
             case RES_INDUSTRY:
-                list = KDBResDataMapper.transformArticleDatas(articleDatas, 0, false);
+                list = KDBResDataMapper.transformIndustryDatas(articleDatas, 0, false);
                 break;
         }
         // Load More Action
@@ -353,6 +374,8 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         if (mWordObserver != null) {
             mWordObserver.unSubscribe();
         }
+        mIndustryObserver.unSubscribe();
+
         KDBResDataMapper.reset();
         unbindView();
     }
@@ -441,7 +464,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
             case RES_INDUSTRY:
                 view().initShow(mContext.getString(R.string.text_analysis));
                 model.getKDBIndustryAnalysisListNoCache(
-                        mArticleObserver,
+                        mIndustryObserver,
                         AppHelper.getInstance().getCurrentToken(),
                         dbId,
                         null,

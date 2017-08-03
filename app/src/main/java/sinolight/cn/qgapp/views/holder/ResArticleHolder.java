@@ -66,20 +66,20 @@ public class ResArticleHolder extends RecyclerView.ViewHolder {
             case R.id.item_hf_article_root:
                 if (holderType == TYPE_ARTICLE) {
                     // Go to Article read
-                    gotoReadActivity();
+                    gotoReadActivity(AppContants.Read.Type.TYPE_ARTICLE);
                 } else if (holderType == TYPE_INDUSTRY) {
-                    // go to Industry detail
+                    gotoReadActivity(AppContants.Read.Type.TYPE_INDUSTRY);
                 }
                 break;
         }
     }
 
-    private void gotoReadActivity() {
+    private void gotoReadActivity(AppContants.Read.Type typeRead) {
         Intent callIntent = ReadActivity.getCallIntent(App.getContext());
         callIntent.putExtra(AppContants.Read.READ_NAME, data.getName());
         callIntent.putExtra(AppContants.Read.READ_ID, data.getId());
         callIntent.putExtra(AppContants.Read.CHAPTERED_ID, "");
-        callIntent.putExtra(AppContants.Read.READ_RES_TYPE, AppContants.Read.Type.TYPE_ARTICLE);
+        callIntent.putExtra(AppContants.Read.READ_RES_TYPE, typeRead);
         callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         App.getContext().startActivity(callIntent);
     }
