@@ -193,8 +193,8 @@ public class HttpManager {
     }
 
     public void getKDBWordListNoCache(Observer<PageEntity<List<ResWordEntity>>> subscriber, String token,
-                                       @Nullable String dbId, int type, @Nullable String key, int page, int size) {
-        toSubscribe(mApiService.getKDBWordList(token, dbId, key, type, page, size), subscriber);
+                                       @Nullable String dbId, @Nullable String key, int type, String themeType, int page, int size) {
+        toSubscribe(mApiService.getKDBWordList(token, dbId, key, type, themeType, page, size), subscriber);
     }
 
     public void getKDBBookInfoNoCache(Observer<BookInfoEntity> subscriber, String token, String id) {

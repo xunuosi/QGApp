@@ -283,7 +283,7 @@ public interface ApiService {
      * 识库/资源库-某一知识库-词典（推荐词条/全部词条）列表
      * @param token
      * @param dbid
-     * @param type:0 推荐词条，1 全部词条
+     * @param type:0 推荐词条，1 全部词条, 2 菜谱
      * @param key
      * @param page
      * @param size
@@ -296,6 +296,7 @@ public interface ApiService {
             @Field("dbid") String dbid,
             @Field("key") String key,
             @Field("type") int type,
+            @Field("themeType") String themeType,
             @Field("page") int page,
             @Field("size") int size
     );

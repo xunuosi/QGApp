@@ -455,6 +455,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                         mWordObserver,
                         AppHelper.getInstance().getCurrentToken(),
                         dbId,
+                        null,
                         dicType,
                         null,
                         page,
@@ -553,8 +554,9 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                         mWordObserver,
                         AppHelper.getInstance().getCurrentToken(),
                         dbId,
-                        dicType,
                         key,
+                        dicType,
+                        null,
                         page,
                         SIZE
                 );

@@ -31,7 +31,8 @@ public interface AppContants {
         enum Type implements DataBase {
             DB_FOOD("16"), DB_ART("11"), DB_PAPER("17"),
             DB_LEATHER("15"), DB_FURNITURE("14"), DB_PACK("10"),
-            DB_CLOTHING("1"), DB_ELECTROMECHANICAL("13"), DB_WEIGHING("12");
+            DB_CLOTHING("1"), DB_ELECTROMECHANICAL("13"), DB_WEIGHING("12"),
+            DB_COOK("18"), DB_STANDARD("19");
             private final String type;
 
             Type(String value) {

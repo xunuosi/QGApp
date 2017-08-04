@@ -317,7 +317,6 @@ public class EBookActivity extends BaseActivity implements IEBookActivityView,
         lp.alpha = 1.0f;
         getWindow().setAttributes(lp);
         // Request themeType Data
-        // Request themeType Data
         mPresenter.loadDataWithPara(
                 mEtToolbarSearch.getText().toString().trim(),
                 themeType,

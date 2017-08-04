@@ -9,6 +9,8 @@ public class ResWordEntity {
     private String id;
     private String name;
     private String source;
+    private String cover;
+    private String remark;
 
     public ResWordEntity() {
     }
@@ -35,5 +37,21 @@ public class ResWordEntity {
 
     public void setSource(String source) {
         this.source = source;
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

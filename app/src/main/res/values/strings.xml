@@ -41,6 +41,7 @@
     <string name="text_reco_words">推荐词条</string>
     <string name="text_all_word">全部词条</string>
     <string name="text_material">素材</string>
+    <string name="text_material_list">素材列表</string>
     <string name="text_video">视频</string>
     <string name="text_cn_name_format">中文名称：%1$s</string>
     <string name="text_en_name_format">英文名称：%1$s</string>

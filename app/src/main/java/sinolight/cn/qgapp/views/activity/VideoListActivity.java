@@ -100,6 +100,11 @@ public class VideoListActivity extends BaseActivity implements IVideoListActivit
 
     @Override
     protected void initData() {
+
+    }
+
+    @Override
+    protected void initializeInjector() {
         DaggerVideoListActivityComponent
                 .builder()
                 .applicationComponent(getApplicationComponent())
@@ -107,11 +112,6 @@ public class VideoListActivity extends BaseActivity implements IVideoListActivit
                 .videoListActivityModule(new VideoListActivityModule(this))
                 .build()
                 .inject(this);
-    }
-
-    @Override
-    protected void initializeInjector() {
-
     }
 
     @OnClick({R.id.im_back_arrow, R.id.iv_video_list_set_search})

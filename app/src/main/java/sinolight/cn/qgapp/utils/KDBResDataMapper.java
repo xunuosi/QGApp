@@ -142,6 +142,37 @@ public class KDBResDataMapper {
         return null;
     }
 
+    private static KDBResData transformResWord2MaterialBean(ResWordEntity bean, int adapterType, boolean isSpan) {
+        if (bean == null) {
+            throw new IllegalArgumentException("Cannot transform a null value");
+        }
+        final KDBResData<MaterialEntity> resData = new KDBResData<>();
+        resData.setItemType(adapterType);
+        resData.setSpan(isSpan);
+        resData.setLocal(false);
+        MaterialEntity materialBean = new MaterialEntity();
+        materialBean.setId(bean.getId());
+        materialBean.setCover(bean.getCover());
+        materialBean.setName(bean.getName());
+        materialBean.setSource(bean.getSource());
+        materialBean.setRemark(bean.getRemark());
+        resData.setData(materialBean);
+        return resData;
+    }
+
+    public static List<KDBResData> transformResWord2Material(List<ResWordEntity> beans, int adapterType, boolean isSpan) {
+        List<KDBResData> resDataCollection;
+        if (beans != null && !beans.isEmpty()) {
+            resDataCollection = new ArrayList<>();
+            for (ResWordEntity bean : beans) {
+                resDataCollection.add(transformResWord2MaterialBean(bean,adapterType,isSpan));
+            }
+            mKDBResDataMap.put(adapterType, resDataCollection);
+            return resDataCollection;
+        }
+        return null;
+    }
+
     private static KDBResData transformStandData(ResStandardEntity bean, int adapterType, boolean isSpan) {
         if (bean == null) {
             throw new IllegalArgumentException("Cannot transform a null value");
