@@ -246,4 +246,8 @@
     <style name="ebook_item_price_red" parent="ebook_item_price">
         <item name="android:textColor">@color/color_red</item>
     </style>
+    <!--cook-->
+    <style name="cook_info_item_title" parent="kdb_book_detail_text_title">
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

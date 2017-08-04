@@ -19,6 +19,7 @@ import sinolight.cn.qgapp.data.http.entity.MaterialEntity;
 import sinolight.cn.qgapp.utils.ImageUtil;
 import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.views.activity.KDBBookDetailActivity;
+import sinolight.cn.qgapp.views.activity.MaterialDetailActivity;
 import sinolight.cn.qgapp.views.activity.MaterialListActivity;
 
 /**
@@ -81,13 +82,14 @@ public class DBResMaterialHolder extends RecyclerView.ViewHolder {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.root_resdb_material:
-//                gotoMaterialListActivity();
+                gotoMaterialInfoActivity();
                 break;
         }
     }
 
-    private void gotoMaterialListActivity() {
-        Intent callIntent = MaterialListActivity.getCallIntent(App.getContext());
+    private void gotoMaterialInfoActivity() {
+        Intent callIntent = MaterialDetailActivity.getCallIntent(App.getContext());
+        callIntent.putExtra(AppContants.Cook.COOK_ID, mData.getId());
         callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         App.getContext().startActivity(callIntent);
     }

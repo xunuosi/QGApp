@@ -28,6 +28,7 @@
     <string name="text_hot_video">热门视频</string>
     <string name="text_author">作者：</string>
     <string name="text_resource">来源：</string>
+    <string name="text_source_format">来源：%1$s</string>
     <string name="text_publish_time">出版时间：</string>
     <string name="text_publish_time_format">出版时间：%1$s</string>
     <string name="text_publish_name_format">出版社：%1$s</string>

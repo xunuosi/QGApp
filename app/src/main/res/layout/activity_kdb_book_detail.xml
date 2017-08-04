@@ -76,8 +76,8 @@
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_kdb_book_cover"
-        android:layout_width="112dp"
-        android:layout_height="152dp"
+        android:layout_width="@dimen/kdb_book_detail_cover_width"
+        android:layout_height="@dimen/kdb_book_detail_cover_height"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="parent"

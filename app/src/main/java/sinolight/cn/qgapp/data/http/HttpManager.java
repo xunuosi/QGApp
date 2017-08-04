@@ -32,6 +32,8 @@ import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.ChapterEntity;
+import sinolight.cn.qgapp.data.http.entity.CookContentEntity;
+import sinolight.cn.qgapp.data.http.entity.CookEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResPicEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
@@ -259,6 +261,10 @@ public class HttpManager {
     public void getEBookListNoCache(Observer<PageEntity<List<EBookEntity>>> subscriber, String token, String key,
                                     String type, String order, String themType, int page, int size) {
         toSubscribe(mApiService.getEBookList(token, key, type, order, themType, page, size), subscriber);
+    }
+
+    public void getCookInfoNoCache(Observer<CookEntity<CookContentEntity>> subscriber, String token, String id) {
+        toSubscribe(mApiService.getCookInfo(token, id), subscriber);
     }
 
     public void changePwdNoCache(Observer<Object> subscriber, String token, String oldPwd, String newPwd,

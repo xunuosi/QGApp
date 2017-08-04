@@ -153,4 +153,7 @@ public interface AppContants {
         }
     }
 
+    interface Cook {
+        String COOK_ID = "cook_id";
+    }
 }

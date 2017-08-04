@@ -89,4 +89,9 @@
     <!--Read Model-->
     <!--Chapter-->
     <dimen name="chapter_root_height">58dp</dimen>
+    <!--Cook Info-->
+    <dimen name="cook_info_title_height">185dp</dimen>
+    <dimen name="cook_info_item_title_height">55dp</dimen>
+    <dimen name="cook_info_item_image_width">245dp</dimen>
+    <dimen name="cook_info_item_image_height">125dp</dimen>
 </resources>

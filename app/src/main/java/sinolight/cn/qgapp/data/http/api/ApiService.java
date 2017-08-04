@@ -13,6 +13,8 @@ import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.ChapterEntity;
+import sinolight.cn.qgapp.data.http.entity.CookContentEntity;
+import sinolight.cn.qgapp.data.http.entity.CookEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResPicEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
@@ -498,6 +500,17 @@ public interface ApiService {
             @Field("chapterid") String chapterid
     );
 
+    /**
+     * EBook List
+     * @param token
+     * @param key
+     * @param type
+     * @param order
+     * @param themeType
+     * @param page
+     * @param size
+     * @return
+     */
     @FormUrlEncoded
     @POST("ebook/doeBookList")
     Observable<ResultEntity<PageEntity<List<EBookEntity>>>> getEBookList(
@@ -508,5 +521,18 @@ public interface ApiService {
             @Field("themeType") String themeType,
             @Field("page") int page,
             @Field("size") int size
+    );
+
+    /**
+     * 资源库-菜谱详情信息
+     * @param token
+     * @param id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("res/doMenuInfo")
+    Observable<ResultEntity<CookEntity<CookContentEntity>>> getCookInfo(
+            @Field("token") String token,
+            @Field("id") String id
     );
 }
