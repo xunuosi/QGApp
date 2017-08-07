@@ -101,7 +101,7 @@
         android:layout_height="@dimen/kdb_dic_detail_cover_height"
         android:layout_marginTop="8dp"
         fresco:placeholderImage="@color/color_bottom_divider"
-        fresco:actualImageScaleType="fitXY"
+        fresco:actualImageScaleType="centerCrop"
         app:layout_constraintLeft_toLeftOf="@+id/tv_kdb_dic_detail_title"
         app:layout_constraintTop_toBottomOf="@+id/tv_kdb_dic_detail_title"/>
 

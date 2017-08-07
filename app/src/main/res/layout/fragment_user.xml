@@ -52,7 +52,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    fresco:actualImageScaleType="fitCenter"
+                    fresco:actualImageScaleType="centerCrop"
                     fresco:placeholderImage="@drawable/avator_holder"
                     fresco:roundAsCircle="true"/>
 

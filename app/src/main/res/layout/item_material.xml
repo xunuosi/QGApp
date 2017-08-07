@@ -14,7 +14,7 @@
         android:layout_width="@dimen/resdb_materail_cover_width"
         android:layout_height="@dimen/resdb_materail_cover_height"
         fresco:placeholderImage="@color/color_bottom_divider"
-        fresco:actualImageScaleType="fitCenter"
+        fresco:actualImageScaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"

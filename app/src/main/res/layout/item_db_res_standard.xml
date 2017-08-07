@@ -20,7 +20,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         fresco:placeholderImage="@color/color_bottom_divider"
-        fresco:actualImageScaleType="fitCenter"/>
+        fresco:actualImageScaleType="centerCrop"/>
 
     <TextView
         android:id="@+id/tv_db_res_item_title"
