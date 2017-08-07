@@ -6,10 +6,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import sinolight.cn.qgapp.AppContants;
+import sinolight.cn.qgapp.adapter.CookAdapter;
 import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.data.bean.KDBResData;
+import sinolight.cn.qgapp.data.bean.SimpleCookInfo;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.ChapterEntity;
+import sinolight.cn.qgapp.data.http.entity.CookContentEntity;
+import sinolight.cn.qgapp.data.http.entity.CookEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResPicEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
@@ -40,6 +45,75 @@ public class KDBResDataMapper {
         return resData;
     }
 
+    private static KDBResData transformCookData(String bean, int adapterType, boolean isSpan) {
+        if (bean == null) {
+            throw new IllegalArgumentException("Cannot transform a null value");
+        }
+        final KDBResData<String> resData = new KDBResData<>();
+        resData.setItemType(adapterType);
+        resData.setSpan(isSpan);
+        resData.setLocal(false);
+        resData.setData(bean);
+        return resData;
+    }
+
+    private static List<KDBResData> transformCookDatas(List<CookContentEntity> beans, int adapterType, boolean isSpan) {
+        List<KDBResData> resDataCollection;
+        if (beans != null && !beans.isEmpty()) {
+            resDataCollection = new ArrayList<>();
+            for (CookContentEntity bean : beans) {
+                resDataCollection.add(transformCookData(bean.getName(), CookAdapter.TYPE_TITLE, isSpan));
+                for (String content : bean.getContent()) {
+                    // If it is img, so it contains ".jpg"
+                    if (content.contains(".jpg")) {
+                        resDataCollection.add(transformCookData(content, CookAdapter.TYPE_IMG, isSpan));
+                    } else {
+                        resDataCollection.add(transformCookData(content, CookAdapter.TYPE_TEXT, isSpan));
+                    }
+                }
+            }
+            mKDBResDataMap.put(adapterType, resDataCollection);
+            return resDataCollection;
+        }
+        return null;
+    }
+
+    public static List<KDBResData> transformCookInfo(CookEntity<CookContentEntity> bean,
+                                                     int adapterType, boolean isSpan) {
+        List<KDBResData> resDataCollection;
+        if (bean != null) {
+            resDataCollection = new ArrayList<>();
+            resDataCollection.add(transformSimpleCookInfo(transform2SimpleCookInfo(bean), adapterType, isSpan));
+            resDataCollection.addAll(transformCookDatas(bean.getData(), 0, isSpan));
+
+            mKDBResDataMap.put(adapterType, resDataCollection);
+            return resDataCollection;
+        }
+        return null;
+    }
+
+    private static SimpleCookInfo transform2SimpleCookInfo(CookEntity bean) {
+        SimpleCookInfo info = new SimpleCookInfo();
+        info.setId(bean.getId());
+        info.setCover(bean.getCover());
+        info.setHascover(bean.isHascover());
+        info.setName(bean.getName());
+        info.setSource(bean.getSource());
+        return info;
+    }
+
+    private static KDBResData transformSimpleCookInfo(SimpleCookInfo bean, int adapterType, boolean isSpan) {
+        if (bean == null) {
+            throw new IllegalArgumentException("Cannot transform a null value");
+        }
+        final KDBResData<SimpleCookInfo> resData = new KDBResData<>();
+        resData.setItemType(adapterType);
+        resData.setSpan(isSpan);
+        resData.setLocal(false);
+        resData.setData(bean);
+        return resData;
+    }
+
     private static KDBResData transformMaterialData(MaterialEntity bean, int adapterType, boolean isSpan) {
         if (bean == null) {
             throw new IllegalArgumentException("Cannot transform a null value");
@@ -57,7 +131,7 @@ public class KDBResDataMapper {
         if (beans != null && !beans.isEmpty()) {
             resDataCollection = new ArrayList<>();
             for (MaterialEntity bean : beans) {
-                resDataCollection.add(transformMaterialData(bean,adapterType,isSpan));
+                resDataCollection.add(transformMaterialData(bean, adapterType, isSpan));
             }
             mKDBResDataMap.put(adapterType, resDataCollection);
             return resDataCollection;
@@ -109,7 +183,7 @@ public class KDBResDataMapper {
         if (beans != null && !beans.isEmpty()) {
             resDataCollection = new ArrayList<>();
             for (BookEntity bean : beans) {
-                resDataCollection.add(transformBookData(bean,adapterType,isSpan));
+                resDataCollection.add(transformBookData(bean, adapterType, isSpan));
             }
             mKDBResDataMap.put(adapterType, resDataCollection);
             return resDataCollection;
@@ -134,7 +208,7 @@ public class KDBResDataMapper {
         if (beans != null && !beans.isEmpty()) {
             resDataCollection = new ArrayList<>();
             for (EBookEntity bean : beans) {
-                resDataCollection.add(transformEBookData(bean,adapterType,isSpan));
+                resDataCollection.add(transformEBookData(bean, adapterType, isSpan));
             }
             mKDBResDataMap.put(adapterType, resDataCollection);
             return resDataCollection;
@@ -165,7 +239,7 @@ public class KDBResDataMapper {
         if (beans != null && !beans.isEmpty()) {
             resDataCollection = new ArrayList<>();
             for (ResWordEntity bean : beans) {
-                resDataCollection.add(transformResWord2MaterialBean(bean,adapterType,isSpan));
+                resDataCollection.add(transformResWord2MaterialBean(bean, adapterType, isSpan));
             }
             mKDBResDataMap.put(adapterType, resDataCollection);
             return resDataCollection;
@@ -190,7 +264,7 @@ public class KDBResDataMapper {
         if (beans != null && !beans.isEmpty()) {
             resDataCollection = new ArrayList<>();
             for (ResStandardEntity bean : beans) {
-                resDataCollection.add(transformStandData(bean,adapterType,isSpan));
+                resDataCollection.add(transformStandData(bean, adapterType, isSpan));
             }
             mKDBResDataMap.put(adapterType, resDataCollection);
             return resDataCollection;

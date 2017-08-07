@@ -2,14 +2,24 @@ package sinolight.cn.qgapp.presenter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.adapter.CookAdapter;
+import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
-import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
+import sinolight.cn.qgapp.data.http.entity.CookContentEntity;
+import sinolight.cn.qgapp.data.http.entity.CookEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.KDBResDataMapper;
 import sinolight.cn.qgapp.utils.L;
@@ -24,40 +34,63 @@ public class MaterialDetailActivityPresenter extends BasePresenter<IMaterialDeta
     private static final String TAG = "MaterialDetailActivityPresenter";
     private Context mContext;
 
-    // VideoParentID
-    private String videoID;
-    private DBResVideoEntity videoData;
-    private MediaPlayer mp;
+    private String cookID;
+    private CookEntity<CookContentEntity> mCookData;
+    private List<KDBResData> mDatas = new ArrayList<>();
+    private CookAdapter mAdapter;
 
-    private HttpSubscriber<DBResVideoEntity> mVideoObserver = new HttpSubscriber<>(
-            new OnResultCallBack<DBResVideoEntity>() {
+    private HttpSubscriber<CookEntity<CookContentEntity>> mCookObserver = new HttpSubscriber<>(
+            new OnResultCallBack<CookEntity<CookContentEntity>>() {
 
                 @Override
-                public void onSuccess(DBResVideoEntity dbResVideoEntity) {
-                    if (dbResVideoEntity != null) {
-                        videoData = dbResVideoEntity;
+                public void onSuccess(CookEntity<CookContentEntity> cookContentEntityCookEntity) {
+                    if (cookContentEntityCookEntity != null) {
+                        mCookData = cookContentEntityCookEntity;
                         showSuccess();
                     }
                 }
 
                 @Override
                 public void onError(int code, String errorMsg) {
-                    L.d(TAG, "mVideoObserver code:" + code + ",errorMsg:" + errorMsg);
+                    L.d(TAG, "mCookObserver code:" + code + ",errorMsg:" + errorMsg);
                     showError();
                 }
             });
 
     private void showSuccess() {
-        showWithData();
+        transformKDBResData();
     }
 
     private void showError() {
-        view().showRefreshing(false);
+        showRefreshView(false);
         showErrorToast(R.string.attention_data_refresh_error);
     }
 
-    private void showWithData() {
+    private void transformKDBResData() {
 
+        Flowable.fromCallable(() -> {
+            List<KDBResData> list = new ArrayList<>();
+            list = KDBResDataMapper.transformCookInfo(mCookData, CookAdapter.TYPE_HEAD, false);
+            return list;
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(list -> showWithData(list));
+
+    }
+
+    private void showWithData(List<KDBResData> list) {
+        mDatas = list;
+        view().showTitle(mCookData.getName());
+
+        if (mAdapter == null) {
+            mAdapter = new CookAdapter(mContext, mDatas);
+        } else {
+            mAdapter.setData(mDatas);
+        }
+
+        view().showListView(mAdapter);
+        showRefreshView(false);
     }
 
     public MaterialDetailActivityPresenter(IMaterialDetailActivityView view, Context context) {
@@ -73,34 +106,24 @@ public class MaterialDetailActivityPresenter extends BasePresenter<IMaterialDeta
 
     @Override
     public void clear() {
-        if (mVideoObserver != null) {
-            mVideoObserver.unSubscribe();
+        if (mCookObserver != null) {
+            mCookObserver.unSubscribe();
         }
-
+        mCookData = null;
+        mDatas.clear();
         KDBResDataMapper.reset();
         unbindView();
     }
 
-    private void closeRefreshing() {
-        view().showRefreshing(false);
-    }
-
     private void showErrorToast(int resId) {
         view().showToast(resId);
-        view().showRefreshing(false);
-    }
-
-    public void init2Show() {
-        resetState();
-        // load video set data
-        getData();
     }
 
     private void getData() {
-        model.getVideoInfoNoCache(
-                mVideoObserver,
+        model.getCookInfoNoCache(
+                mCookObserver,
                 AppHelper.getInstance().getCurrentToken(),
-                videoID
+                cookID
         );
     }
 
@@ -114,13 +137,16 @@ public class MaterialDetailActivityPresenter extends BasePresenter<IMaterialDeta
 
     public void checkoutIntent(Intent intent) {
         if (intent == null) {
-            view().showRefreshing(false);
+            return;
         } else {
-            videoID = intent.getStringExtra(AppContants.Video.VIDEO_ID);
-            view().showRefreshing(true);
-            // load data
-            this.getData();
+            cookID = intent.getStringExtra(AppContants.Cook.COOK_ID);
+            showRefreshView(true);
+            getData();
         }
+    }
+
+    private void showRefreshView(boolean enable) {
+        view().showRefreshView(enable);
     }
 
 }

@@ -57,3 +57,6 @@
 -keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
     <init>(java.lang.Throwable);
 }
+
+-dontwarn java.lang.invoke.*
+-dontwarn **$$Lambda$*

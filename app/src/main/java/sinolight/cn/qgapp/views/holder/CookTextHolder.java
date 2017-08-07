@@ -8,7 +8,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import sinolight.cn.qgapp.R;
-import sinolight.cn.qgapp.data.bean.HomeData;
+import sinolight.cn.qgapp.data.bean.KDBResData;
 
 /**
  * Created by xns on 2017/7/6.
@@ -16,6 +16,7 @@ import sinolight.cn.qgapp.data.bean.HomeData;
  */
 
 public class CookTextHolder extends RecyclerView.ViewHolder {
+    private String content;
     @BindView(R.id.tv_item_cook_info_text)
     TextView mTvItemCookInfoText;
     @BindView(R.id.root_item_cook_info_image)
@@ -26,12 +27,15 @@ public class CookTextHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, layout);
     }
 
-    public void setData(HomeData homeData) {
-
+    public void setData(KDBResData<String> data) {
+        if (data != null) {
+            content = data.getData();
+            bindData();
+        }
     }
 
     private void bindData() {
-
+        mTvItemCookInfoText.setText(content);
     }
 
 }

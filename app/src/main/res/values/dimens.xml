@@ -94,4 +94,6 @@
     <dimen name="cook_info_item_title_height">55dp</dimen>
     <dimen name="cook_info_item_image_width">245dp</dimen>
     <dimen name="cook_info_item_image_height">125dp</dimen>
+    <dimen name="cook_info_image_width">152dp</dimen>
+    <dimen name="cook_info_image_height">125dp</dimen>
 </resources>
