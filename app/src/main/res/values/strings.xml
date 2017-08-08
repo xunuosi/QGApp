@@ -85,6 +85,8 @@
     <string name="text_price">价格</string>
     <string name="text_price_two">定价：</string>
     <string name="text_price_format">¥%1$s</string>
+    <string name="text_master_field_format">研究领域：%1$s</string>
+    <string name="text_master_findings_format">研究成果：%1$s</string>
     <!--Cook-->
     <string name="text_step">主要步骤</string>
     <!--DBDetail Home-->
@@ -159,5 +161,6 @@
     <string name="text_video_set">视频集合</string>
     <string name="text_video_list">视频列表</string>
     <string name="attention_exit_app">再按一次退出程序</string>
+    <string name="text_new_master">新锐专家</string>
 
 </resources>

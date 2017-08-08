@@ -40,6 +40,7 @@ import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
 import sinolight.cn.qgapp.data.http.entity.DicInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.EBookEntity;
+import sinolight.cn.qgapp.data.http.entity.MasterEntity;
 import sinolight.cn.qgapp.data.http.entity.MaterialEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
@@ -251,6 +252,16 @@ public class HttpManager {
     public void getHotPicWithCache(Observer<List<DBResPicEntity>> subscriber, String token, boolean update) {
         toSubscribe(cacheProvider.getHotPic(
                 mApiService.getHotPic(token), new EvictProvider(update)), subscriber);
+    }
+
+    public void getMasterTopWithCache(Observer<MasterEntity> subscriber, String token, String key, boolean update) {
+        toSubscribe(cacheProvider.getMasterTop(
+                mApiService.getMasterTop(token, key), new EvictProvider(update)), subscriber);
+    }
+
+    public void getMasterHotListWithCache(Observer<List<MasterEntity>> subscriber, String token, String key, boolean update) {
+        toSubscribe(cacheProvider.getMasterHotList(
+                mApiService.getMasterHotList(token, key), new EvictProvider(update)), subscriber);
     }
 
     public void getHotVideoWithCache(Observer<List<DBResVideoEntity>> subscriber, String token, boolean update) {

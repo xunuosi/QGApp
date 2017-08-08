@@ -1,0 +1,115 @@
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/iv_master_home_banner"
+        android:layout_width="0dp"
+        android:layout_height="155dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        fresco:actualImageScaleType="centerCrop"
+        fresco:placeholderImage="@color/color_home_bg"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/et_master_home_search"
+        android:layout_width="0dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rect_frame_blue_no_radiu"
+        android:paddingStart="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/guideline35"
+        app:layout_constraintTop_toBottomOf="@+id/iv_master_home_banner"
+        />
+
+    <ImageView
+        android:id="@+id/iv_master_home_search"
+        android:layout_width="0dp"
+        android:layout_height="38dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rect_blue_no_radiu"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/icon_search_white"
+        app:layout_constraintBottom_toBottomOf="@+id/et_master_home_search"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline35"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_master_home_search"
+        app:layout_constraintVertical_bias="0.0"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline35"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.79"
+        tools:layout_editor_absoluteX="304dp"
+        tools:layout_editor_absoluteY="25dp"/>
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/iv_master_home_indicator"
+        android:layout_width="8dp"
+        android:layout_height="9dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_master_home_list_title"
+        app:layout_constraintLeft_toLeftOf="@+id/et_master_home_search"
+        app:layout_constraintTop_toTopOf="@+id/tv_master_home_list_title"
+        fresco:placeholderImage="@drawable/indicator_yellow"
+        />
+
+    <TextView
+        android:id="@+id/tv_master_home_list_title"
+        style="@style/dbres_text_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        app:layout_constraintLeft_toRightOf="@+id/iv_master_home_indicator"
+        app:layout_constraintRight_toLeftOf="@+id/guideline35"
+        app:layout_constraintTop_toBottomOf="@+id/et_master_home_search"
+        android:text="@string/text_new_master"/>
+
+    <TextView
+        android:id="@+id/tv_master_home_getall"
+        style="@style/dbres_text_blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_get_all"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_master_home_list_title"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline35"
+        app:layout_constraintTop_toTopOf="@+id/tv_master_home_list_title"
+        />
+
+    <View
+        android:id="@+id/empty_view2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/color_bottom_divider"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_master_home_list_title"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_master_home"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/empty_view2"/>
+</android.support.constraint.ConstraintLayout>

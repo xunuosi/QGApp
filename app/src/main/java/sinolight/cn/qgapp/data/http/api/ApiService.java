@@ -21,6 +21,7 @@ import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
 import sinolight.cn.qgapp.data.http.entity.DicInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.EBookEntity;
+import sinolight.cn.qgapp.data.http.entity.MasterEntity;
 import sinolight.cn.qgapp.data.http.entity.MaterialEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
@@ -534,5 +535,31 @@ public interface ApiService {
     Observable<ResultEntity<CookEntity<CookContentEntity>>> getCookInfo(
             @Field("token") String token,
             @Field("id") String id
+    );
+
+    /**
+     * 行业专家-特别推荐专家
+     * @param token
+     * @param key
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("expert/doTopExpert")
+    Observable<ResultEntity<MasterEntity>> getMasterTop(
+            @Field("token") String token,
+            @Field("key") String key
+    );
+
+    /**
+     * 行业专家-新锐专家
+     * @param token
+     * @param key
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("expert/doHotExpert")
+    Observable<ResultEntity<List<MasterEntity>>> getMasterHotList(
+            @Field("token") String token,
+            @Field("key") String key
     );
 }

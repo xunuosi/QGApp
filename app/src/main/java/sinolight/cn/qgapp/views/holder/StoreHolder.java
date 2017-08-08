@@ -21,6 +21,7 @@ import sinolight.cn.qgapp.utils.ImageUtil;
 import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.views.activity.DBResourceActivity;
 import sinolight.cn.qgapp.views.activity.EBookActivity;
+import sinolight.cn.qgapp.views.activity.MasterHomeActivity;
 
 /**
  * Created by admin on 2017/7/5.3
@@ -87,9 +88,15 @@ public class StoreHolder extends RecyclerView.ViewHolder {
                 onClickEBook();
                 break;
             case TYPE_MASTER:
-
+                onClickMaster();
                 break;
         }
+    }
+
+    private void onClickMaster() {
+        Intent callIntent = MasterHomeActivity.getCallIntent(App.getContext());
+        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        App.getContext().startActivity(callIntent);
     }
 
     private void onClickStandard() {
