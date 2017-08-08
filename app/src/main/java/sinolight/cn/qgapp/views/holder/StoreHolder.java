@@ -19,6 +19,7 @@ import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.HomeData;
 import sinolight.cn.qgapp.utils.ImageUtil;
 import sinolight.cn.qgapp.utils.L;
+import sinolight.cn.qgapp.views.activity.DBResourceActivity;
 import sinolight.cn.qgapp.views.activity.EBookActivity;
 
 /**
@@ -80,7 +81,7 @@ public class StoreHolder extends RecyclerView.ViewHolder {
 
                 break;
             case TYPE_DB_STANDARD:
-
+                onClickStandard();
                 break;
             case TYPE_EBOOK:
                 onClickEBook();
@@ -89,6 +90,14 @@ public class StoreHolder extends RecyclerView.ViewHolder {
 
                 break;
         }
+    }
+
+    private void onClickStandard() {
+//        Intent callIntent = DBResourceActivity.getCallIntent(App.getContext());
+//        callIntent.putExtra(AppContants.DataBase.KEY_ID, homeData.getId());
+//        callIntent.putExtra(AppContants.DataBase.KEY_RES_TYPE, resType);
+//        callIntent.putExtra(AppContants.DataBase.KEY_TYPE, dbType.getType());
+//        App.getContext().startActivity(callIntent);
     }
 
     private void onClickEBook() {
