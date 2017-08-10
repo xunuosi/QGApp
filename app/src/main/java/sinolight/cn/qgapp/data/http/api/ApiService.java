@@ -562,4 +562,23 @@ public interface ApiService {
             @Field("token") String token,
             @Field("key") String key
     );
+
+    /**
+     * 行业专家列表
+     * @param token
+     * @param key
+     * @param type
+     * @param page
+     * @param size
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("expert/doExpertList")
+    Observable<ResultEntity<PageEntity<List<MasterEntity>>>> getMasterList(
+            @Field("token") String token,
+            @Field("key") String key,
+            @Field("type") String type,
+            @Field("page") int page,
+            @Field("size") int size
+    );
 }

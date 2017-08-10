@@ -264,6 +264,11 @@ public class HttpManager {
                 mApiService.getMasterHotList(token, key), new EvictProvider(update)), subscriber);
     }
 
+    public void getMasterListNoCache(Observer<PageEntity<List<MasterEntity>>> subscriber, String token, String key,
+                                     String type, int page, int size) {
+        toSubscribe(mApiService.getMasterList(token, key, type, page, size), subscriber);
+    }
+
     public void getHotVideoWithCache(Observer<List<DBResVideoEntity>> subscriber, String token, boolean update) {
         toSubscribe(cacheProvider.getHotVideo(
                 mApiService.getHotVideo(token), new EvictProvider(update)), subscriber);

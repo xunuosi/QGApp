@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -31,40 +32,37 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 import sinolight.cn.qgapp.R;
-import sinolight.cn.qgapp.adapter.CommonTitleAdapter;
-import sinolight.cn.qgapp.adapter.VideoAdapter;
-import sinolight.cn.qgapp.dagger.component.DaggerMaterialListActivityComponent;
-import sinolight.cn.qgapp.dagger.module.MaterialListActivityModule;
-import sinolight.cn.qgapp.presenter.MaterialListActivityPresenter;
+import sinolight.cn.qgapp.adapter.MasterAdapter;
+import sinolight.cn.qgapp.dagger.component.DaggerMasterListActivityComponent;
+import sinolight.cn.qgapp.dagger.module.MasterListActivityModule;
+import sinolight.cn.qgapp.presenter.MasterListActivityPresenter;
 import sinolight.cn.qgapp.views.holder.TreeParentHolder;
-import sinolight.cn.qgapp.views.view.IMaterialListActivityView;
+import sinolight.cn.qgapp.views.view.IMasterListActivityView;
 import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
 
 /**
- * Created by xns on 2017/8/1.
- * 菜谱列表的Activity
+ * Created by xns on 2017/8/10.
+ * 专家列表
  */
 
-public class MaterialListActivity extends BaseActivity implements IMaterialListActivityView,
+public class MasterListActivity extends BaseActivity implements IMasterListActivityView,
         OnRefreshListener, OnLoadMoreListener, TreeNode.TreeNodeClickListener, PopupWindow.OnDismissListener {
-    private static final String TAG = "MaterialListActivity";
-
     @Inject
     Context mContext;
     @Inject
-    MaterialListActivityPresenter mPresenter;
+    MasterListActivityPresenter mPresenter;
     @BindView(R.id.tv_title)
     TextView mTvTitle;
-    @BindView(R.id.tool_bar_material_list)
-    Toolbar mToolBarMaterialList;
-    @BindView(R.id.et_material_list_search)
-    EditText mEtMaterialListSearch;
-    @BindView(R.id.swipe_target)
-    RecyclerView mSwipeTarget;
-    @BindView(R.id.swipe_material_list)
-    SwipeToLoadLayout mSwipeMaterialList;
     @BindView(R.id.iv_menu)
     ImageView mIvMenu;
+    @BindView(R.id.tool_bar_master_list)
+    Toolbar mToolBarMasterList;
+    @BindView(R.id.et_master_list_search)
+    EditText mEtMasterListSearch;
+    @BindView(R.id.swipe_target)
+    RecyclerView mSwipeTarget;
+    @BindView(R.id.swipe_master_list)
+    SwipeToLoadLayout mSwipe;
 
     private TopRightMenu mTopRightMenu;
     private AndroidTreeView tView;
@@ -73,7 +71,7 @@ public class MaterialListActivity extends BaseActivity implements IMaterialListA
     private LinearLayoutManager mLayoutManager;
 
     public static Intent getCallIntent(Context context) {
-        return new Intent(context, MaterialListActivity.class);
+        return new Intent(context, MasterListActivity.class);
     }
 
     @Override
@@ -84,28 +82,28 @@ public class MaterialListActivity extends BaseActivity implements IMaterialListA
     }
 
     @Override
-    public void onDestroy() {
+    protected void onDestroy() {
         super.onDestroy();
         mPresenter.clear();
     }
 
     @Override
     public int setLayoutId() {
-        return R.layout.activity_material_list;
+        return R.layout.activity_master_list;
     }
 
     @Override
     protected void initViews() {
-        mTvTitle.setText(R.string.text_material_list);
+        mTvTitle.setText(R.string.text_master_store);
 
         mLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         mSwipeTarget.setLayoutManager(mLayoutManager);
         mSwipeTarget.setHasFixedSize(true);
         mSwipeTarget.addItemDecoration(new LinearDivider(mContext));
 
-        mSwipeMaterialList.setOnRefreshListener(MaterialListActivity.this);
-        mSwipeMaterialList.setOnLoadMoreListener(MaterialListActivity.this);
-        mSwipeMaterialList.setRefreshing(true);
+        mSwipe.setOnRefreshListener(MasterListActivity.this);
+        mSwipe.setOnLoadMoreListener(MasterListActivity.this);
+        mSwipe.setRefreshing(true);
     }
 
     @Override
@@ -115,82 +113,104 @@ public class MaterialListActivity extends BaseActivity implements IMaterialListA
 
     @Override
     protected void initializeInjector() {
-        DaggerMaterialListActivityComponent
+        DaggerMasterListActivityComponent
                 .builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
-                .materialListActivityModule(new MaterialListActivityModule(this))
+                .masterListActivityModule(new MasterListActivityModule(this))
                 .build()
                 .inject(this);
     }
 
-
-    private void searchData() {
-        if (TextUtils.isEmpty(mEtMaterialListSearch.getText().toString().trim())) {
-            showToast(R.string.text_search_data_empty);
-            return;
-        } else {
-            mPresenter.searchData(mEtMaterialListSearch.getText().toString().trim(), themeType);
-        }
+    @Override
+    public void onDismiss() {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = 1.0f;
+        getWindow().setAttributes(lp);
+        // Request themeType Data
+        mPresenter.loadDataWithPara(
+                mEtMasterListSearch.getText().toString().trim(),
+                themeType,
+                false,
+                true
+        );
     }
 
     @Override
     public void onLoadMore() {
-        mPresenter.loadMore(mEtMaterialListSearch.getText().toString().trim(), themeType);
+        mPresenter.loadMore(mEtMasterListSearch.getText().toString().trim(), themeType);
+    }
+
+    @Override
+    public void onRefresh() {
+        mEtMasterListSearch.setText(null);
+        themeType = null;
+        mPresenter.refreshView();
+    }
+
+    @Override
+    public void onClick(TreeNode node, Object value) {
+        TreeParentHolder.IconTreeItem item = (TreeParentHolder.IconTreeItem) value;
+        themeType = item.id;
+        Toast.makeText(mContext, "你选择了:" + item.name + "分类", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showToast(int msgId) {
         String msg = getString(msgId);
+        this.showToastStr(msg);
+    }
+
+    @Override
+    public void showToastStr(String msg) {
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void showListView(CommonTitleAdapter adapter) {
+    public void showListView(MasterAdapter adapter) {
         if (mSwipeTarget != null && mSwipeTarget.getAdapter() == null) {
             mSwipeTarget.setAdapter(adapter);
         }
     }
 
-
     @Override
     public void showRefreshing(boolean enable) {
         if (enable) {
-            mSwipeMaterialList.post(new Runnable() {
+            mSwipe.post(new Runnable() {
                 @Override
                 public void run() {
-                    mSwipeMaterialList.setRefreshing(true);
+                    mSwipe.setRefreshing(true);
                 }
             });
         } else {
-            mSwipeMaterialList.setRefreshing(false);
+            mSwipe.setRefreshing(false);
         }
     }
 
     @Override
     public void showLoadMoreing(boolean enable) {
-        if (!mSwipeMaterialList.isLoadMoreEnabled()) {
+        if (!mSwipe.isLoadMoreEnabled()) {
             return;
         }
         if (enable) {
-            mSwipeMaterialList.post(new Runnable() {
+            mSwipe.post(new Runnable() {
                 @Override
                 public void run() {
-                    mSwipeMaterialList.setLoadingMore(true);
+                    mSwipe.setLoadingMore(true);
                 }
             });
         } else {
-            mSwipeMaterialList.setLoadingMore(false);
+            mSwipe.setLoadingMore(false);
         }
     }
 
     @Override
     public void hasMoreData(boolean hasMore) {
-        if (mSwipeMaterialList != null) {
-            if (mSwipeMaterialList.isLoadingMore()) {
+        if (mSwipe != null) {
+            if (mSwipe.isLoadingMore()) {
                 showLoadMoreing(false);
             }
-            mSwipeMaterialList.setLoadMoreEnabled(hasMore);
+            mSwipe.setLoadMoreEnabled(hasMore);
         }
     }
 
@@ -229,13 +249,14 @@ public class MaterialListActivity extends BaseActivity implements IMaterialListA
     }
 
     @Override
-    public void onRefresh() {
-        mEtMaterialListSearch.setText(null);
-        themeType = null;
-        mPresenter.refreshView();
+    public void hideKeyboard(boolean enable) {
+        if (enable) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 
-    @OnClick({R.id.im_back_arrow, R.id.iv_menu, R.id.iv_material_list_search})
+    @OnClick({R.id.im_back_arrow, R.id.iv_menu, R.id.iv_master_list_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.im_back_arrow:
@@ -244,32 +265,19 @@ public class MaterialListActivity extends BaseActivity implements IMaterialListA
             case R.id.iv_menu:
                 popTreeMenu();
                 break;
-            case R.id.iv_material_list_search:
+            case R.id.iv_master_list_search:
                 searchData();
                 break;
         }
     }
 
-    @Override
-    public void onDismiss() {
-        // recover window Alpha
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.alpha = 1.0f;
-        getWindow().setAttributes(lp);
-        // Request themeType Data
-        mPresenter.loadDataWithPara(
-                mEtMaterialListSearch.getText().toString().trim(),
-                themeType,
-                false,
-                true
-        );
-    }
-
-    @Override
-    public void onClick(TreeNode node, Object value) {
-        TreeParentHolder.IconTreeItem item = (TreeParentHolder.IconTreeItem) value;
-        themeType = item.id;
-        Toast.makeText(mContext, "你选择了:" + item.name + "分类", Toast.LENGTH_SHORT).show();
+    private void searchData() {
+        if (TextUtils.isEmpty(mEtMasterListSearch.getText().toString().trim())) {
+            showToast(R.string.text_search_data_empty);
+            return;
+        } else {
+            mPresenter.searchData(mEtMasterListSearch.getText().toString().trim(), themeType);
+        }
     }
 
     private class LinearDivider extends Y_DividerItemDecoration {

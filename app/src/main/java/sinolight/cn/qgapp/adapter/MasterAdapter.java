@@ -11,7 +11,6 @@ import java.util.List;
 
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.KDBResData;
-import sinolight.cn.qgapp.views.holder.CookHeadHolder;
 import sinolight.cn.qgapp.views.holder.MasterHolder;
 
 /**

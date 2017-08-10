@@ -8,7 +8,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -195,8 +194,14 @@ public class MasterHomeActivity extends BaseActivity implements IMasterHomeActiv
                 mPresenter.searchData(mEtMasterHomeSearch.getText().toString().trim());
                 break;
             case R.id.tv_master_home_getall:
+                gotoMasterListActivity();
                 break;
         }
+    }
+
+    private void gotoMasterListActivity() {
+        Intent callIntent = MasterListActivity.getCallIntent(mContext);
+        startActivity(callIntent);
     }
 
     @Override
