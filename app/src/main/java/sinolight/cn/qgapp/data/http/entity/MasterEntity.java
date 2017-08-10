@@ -13,6 +13,10 @@ public class MasterEntity {
     private String remark;
     // 研究领域
     private String domain;
+    // 代表作
+    private String works;
+    // 简介
+    private String abs;
 
     public MasterEntity() {
     }
@@ -55,5 +59,21 @@ public class MasterEntity {
 
     public void setDomain(String domain) {
         this.domain = domain;
+    }
+
+    public String getWorks() {
+        return works;
+    }
+
+    public void setWorks(String works) {
+        this.works = works;
+    }
+
+    public String getAbs() {
+        return abs;
+    }
+
+    public void setAbs(String abs) {
+        this.abs = abs;
     }
 }

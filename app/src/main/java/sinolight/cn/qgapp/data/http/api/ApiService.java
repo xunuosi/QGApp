@@ -581,4 +581,17 @@ public interface ApiService {
             @Field("page") int page,
             @Field("size") int size
     );
+
+    /**
+     * 行业专家详情信息
+     * @param token
+     * @param id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("expert/doExpertInfo")
+    Observable<ResultEntity<MasterEntity>> getMasterInfo(
+            @Field("token") String token,
+            @Field("id") String id
+    );
 }

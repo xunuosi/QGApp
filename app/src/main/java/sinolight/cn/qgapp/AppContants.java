@@ -156,4 +156,8 @@ public interface AppContants {
     interface Cook {
         String COOK_ID = "cook_id";
     }
+
+    interface Master {
+        String MASTER_ID = "master_id";
+    }
 }

@@ -250,4 +250,20 @@
     <style name="cook_info_item_title" parent="kdb_book_detail_text_title">
         <item name="android:gravity">center</item>
     </style>
+    <!--Master-->
+    <style name="master_info_text_blue">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/color_login_blue</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="master_info_text">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/color_hf_article_info_text</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="master_info_text_gray">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/mask_color</item>
+        <item name="android:gravity">left</item>
+    </style>
 </resources>
