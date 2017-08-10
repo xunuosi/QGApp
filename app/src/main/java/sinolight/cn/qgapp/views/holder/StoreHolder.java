@@ -18,7 +18,7 @@ import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.HomeData;
 import sinolight.cn.qgapp.utils.ImageUtil;
-import sinolight.cn.qgapp.utils.L;
+import sinolight.cn.qgapp.views.activity.BaiKeActivity;
 import sinolight.cn.qgapp.views.activity.DBResourceActivity;
 import sinolight.cn.qgapp.views.activity.EBookActivity;
 import sinolight.cn.qgapp.views.activity.MasterHomeActivity;
@@ -79,7 +79,7 @@ public class StoreHolder extends RecyclerView.ViewHolder {
                 onClickRes();
                 break;
             case TYPE_DB_BAIKE:
-
+                onClickBaiKe();
                 break;
             case TYPE_DB_STANDARD:
                 onClickStandard();
@@ -93,6 +93,12 @@ public class StoreHolder extends RecyclerView.ViewHolder {
         }
     }
 
+    private void onClickBaiKe() {
+        Intent callIntent = BaiKeActivity.getCallIntent(App.getContext());
+        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        App.getContext().startActivity(callIntent);
+    }
+
     private void onClickMaster() {
         Intent callIntent = MasterHomeActivity.getCallIntent(App.getContext());
         callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -100,11 +106,10 @@ public class StoreHolder extends RecyclerView.ViewHolder {
     }
 
     private void onClickStandard() {
-//        Intent callIntent = DBResourceActivity.getCallIntent(App.getContext());
-//        callIntent.putExtra(AppContants.DataBase.KEY_ID, homeData.getId());
-//        callIntent.putExtra(AppContants.DataBase.KEY_RES_TYPE, resType);
-//        callIntent.putExtra(AppContants.DataBase.KEY_TYPE, dbType.getType());
-//        App.getContext().startActivity(callIntent);
+        Intent callIntent = DBResourceActivity.getCallIntent(App.getContext());
+        callIntent.putExtra(AppContants.DataBase.KEY_RES_TYPE, AppContants.DataBase.Res.RES_STANDARD);
+        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        App.getContext().startActivity(callIntent);
     }
 
     private void onClickEBook() {

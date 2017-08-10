@@ -52,7 +52,7 @@
         android:background="@color/white"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="@+id/db_res_empty_view"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/db_res_empty_view"
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/color_login_blue"
