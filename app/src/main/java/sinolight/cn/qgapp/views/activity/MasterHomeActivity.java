@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -142,7 +143,7 @@ public class MasterHomeActivity extends BaseActivity implements IMasterHomeActiv
 
     @Override
     public void showToastStr(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -174,6 +175,14 @@ public class MasterHomeActivity extends BaseActivity implements IMasterHomeActiv
         );
     }
 
+    @Override
+    public void hideKeyboard(boolean enable) {
+        if (enable) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
     @OnClick({R.id.im_back_arrow, R.id.iv_collect, R.id.iv_master_home_search, R.id.tv_master_home_getall})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -183,6 +192,7 @@ public class MasterHomeActivity extends BaseActivity implements IMasterHomeActiv
             case R.id.iv_collect:
                 break;
             case R.id.iv_master_home_search:
+                mPresenter.searchData(mEtMasterHomeSearch.getText().toString().trim());
                 break;
             case R.id.tv_master_home_getall:
                 break;
@@ -191,6 +201,7 @@ public class MasterHomeActivity extends BaseActivity implements IMasterHomeActiv
 
     @Override
     public void onRefresh() {
+        mEtMasterHomeSearch.setText(null);
         mPresenter.init2Show();
     }
 

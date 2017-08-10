@@ -18,4 +18,6 @@ public interface IMasterHomeActivityView {
     void showRefreshing(boolean enable);
 
     void showTopBanner(String cover);
+
+    void hideKeyboard(boolean enable);
 }

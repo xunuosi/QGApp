@@ -1,11 +1,13 @@
 package sinolight.cn.qgapp.presenter;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import sinolight.cn.qgapp.AppHelper;
+import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.adapter.MasterAdapter;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.HttpManager;
@@ -27,7 +29,6 @@ public class MasterHomeActivityPresenter extends BasePresenter<IMasterHomeActivi
     private static final int TYPE_MASTER_LIST = 1;
 
     private final Context mContext;
-    private String masterID;
     private MasterAdapter mAdapter;
     private MasterEntity mTopMaster;
     private List<MasterEntity> masterList;
@@ -158,7 +159,7 @@ public class MasterHomeActivityPresenter extends BasePresenter<IMasterHomeActivi
                 masterListObserver,
                 AppHelper.getInstance().getCurrentToken(),
                 null,
-                false
+                true
         );
     }
 
@@ -171,5 +172,32 @@ public class MasterHomeActivityPresenter extends BasePresenter<IMasterHomeActivi
     protected void resetState() {
         super.resetState();
         mDatas.clear();
+    }
+
+    /**
+     *
+     * @param key
+     */
+    public void searchData(String key) {
+        if (checkKey(key)) {
+            view().showToast(R.string.text_search_data_empty);
+        } else {
+            // hide keyboard
+            view().hideKeyboard(true);
+            getSearchData(key);
+        }
+    }
+
+    private void getSearchData(String key) {
+        model.getMasterHotListWithCache(
+                masterListObserver,
+                AppHelper.getInstance().getCurrentToken(),
+                key,
+                true
+        );
+    }
+
+    private boolean checkKey(String key) {
+        return TextUtils.isEmpty(key);
     }
 }
