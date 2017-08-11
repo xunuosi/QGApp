@@ -13,7 +13,7 @@
         android:layout_height="25dp"
         android:src="@drawable/nav_back"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="32dp"
+        android:layout_marginLeft="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_title"
         android:layout_marginTop="0dp"
@@ -46,6 +46,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/guideline36"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="57dp"/>
+        app:layout_constraintGuide_end="41dp"/>
 
 </android.support.constraint.ConstraintLayout>

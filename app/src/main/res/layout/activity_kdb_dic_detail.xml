@@ -44,7 +44,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="33dp"
+                android:layout_marginLeft="16dp"
                 android:src="@drawable/nav_back"
                 />
 
@@ -63,7 +63,7 @@
                 android:layout_height="25dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="33dp"
+                android:layout_marginEnd="16dp"
                 android:clickable="true"
                 android:src="@drawable/icon_collect"/>
         </RelativeLayout>
