@@ -72,6 +72,7 @@ public class DBResMaterialFragment extends BaseLazyLoadFragment implements IDBRe
 
     private void initView() {
         mLayoutManager = new LinearLayoutManager(getActivity());
+        mRvDbresMaterial.setHasFixedSize(true);
         mRvDbresMaterial.setLayoutManager(mLayoutManager);
         mRvDbresMaterial.addItemDecoration(new LinearDivider(getActivity()));
         mSwipeDbResMaterial.setOnRefreshListener(this);

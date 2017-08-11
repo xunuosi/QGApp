@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +13,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +29,10 @@ import sinolight.cn.qgapp.dagger.HasComponent;
 import sinolight.cn.qgapp.dagger.component.DaggerUserComponent;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
 import sinolight.cn.qgapp.dagger.module.UserModule;
-import sinolight.cn.qgapp.views.fragment.BaiKeFragment;
-import sinolight.cn.qgapp.views.fragment.ResourceFragment;
+import sinolight.cn.qgapp.data.bean.EventAction;
+import sinolight.cn.qgapp.views.fragment.BaiKeAnalysisFragment;
+import sinolight.cn.qgapp.views.fragment.BaiKeWordFragment;
+import sinolight.cn.qgapp.views.fragment.BaseLazyLoadFragment;
 
 /**
  * Created by xns on 2017/8/10.
@@ -36,23 +41,25 @@ import sinolight.cn.qgapp.views.fragment.ResourceFragment;
 
 public class BaiKeActivity extends BaseActivity implements HasComponent<UserComponent>,
         TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener {
+    private static final int TYPE_ANALYSIS = 0;
+    private static final int TYPE_WORD = 1;
 
-    @BindView(R.id.et_toolbar_search)
-    EditText mEtToolbarSearch;
-    @BindView(R.id.iv_menu)
-    ImageView mIvMenu;
-    @BindView(R.id.tool_bar_baike)
-    Toolbar mToolBarBaike;
     @BindView(R.id.tabLayout_baike)
     TabLayout mTabLayoutBaike;
     @BindView(R.id.vp_baike)
     ViewPager mVpBaike;
+    @BindView(R.id.et_db_detail_search)
+    EditText mEtDbDetailSearch;
+    @BindView(R.id.iv_db_detail_search)
+    ImageView mIvDbDetailSearch;
+    @BindView(R.id.tool_bar_baike)
+    Toolbar mToolBarBaike;
 
     private List<String> mTitles = new ArrayList<>();
     private MyTabAdapter mTabAdapter;
     private List<Fragment> mFragments;
     private UserComponent userComponent;
-    private ResourceFragment currentFragment;
+    private BaseLazyLoadFragment currentFragment;
 
     public static Intent getCallIntent(Context context) {
         return new Intent(context, BaiKeActivity.class);
@@ -60,7 +67,16 @@ public class BaiKeActivity extends BaseActivity implements HasComponent<UserComp
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        this.initializeInjector();
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
     }
 
     @Override
@@ -68,6 +84,9 @@ public class BaiKeActivity extends BaseActivity implements HasComponent<UserComp
         super.onDestroy();
         mFragments.clear();
         currentFragment = null;
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     @Override
@@ -84,6 +103,7 @@ public class BaiKeActivity extends BaseActivity implements HasComponent<UserComp
 
         mTabLayoutBaike.addOnTabSelectedListener(this);
         mVpBaike.addOnPageChangeListener(this);
+
     }
 
     private void addTabLayoutDivider() {
@@ -100,14 +120,18 @@ public class BaiKeActivity extends BaseActivity implements HasComponent<UserComp
         mTitles.add(getString(R.string.text_all_word));
 
         mFragments = new ArrayList<>();
-        mFragments.add(BaiKeFragment.newInstance(BaiKeFragment.TYPE_BAIKE_ANALYSIS));
-        mFragments.add(BaiKeFragment.newInstance(BaiKeFragment.TYPE_BAIKE_WORD));
+        mFragments.add(BaiKeAnalysisFragment.newInstance());
+        mFragments.add(BaiKeWordFragment.newInstance());
 
         mTabAdapter = new MyTabAdapter(
                 getSupportFragmentManager(),
                 mFragments,
                 mTitles
         );
+    }
+
+    private void setCurrentFragment(BaseLazyLoadFragment currentFragment) {
+        this.currentFragment = currentFragment;
     }
 
     @Override
@@ -146,7 +170,7 @@ public class BaiKeActivity extends BaseActivity implements HasComponent<UserComp
 
     @Override
     public void onPageSelected(int position) {
-
+        setCurrentFragment((BaseLazyLoadFragment) mFragments.get(position));
     }
 
     @Override
@@ -154,16 +178,24 @@ public class BaiKeActivity extends BaseActivity implements HasComponent<UserComp
 
     }
 
-    @OnClick({R.id.im_search_back_arrow, R.id.iv_toolbar_search, R.id.iv_menu})
+
+    @OnClick({R.id.im_back_arrow_search, R.id.iv_db_detail_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.im_search_back_arrow:
+            case R.id.im_back_arrow_search:
                 finish();
                 break;
-            case R.id.iv_toolbar_search:
-                break;
-            case R.id.iv_menu:
+            case R.id.iv_db_detail_search:
                 break;
         }
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void resetSearch(EventAction action) {
+        switch (action) {
+            case ACTION_RESET:
+                mEtDbDetailSearch.setText(null);
+                break;
+        }
+
     }
 }

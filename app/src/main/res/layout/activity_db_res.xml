@@ -120,7 +120,7 @@
         android:layout_marginLeft="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:background="@color/color_bottom_divider"
-        android:text="@string/text_word_footer_holder"
+        tools:text="@string/text_word_footer_holder"
         android:gravity="center_vertical"
         android:paddingLeft="16dp"
         style="@style/hf_standard_text"

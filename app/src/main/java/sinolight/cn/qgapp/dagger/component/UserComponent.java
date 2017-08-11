@@ -4,7 +4,8 @@ import dagger.Component;
 import sinolight.cn.qgapp.dagger.PerActivity;
 import sinolight.cn.qgapp.dagger.module.ActivityModule;
 import sinolight.cn.qgapp.dagger.module.UserModule;
-import sinolight.cn.qgapp.data.http.entity.DBResArticleEntity;
+import sinolight.cn.qgapp.views.fragment.BaiKeAnalysisFragment;
+import sinolight.cn.qgapp.views.fragment.BaiKeWordFragment;
 import sinolight.cn.qgapp.views.fragment.DBResArticleFragment;
 import sinolight.cn.qgapp.views.fragment.DBResMaterialFragment;
 import sinolight.cn.qgapp.views.fragment.DBResPicFragment;
@@ -38,5 +39,9 @@ public interface UserComponent extends ActivityComponent {
     void inject(DBResPicFragment dbResPicFragment);
 
     void inject(DBResVideoFragment dbResVideoFragment);
+
+    void inject(BaiKeAnalysisFragment baiKeAnalysisFragment);
+
+    void inject(BaiKeWordFragment baiKeWordFragment);
 
 }

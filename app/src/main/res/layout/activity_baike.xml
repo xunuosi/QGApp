@@ -20,7 +20,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <include layout="@layout/layout_search_toolbar_with_menu"/>
+        <include layout="@layout/layout_toolbar_search"/>
 
     </android.support.v7.widget.Toolbar>
     <View

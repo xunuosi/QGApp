@@ -11,6 +11,9 @@ import sinolight.cn.qgapp.dagger.component.UserComponent;
  */
 
 public abstract class BaseLazyLoadFragment extends Fragment{
+    public static final int TYPE_BAIKE_ANALYSIS = 0;
+    public static final int TYPE_BAIKE_WORD = 1;
+
     /** Fragment当前状态是否可见 */
     protected boolean isVisible;
 
