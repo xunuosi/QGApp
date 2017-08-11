@@ -253,8 +253,8 @@ public interface ApiService {
      * @return
      */
     @FormUrlEncoded
-    @POST("db/doPicList")
-    Observable<ResultEntity<PageEntity<List<ResImgEntity>>>> getKDBPicList(
+    @POST("Res/DoPicList")
+    Observable<ResultEntity<PageEntity<List<DBResPicEntity>>>> getKDBPicList(
             @Field("token") String token,
             @Field("key") String key,
             @Field("page") int page,

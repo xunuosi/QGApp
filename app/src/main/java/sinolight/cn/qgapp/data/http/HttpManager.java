@@ -184,7 +184,7 @@ public class HttpManager {
         toSubscribe(mApiService.getKDBIndustryAnalysisList(token,dbId,themeType,key, type, page, size), subscriber);
     }
 
-    public void getKDBdoPicListNoCache(Observer<PageEntity<List<ResImgEntity>>> subscriber, String token,
+    public void getKDBdoPicListNoCache(Observer<PageEntity<List<DBResPicEntity>>> subscriber, String token,
                                        @Nullable String key, int page, int size) {
         toSubscribe(mApiService.getKDBPicList(token, key, page, size), subscriber);
     }

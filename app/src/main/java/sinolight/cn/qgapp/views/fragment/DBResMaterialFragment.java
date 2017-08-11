@@ -134,15 +134,17 @@ public class DBResMaterialFragment extends BaseLazyLoadFragment implements IDBRe
 
     @Override
     public void showRefreshing(boolean enable) {
-        if (enable) {
-            mSwipeDbResMaterial.post(new Runnable() {
-                @Override
-                public void run() {
-                    mSwipeDbResMaterial.setRefreshing(true);
-                }
-            });
-        } else {
-            mSwipeDbResMaterial.setRefreshing(false);
+        if (mSwipeDbResMaterial != null) {
+            if (enable) {
+                mSwipeDbResMaterial.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeDbResMaterial.setRefreshing(true);
+                    }
+                });
+            } else {
+                mSwipeDbResMaterial.setRefreshing(false);
+            }
         }
     }
 

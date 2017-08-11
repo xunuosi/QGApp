@@ -30,7 +30,7 @@ import sinolight.cn.qgapp.dagger.component.UserComponent;
 
 public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener {
 
-    @BindView(R.id.et_toolbar_search)
+    @BindView(R.id.et_db_detail_search)
     EditText mEtToolbarSearch;
     @BindView(R.id.tool_bar_rf)
     Toolbar mToolBarRf;
@@ -114,13 +114,13 @@ public class ResourceFragment extends BaseFragment implements TabLayout.OnTabSel
         unbinder.unbind();
     }
 
-    @OnClick({R.id.im_search_back_arrow, R.id.iv_toolbar_search})
+    @OnClick({R.id.im_back_arrow_search, R.id.iv_db_detail_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.im_search_back_arrow:
+            case R.id.im_back_arrow_search:
                 getActivity().onBackPressed();
                 break;
-            case R.id.iv_toolbar_search:
+            case R.id.iv_db_detail_search:
                 getSearchData();
                 break;
         }

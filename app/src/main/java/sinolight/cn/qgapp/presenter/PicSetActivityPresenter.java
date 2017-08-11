@@ -2,6 +2,7 @@ package sinolight.cn.qgapp.presenter;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,28 +10,24 @@ import java.util.List;
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
-import sinolight.cn.qgapp.adapter.KDBResAdapter;
+import sinolight.cn.qgapp.adapter.CommonTitleAdapter;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
+import sinolight.cn.qgapp.data.http.entity.DBResPicEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
-import sinolight.cn.qgapp.data.http.entity.ResArticleEntity;
-import sinolight.cn.qgapp.data.http.entity.ResWordEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.KDBResDataMapper;
 import sinolight.cn.qgapp.utils.L;
-import sinolight.cn.qgapp.views.fragment.BaiKeWordFragment;
-import sinolight.cn.qgapp.views.fragment.BaseLazyLoadFragment;
-import sinolight.cn.qgapp.views.view.IBaiKeFragmentView;
+import sinolight.cn.qgapp.views.view.IPicSetActivityView;
 
 /**
  * Created by xns on 2017/6/29.
  * MaterialList Presenter
  */
 
-public class BaiKeWordFragmentPresenter extends BasePresenter<IBaiKeFragmentView, HttpManager> {
-    private static final String TAG = "BaiKeWordFragmentPresenter";
-    private static final int TYPE_ALL_DIC = 1;
+public class PicSetActivityPresenter extends BasePresenter<IPicSetActivityView, HttpManager> {
+    private static final String TAG = "PicSetActivityPresenter";
     private Context mContext;
 
     // 获取资源列表
@@ -43,18 +40,18 @@ public class BaiKeWordFragmentPresenter extends BasePresenter<IBaiKeFragmentView
     private boolean action_search = false;
 
     private List<KDBResData> mDatas = new ArrayList<>();
-    private List<ResWordEntity> wordDatas;
-    private KDBResAdapter mAdapter;
+    private List<DBResPicEntity> picDatas;
+    private CommonTitleAdapter mAdapter;
 
-    private HttpSubscriber<PageEntity<List<ResWordEntity>>> mWordObserver = new HttpSubscriber<>(
-            new OnResultCallBack<PageEntity<List<ResWordEntity>>>() {
+    private HttpSubscriber<PageEntity<List<DBResPicEntity>>> mPicObserver = new HttpSubscriber<>(
+            new OnResultCallBack<PageEntity<List<DBResPicEntity>>>() {
 
                 @Override
-                public void onSuccess(PageEntity<List<ResWordEntity>> pageEntity) {
+                public void onSuccess(PageEntity<List<DBResPicEntity>> pageEntity) {
                     if (pageEntity != null) {
                         count = pageEntity.getCount();
-                        wordDatas = pageEntity.getData();
-                        transformKDBResData(AppContants.DataBase.Res.RES_DIC);
+                        picDatas = pageEntity.getData();
+                        transformKDBResData();
                     } else {
                         showError(0, null);
                     }
@@ -62,7 +59,7 @@ public class BaiKeWordFragmentPresenter extends BasePresenter<IBaiKeFragmentView
 
                 @Override
                 public void onError(int code, String errorMsg) {
-                    L.d(TAG, "mWordObserver code:" + code + ",errorMsg:" + errorMsg);
+                    L.d(TAG, "mPicObserver code:" + code + ",errorMsg:" + errorMsg);
                     showError(code, errorMsg);
                 }
             });
@@ -87,14 +84,11 @@ public class BaiKeWordFragmentPresenter extends BasePresenter<IBaiKeFragmentView
         clearData();
     }
 
-    private void transformKDBResData(AppContants.DataBase.Res resType) {
+    private void transformKDBResData() {
         List<KDBResData> list = new ArrayList<>();
-        switch (resType) {
-            case RES_DIC:
-                list = KDBResDataMapper.transformDicDatas(wordDatas, KDBResAdapter.TYPE_WORD, false);
-                view().showFooterView(true, String.valueOf(count));
-                break;
-        }
+
+        list = KDBResDataMapper.transformPicDatas(picDatas, CommonTitleAdapter.TYPE_PIC, false);
+
         // Load More Action
         if (action_more) {
             mDatas.addAll(list);
@@ -107,7 +101,7 @@ public class BaiKeWordFragmentPresenter extends BasePresenter<IBaiKeFragmentView
 
     private void showWithData() {
         if (mAdapter == null) {
-            mAdapter = new KDBResAdapter(mContext, mDatas);
+            mAdapter = new CommonTitleAdapter(mContext, mDatas);
         } else {
             mAdapter.setData(mDatas);
         }
@@ -120,9 +114,10 @@ public class BaiKeWordFragmentPresenter extends BasePresenter<IBaiKeFragmentView
 
     }
 
-    public BaiKeWordFragmentPresenter(Context context) {
+    public PicSetActivityPresenter(Context context, IPicSetActivityView view) {
         this.mContext = context;
         setModel(HttpManager.getInstance());
+        bindView(view);
     }
 
     @Override
@@ -132,7 +127,7 @@ public class BaiKeWordFragmentPresenter extends BasePresenter<IBaiKeFragmentView
 
     @Override
     public void clear() {
-        mWordObserver.unSubscribe();
+        mPicObserver.unSubscribe();
 
         KDBResDataMapper.reset();
         unbindView();
@@ -150,20 +145,17 @@ public class BaiKeWordFragmentPresenter extends BasePresenter<IBaiKeFragmentView
         if (!isMore) {
             mDatas.clear();
         }
+
         // 请求资源数据
-        model.getKDBWordListNoCache(
-                mWordObserver,
+        model.getKDBdoPicListNoCache(
+                mPicObserver,
                 AppHelper.getInstance().getCurrentToken(),
-                null,
                 key,
-                TYPE_ALL_DIC,
-                themeType,
                 page,
                 SIZE
         );
 
     }
-
 
     private void closeRefreshing() {
         if (checkData()) {
@@ -211,23 +203,28 @@ public class BaiKeWordFragmentPresenter extends BasePresenter<IBaiKeFragmentView
     }
 
     private void getData() {
-        model.getKDBWordListNoCache(
-                mWordObserver,
+        model.getKDBdoPicListNoCache(
+                mPicObserver,
                 AppHelper.getInstance().getCurrentToken(),
-                null,
-                null,
-                TYPE_ALL_DIC,
                 null,
                 page,
                 SIZE
-
         );
+
     }
 
     public void searchData(String key, String themeType) {
+        if (checkData(key)) {
+            view().showToast(R.string.text_search_data_empty);
+            return;
+        }
         resetState();
         this.action_search = true;
         this.loadDataWithPara(key, themeType, false, true);
+    }
+
+    private boolean checkData(String key) {
+        return TextUtils.isEmpty(key);
     }
 
     /**

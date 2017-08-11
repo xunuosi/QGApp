@@ -18,6 +18,7 @@ import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.views.activity.DBResourceActivity;
 import sinolight.cn.qgapp.views.activity.MaterialListActivity;
+import sinolight.cn.qgapp.views.activity.PicSetActivity;
 import sinolight.cn.qgapp.views.activity.VideoListSetActivity;
 
 /**
@@ -76,12 +77,18 @@ public class DBResTitleHolder extends RecyclerView.ViewHolder {
                 gotoArticleListActivity();
                 break;
             case CommonTitleAdapter.TYPE_PIC_TITLE:
-
+                gotoPicSetActivity();
                 break;
             case CommonTitleAdapter.TYPE_VIDEO_TITLE:
                 gotoVideoSetActivity();
                 break;
         }
+    }
+
+    private void gotoPicSetActivity() {
+        Intent callIntent = PicSetActivity.getCallIntent(App.getContext());
+        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        App.getContext().startActivity(callIntent);
     }
 
     private void gotoMaterialListActivity() {

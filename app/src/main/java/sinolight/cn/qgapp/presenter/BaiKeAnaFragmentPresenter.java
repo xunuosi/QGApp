@@ -203,6 +203,7 @@ public class BaiKeAnaFragmentPresenter extends BasePresenter<IBaiKeFragmentView,
     }
 
     public void init2Show() {
+        view().hasMoreData(true);
         resetState();
         // load video set data
         getData();

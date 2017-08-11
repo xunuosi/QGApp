@@ -1,5 +1,6 @@
 package sinolight.cn.qgapp.views.holder;
 
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,11 +12,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import sinolight.cn.qgapp.App;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.entity.DBResPicEntity;
 import sinolight.cn.qgapp.utils.ImageUtil;
 import sinolight.cn.qgapp.utils.L;
+import sinolight.cn.qgapp.views.activity.DBResourceActivity;
 
 /**
  * Created by xns on 2017/7/17.
@@ -77,8 +80,17 @@ public class DBResPicHolder extends RecyclerView.ViewHolder {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.root_db_res_hot_pic:
-                L.d(TAG, "onClick:" + mData.getName());
+                gotoPicListActivity();
                 break;
         }
+    }
+
+    private void gotoPicListActivity() {
+        Intent callIntent = DBResourceActivity.getCallIntent(App.getContext());
+        callIntent.putExtra(AppContants.DataBase.KEY_ID, mData.getId());
+        callIntent.putExtra(AppContants.DataBase.KEY_RES_TYPE, AppContants.DataBase.Res.RES_IMG);
+        callIntent.putExtra(AppContants.DataBase.KEY_TYPE, "");
+        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        App.getContext().startActivity(callIntent);
     }
 }
