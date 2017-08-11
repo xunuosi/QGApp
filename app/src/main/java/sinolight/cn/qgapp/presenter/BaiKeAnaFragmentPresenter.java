@@ -142,31 +142,27 @@ public class BaiKeAnaFragmentPresenter extends BasePresenter<IBaiKeFragmentView,
      *
      * @param key
      */
-    public void loadDataWithPara(@Nullable String key, @Nullable String themeType, boolean isMore, boolean isSearch) {
+    private void loadDataWithPara(@Nullable String key, @Nullable String themeType, boolean isMore, boolean isSearch) {
         action_more = isMore;
         action_search = isSearch;
         // If not load more data, need clear data.
         if (!isMore) {
             mDatas.clear();
         }
-//        switch (this.resType) {
-//            case RES_COOK:
-//                // 请求资源数据
-//                model.getKDBWordListNoCache(
-//                        mMaterialObserver,
-//                        AppHelper.getInstance().getCurrentToken(),
-//                        null,
-//                        key,
-//                        TYPE_COOk,
-//                        themeType,
-//                        page,
-//                        SIZE
-//                );
-//                break;
-//        }
+
+        // 请求资源数据
+        model.getKDBIndustryAnalysisListNoCache(
+                mAnalysisObserver,
+                AppHelper.getInstance().getCurrentToken(),
+                null,
+                themeType,
+                key,
+                TYPE_INDUSTRY,
+                page,
+                SIZE
+        );
 
     }
-
 
     private void closeRefreshing() {
         if (checkData()) {

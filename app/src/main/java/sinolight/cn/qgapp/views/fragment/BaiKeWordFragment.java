@@ -2,7 +2,6 @@ package sinolight.cn.qgapp.views.fragment;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -21,6 +20,8 @@ import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder;
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import javax.inject.Inject;
 
@@ -33,6 +34,7 @@ import sinolight.cn.qgapp.dagger.HasComponent;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
 import sinolight.cn.qgapp.data.bean.EventAction;
 import sinolight.cn.qgapp.presenter.BaiKeWordFragmentPresenter;
+import sinolight.cn.qgapp.views.activity.BaiKeActivity;
 import sinolight.cn.qgapp.views.view.IBaiKeFragmentView;
 
 /**
@@ -55,6 +57,7 @@ public class BaiKeWordFragment extends BaseLazyLoadFragment implements IBaiKeFra
     Unbinder unbinder;
 
     private RecyclerView.LayoutManager mLayoutManager;
+    private String key;
 
     public static BaiKeWordFragment newInstance() {
         BaiKeWordFragment fragment = new BaiKeWordFragment();
@@ -67,9 +70,33 @@ public class BaiKeWordFragment extends BaseLazyLoadFragment implements IBaiKeFra
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
         mPresenter.clear();
+    }
+
+    @Subscribe(threadMode = ThreadMode.POSTING)
+    public void searchData(EventAction action) {
+        switch (action) {
+            case ACTION_SEARCH_WORD:
+                key = ((BaiKeActivity) getActivity()).getKey();
+                mPresenter.searchData(
+                        key,
+                        null
+                );
+                break;
+        }
     }
 
     @Nullable
@@ -131,7 +158,8 @@ public class BaiKeWordFragment extends BaseLazyLoadFragment implements IBaiKeFra
 
     @Override
     public void showToast(int msgId) {
-
+        String msg = getString(msgId);
+        this.showToastMessage(msg);
     }
 
     @Override
@@ -139,11 +167,6 @@ public class BaiKeWordFragment extends BaseLazyLoadFragment implements IBaiKeFra
         if (mSwipeTarget != null && mSwipeTarget.getAdapter() == null) {
             mSwipeTarget.setAdapter(adapter);
         }
-    }
-
-    @Override
-    public void gotoActivity(Intent callIntent) {
-
     }
 
     @Override
@@ -188,7 +211,7 @@ public class BaiKeWordFragment extends BaseLazyLoadFragment implements IBaiKeFra
     @Override
     public void showFooterView(boolean enable, String msg) {
         if (enable) {
-            mTvCountBaikeWord.setText(String.format(getString(R.string.text_word_count), msg));
+            mTvCountBaikeWord.setText(formatStr(R.string.text_word_count, msg));
             mTvCountBaikeWord.setVisibility(View.VISIBLE);
         } else {
             mTvCountBaikeWord.setVisibility(View.GONE);
@@ -197,12 +220,13 @@ public class BaiKeWordFragment extends BaseLazyLoadFragment implements IBaiKeFra
 
     @Override
     public void onLoadMore() {
-
+        mPresenter.loadMore(key, null);
     }
 
     @Override
     public void onRefresh() {
         EventBus.getDefault().post(EventAction.ACTION_RESET);
+        key = null;
         mPresenter.refreshView();
     }
 

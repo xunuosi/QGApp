@@ -9,10 +9,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -32,7 +34,6 @@ import sinolight.cn.qgapp.dagger.module.UserModule;
 import sinolight.cn.qgapp.data.bean.EventAction;
 import sinolight.cn.qgapp.views.fragment.BaiKeAnalysisFragment;
 import sinolight.cn.qgapp.views.fragment.BaiKeWordFragment;
-import sinolight.cn.qgapp.views.fragment.BaseLazyLoadFragment;
 
 /**
  * Created by xns on 2017/8/10.
@@ -59,7 +60,7 @@ public class BaiKeActivity extends BaseActivity implements HasComponent<UserComp
     private MyTabAdapter mTabAdapter;
     private List<Fragment> mFragments;
     private UserComponent userComponent;
-    private BaseLazyLoadFragment currentFragment;
+    private int type_position;
 
     public static Intent getCallIntent(Context context) {
         return new Intent(context, BaiKeActivity.class);
@@ -83,7 +84,6 @@ public class BaiKeActivity extends BaseActivity implements HasComponent<UserComp
     protected void onDestroy() {
         super.onDestroy();
         mFragments.clear();
-        currentFragment = null;
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
@@ -130,10 +130,6 @@ public class BaiKeActivity extends BaseActivity implements HasComponent<UserComp
         );
     }
 
-    private void setCurrentFragment(BaseLazyLoadFragment currentFragment) {
-        this.currentFragment = currentFragment;
-    }
-
     @Override
     protected void initializeInjector() {
         this.userComponent = DaggerUserComponent.builder()
@@ -170,7 +166,8 @@ public class BaiKeActivity extends BaseActivity implements HasComponent<UserComp
 
     @Override
     public void onPageSelected(int position) {
-        setCurrentFragment((BaseLazyLoadFragment) mFragments.get(position));
+        type_position = position;
+        mEtDbDetailSearch.setText(null);
     }
 
     @Override
@@ -186,9 +183,31 @@ public class BaiKeActivity extends BaseActivity implements HasComponent<UserComp
                 finish();
                 break;
             case R.id.iv_db_detail_search:
+                searchData();
                 break;
         }
     }
+
+    private void searchData() {
+        if (TextUtils.isEmpty(mEtDbDetailSearch.getText().toString().trim())) {
+            String msg = getString(R.string.text_search_data_empty);
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        switch (type_position) {
+            case TYPE_ANALYSIS:
+                EventBus.getDefault().post(EventAction.ACTION_SEARCH_ANALYSIS);
+                break;
+            case TYPE_WORD:
+                EventBus.getDefault().post(EventAction.ACTION_SEARCH_WORD);
+                break;
+        }
+    }
+
+    public String getKey() {
+        return mEtDbDetailSearch.getText().toString().trim();
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void resetSearch(EventAction action) {
         switch (action) {

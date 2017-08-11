@@ -6,7 +6,9 @@ package sinolight.cn.qgapp.data.bean;
  */
 
 public enum  EventAction {
-    ACTION_RESET("action_reset");
+    ACTION_RESET("action_reset"),
+    ACTION_SEARCH_ANALYSIS("action_search_analysis"),
+    ACTION_SEARCH_WORD("action_search_word");
 
     private final String action;
 
