@@ -46,6 +46,31 @@ public class KDBBookActivityPresenter extends BasePresenter<IKDBBookDetailActivi
                 }
             });
 
+    private HttpSubscriber<Object> mCollectObserver = new HttpSubscriber<>(
+            new OnResultCallBack<Object>() {
+
+                @Override
+                public void onSuccess(Object o) {
+                    showErrorToast(R.string.text_collect_success);
+                    view().showRefreshing(false);
+                }
+
+                @Override
+                public void onError(int code, String errorMsg) {
+                    L.d(TAG, "mCollectObserver code:" + code + ",errorMsg:" + errorMsg);
+                    checkoutCollectState(code, errorMsg);
+                }
+            });
+
+    private void checkoutCollectState(int code, String errorMsg) {
+        if (code == AppContants.SUCCESS_CODE) {
+            view().setCollectState(true);
+            view().showStrToast(errorMsg);
+        } else {
+            showError();
+        }
+    }
+
     private void showView() {
         view().init2Show(bookData);
     }
@@ -74,6 +99,7 @@ public class KDBBookActivityPresenter extends BasePresenter<IKDBBookDetailActivi
     public void clear() {
         view().showRefreshing(false);
         mBookObserver.unSubscribe();
+        mCollectObserver.unSubscribe();
         unbindView();
     }
 
@@ -97,5 +123,14 @@ public class KDBBookActivityPresenter extends BasePresenter<IKDBBookDetailActivi
         callIntent.putExtra(AppContants.Read.READ_NAME, bookData.getName());
         callIntent.putExtra(AppContants.Read.READ_RES_TYPE, AppContants.Read.Type.TYPE_BOOK);
         return callIntent;
+    }
+
+    public void collectRes(AppContants.DataBase.Res resType) {
+        model.collectResNoCache(
+                mCollectObserver,
+                AppHelper.getInstance().getCurrentToken(),
+                resType.getType(),
+                bookData.getId()
+        );
     }
 }

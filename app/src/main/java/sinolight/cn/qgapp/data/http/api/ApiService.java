@@ -594,4 +594,23 @@ public interface ApiService {
             @Field("token") String token,
             @Field("id") String id
     );
+
+    /**
+     *
+     * @param token
+     * @param resType:资源类型 1:图书，2:标准，12:图片，19:文章，22:词条，32:行业分析，35:菜谱
+     * @param resId:资源id
+     * @param remark:"加入收藏"
+     * @param user:用户名
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("db/addToFavor")
+    Observable<ResultEntity<Object>> collectRes(
+            @Field("token") String token,
+            @Field("resType") String resType,
+            @Field("resId") String resId,
+            @Field("remark") String remark,
+            @Field("user") String user
+    );
 }

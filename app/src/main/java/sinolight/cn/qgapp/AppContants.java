@@ -6,10 +6,13 @@ package sinolight.cn.qgapp;
  */
 
 public interface AppContants {
-    String BASE_URL = "http://192.168.101.215:9011/api/";
-//    String BASE_URL = "http:/192.168.25.183:8018/api/";
+//    String BASE_URL = "http://192.168.101.215:9011/api/";
+    String BASE_URL = "http:/192.168.25.183:8018/api/";
     int SUCCESS_CODE = -1;
-    int FAILED_CODE = 0;
+    // 身份验证失败
+    int FAILED_TOKEN = 0;
+    // 请求信息不完整
+    int FAILED_PARA = 1;
 
     interface Account {
         String USER_NAME = "account_name";

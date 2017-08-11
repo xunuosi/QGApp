@@ -24,6 +24,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sinolight.cn.qgapp.AppContants;
+import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.data.bean.DataBaseBean;
 import sinolight.cn.qgapp.data.http.api.ApiService;
 import sinolight.cn.qgapp.data.http.cache.CacheProvider;
@@ -120,7 +121,7 @@ public class HttpManager {
                     @Override
                     public T apply(@NonNull ResultEntity<T> response) throws Exception {
                         int code= response.getCode();
-                        if (code != AppContants.SUCCESS_CODE) {
+                        if (code != AppContants.SUCCESS_CODE || response.getResult() == null) {
                             throw new ApiException(code, response.getMessage());
                         } else {
                             return response.getResult();
@@ -302,5 +303,15 @@ public class HttpManager {
 
     public void login(Observer<TokenEntity> subscriber, String name, String pwd) {
         toSubscribe(mApiService.login(name, pwd), subscriber);
+    }
+
+    public void collectResNoCache(Observer<Object> subscriber, String token, String resType, String resId) {
+        toSubscribe(mApiService.collectRes(
+                token,
+                resType,
+                resId,
+                "加入收藏",
+                AppHelper.getInstance().getCurrentUserName()),
+                subscriber);
     }
 }

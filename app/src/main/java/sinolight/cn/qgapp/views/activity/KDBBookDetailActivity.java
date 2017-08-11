@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -72,6 +72,8 @@ public class KDBBookDetailActivity extends BaseActivity implements IKDBBookDetai
     TabLayout mTlKdbBookDetail;
     @BindView(R.id.vp_kdb_book_detail)
     ViewPager mVpKdbBookDetail;
+    @BindView(R.id.iv_collect)
+    ImageView mIvCollect;
 
     private MyTabAdapter mTabAdapter;
     private List<Fragment> mFragments;
@@ -107,7 +109,7 @@ public class KDBBookDetailActivity extends BaseActivity implements IKDBBookDetai
 
     @Override
     protected void initializeInjector() {
-       DaggerKDBBookActivityComponent
+        DaggerKDBBookActivityComponent
                 .builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
@@ -129,6 +131,7 @@ public class KDBBookDetailActivity extends BaseActivity implements IKDBBookDetai
                 finish();
                 break;
             case R.id.iv_collect:
+                mPresenter.collectRes(AppContants.DataBase.Res.RES_BOOK);
                 break;
             case R.id.btn_kdb_book_read:
                 gotoChapterActivity();
@@ -152,6 +155,11 @@ public class KDBBookDetailActivity extends BaseActivity implements IKDBBookDetai
     @Override
     public void showErrorToast(int msgId) {
         String msg = getString(msgId);
+        this.showStrToast(msg);
+    }
+
+    @Override
+    public void showStrToast(String msg) {
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 
@@ -170,12 +178,12 @@ public class KDBBookDetailActivity extends BaseActivity implements IKDBBookDetai
                 mIvKdbBookCover,
                 width,
                 height
-                );
+        );
         mTvKdbBookTitle.setText(bookData.getName());
 
-        mTvKdbBookAuthor.setText(formatStr(R.string.text_author_format,bookData.getAuthor()));
-        mTvKdbBookPubName.setText(formatStr(R.string.text_publish_name_format,bookData.getIssuedept()));
-        mTvKdbBookPubTime.setText(formatStr(R.string.text_publish_time_format,bookData.getIssuedate()));
+        mTvKdbBookAuthor.setText(formatStr(R.string.text_author_format, bookData.getAuthor()));
+        mTvKdbBookPubName.setText(formatStr(R.string.text_publish_name_format, bookData.getIssuedept()));
+        mTvKdbBookPubTime.setText(formatStr(R.string.text_publish_time_format, bookData.getIssuedate()));
 
         mFragments = new ArrayList<>();
         mFragments.add(BookInfoFragment.newInstance(BookInfoFragment.TYPE_BOOK_INFO, bookData));
@@ -185,6 +193,15 @@ public class KDBBookDetailActivity extends BaseActivity implements IKDBBookDetai
         mTabAdapter = new MyTabAdapter(getSupportFragmentManager(), mFragments, mTitles);
         mVpKdbBookDetail.setAdapter(mTabAdapter);
         mTlKdbBookDetail.setupWithViewPager(mVpKdbBookDetail);
+    }
+
+    @Override
+    public void setCollectState(boolean enable) {
+        if (enable) {
+            mIvCollect.setImageDrawable(getDrawable(R.drawable.ic_icon_collected));
+        } else {
+            mIvCollect.setImageDrawable(getDrawable(R.drawable.icon_collect));
+        }
     }
 
     private String formatStr(int baseStrId, String child) {
