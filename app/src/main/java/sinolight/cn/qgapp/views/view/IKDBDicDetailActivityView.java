@@ -14,4 +14,8 @@ public interface IKDBDicDetailActivityView {
     void init2Show(DicInfoEntity dicData);
 
     void showErrorToast(int msgId);
+
+    void showStrToast(String msg);
+
+    void setCollectState(boolean enable);
 }

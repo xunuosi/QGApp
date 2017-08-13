@@ -22,6 +22,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.dagger.component.DaggerReadActivityComponent;
 import sinolight.cn.qgapp.dagger.module.ReadActivityModule;
@@ -187,7 +188,7 @@ public class ReadActivity extends BaseActivity implements IReadActivityView {
                 finish();
                 break;
             case R.id.iv_collect:
-
+                mPresenter.collectRes(AppContants.DataBase.Res.RES_ARTICLE);
                 break;
         }
     }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 import sinolight.cn.qgapp.App;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.dagger.component.DaggerKDBDicActivityComponent;
 import sinolight.cn.qgapp.dagger.module.KDBDicActivityModule;
@@ -53,6 +55,8 @@ public class KDBDicDetailActivity extends BaseActivity implements IKDBDicDetailA
     TextView mTvKdbDicDetailInfo;
     @BindView(R.id.loading_root)
     RelativeLayout mLoadingRoot;
+    @BindView(R.id.iv_collect)
+    ImageView ivCollect;
 
     public static Intent getCallIntent(Context context) {
         return new Intent(context, KDBDicDetailActivity.class);
@@ -112,9 +116,9 @@ public class KDBDicDetailActivity extends BaseActivity implements IKDBDicDetailA
         mTvTitle.setText(dicData.getName());
         mTvKdbDicDetailTitle.setText(dicData.getName());
         String formatCNname = getString(R.string.text_cn_name_format);
-        mTvKdbDicDetailCnName.setText(String.format(formatCNname,dicData.getName()));
+        mTvKdbDicDetailCnName.setText(String.format(formatCNname, dicData.getName()));
         String formatENname = getString(R.string.text_en_name_format);
-        mTvKdbDicDetailEnName.setText(String.format(formatENname,dicData.getEnname()));
+        mTvKdbDicDetailEnName.setText(String.format(formatENname, dicData.getEnname()));
         String formatRESname = getString(R.string.text_resource_format);
         mTvKdbDicDetailSource.setText(String.format(formatRESname, dicData.getSource()));
 
@@ -141,7 +145,7 @@ public class KDBDicDetailActivity extends BaseActivity implements IKDBDicDetailA
     @Override
     public void showErrorToast(int msgId) {
         String msg = getString(msgId);
-        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+        this.showStrToast(msg);
     }
 
 
@@ -152,8 +156,22 @@ public class KDBDicDetailActivity extends BaseActivity implements IKDBDicDetailA
                 finish();
                 break;
             case R.id.iv_collect:
-                // // TODO: 2017/7/21 Collect function undetermined 
+                mPresenter.collectRes(AppContants.DataBase.Res.RES_DIC);
                 break;
         }
+    }
+
+    @Override
+    public void setCollectState(boolean enable) {
+        if (enable) {
+            ivCollect.setImageDrawable(getDrawable(R.drawable.ic_icon_collected));
+        } else {
+            ivCollect.setImageDrawable(getDrawable(R.drawable.icon_collect));
+        }
+    }
+
+    @Override
+    public void showStrToast(String msg) {
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 }
