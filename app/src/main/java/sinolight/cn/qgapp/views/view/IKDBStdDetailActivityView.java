@@ -15,4 +15,8 @@ public interface IKDBStdDetailActivityView {
     void showErrorToast(int msgId);
 
     void init2Show(StdInfoEntity stdData);
+
+    void showStrToast(String msg);
+
+    void setCollectState(boolean enable);
 }

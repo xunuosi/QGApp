@@ -14,9 +14,9 @@ public interface IKDBBookDetailActivityView {
 
     void showErrorToast(int msgId);
 
-    void showStrToast(String msg);
-
     void init2Show(BookInfoEntity dicData);
+
+    void showStrToast(String msg);
 
     void setCollectState(boolean enable);
 }

@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 import sinolight.cn.qgapp.App;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.adapter.MyTabAdapter;
 import sinolight.cn.qgapp.dagger.component.DaggerKDBStdActivityComponent;
@@ -63,6 +65,8 @@ public class KDBStdDetailActivity extends BaseActivity implements IKDBStdDetailA
     ViewPager mVpKdbStdDetail;
     @BindView(R.id.tv_kdb_std_from)
     TextView mTvKdbStdFrom;
+    @BindView(R.id.iv_collect)
+    ImageView mIvCollect;
 
     private List<String> mTitles = new ArrayList<>();
     private MyTabAdapter mTabAdapter;
@@ -126,6 +130,11 @@ public class KDBStdDetailActivity extends BaseActivity implements IKDBStdDetailA
     @Override
     public void showErrorToast(int msgId) {
         String msg = getString(msgId);
+        this.showStrToast(msg);
+    }
+
+    @Override
+    public void showStrToast(String msg) {
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 
@@ -170,10 +179,20 @@ public class KDBStdDetailActivity extends BaseActivity implements IKDBStdDetailA
                 finish();
                 break;
             case R.id.iv_collect:
+                mPresenter.collectRes(AppContants.DataBase.Res.RES_STANDARD);
                 break;
             case R.id.btn_kdb_std_read:
                 gotoChapterActivity();
                 break;
+        }
+    }
+
+    @Override
+    public void setCollectState(boolean enable) {
+        if (enable) {
+            mIvCollect.setImageDrawable(getDrawable(R.drawable.ic_icon_collected));
+        } else {
+            mIvCollect.setImageDrawable(getDrawable(R.drawable.icon_collect));
         }
     }
 
