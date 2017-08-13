@@ -26,6 +26,10 @@ import com.yanyusong.y_divideritemdecoration.Y_Divider;
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder;
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -34,6 +38,8 @@ import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.dagger.component.DaggerDBResActivityComponent;
 import sinolight.cn.qgapp.dagger.module.DBResActivityModule;
+import sinolight.cn.qgapp.data.bean.CollectEvent;
+import sinolight.cn.qgapp.data.bean.EventAction;
 import sinolight.cn.qgapp.presenter.DBResActivityPresenter;
 import sinolight.cn.qgapp.views.holder.TreeParentHolder;
 import sinolight.cn.qgapp.views.view.IDBResActivityView;
@@ -83,6 +89,14 @@ public class DBResourceActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         mPresenter.show(intent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
     }
 
     @Override
@@ -137,6 +151,9 @@ public class DBResourceActivity extends BaseActivity implements
     protected void onDestroy() {
         super.onDestroy();
         mPresenter.clear();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     @OnClick({R.id.im_back_arrow, R.id.iv_menu, R.id.iv_db_detail_search})
@@ -208,7 +225,7 @@ public class DBResourceActivity extends BaseActivity implements
     @Override
     public void showToast(int msgId) {
         String msg = getString(msgId);
-        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+        this.showStrToast(msg);
     }
 
     @Override
@@ -354,6 +371,15 @@ public class DBResourceActivity extends BaseActivity implements
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void ActionCollect(CollectEvent event) {
+       mPresenter.collectRes(event);
+    }
+
+    @Override
+    public void showStrToast(String msg) {
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+    }
 
     private class LinearDivider extends Y_DividerItemDecoration {
         private Context context;

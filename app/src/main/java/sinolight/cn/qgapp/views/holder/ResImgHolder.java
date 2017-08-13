@@ -8,11 +8,16 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import sinolight.cn.qgapp.App;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.data.bean.CollectEvent;
+import sinolight.cn.qgapp.data.bean.EventAction;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.entity.ResImgEntity;
 import sinolight.cn.qgapp.utils.ImageUtil;
@@ -71,8 +76,27 @@ public class ResImgHolder extends RecyclerView.ViewHolder {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_db_res_img_collect:
-                L.d(TAG, "onClick:" + mData.getName());
+                onCollect();
                 break;
+        }
+    }
+
+    /**
+     * Collect action
+     */
+    private void onCollect() {
+        setCollectState(true);
+        CollectEvent event = new CollectEvent();
+        event.setId(mData.getId());
+        event.setResType(AppContants.DataBase.Res.RES_IMG);
+        EventBus.getDefault().post(event);
+    }
+
+    private void setCollectState(boolean enable) {
+        if (enable) {
+            mIvDbResImgCollect.setImageDrawable(App.getContext().getDrawable(R.drawable.ic_icon_collected));
+        } else {
+            mIvDbResImgCollect.setImageDrawable(App.getContext().getDrawable(R.drawable.icon_collect));
         }
     }
 }

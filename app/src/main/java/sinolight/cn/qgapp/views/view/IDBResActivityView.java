@@ -29,4 +29,7 @@ public interface IDBResActivityView {
     void showFooterView(boolean enable, String msg);
 
     void hideTreeMenu(boolean isHide);
+
+    void showStrToast(String msg);
+
 }
