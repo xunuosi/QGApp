@@ -27,7 +27,7 @@ import sinolight.cn.qgapp.views.view.IMasterInfoActivityView;
 
 /**
  * Created by xns on 2017/8/10.
- * 专家详情
+ * 素材详情
  */
 
 public class MasterInfoActivity extends BaseActivity implements IMasterInfoActivityView {

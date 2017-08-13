@@ -18,4 +18,8 @@ public interface IMaterialDetailActivityView {
     void showListView(CookAdapter adapter);
 
     void showTitle(String title);
+
+    void showStrToast(String msg);
+
+    void setCollectState(boolean enable);
 }

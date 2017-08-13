@@ -9,11 +9,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.yanyusong.y_divideritemdecoration.Y_Divider;
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder;
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration;
@@ -22,6 +22,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.adapter.CookAdapter;
 import sinolight.cn.qgapp.dagger.component.DaggerMaterialInfoActivityComponent;
@@ -49,6 +50,8 @@ public class MaterialDetailActivity extends BaseActivity implements IMaterialDet
     RecyclerView mRvBookInfo;
     @BindView(R.id.loading_root)
     RelativeLayout mLoadingRoot;
+    @BindView(R.id.iv_collect)
+    ImageView ivCollect;
 
     private LinearLayoutManager mLayoutManager;
 
@@ -105,7 +108,7 @@ public class MaterialDetailActivity extends BaseActivity implements IMaterialDet
     @Override
     public void showToast(int msgId) {
         String msg = getString(msgId);
-        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+        this.showStrToast(msg);
     }
 
     @Override
@@ -128,8 +131,23 @@ public class MaterialDetailActivity extends BaseActivity implements IMaterialDet
                 finish();
                 break;
             case R.id.iv_collect:
+                mPresenter.collectRes(AppContants.DataBase.Res.RES_COOK);
                 break;
         }
+    }
+
+    @Override
+    public void setCollectState(boolean enable) {
+        if (enable) {
+            ivCollect.setImageDrawable(getDrawable(R.drawable.ic_icon_collected));
+        } else {
+            ivCollect.setImageDrawable(getDrawable(R.drawable.icon_collect));
+        }
+    }
+
+    @Override
+    public void showStrToast(String msg) {
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 
     private class LinearDivider extends Y_DividerItemDecoration {
