@@ -81,6 +81,8 @@ public class ReadActivityPresenter extends BasePresenter<IReadActivityView, Http
             mReadObserver.unSubscribe();
         }
 
+        mCollectObserver.unSubscribe();
+
         KDBResDataMapper.reset();
         unbindView();
     }
@@ -130,6 +132,40 @@ public class ReadActivityPresenter extends BasePresenter<IReadActivityView, Http
             // load data
             this.getData();
         }
+    }
+
+    private HttpSubscriber<Object> mCollectObserver = new HttpSubscriber<>(
+            new OnResultCallBack<Object>() {
+
+                @Override
+                public void onSuccess(Object o) {
+                    showErrorToast(R.string.text_collect_success);
+                    view().showRefreshing(false);
+                }
+
+                @Override
+                public void onError(int code, String errorMsg) {
+                    L.d(TAG, "mCollectObserver code:" + code + ",errorMsg:" + errorMsg);
+                    checkoutCollectState(code, errorMsg);
+                }
+            });
+
+    private void checkoutCollectState(int code, String errorMsg) {
+        if (code == AppContants.SUCCESS_CODE) {
+            view().setCollectState(true);
+            view().showStrToast(errorMsg);
+        } else {
+            showError();
+        }
+    }
+
+    public void collectRes(AppContants.DataBase.Res resType) {
+        model.collectResNoCache(
+                mCollectObserver,
+                AppHelper.getInstance().getCurrentToken(),
+                resType.getType(),
+                readID
+        );
     }
 
 }

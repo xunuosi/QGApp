@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +51,8 @@ public class ReadActivity extends BaseActivity implements IReadActivityView {
     TextView mTvReadFooter;
     @BindView(R.id.loading_root)
     RelativeLayout mLoadingRoot;
+    @BindView(R.id.iv_collect)
+    ImageView ivCollect;
 
 
     public static Intent getCallIntent(Context context) {
@@ -92,7 +95,7 @@ public class ReadActivity extends BaseActivity implements IReadActivityView {
     @Override
     public void showToast(int msgId) {
         String msg = getString(msgId);
-        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+        this.showStrToast(msg);
     }
 
     @Override
@@ -163,6 +166,20 @@ public class ReadActivity extends BaseActivity implements IReadActivityView {
         mTvReadFooter.setText(name);
     }
 
+    @Override
+    public void setCollectState(boolean enable) {
+        if (enable) {
+            ivCollect.setImageDrawable(getDrawable(R.drawable.ic_icon_collected));
+        } else {
+            ivCollect.setImageDrawable(getDrawable(R.drawable.icon_collect));
+        }
+    }
+
+    @Override
+    public void showStrToast(String msg) {
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+    }
+
     @OnClick({R.id.im_back_arrow, R.id.iv_collect})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -170,6 +187,7 @@ public class ReadActivity extends BaseActivity implements IReadActivityView {
                 finish();
                 break;
             case R.id.iv_collect:
+
                 break;
         }
     }

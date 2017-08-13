@@ -17,4 +17,8 @@ public interface IReadActivityView {
     void showData(ReaderEntity readData);
 
     void showFooter(String name);
+
+    void showStrToast(String msg);
+
+    void setCollectState(boolean enable);
 }
