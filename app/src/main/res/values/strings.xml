@@ -64,20 +64,6 @@
     <string name="text_from_format">出自：%1$s</string>
     <string name="text_std_info">标准信息</string>
     <string name="text_std_scope">试用范围</string>
-    <string name="text_user_name_format">%1$s，您好！</string>
-    <string name="text_user_home">个人主页</string>
-    <string name="text_my_res_database">我的资源库</string>
-    <string name="text_my_collect">我的收藏</string>
-    <string name="text_sys_setting">系统设置</string>
-    <string name="text_help">帮助与反馈</string>
-    <string name="text_change_account">切换账号</string>
-    <string name="text_my_center">个人中心</string>
-    <string name="text_origin_pw">原密码</string>
-    <string name="text_new_pw">新密码</string>
-    <string name="text_confirm_pw">确认密码</string>
-    <string name="text_confirm_submit">确认提交</string>
-    <string name="text_person_info">个人资料</string>
-    <string name="text_account_security">账户安全</string>
     <string name="text_get_all">查看全部</string>
     <string name="text_publish_time_format2">发布日期：%1$S</string>
     <string name="text_comprehensive">综合</string>
@@ -166,7 +152,22 @@
     <string name="text_video_set">视频集合</string>
     <string name="text_video_list">视频列表</string>
     <string name="attention_exit_app">再按一次退出程序</string>
+    <!--My center-->
     <string name="text_collect_success">加入收藏成功</string>
     <string name="text_collect_is_empty">暂无收藏资源</string>
+    <string name="text_user_name_format">%1$s，您好！</string>
+    <string name="text_user_home">个人主页</string>
+    <string name="text_my_res_database">我的资源库</string>
+    <string name="text_my_collect">我的收藏</string>
+    <string name="text_sys_setting">系统设置</string>
+    <string name="text_help">帮助与反馈</string>
+    <string name="text_change_account">切换账号</string>
+    <string name="text_my_center">个人中心</string>
+    <string name="text_origin_pw">原密码</string>
+    <string name="text_new_pw">新密码</string>
+    <string name="text_confirm_pw">确认密码</string>
+    <string name="text_confirm_submit">确认提交</string>
+    <string name="text_person_info">个人资料</string>
+    <string name="text_account_security">账户安全</string>
 
 </resources>
