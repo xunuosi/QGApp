@@ -13,6 +13,7 @@ import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.bean.SimpleCookInfo;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.ChapterEntity;
+import sinolight.cn.qgapp.data.http.entity.CollectEntity;
 import sinolight.cn.qgapp.data.http.entity.CookContentEntity;
 import sinolight.cn.qgapp.data.http.entity.CookEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResArticleEntity;
@@ -25,6 +26,7 @@ import sinolight.cn.qgapp.data.http.entity.ResArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.ResImgEntity;
 import sinolight.cn.qgapp.data.http.entity.ResStandardEntity;
 import sinolight.cn.qgapp.data.http.entity.ResWordEntity;
+import sinolight.cn.qgapp.data.http.entity.StandardEntity;
 
 /**
  * Created by xns on 2017/7/5.
@@ -462,6 +464,41 @@ public class KDBResDataMapper {
             resDataCollection = new ArrayList<>();
             for (DBResVideoEntity bean : beans) {
                 resDataCollection.add(transformVideoData(bean, adapterType, isSpan));
+            }
+            mKDBResDataMap.put(adapterType, resDataCollection);
+            return resDataCollection;
+        }
+        return null;
+    }
+
+    public static List<KDBResData> transformCollectDatas(List<CollectEntity> beans, int adapterType, boolean isSpan) {
+        List<KDBResData> resDataCollection;
+        if (beans != null && !beans.isEmpty()) {
+            resDataCollection = new ArrayList<>();
+            switch (adapterType) {
+                case KDBResAdapter.TYPE_BOOK:
+                    for (CollectEntity bean : beans) {
+                        BookEntity transformBean = new BookEntity();
+                        transformBean.setId(bean.getId());
+                        transformBean.setAbs(bean.getAbs());
+                        transformBean.setAuthor(bean.getAuthor());
+                        transformBean.setCover(bean.getCover());
+                        transformBean.setName(bean.getName());
+                        transformBean.setDate(bean.getDate());
+                        resDataCollection.add(transformBookData(transformBean, adapterType, isSpan));
+                    }
+                    break;
+                case KDBResAdapter.TYPE_STANDARD:
+                    for (CollectEntity bean : beans) {
+                        ResStandardEntity transformBean = new ResStandardEntity();
+                        transformBean.setId(bean.getId());
+                        transformBean.setName(bean.getName());
+                        transformBean.setCover(bean.getCover());
+                        transformBean.setStdno(bean.getIsbn());
+                        transformBean.setImdate(bean.getDate());
+                        resDataCollection.add(transformStandData(transformBean, adapterType, isSpan));
+                    }
+                    break;
             }
             mKDBResDataMap.put(adapterType, resDataCollection);
             return resDataCollection;

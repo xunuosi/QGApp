@@ -107,6 +107,7 @@
     <string name="text_standard">标准</string>
     <string name="text_img">图片</string>
     <string name="text_analysis">行业分析</string>
+    <string name="text_cook">菜谱</string>
     <!--行业知识库-->
     <string name="text_database_food">食品数据库</string>
     <string name="text_database_paper">造纸数据库</string>

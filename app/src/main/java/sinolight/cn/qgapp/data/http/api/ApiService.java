@@ -13,6 +13,7 @@ import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.ChapterEntity;
+import sinolight.cn.qgapp.data.http.entity.CollectEntity;
 import sinolight.cn.qgapp.data.http.entity.CookContentEntity;
 import sinolight.cn.qgapp.data.http.entity.CookEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResArticleEntity;
@@ -612,5 +613,24 @@ public interface ApiService {
             @Field("resId") String resId,
             @Field("remark") String remark,
             @Field("user") String user
+    );
+
+    /**
+     * 个人中心-我的收藏
+     * @param token
+     * @param user
+     * @param resType: 资源类型 1:图书，2:标准，12:图片，19:文章，22:词条，32:行业分析，35:菜谱
+     * @param page
+     * @param size
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("account/doMyFavor")
+    Observable<ResultEntity<PageEntity<List<CollectEntity>>>> getCollecData(
+            @Field("token") String token,
+            @Field("user") String user,
+            @Field("resType") String resType,
+            @Field("page") int page,
+            @Field("size") int size
     );
 }

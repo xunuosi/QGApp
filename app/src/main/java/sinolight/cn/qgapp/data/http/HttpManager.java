@@ -33,6 +33,7 @@ import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.BookInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.ChapterEntity;
+import sinolight.cn.qgapp.data.http.entity.CollectEntity;
 import sinolight.cn.qgapp.data.http.entity.CookContentEntity;
 import sinolight.cn.qgapp.data.http.entity.CookEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResArticleEntity;
@@ -312,6 +313,16 @@ public class HttpManager {
                 resId,
                 "加入收藏",
                 AppHelper.getInstance().getCurrentUserName()),
+                subscriber);
+    }
+
+    public void getCollectDataNoCache(Observer<PageEntity<List<CollectEntity>>> subscriber, String token, String resType, int page, int size) {
+        toSubscribe(mApiService.getCollecData(
+                token,
+                AppHelper.getInstance().getCurrentUserName(),
+                resType,
+                page,
+                size),
                 subscriber);
     }
 }

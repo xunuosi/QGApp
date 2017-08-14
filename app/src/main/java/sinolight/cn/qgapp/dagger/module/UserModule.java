@@ -9,6 +9,8 @@ import dagger.Provides;
 import sinolight.cn.qgapp.dagger.PerActivity;
 import sinolight.cn.qgapp.presenter.BaiKeAnaFragmentPresenter;
 import sinolight.cn.qgapp.presenter.BaiKeWordFragmentPresenter;
+import sinolight.cn.qgapp.presenter.CollectBookPresenter;
+import sinolight.cn.qgapp.presenter.CollectStdPresenter;
 import sinolight.cn.qgapp.presenter.DBResArticlePresenter;
 import sinolight.cn.qgapp.presenter.DBResMaterialPresenter;
 import sinolight.cn.qgapp.presenter.DBResPicPresenter;
@@ -85,5 +87,17 @@ public class UserModule {
     @PerActivity
     BaiKeWordFragmentPresenter provideBaiKeWordFragmentPresenter(Context context) {
         return new BaiKeWordFragmentPresenter(context);
+    }
+
+    @Provides
+    @PerActivity
+    CollectBookPresenter provideCollectBookPresenter(Context context) {
+        return new CollectBookPresenter(context);
+    }
+
+    @Provides
+    @PerActivity
+    CollectStdPresenter provideCollectStdPresenter(Context context) {
+        return new CollectStdPresenter(context);
     }
 }

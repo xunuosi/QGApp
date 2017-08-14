@@ -11,6 +11,7 @@ import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
 import sinolight.cn.qgapp.data.http.entity.UserEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.L;
+import sinolight.cn.qgapp.views.activity.CollectActivity;
 import sinolight.cn.qgapp.views.activity.LoginActivity;
 import sinolight.cn.qgapp.views.activity.UserHomeActivity;
 import sinolight.cn.qgapp.views.view.IUserFragmentView;
@@ -84,6 +85,11 @@ public class UserFragmentPresenter extends BasePresenter<IUserFragmentView, Http
     public void gotoUserHomeActivity() {
         Intent callIntent = UserHomeActivity.getCallIntent(mContext);
         callIntent.putExtra(AppContants.User.USER_BEAN, userData);
+        view().gotoActivity(callIntent);
+    }
+
+    public void gotoCollectActivity() {
+        Intent callIntent = CollectActivity.getCallIntent(mContext);
         view().gotoActivity(callIntent);
     }
 }
