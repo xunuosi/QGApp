@@ -1,17 +1,17 @@
 package sinolight.cn.qgapp.views.view;
 
-import sinolight.cn.qgapp.adapter.KDBResAdapter;
+import sinolight.cn.qgapp.adapter.CommonTitleAdapter;
 
 /**
  * Created by xns on 2017/8/14.
  * Collect book view frame
  */
 
-public interface ICollectBookFragmentView {
+public interface ICollectCookFragmentView {
 
     void showToast(int msgId);
 
-    void showListView(KDBResAdapter adapter);
+    void showListView(CommonTitleAdapter adapter);
 
     void showRefreshing(boolean enable);
 
@@ -20,4 +20,5 @@ public interface ICollectBookFragmentView {
     void hasMoreData(boolean hasMore);
 
     void setHideEmpty(boolean enable);
+
 }

@@ -188,7 +188,7 @@ public class ReadActivity extends BaseActivity implements IReadActivityView {
                 finish();
                 break;
             case R.id.iv_collect:
-                mPresenter.collectRes(AppContants.DataBase.Res.RES_ARTICLE);
+                mPresenter.collectRes();
                 break;
         }
     }

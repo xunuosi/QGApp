@@ -74,12 +74,16 @@ public class CollectStdPresenter extends BasePresenter<ICollectBookFragmentView,
 
     private void showError(int code, String msg) {
         view().showRefreshing(false);
-        showErrorToast(R.string.attention_data_refresh_error);
+        view().setHideEmpty(false);
+        if (code != AppContants.SUCCESS_CODE) {
+            showErrorToast(R.string.attention_data_refresh_error);
+        }
         // if data is not obtained,you need clear data show empty.
         clearData();
     }
 
     private void transformKDBResData() {
+        view().setHideEmpty(true);
         List<KDBResData> list = new ArrayList<>();
         list = KDBResDataMapper.transformCollectDatas(collectDatas, KDBResAdapter.TYPE_STANDARD, false);
 

@@ -14,6 +14,7 @@ import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.entity.ResArticleEntity;
+import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.views.activity.ReadActivity;
 
 /**

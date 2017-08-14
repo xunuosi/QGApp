@@ -6,7 +6,12 @@ import sinolight.cn.qgapp.dagger.module.ActivityModule;
 import sinolight.cn.qgapp.dagger.module.UserModule;
 import sinolight.cn.qgapp.views.fragment.BaiKeAnalysisFragment;
 import sinolight.cn.qgapp.views.fragment.BaiKeWordFragment;
+import sinolight.cn.qgapp.views.fragment.CollectArticleFragment;
 import sinolight.cn.qgapp.views.fragment.CollectBookFragment;
+import sinolight.cn.qgapp.views.fragment.CollectCookFragment;
+import sinolight.cn.qgapp.views.fragment.CollectDicFragment;
+import sinolight.cn.qgapp.views.fragment.CollectIndustryAnalysisFragment;
+import sinolight.cn.qgapp.views.fragment.CollectPicFragment;
 import sinolight.cn.qgapp.views.fragment.CollectStdFragment;
 import sinolight.cn.qgapp.views.fragment.DBResArticleFragment;
 import sinolight.cn.qgapp.views.fragment.DBResMaterialFragment;
@@ -49,4 +54,14 @@ public interface UserComponent extends ActivityComponent {
     void inject(CollectBookFragment collectBookFragment);
 
     void inject(CollectStdFragment collectStdFragment);
+
+    void inject(CollectPicFragment collectPicFragment);
+
+    void inject(CollectArticleFragment collectArticleFragment);
+
+    void inject(CollectDicFragment collectDicFragment);
+
+    void inject(CollectIndustryAnalysisFragment collectIndustryAnalysisFragment);
+
+    void inject(CollectCookFragment collectCookFragment);
 }

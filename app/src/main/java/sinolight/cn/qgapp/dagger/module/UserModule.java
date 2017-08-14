@@ -9,7 +9,12 @@ import dagger.Provides;
 import sinolight.cn.qgapp.dagger.PerActivity;
 import sinolight.cn.qgapp.presenter.BaiKeAnaFragmentPresenter;
 import sinolight.cn.qgapp.presenter.BaiKeWordFragmentPresenter;
+import sinolight.cn.qgapp.presenter.CollectArticlePresenter;
 import sinolight.cn.qgapp.presenter.CollectBookPresenter;
+import sinolight.cn.qgapp.presenter.CollectCookPresenter;
+import sinolight.cn.qgapp.presenter.CollectDicPresenter;
+import sinolight.cn.qgapp.presenter.CollectIndustryAnalysisPresenter;
+import sinolight.cn.qgapp.presenter.CollectPicPresenter;
 import sinolight.cn.qgapp.presenter.CollectStdPresenter;
 import sinolight.cn.qgapp.presenter.DBResArticlePresenter;
 import sinolight.cn.qgapp.presenter.DBResMaterialPresenter;
@@ -99,5 +104,35 @@ public class UserModule {
     @PerActivity
     CollectStdPresenter provideCollectStdPresenter(Context context) {
         return new CollectStdPresenter(context);
+    }
+
+    @Provides
+    @PerActivity
+    CollectPicPresenter provideCollectPicPresenter(Context context) {
+        return new CollectPicPresenter(context);
+    }
+
+    @Provides
+    @PerActivity
+    CollectArticlePresenter provideCollectArticlePresenter(Context context) {
+        return new CollectArticlePresenter(context);
+    }
+
+    @Provides
+    @PerActivity
+    CollectDicPresenter provideCollectDicPresenter(Context context) {
+        return new CollectDicPresenter(context);
+    }
+
+    @Provides
+    @PerActivity
+    CollectIndustryAnalysisPresenter provideCollectIndustryAnalysisPresenter(Context context) {
+        return new CollectIndustryAnalysisPresenter(context);
+    }
+
+    @Provides
+    @PerActivity
+    CollectCookPresenter provideCollectCookPresenter(Context context) {
+        return new CollectCookPresenter(context);
     }
 }

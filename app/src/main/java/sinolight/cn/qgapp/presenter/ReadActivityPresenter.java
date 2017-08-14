@@ -159,11 +159,11 @@ public class ReadActivityPresenter extends BasePresenter<IReadActivityView, Http
         }
     }
 
-    public void collectRes(AppContants.DataBase.Res resType) {
+    public void collectRes() {
         model.collectResNoCache(
                 mCollectObserver,
                 AppHelper.getInstance().getCurrentToken(),
-                resType.getType(),
+                readResType.getType(),
                 readID
         );
     }

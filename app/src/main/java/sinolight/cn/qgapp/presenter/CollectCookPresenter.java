@@ -8,6 +8,7 @@ import java.util.List;
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.adapter.CommonTitleAdapter;
 import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.HttpManager;
@@ -17,15 +18,15 @@ import sinolight.cn.qgapp.data.http.entity.PageEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.KDBResDataMapper;
 import sinolight.cn.qgapp.utils.L;
-import sinolight.cn.qgapp.views.view.ICollectBookFragmentView;
+import sinolight.cn.qgapp.views.view.ICollectCookFragmentView;
 
 /**
  * Created by xns on 2017/6/29.
  * MaterialList Presenter
  */
 
-public class CollectBookPresenter extends BasePresenter<ICollectBookFragmentView, HttpManager> {
-    private static final String TAG = "CollectBookPresenter";
+public class CollectCookPresenter extends BasePresenter<ICollectCookFragmentView, HttpManager> {
+    private static final String TAG = "CollectCookPresenter";
     private Context mContext;
 
     // 获取资源列表
@@ -36,9 +37,11 @@ public class CollectBookPresenter extends BasePresenter<ICollectBookFragmentView
     // 判断当前操作是否为加载更多数据
     private boolean action_more = false;
 
+    private String resType;
+
     private List<KDBResData> mDatas = new ArrayList<>();
     private List<CollectEntity> collectDatas;
-    private KDBResAdapter mAdapter;
+    private CommonTitleAdapter mAdapter;
 
     private HttpSubscriber<PageEntity<List<CollectEntity>>> mCollectObserver = new HttpSubscriber<>(
             new OnResultCallBack<PageEntity<List<CollectEntity>>>() {
@@ -83,7 +86,7 @@ public class CollectBookPresenter extends BasePresenter<ICollectBookFragmentView
     private void transformKDBResData() {
         view().setHideEmpty(true);
         List<KDBResData> list = new ArrayList<>();
-        list = KDBResDataMapper.transformCollectDatas(collectDatas, KDBResAdapter.TYPE_BOOK, false);
+        list = KDBResDataMapper.transformCollectDatas(collectDatas, CommonTitleAdapter.TYPE_MATERIAL, false);
 
         // Load More Action
         if (action_more) {
@@ -97,7 +100,7 @@ public class CollectBookPresenter extends BasePresenter<ICollectBookFragmentView
 
     private void showWithData() {
         if (mAdapter == null) {
-            mAdapter = new KDBResAdapter(mContext, mDatas);
+            mAdapter = new CommonTitleAdapter(mContext, mDatas);
         } else {
             mAdapter.setData(mDatas);
         }
@@ -110,9 +113,10 @@ public class CollectBookPresenter extends BasePresenter<ICollectBookFragmentView
 
     }
 
-    public CollectBookPresenter(Context context) {
+    public CollectCookPresenter(Context context) {
         this.mContext = context;
         setModel(HttpManager.getInstance());
+        resType = AppContants.DataBase.Res.RES_COOK.getType();
     }
 
     @Override
@@ -142,7 +146,7 @@ public class CollectBookPresenter extends BasePresenter<ICollectBookFragmentView
         model.getCollectDataNoCache(
                 mCollectObserver,
                 AppHelper.getInstance().getCurrentToken(),
-                AppContants.DataBase.Res.RES_BOOK.getType(),
+                resType,
                 page,
                 SIZE
         );
@@ -198,7 +202,7 @@ public class CollectBookPresenter extends BasePresenter<ICollectBookFragmentView
         model.getCollectDataNoCache(
                 mCollectObserver,
                 AppHelper.getInstance().getCurrentToken(),
-                AppContants.DataBase.Res.RES_BOOK.getType(),
+                resType,
                 page,
                 SIZE
         );

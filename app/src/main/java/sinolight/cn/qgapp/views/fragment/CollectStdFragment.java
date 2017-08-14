@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
@@ -18,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.R2;
 import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.dagger.HasComponent;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
@@ -34,11 +36,13 @@ public class CollectStdFragment extends BaseCollectFragment implements ICollectB
         OnRefreshListener, OnLoadMoreListener {
     @Inject
     CollectStdPresenter mPresenter;
-    @BindView(R.id.swipe_target)
+    @BindView(R2.id.swipe_target)
     RecyclerView mSwipeTarget;
-    @BindView(R.id.swipe_collect)
+    @BindView(R2.id.swipe_collect)
     SwipeToLoadLayout mSwipe;
     Unbinder unbinder;
+    @BindView(R2.id.tv_collect_empty)
+    TextView mTvCollectEmpty;
 
     private RecyclerView.LayoutManager mLayoutManager;
 
@@ -154,5 +158,14 @@ public class CollectStdFragment extends BaseCollectFragment implements ICollectB
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void setHideEmpty(boolean enable) {
+        if (enable) {
+            mTvCollectEmpty.setVisibility(View.GONE);
+        } else {
+            mTvCollectEmpty.setVisibility(View.VISIBLE);
+        }
     }
 }

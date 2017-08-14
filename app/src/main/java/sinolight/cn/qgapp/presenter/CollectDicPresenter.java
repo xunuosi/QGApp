@@ -24,8 +24,8 @@ import sinolight.cn.qgapp.views.view.ICollectBookFragmentView;
  * MaterialList Presenter
  */
 
-public class CollectBookPresenter extends BasePresenter<ICollectBookFragmentView, HttpManager> {
-    private static final String TAG = "CollectBookPresenter";
+public class CollectDicPresenter extends BasePresenter<ICollectBookFragmentView, HttpManager> {
+    private static final String TAG = "CollectArticlePresenter";
     private Context mContext;
 
     // 获取资源列表
@@ -35,6 +35,8 @@ public class CollectBookPresenter extends BasePresenter<ICollectBookFragmentView
     private int count = 0;
     // 判断当前操作是否为加载更多数据
     private boolean action_more = false;
+
+    private String resType;
 
     private List<KDBResData> mDatas = new ArrayList<>();
     private List<CollectEntity> collectDatas;
@@ -83,7 +85,7 @@ public class CollectBookPresenter extends BasePresenter<ICollectBookFragmentView
     private void transformKDBResData() {
         view().setHideEmpty(true);
         List<KDBResData> list = new ArrayList<>();
-        list = KDBResDataMapper.transformCollectDatas(collectDatas, KDBResAdapter.TYPE_BOOK, false);
+        list = KDBResDataMapper.transformCollectDatas(collectDatas, KDBResAdapter.TYPE_WORD, false);
 
         // Load More Action
         if (action_more) {
@@ -110,9 +112,10 @@ public class CollectBookPresenter extends BasePresenter<ICollectBookFragmentView
 
     }
 
-    public CollectBookPresenter(Context context) {
+    public CollectDicPresenter(Context context) {
         this.mContext = context;
         setModel(HttpManager.getInstance());
+        resType = AppContants.DataBase.Res.RES_DIC.getType();
     }
 
     @Override
@@ -142,7 +145,7 @@ public class CollectBookPresenter extends BasePresenter<ICollectBookFragmentView
         model.getCollectDataNoCache(
                 mCollectObserver,
                 AppHelper.getInstance().getCurrentToken(),
-                AppContants.DataBase.Res.RES_BOOK.getType(),
+                resType,
                 page,
                 SIZE
         );
@@ -198,7 +201,7 @@ public class CollectBookPresenter extends BasePresenter<ICollectBookFragmentView
         model.getCollectDataNoCache(
                 mCollectObserver,
                 AppHelper.getInstance().getCurrentToken(),
-                AppContants.DataBase.Res.RES_BOOK.getType(),
+                resType,
                 page,
                 SIZE
         );

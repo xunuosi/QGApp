@@ -23,7 +23,12 @@ import sinolight.cn.qgapp.dagger.component.DaggerUserComponent;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
 import sinolight.cn.qgapp.dagger.module.UserModule;
 import sinolight.cn.qgapp.utils.KDBResDataMapper;
+import sinolight.cn.qgapp.views.fragment.CollectArticleFragment;
 import sinolight.cn.qgapp.views.fragment.CollectBookFragment;
+import sinolight.cn.qgapp.views.fragment.CollectCookFragment;
+import sinolight.cn.qgapp.views.fragment.CollectDicFragment;
+import sinolight.cn.qgapp.views.fragment.CollectIndustryAnalysisFragment;
+import sinolight.cn.qgapp.views.fragment.CollectPicFragment;
 import sinolight.cn.qgapp.views.fragment.CollectStdFragment;
 
 /**
@@ -89,11 +94,11 @@ public class CollectActivity extends BaseActivity implements HasComponent<UserCo
         mFragments = new ArrayList<>();
         mFragments.add(CollectBookFragment.newInstance());
         mFragments.add(CollectStdFragment.newInstance());
-        mFragments.add(CollectBookFragment.newInstance());
-        mFragments.add(CollectBookFragment.newInstance());
-        mFragments.add(CollectBookFragment.newInstance());
-        mFragments.add(CollectBookFragment.newInstance());
-        mFragments.add(CollectBookFragment.newInstance());
+        mFragments.add(CollectPicFragment.newInstance());
+        mFragments.add(CollectArticleFragment.newInstance());
+        mFragments.add(CollectDicFragment.newInstance());
+        mFragments.add(CollectIndustryAnalysisFragment.newInstance());
+        mFragments.add(CollectCookFragment.newInstance());
 
         mTabAdapter = new MyTabAdapter(
                 getSupportFragmentManager(),

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QGApp</string>
+    <string name="app_name">掌上轻工</string>
     <!--bottomBar-->
     <string name="bottomBar_home">首页</string>
     <string name="bottomBar_knowledge">知识库</string>
@@ -167,5 +167,6 @@
     <string name="text_video_list">视频列表</string>
     <string name="attention_exit_app">再按一次退出程序</string>
     <string name="text_collect_success">加入收藏成功</string>
+    <string name="text_collect_is_empty">暂无收藏资源</string>
 
 </resources>

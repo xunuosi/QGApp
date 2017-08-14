@@ -24,14 +24,14 @@ import sinolight.cn.qgapp.views.holder.DBResTitleHolder;
  */
 
 public class CommonTitleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    public static final int TYPE_MATERIAL_TITLE = 0;
-    public static final int TYPE_MATERIAL = 1;
-    public static final int TYPE_ARTICLE_TITLE = 2;
-    public static final int TYPE_ARTICLE = 3;
-    public static final int TYPE_PIC_TITLE = 4;
-    public static final int TYPE_PIC = 5;
-    public static final int TYPE_VIDEO_TITLE = 6;
-    public static final int TYPE_VIDEO = 7;
+    public static final int TYPE_MATERIAL_TITLE = 300;
+    public static final int TYPE_MATERIAL = 301;
+    public static final int TYPE_ARTICLE_TITLE = 302;
+    public static final int TYPE_ARTICLE = 303;
+    public static final int TYPE_PIC_TITLE = 304;
+    public static final int TYPE_PIC = 305;
+    public static final int TYPE_VIDEO_TITLE = 306;
+    public static final int TYPE_VIDEO = 307;
 
 
     private Context mContext;

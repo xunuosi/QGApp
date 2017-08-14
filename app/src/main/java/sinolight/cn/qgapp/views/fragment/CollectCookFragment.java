@@ -19,11 +19,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import sinolight.cn.qgapp.R;
-import sinolight.cn.qgapp.adapter.KDBResAdapter;
+import sinolight.cn.qgapp.R2;
+import sinolight.cn.qgapp.adapter.CommonTitleAdapter;
 import sinolight.cn.qgapp.dagger.HasComponent;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
-import sinolight.cn.qgapp.presenter.CollectBookPresenter;
-import sinolight.cn.qgapp.views.view.ICollectBookFragmentView;
+import sinolight.cn.qgapp.presenter.CollectCookPresenter;
+import sinolight.cn.qgapp.views.view.ICollectCookFragmentView;
 import sinolight.cn.qgapp.views.widget.ItemDivider;
 
 /**
@@ -31,22 +32,22 @@ import sinolight.cn.qgapp.views.widget.ItemDivider;
  * Collect Book
  */
 
-public class CollectBookFragment extends BaseCollectFragment implements ICollectBookFragmentView,
+public class CollectCookFragment extends BaseCollectFragment implements ICollectCookFragmentView,
         OnRefreshListener, OnLoadMoreListener {
     @Inject
-    CollectBookPresenter mPresenter;
-    @BindView(R.id.swipe_target)
+    CollectCookPresenter mPresenter;
+    @BindView(R2.id.swipe_target)
     RecyclerView mSwipeTarget;
-    @BindView(R.id.swipe_collect)
+    @BindView(R2.id.swipe_collect)
     SwipeToLoadLayout mSwipe;
     Unbinder unbinder;
-    @BindView(R.id.tv_collect_empty)
+    @BindView(R2.id.tv_collect_empty)
     TextView mTvCollectEmpty;
 
     private RecyclerView.LayoutManager mLayoutManager;
 
-    public static CollectBookFragment newInstance() {
-        CollectBookFragment fragment = new CollectBookFragment();
+    public static CollectCookFragment newInstance() {
+        CollectCookFragment fragment = new CollectCookFragment();
         return fragment;
     }
 
@@ -108,7 +109,7 @@ public class CollectBookFragment extends BaseCollectFragment implements ICollect
     }
 
     @Override
-    public void showListView(KDBResAdapter adapter) {
+    public void showListView(CommonTitleAdapter adapter) {
         if (mSwipeTarget != null && mSwipeTarget.getAdapter() == null) {
             mSwipeTarget.setAdapter(adapter);
         }

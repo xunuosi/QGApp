@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.List;
 
 import sinolight.cn.qgapp.AppContants;
+import sinolight.cn.qgapp.adapter.CommonTitleAdapter;
 import sinolight.cn.qgapp.adapter.CookAdapter;
 import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.data.bean.KDBResData;
@@ -497,6 +498,69 @@ public class KDBResDataMapper {
                         transformBean.setStdno(bean.getIsbn());
                         transformBean.setImdate(bean.getDate());
                         resDataCollection.add(transformStandData(transformBean, adapterType, isSpan));
+                    }
+                    break;
+                case KDBResAdapter.TYPE_IMG:
+                    for (CollectEntity bean : beans) {
+                        ResImgEntity transformBean = new ResImgEntity();
+                        transformBean.setId(bean.getId());
+                        transformBean.setName(bean.getName());
+                        transformBean.setCover(bean.getCover());
+                        resDataCollection.add(transformImgData(transformBean, adapterType, isSpan));
+                    }
+                    break;
+                case KDBResAdapter.TYPE_ARTICLE:
+                    for (CollectEntity bean : beans) {
+                        ResArticleEntity transformBean = new ResArticleEntity();
+                        transformBean.setId(bean.getId());
+                        transformBean.setName(bean.getName());
+                        transformBean.setCover(bean.getCover());
+                        transformBean.setAuthor(bean.getAuthor());
+                        transformBean.setAbs(bean.getAbs());
+                        transformBean.setSource(bean.getSource());
+                        if (transformBean.getCover() != null) {
+                            resDataCollection.add(transformArticleData(transformBean, KDBResAdapter.TYPE_ARTICLE_ICON, isSpan));
+                        } else {
+                            resDataCollection.add(transformArticleData(transformBean, KDBResAdapter.TYPE_ARTICLE, isSpan));
+                        }
+                    }
+                    break;
+                case KDBResAdapter.TYPE_WORD:
+                    for (CollectEntity bean : beans) {
+                        ResWordEntity transformBean = new ResWordEntity();
+                        transformBean.setId(bean.getId());
+                        transformBean.setName(bean.getName());
+                        transformBean.setCover(bean.getCover());
+                        transformBean.setRemark(bean.getAbs());
+                        transformBean.setSource(bean.getSource());
+                        resDataCollection.add(transformDicData(transformBean, adapterType, isSpan));
+                    }
+                    break;
+                case KDBResAdapter.TYPE_INDUSTRY:
+                    for (CollectEntity bean : beans) {
+                        ResArticleEntity transformBean = new ResArticleEntity();
+                        transformBean.setId(bean.getId());
+                        transformBean.setName(bean.getName());
+                        transformBean.setCover(bean.getCover());
+                        transformBean.setAuthor(bean.getAuthor());
+                        transformBean.setAbs(bean.getAbs());
+                        transformBean.setSource(bean.getSource());
+                        if (transformBean.getCover() != null) {
+                            resDataCollection.add(transformArticleData(transformBean, KDBResAdapter.TYPE_INDUSTRY_ICON, isSpan));
+                        } else {
+                            resDataCollection.add(transformArticleData(transformBean, KDBResAdapter.TYPE_INDUSTRY, isSpan));
+                        }
+                    }
+                    break;
+                case CommonTitleAdapter.TYPE_MATERIAL:
+                    for (CollectEntity bean : beans) {
+                        MaterialEntity transformBean = new MaterialEntity();
+                        transformBean.setId(bean.getId());
+                        transformBean.setName(bean.getName());
+                        transformBean.setCover(bean.getCover());
+                        transformBean.setRemark(bean.getAbs());
+                        transformBean.setSource(bean.getSource());
+                        resDataCollection.add(transformMaterialData(transformBean, adapterType, isSpan));
                     }
                     break;
             }

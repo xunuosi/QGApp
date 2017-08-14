@@ -19,10 +19,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.R2;
 import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.dagger.HasComponent;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
-import sinolight.cn.qgapp.presenter.CollectBookPresenter;
+import sinolight.cn.qgapp.presenter.CollectPicPresenter;
 import sinolight.cn.qgapp.views.view.ICollectBookFragmentView;
 import sinolight.cn.qgapp.views.widget.ItemDivider;
 
@@ -31,13 +32,13 @@ import sinolight.cn.qgapp.views.widget.ItemDivider;
  * Collect Book
  */
 
-public class CollectBookFragment extends BaseCollectFragment implements ICollectBookFragmentView,
+public class CollectPicFragment extends BaseCollectFragment implements ICollectBookFragmentView,
         OnRefreshListener, OnLoadMoreListener {
     @Inject
-    CollectBookPresenter mPresenter;
-    @BindView(R.id.swipe_target)
+    CollectPicPresenter mPresenter;
+    @BindView(R2.id.swipe_target)
     RecyclerView mSwipeTarget;
-    @BindView(R.id.swipe_collect)
+    @BindView(R2.id.swipe_collect)
     SwipeToLoadLayout mSwipe;
     Unbinder unbinder;
     @BindView(R.id.tv_collect_empty)
@@ -45,8 +46,8 @@ public class CollectBookFragment extends BaseCollectFragment implements ICollect
 
     private RecyclerView.LayoutManager mLayoutManager;
 
-    public static CollectBookFragment newInstance() {
-        CollectBookFragment fragment = new CollectBookFragment();
+    public static CollectPicFragment newInstance() {
+        CollectPicFragment fragment = new CollectPicFragment();
         return fragment;
     }
 
