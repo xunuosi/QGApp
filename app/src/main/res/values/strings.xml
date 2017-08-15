@@ -169,5 +169,6 @@
     <string name="text_confirm_submit">确认提交</string>
     <string name="text_person_info">个人资料</string>
     <string name="text_account_security">账户安全</string>
+    <string name="text_my_database_is_empty">您并未购买任何资源库</string>
 
 </resources>

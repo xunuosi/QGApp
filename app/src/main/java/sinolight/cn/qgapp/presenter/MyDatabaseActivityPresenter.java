@@ -1,21 +1,19 @@
 package sinolight.cn.qgapp.presenter;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
-import sinolight.cn.qgapp.adapter.KnowledgeAdapter;
+import sinolight.cn.qgapp.adapter.MyDatabaseAdapter;
 import sinolight.cn.qgapp.data.bean.DataBaseBean;
 import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
-import sinolight.cn.qgapp.data.http.entity.PageEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.L;
-import sinolight.cn.qgapp.views.view.IKnowledgeFragmentView;
 import sinolight.cn.qgapp.views.view.IMyDatabaseActivityView;
 
 /**
@@ -23,32 +21,28 @@ import sinolight.cn.qgapp.views.view.IMyDatabaseActivityView;
  * 知识库界面的Presenter
  */
 
-public class MyDatabaseActivityPresenter extends BasePresenter<IMyDatabaseActivityView, HttpManager>{
+public class MyDatabaseActivityPresenter extends BasePresenter<IMyDatabaseActivityView, HttpManager> {
     private static final String TAG = "MyDatabaseActivityPresenter";
     private Context mContext;
-    private List<DataBaseBean> mDataInternet;
-    private KnowledgeAdapter mKnowledgeAdapter;
+    private List<DataBaseBean> mDataInternet = new ArrayList<>();
+    private MyDatabaseAdapter mAdapter;
 
-    private HttpSubscriber databaseObserver = new HttpSubscriber(new OnResultCallBack<PageEntity<List<DataBaseBean>>>() {
+    private HttpSubscriber databaseObserver = new HttpSubscriber(new OnResultCallBack<List<DataBaseBean>>() {
+
         @Override
-        public void onSuccess(PageEntity<List<DataBaseBean>> pageEntity) {
-            if (pageEntity != null) {
-                mDataInternet = pageEntity.getData();
-            }
-            if (mDataInternet == null || mDataInternet.isEmpty()) {
-                Toast.makeText(mContext, mContext.getString(R.string.attention_data_refresh_error), Toast.LENGTH_SHORT).show();
+        public void onSuccess(List<DataBaseBean> list) {
+            if (list != null && !list.isEmpty()) {
+                mDataInternet = list;
+                showSuccess();
             } else {
-                // 显示获取数据
-                closeLoading();
+                showError(-1, null);
             }
         }
 
         @Override
         public void onError(int code, String errorMsg) {
             L.d(TAG, "databaseObserver code:" + code + ",errorMsg:" + errorMsg);
-            Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
-            mDataInternet = new ArrayList<>();
-            closeLoading();
+            showError(code, errorMsg);
         }
     });
 
@@ -58,15 +52,24 @@ public class MyDatabaseActivityPresenter extends BasePresenter<IMyDatabaseActivi
         setModel(HttpManager.getInstance());
     }
 
-    private void closeLoading() {
-        if (checkData() && view() != null) {
-            mKnowledgeAdapter = new KnowledgeAdapter(mContext, mDataInternet);
-
+    private void showSuccess() {
+        view().setRefreshEnable(false);
+        if (mAdapter == null) {
+            mAdapter = new MyDatabaseAdapter(mContext, mDataInternet);
+        } else {
+            mAdapter.setData(mDataInternet);
         }
+        view().showListView(mAdapter);
     }
 
-    private boolean checkData() {
-        return mDataInternet != null;
+    private void showError(int code, String msg) {
+        if (code != AppContants.SUCCESS_CODE) {
+            view().showToast(R.string.attention_data_refresh_error);
+        } else {
+            view().showToast(R.string.text_my_database_is_empty);
+        }
+
+        view().setRefreshEnable(false);
     }
 
     @Override
@@ -81,11 +84,20 @@ public class MyDatabaseActivityPresenter extends BasePresenter<IMyDatabaseActivi
     }
 
     public void init2Show() {
-        model.getKDBWithCache(
+        resetState();
+        getData();
+    }
+
+    private void getData() {
+        model.getMyDataBaseWithCache(
                 databaseObserver,
                 AppHelper.getInstance().getCurrentToken(),
-                1,
-                10,
                 false);
+    }
+
+    @Override
+    protected void resetState() {
+        super.resetState();
+        mDataInternet.clear();
     }
 }

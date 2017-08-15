@@ -100,4 +100,9 @@ public interface CacheProvider {
     Observable<ResultEntity<List<MasterEntity>>> getMasterHotList(
             Observable<ResultEntity<List<MasterEntity>>> oRepos,
             EvictProvider evictDynamicKey);
+
+    @LifeCache(duration = 5, timeUnit = TimeUnit.MINUTES)
+    Observable<ResultEntity<List<DataBaseBean>>> getMyDataBase(
+            Observable<ResultEntity<List<DataBaseBean>>> oRepos,
+            EvictProvider evictDynamicKey);
 }

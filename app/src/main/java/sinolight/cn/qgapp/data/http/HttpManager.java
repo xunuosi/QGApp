@@ -62,7 +62,7 @@ import sinolight.cn.qgapp.data.http.exception.ApiException;
 import sinolight.cn.qgapp.data.http.parser.GsonTSpeaker;
 
 public class HttpManager {
-    public static final String TAG=HttpManager.class.getSimpleName();
+    public static final String TAG = HttpManager.class.getSimpleName();
     private static final int DEFAULT_TIMEOUT = 5;
     private Retrofit mRetrofit;
     private ApiService mApiService;
@@ -71,11 +71,11 @@ public class HttpManager {
     private volatile static HttpManager instance;
 
     private HttpManager() {
-        HttpLoggingInterceptor.Level level= HttpLoggingInterceptor.Level.BODY;
-        HttpLoggingInterceptor loggingInterceptor=new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+        HttpLoggingInterceptor.Level level = HttpLoggingInterceptor.Level.BODY;
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
-                Log.i("HttpManager",message);
+                Log.i("HttpManager", message);
             }
         });
         loggingInterceptor.setLevel(level);
@@ -112,8 +112,8 @@ public class HttpManager {
         return instance;
     }
 
-    public static void init(Context context){
-        mContext=context;
+    public static void init(Context context) {
+        mContext = context;
     }
 
     private <T> void toSubscribe(Observable<ResultEntity<T>> o, Observer<T> s) {
@@ -121,7 +121,7 @@ public class HttpManager {
                 .map(new Function<ResultEntity<T>, T>() {
                     @Override
                     public T apply(@NonNull ResultEntity<T> response) throws Exception {
-                        int code= response.getCode();
+                        int code = response.getCode();
                         if (code != AppContants.SUCCESS_CODE || response.getResult() == null) {
                             throw new ApiException(code, response.getMessage());
                         } else {
@@ -135,55 +135,55 @@ public class HttpManager {
     }
 
     public void getHomeBannerWithCache(Observer<List<BannerEntity>> subscriber, String token, boolean update) {
-        toSubscribe(cacheProvider.getHomeBanner(mApiService.getHomeBanner(token),new EvictProvider(update)), subscriber);
+        toSubscribe(cacheProvider.getHomeBanner(mApiService.getHomeBanner(token), new EvictProvider(update)), subscriber);
     }
 
     public void getHotPicsWithCache(Observer<List<BannerEntity>> subscriber, String token, boolean update) {
-        toSubscribe(cacheProvider.getHotPics(mApiService.getHotPics(token),new EvictProvider(update)), subscriber);
+        toSubscribe(cacheProvider.getHotPics(mApiService.getHotPics(token), new EvictProvider(update)), subscriber);
     }
 
     public void getNewestStdDataWithCache(Observer<List<StandardEntity>> subscriber, String token, boolean update) {
-        toSubscribe(cacheProvider.getNewestStdData(mApiService.getNewestStdData(token),new EvictProvider(update)), subscriber);
+        toSubscribe(cacheProvider.getNewestStdData(mApiService.getNewestStdData(token), new EvictProvider(update)), subscriber);
     }
 
     public void getRecommendWordsWithCache(Observer<List<RecommendEntity>> subscriber, String token, boolean update) {
-        toSubscribe(cacheProvider.getRecommendWords(mApiService.getRecommendWords(token),new EvictProvider(update)), subscriber);
+        toSubscribe(cacheProvider.getRecommendWords(mApiService.getRecommendWords(token), new EvictProvider(update)), subscriber);
     }
 
     public void getNewsBooksWithCache(Observer<List<NewBookEntity>> subscriber, String token, boolean update) {
-        toSubscribe(cacheProvider.getNewsBooks(mApiService.getNewsBooks(token),new EvictProvider(update)), subscriber);
+        toSubscribe(cacheProvider.getNewsBooks(mApiService.getNewsBooks(token), new EvictProvider(update)), subscriber);
     }
 
     public void getNewsArticleWithCache(Observer<List<ArticleEntity>> subscriber, String token, boolean update) {
-        toSubscribe(cacheProvider.getNewsArticle(mApiService.getNewsArticle(token),new EvictProvider(update)), subscriber);
+        toSubscribe(cacheProvider.getNewsArticle(mApiService.getNewsArticle(token), new EvictProvider(update)), subscriber);
     }
 
     public void getKDBWithCache(Observer<PageEntity<List<DataBaseBean>>> subscriber, String token, int page, int size, boolean update) {
         toSubscribe(cacheProvider.getKnowledgeDataBase(
-                mApiService.getKnowledgeDataBase(token,page,size),
+                mApiService.getKnowledgeDataBase(token, page, size),
                 new EvictProvider(update)), subscriber);
     }
 
     public void getKDBResTypeNoCache(Observer<List<DBResTypeEntity>> subscriber, String token, String type) {
-        toSubscribe(mApiService.getKDBResType(token,type), subscriber);
+        toSubscribe(mApiService.getKDBResType(token, type), subscriber);
     }
 
     public void getKDBBookListNoCache(Observer<PageEntity<List<BookEntity>>> subscriber, String token,
-                                        @Nullable String dbId, @Nullable String type, @Nullable String key,
-                                        int page, int size) {
-        toSubscribe(mApiService.getKDBBookList(token,dbId,type,key, page, size), subscriber);
+                                      @Nullable String dbId, @Nullable String type, @Nullable String key,
+                                      int page, int size) {
+        toSubscribe(mApiService.getKDBBookList(token, dbId, type, key, page, size), subscriber);
     }
 
     public void getKDBStdListNoCache(Observer<PageEntity<List<ResStandardEntity>>> subscriber, String token,
-                                       @Nullable String dbId, @Nullable String type, @Nullable String key,
-                                       int page, int size) {
-        toSubscribe(mApiService.getKDBStdList(token,dbId,type,key, page, size), subscriber);
+                                     @Nullable String dbId, @Nullable String type, @Nullable String key,
+                                     int page, int size) {
+        toSubscribe(mApiService.getKDBStdList(token, dbId, type, key, page, size), subscriber);
     }
 
     public void getKDBIndustryAnalysisListNoCache(Observer<PageEntity<List<ResArticleEntity>>> subscriber,
                                                   String token, @Nullable String dbId, @Nullable String themeType,
                                                   @Nullable String key, int type, int page, int size) {
-        toSubscribe(mApiService.getKDBIndustryAnalysisList(token,dbId,themeType,key, type, page, size), subscriber);
+        toSubscribe(mApiService.getKDBIndustryAnalysisList(token, dbId, themeType, key, type, page, size), subscriber);
     }
 
     public void getKDBdoPicListNoCache(Observer<PageEntity<List<DBResPicEntity>>> subscriber, String token,
@@ -194,11 +194,11 @@ public class HttpManager {
     public void getKDBdoPicInfoNoCache(Observer<PageEntity<List<ResImgEntity>>> subscriber, String token,
                                        @Nullable String dbId, @Nullable String themeType,
                                        @Nullable String key, int page, int size) {
-        toSubscribe(mApiService.getKDBPicInfo(token,dbId,themeType,key, page, size), subscriber);
+        toSubscribe(mApiService.getKDBPicInfo(token, dbId, themeType, key, page, size), subscriber);
     }
 
     public void getKDBWordListNoCache(Observer<PageEntity<List<ResWordEntity>>> subscriber, String token,
-                                       @Nullable String dbId, @Nullable String key, int type, String themeType, int page, int size) {
+                                      @Nullable String dbId, @Nullable String key, int type, String themeType, int page, int size) {
         toSubscribe(mApiService.getKDBWordList(token, dbId, key, type, themeType, page, size), subscriber);
     }
 
@@ -219,7 +219,7 @@ public class HttpManager {
     }
 
     public void getVideoListNoCache(Observer<PageEntity<List<DBResVideoEntity>>> subscriber, String token, String dbid,
-                                     String key, int page, int size) {
+                                    String key, int page, int size) {
         toSubscribe(mApiService.getVideoList(token, dbid, key, page, size), subscriber);
     }
 
@@ -237,7 +237,7 @@ public class HttpManager {
 
     public void getUserInfoWithCache(Observer<UserEntity> subscriber, String token, String user, boolean update) {
         toSubscribe(cacheProvider.getUserInfo(
-                mApiService.getUserInfo(token,user),
+                mApiService.getUserInfo(token, user),
                 new EvictProvider(update)), subscriber);
     }
 
@@ -324,5 +324,10 @@ public class HttpManager {
                 page,
                 size),
                 subscriber);
+    }
+
+    public void getMyDataBaseWithCache(Observer<List<DataBaseBean>> subscriber, String token, boolean update) {
+        toSubscribe(cacheProvider.getMyDataBase(mApiService.getMyDataBase(token, AppHelper.getInstance().getCurrentUserName()),
+                new EvictProvider(update)), subscriber);
     }
 }

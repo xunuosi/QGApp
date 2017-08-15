@@ -9,7 +9,7 @@ import java.util.List;
 
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.DataBaseBean;
-import sinolight.cn.qgapp.views.holder.DatabaseHolder;
+import sinolight.cn.qgapp.views.holder.MyDatabaseHolder;
 
 /**
  * Created by xns on 2017/7/10.
@@ -18,31 +18,37 @@ import sinolight.cn.qgapp.views.holder.DatabaseHolder;
 
 public class MyDatabaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
-    private List<DataBaseBean> mList;
+    private List<DataBaseBean> mData;
     private LayoutInflater mInflater;
 
     public MyDatabaseAdapter(Context context, List<DataBaseBean> list) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
-        mList = list;
+        mData = list;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holder = null;
-        holder = new DatabaseHolder(mInflater.inflate(R.layout.item_database, parent, false));
+        holder = new MyDatabaseHolder(mInflater.inflate(R.layout.item_my_database, parent, false));
         return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((DatabaseHolder) holder).setData(mList.get(position));
+        ((MyDatabaseHolder) holder).setData(mData.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mList == null ? 0 : mList.size();
+        return mData == null ? 0 : mData.size();
     }
 
-
+    public void setData(List<DataBaseBean> data) {
+        if (mData != null) {
+            mData.clear();
+            mData.addAll(data);
+        }
+        notifyDataSetChanged();
+    }
 }

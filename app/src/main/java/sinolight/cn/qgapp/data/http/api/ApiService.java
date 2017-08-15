@@ -633,4 +633,17 @@ public interface ApiService {
             @Field("page") int page,
             @Field("size") int size
     );
+
+    /**
+     * 个人中心-我的资源库
+     * @param token
+     * @param user
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("account/doMyDataBase")
+    Observable<ResultEntity<List<DataBaseBean>>> getMyDataBase(
+            @Field("token") String token,
+            @Field("user") String user
+    );
 }
