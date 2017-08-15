@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/iv_kf_back"
+            android:id="@+id/iv_sys_back"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginStart="15dp"
@@ -31,7 +31,7 @@
             android:src="@drawable/nav_back"/>
 
         <TextView
-            android:id="@+id/tv_kf_title"
+            android:id="@+id/tv_sys_title"
             style="@style/tool_bar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

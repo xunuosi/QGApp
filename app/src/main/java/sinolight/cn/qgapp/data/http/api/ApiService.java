@@ -8,6 +8,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import sinolight.cn.qgapp.data.bean.DataBaseBean;
+import sinolight.cn.qgapp.data.http.entity.AboutEntity;
 import sinolight.cn.qgapp.data.http.entity.ArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
@@ -654,7 +655,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("account/doAbout")
-    Observable<ResultEntity<List<DataBaseBean>>> getMyDataBase(
+    Observable<ResultEntity<List<AboutEntity>>> getAbout(
             @Field("token") String token
     );
 }

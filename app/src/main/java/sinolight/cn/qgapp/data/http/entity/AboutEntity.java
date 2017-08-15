@@ -7,6 +7,7 @@ package sinolight.cn.qgapp.data.http.entity;
 
 public class AboutEntity {
     private String data;
+    private String title;
 
     public AboutEntity() {
     }
@@ -17,5 +18,13 @@ public class AboutEntity {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

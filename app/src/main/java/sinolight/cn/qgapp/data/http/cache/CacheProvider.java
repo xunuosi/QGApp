@@ -10,6 +10,7 @@ import io.reactivex.Observable;
 import io.rx_cache2.EvictProvider;
 import io.rx_cache2.LifeCache;
 import sinolight.cn.qgapp.data.bean.DataBaseBean;
+import sinolight.cn.qgapp.data.http.entity.AboutEntity;
 import sinolight.cn.qgapp.data.http.entity.ArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
@@ -104,5 +105,10 @@ public interface CacheProvider {
     @LifeCache(duration = 5, timeUnit = TimeUnit.MINUTES)
     Observable<ResultEntity<List<DataBaseBean>>> getMyDataBase(
             Observable<ResultEntity<List<DataBaseBean>>> oRepos,
+            EvictProvider evictDynamicKey);
+
+    @LifeCache(duration = 5, timeUnit = TimeUnit.MINUTES)
+    Observable<ResultEntity<List<AboutEntity>>> getAbout(
+            Observable<ResultEntity<List<AboutEntity>>> oRepos,
             EvictProvider evictDynamicKey);
 }

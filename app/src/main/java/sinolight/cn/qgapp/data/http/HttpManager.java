@@ -28,6 +28,7 @@ import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.data.bean.DataBaseBean;
 import sinolight.cn.qgapp.data.http.api.ApiService;
 import sinolight.cn.qgapp.data.http.cache.CacheProvider;
+import sinolight.cn.qgapp.data.http.entity.AboutEntity;
 import sinolight.cn.qgapp.data.http.entity.ArticleEntity;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.data.http.entity.BookEntity;
@@ -329,5 +330,9 @@ public class HttpManager {
     public void getMyDataBaseWithCache(Observer<List<DataBaseBean>> subscriber, String token, boolean update) {
         toSubscribe(cacheProvider.getMyDataBase(mApiService.getMyDataBase(token, AppHelper.getInstance().getCurrentUserName()),
                 new EvictProvider(update)), subscriber);
+    }
+
+    public void getAboutWithCache(Observer<List<AboutEntity>> subscriber, String token, boolean update) {
+        toSubscribe(cacheProvider.getAbout(mApiService.getAbout(token), new EvictProvider(update)), subscriber);
     }
 }
