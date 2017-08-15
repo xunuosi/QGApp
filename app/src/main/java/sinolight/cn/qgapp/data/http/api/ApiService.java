@@ -646,4 +646,15 @@ public interface ApiService {
             @Field("token") String token,
             @Field("user") String user
     );
+
+    /**
+     * 个人中心-系统设置-关于我们
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("account/doAbout")
+    Observable<ResultEntity<List<DataBaseBean>>> getMyDataBase(
+            @Field("token") String token
+    );
 }

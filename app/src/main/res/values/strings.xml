@@ -170,5 +170,9 @@
     <string name="text_person_info">个人资料</string>
     <string name="text_account_security">账户安全</string>
     <string name="text_my_database_is_empty">您并未购买任何资源库</string>
+    <string name="text_about_me">关于我们</string>
+    <string name="text_clear">清除缓存</string>
+    <string name="text_update">版本更新</string>
+    <string name="text_quit">退出登录</string>
 
 </resources>

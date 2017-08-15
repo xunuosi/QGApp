@@ -111,6 +111,7 @@ public class UserFragment extends BaseFragment implements IUserFragmentView {
                 mPresenter.gotoCollectActivity();
                 break;
             case R.id.root_my_center_setting:
+                mPresenter.gotoSysActivity();
                 break;
             case R.id.root_my_center_help:
                 break;

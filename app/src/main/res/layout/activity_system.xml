@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tool_bar_my_database"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        android:background="@color/color_white"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_kf_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="15dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/nav_back"/>
+
+        <TextView
+            android:id="@+id/tv_kf_title"
+            style="@style/tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="55dp"
+            android:layout_marginStart="15dp"
+            android:gravity="center"
+            android:text="@string/text_sys_setting"/>
+    </android.support.v7.widget.Toolbar>
+    <View
+        android:id="@+id/empty_view2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/color_bottom_divider"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tool_bar_my_database"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintLeft_creator="1"/>
+
+    <LinearLayout
+        android:id="@+id/root_sys_about"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/my_fragment_line_height"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/color_white"
+        android:gravity="center_vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/empty_view2">
+
+        <TextView
+            android:id="@+id/tv_sys_about"
+            style="@style/my_center_fragment_text_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:text="@string/text_about_me"/>
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_sys_about"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginEnd="16dp"
+            fresco:actualImageScaleType="fitCenter"
+            fresco:placeholderImage="@drawable/arrow_right_gray"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/root_sys_clear"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/my_fragment_line_height"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/color_white"
+        android:gravity="center_vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/root_sys_about">
+
+        <TextView
+            android:id="@+id/tv_sys_clear"
+            style="@style/my_center_fragment_text_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:text="@string/text_clear"/>
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_sys_clear"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginEnd="16dp"
+            fresco:actualImageScaleType="fitCenter"
+            fresco:placeholderImage="@drawable/arrow_right_gray"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/empty_view3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/color_bottom_divider"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/root_sys_clear"
+        android:layout_marginStart="16dp"/>
+    <LinearLayout
+        android:id="@+id/root_sys_update"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/my_fragment_line_height"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/color_white"
+        android:gravity="center_vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/empty_view3">
+
+        <TextView
+            android:id="@+id/tv_sys_update"
+            style="@style/my_center_fragment_text_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:text="@string/text_update"/>
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_sys_update"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginEnd="16dp"
+            fresco:actualImageScaleType="fitCenter"
+            fresco:placeholderImage="@drawable/arrow_right_gray"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_sys_quit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_quit"
+        android:layout_marginTop="8dp"
+        android:textSize="16sp"
+        android:textColor="@color/color_my_center_red"
+        app:layout_constraintTop_toBottomOf="@+id/root_sys_update"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="32dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="32dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:background="@drawable/btn_bg_white"/>
+</android.support.constraint.ConstraintLayout>
