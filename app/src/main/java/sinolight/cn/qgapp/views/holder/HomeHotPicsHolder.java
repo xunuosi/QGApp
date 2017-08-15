@@ -1,5 +1,6 @@
 package sinolight.cn.qgapp.views.holder;
 
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
@@ -17,11 +18,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import sinolight.cn.qgapp.App;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.HomeData;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.utils.ScreenUtil;
+import sinolight.cn.qgapp.views.activity.DBResourceActivity;
 import sinolight.cn.qgapp.views.widget.FrescoLoader;
 
 /**
@@ -109,9 +112,10 @@ public class HomeHotPicsHolder extends RecyclerView.ViewHolder implements
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         // 9条数据 position变化范围：1-10，其中到10的时候直接又变成1需要特殊处理
-        if (position == titles.size() + 1) {
+        if (position >= titles.size() + 1) {
             return;
         }
+
         mTvHotImgsBannerCenterTitle.setText(titles.get(position - 1));
     }
 
@@ -127,6 +131,15 @@ public class HomeHotPicsHolder extends RecyclerView.ViewHolder implements
 
     @Override
     public void OnBannerClick(int position) {
-        L.d(TAG, "title:" + datas.get(position).getTitle());
+        gotoImgSetInfo(position);
+    }
+
+    private void gotoImgSetInfo(int position) {
+        Intent callIntent = DBResourceActivity.getCallIntent(App.getContext());
+        callIntent.putExtra(AppContants.DataBase.KEY_ID, datas.get(position).getId());
+        callIntent.putExtra(AppContants.DataBase.KEY_RES_TYPE, AppContants.DataBase.Res.RES_IMG);
+        callIntent.putExtra(AppContants.DataBase.KEY_TYPE, "");
+        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        App.getContext().startActivity(callIntent);
     }
 }
