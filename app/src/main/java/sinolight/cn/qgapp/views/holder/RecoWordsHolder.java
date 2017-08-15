@@ -87,7 +87,7 @@ public class RecoWordsHolder extends RecyclerView.ViewHolder implements
         //设置banner样式
         mItemRecWordsBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         //设置图片加载器
-        mItemRecWordsBanner.setImageLoader(new FrescoLoader(width, height));
+        mItemRecWordsBanner.setImageLoader(new FrescoLoader(width, height, false));
         //设置图片集合
         mItemRecWordsBanner.setImages(imgList);
         //设置banner动画效果

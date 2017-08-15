@@ -1,12 +1,12 @@
 package sinolight.cn.qgapp.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.interfaces.DraweeController;
@@ -15,6 +15,8 @@ import com.facebook.imagepipeline.common.ResizeOptions;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+
+import sinolight.cn.qgapp.utils.fresco.CutProcess;
 
 /**
  * Created by liubin on 2017/1/17.
@@ -78,7 +80,52 @@ public class ImageUtil {
                         ScreenUtil.dip2px(activity, width), ScreenUtil.dip2px(activity, height)))
                 .build();
 
-        DraweeController controller = Fresco.newDraweeControllerBuilder()
+        PipelineDraweeController controller = (PipelineDraweeController) Fresco.newDraweeControllerBuilder()
+                .setImageRequest(request)
+                .setOldController(view.getController())
+                .setControllerListener(new BaseControllerListener<ImageInfo>())
+                .build();
+
+        view.setController(controller);
+    }
+
+
+    /**
+     * Fresco框架显示轮播图片的方法(带裁剪)
+     * @param activity:
+     * @param path:
+     * @param view:
+     * @param beginXPercent: 起始切割 X 轴百分比
+     * @param beginYPercent: 起始切割 Y 轴百分比
+     * @param cutWidthPercent: 切割结束 X 轴百分比
+     * @param cutHeightPercent: 切割结束 Y 轴百分比
+     * @param width: View的实际宽度(dp)
+     * @param height: View的实际高度（dp）
+     */
+    public static void frescoShowBannerByUri(Context activity, String path, SimpleDraweeView view,
+                                             float beginXPercent, float beginYPercent,
+                                             float cutWidthPercent, float cutHeightPercent,
+                                             int width, int height) {
+
+        if (path == null || activity == null || view == null) {
+            return;
+        }
+        if (width == 0 || height == 0) {
+            width = 70;
+            height = 70;
+        }
+
+        Uri uri = Uri.parse(path);
+
+        CutProcess cutProcess = new CutProcess(beginXPercent, beginYPercent, cutWidthPercent, cutHeightPercent);
+
+        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
+                .setPostprocessor(cutProcess)
+                .setResizeOptions(new ResizeOptions(
+                        ScreenUtil.dip2px(activity, width), ScreenUtil.dip2px(activity, height)))
+                .build();
+
+        PipelineDraweeController controller = (PipelineDraweeController) Fresco.newDraweeControllerBuilder()
                 .setImageRequest(request)
                 .setOldController(view.getController())
                 .setControllerListener(new BaseControllerListener<ImageInfo>())

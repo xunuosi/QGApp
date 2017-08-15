@@ -70,7 +70,7 @@ public class HomeBannerHolder extends RecyclerView.ViewHolder {
         //设置banner样式
         mBannerHomeHead.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         //设置图片加载器
-        mBannerHomeHead.setImageLoader(new FrescoLoader(width, height));
+        mBannerHomeHead.setImageLoader(new FrescoLoader(width, height, true));
         //设置图片集合
         mBannerHomeHead.setImages(imgList);
         //设置banner动画效果

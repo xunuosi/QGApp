@@ -42,8 +42,8 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
     private HomeAdapter mHomeAdapter;
 
     private int[] storeImgArr = {
-            R.drawable.holder_circle_image,
-            R.drawable.holder_circle_image,
+            R.drawable.store_icon_knowledge,
+            R.drawable.store_icon_res,
             R.drawable.store_icon_bk,
             R.drawable.store_icon_standard,
             R.drawable.store_icon_ebk,
