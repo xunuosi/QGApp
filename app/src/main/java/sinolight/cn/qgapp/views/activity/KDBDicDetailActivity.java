@@ -43,8 +43,6 @@ public class KDBDicDetailActivity extends BaseActivity implements IKDBDicDetailA
     Toolbar mTbKdbDicDetail;
     @BindView(R.id.tv_kdb_dic_detail_title)
     TextView mTvKdbDicDetailTitle;
-    @BindView(R.id.iv_kdb_dic_detail)
-    SimpleDraweeView mIvKdbDicDetail;
     @BindView(R.id.tv_kdb_dic_detail_cn_name)
     TextView mTvKdbDicDetailCnName;
     @BindView(R.id.tv_kdb_dic_detail_en_name)
@@ -122,19 +120,19 @@ public class KDBDicDetailActivity extends BaseActivity implements IKDBDicDetailA
         String formatRESname = getString(R.string.text_resource_format);
         mTvKdbDicDetailSource.setText(String.format(formatRESname, dicData.getSource()));
 
-        if (dicData.isPicflag()) {
-            int width = (int) (App.getContext().getResources().getDimensionPixelOffset(R.dimen.kdb_dic_detail_cover_width) /
-                    App.getContext().getResources().getDisplayMetrics().density);
-            int height = (int) (App.getContext().getResources().getDimensionPixelOffset(R.dimen.kdb_dic_detail_cover_height) /
-                    App.getContext().getResources().getDisplayMetrics().density);
-            ImageUtil.frescoShowImageByUri(
-                    KDBDicDetailActivity.this,
-                    dicData.getPicpath(),
-                    mIvKdbDicDetail,
-                    width,
-                    height
-            );
-        }
+//        if (dicData.isPicflag()) {
+//            int width = (int) (App.getContext().getResources().getDimensionPixelOffset(R.dimen.kdb_dic_detail_cover_width) /
+//                    App.getContext().getResources().getDisplayMetrics().density);
+//            int height = (int) (App.getContext().getResources().getDimensionPixelOffset(R.dimen.kdb_dic_detail_cover_height) /
+//                    App.getContext().getResources().getDisplayMetrics().density);
+//            ImageUtil.frescoShowImageByUri(
+//                    KDBDicDetailActivity.this,
+//                    dicData.getPicpath(),
+//                    mIvKdbDicDetail,
+//                    width,
+//                    height
+//            );
+//        }
         // Show part two
         String formatContent = getString(R.string.text_two_empty_format);
         mTvKdbDicDetailInfo.setText(String.format(formatContent, dicData.getContent()));
