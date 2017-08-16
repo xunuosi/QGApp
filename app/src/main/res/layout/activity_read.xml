@@ -60,7 +60,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="16dp"
                 android:clickable="true"
-                android:src="@drawable/icon_collect"/>
+                android:src="@drawable/icon_collect"
+                android:visibility="invisible"/>
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
     <View
