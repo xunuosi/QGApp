@@ -120,8 +120,8 @@ public class MasterListActivityPresenter extends BasePresenter<IMasterListActivi
         }
 
         mRoot = createTree(AppContants.DataBase.TREE_PID, mTrees);
-        TreeNode treeNode = mRoot.get(0);
-        mTreeNodes = treeNode.getChildren();
+//        TreeNode treeNode = mRoot.get(0);
+        mTreeNodes = mRoot;
     }
 
     public List<TreeNode> createTree(String pid, List<TreeNode> treeRes) {
