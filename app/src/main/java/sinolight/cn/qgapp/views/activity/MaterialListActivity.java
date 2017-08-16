@@ -69,6 +69,7 @@ public class MaterialListActivity extends BaseActivity implements IMaterialListA
     private TopRightMenu mTopRightMenu;
     private AndroidTreeView tView;
     private String themeType;
+    private String themeName;
 
     private LinearLayoutManager mLayoutManager;
 
@@ -202,7 +203,7 @@ public class MaterialListActivity extends BaseActivity implements IMaterialListA
                 tView = new AndroidTreeView(this, treeRoot);
 //                tView.setDefaultAnimation(true);
 //                tView.setUse2dScroll(true);
-                tView.setDefaultContainerStyle(R.style.TreeNodeStyleDivided, true);
+                tView.setDefaultContainerStyle(R.style.TreeNodeStyleCustom, true);
                 tView.setDefaultViewHolder(TreeParentHolder.class);
                 tView.setDefaultNodeClickListener(this);
                 tView.setUseAutoToggle(true);
@@ -211,7 +212,7 @@ public class MaterialListActivity extends BaseActivity implements IMaterialListA
                 mTopRightMenu = new TopRightMenu(this, tView.getView());
                 mTopRightMenu
                         .setHeight(850)     //默认高度480
-                        .setWidth(450)      //默认宽度wrap_content
+                        .setWidth(520)      //默认宽度wrap_content
                         .showIcon(true)     //显示菜单图标，默认为true
                         .dimBackground(true)           //背景变暗，默认为true
                         .needAnimationStyle(true)   //显示动画，默认为true
@@ -252,6 +253,7 @@ public class MaterialListActivity extends BaseActivity implements IMaterialListA
 
     @Override
     public void onDismiss() {
+        Toast.makeText(mContext, "你选择了:" + themeName + "分类", Toast.LENGTH_SHORT).show();
         // recover window Alpha
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = 1.0f;
@@ -269,7 +271,7 @@ public class MaterialListActivity extends BaseActivity implements IMaterialListA
     public void onClick(TreeNode node, Object value) {
         TreeParentHolder.IconTreeItem item = (TreeParentHolder.IconTreeItem) value;
         themeType = item.id;
-        Toast.makeText(mContext, "你选择了:" + item.name + "分类", Toast.LENGTH_SHORT).show();
+        themeName = item.name;
     }
 
     private class LinearDivider extends Y_DividerItemDecoration {

@@ -22,7 +22,6 @@ import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.HomeData;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
-import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.utils.ScreenUtil;
 import sinolight.cn.qgapp.views.activity.DBResourceActivity;
 import sinolight.cn.qgapp.views.widget.FrescoLoader;

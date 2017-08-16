@@ -432,11 +432,19 @@ public class TestActivity extends AppCompatActivity {
         List<TreeNode> mTreeNodes = treeNode.getChildren();
         TreeNode root = TreeNode.root();
         root.addChildren(mTreeNodes);
-
+//
+//        TreeNode root = TreeNode.root();
+//        TreeNode a = mTrees.get(0);
+//        TreeNode a1 = mTrees.get(1);
+//        TreeNode a2 = mTrees.get(2);
+//
+//        a.addChildren(a1, a2);
+//        root.addChild(a);
+//
         AndroidTreeView tView = new AndroidTreeView(TestActivity.this, root);
         tView.setDefaultAnimation(true);
 //        tView.setUse2dScroll(true);
-        tView.setDefaultContainerStyle(R.style.TreeNodeStyleDivided, true);
+        tView.setDefaultContainerStyle(R.style.TreeNodeStyleCustom, true);
         tView.setDefaultViewHolder(TreeParentHolder.class);
 //        tView.setDefaultNodeClickListener(DBResourceActivity.this);
         tView.setUseAutoToggle(true);
