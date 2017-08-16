@@ -85,6 +85,11 @@ public class ScreenUtil {
         return px2dip(context, screenWidth);
     }
 
+    public static int getScreenHeight2Dp(Context context) {
+        int screenHeight = getScreenHeight(context);
+        return px2dip(context, screenHeight);
+    }
+
     /**
      * 获取屏幕尺寸
      */

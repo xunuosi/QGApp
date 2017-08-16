@@ -5,15 +5,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.utils.ImageUtil;
+import sinolight.cn.qgapp.utils.ScreenUtil;
 
 /**
  * Created by xns on 2017/7/4.
- *
+ * Splash Activity
  */
 
 public class SplashActivity extends BaseActivity {
@@ -21,6 +26,8 @@ public class SplashActivity extends BaseActivity {
     private static final int sleepTime = 2000;
     @Inject
     Context mContext;
+    @BindView(R.id.iv_splash)
+    SimpleDraweeView mIvSplash;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,7 +42,15 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-
+        int width = ScreenUtil.getScreenWidth2Dp(mContext);
+        int height = ScreenUtil.getScreenHeight2Dp(mContext);
+        ImageUtil.frescoShowImageByResId(
+                mContext,
+                R.drawable.splash_icon,
+                mIvSplash,
+                width,
+                height
+        );
     }
 
     @Override
