@@ -175,8 +175,9 @@ public class EBookActivityPresenter extends BasePresenter<IEBookActivityView, Ht
         }
 
         mRoot = createTree(AppContants.DataBase.TREE_PID, mTrees);
-        TreeNode treeNode = mRoot.get(0);
-        mTreeNodes = treeNode.getChildren();
+//        TreeNode treeNode = mRoot.get(0);
+//        mTreeNodes = treeNode.getChildren();
+        mTreeNodes = mRoot;
     }
 
     public List<TreeNode> createTree(String pid, List<TreeNode> treeRes) {
