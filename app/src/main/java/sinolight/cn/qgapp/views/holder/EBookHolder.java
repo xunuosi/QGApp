@@ -1,6 +1,7 @@
 package sinolight.cn.qgapp.views.holder;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -81,18 +82,22 @@ public class EBookHolder extends RecyclerView.ViewHolder {
         switch (view.getId()) {
             case R.id.item_root_ebook:
                 // Go to Article read
-                gotoReadActivity();
+                gotoInternet();
                 break;
         }
     }
 
-    private void gotoReadActivity() {
-//        Intent callIntent = ReadActivity.getCallIntent(App.getContext());
-//        callIntent.putExtra(AppContants.Read.READ_NAME, mHomeData.getTitle());
-//        callIntent.putExtra(AppContants.Read.READ_ID, mHomeData.getId());
-//        callIntent.putExtra(AppContants.Read.CHAPTERED_ID, "");
-//        callIntent.putExtra(AppContants.Read.READ_RES_TYPE, AppContants.Read.Type.TYPE_ARTICLE);
-//        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        App.getContext().startActivity(callIntent);
+    private void gotoInternet() {
+        String url = null;
+        if (mData.getUrl() != null && !mData.getUrl().isEmpty()) {
+            url = mData.getUrl();
+        } else {
+            url = "http://www.taobao.com";
+        }
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        App.getContext().startActivity(intent);
     }
+
 }
