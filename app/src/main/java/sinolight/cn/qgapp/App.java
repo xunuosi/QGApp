@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
 
 import sinolight.cn.qgapp.dagger.component.ApplicationComponent;
 import sinolight.cn.qgapp.dagger.component.DaggerApplicationComponent;
@@ -30,7 +31,11 @@ public class App extends Application {
                 .applicationModule(new ApplicationModule(this))
                 .build();
 
-        Fresco.initialize(this);
+        ImagePipelineConfig config = ImagePipelineConfig.newBuilder(this)
+                .setDownsampleEnabled(true)
+                .build();
+
+        Fresco.initialize(this, config);
         HttpManager.init(this);
         initDatabase();
         AppHelper.getInstance().init(instance);
