@@ -107,7 +107,7 @@ public class StoreHolder extends RecyclerView.ViewHolder {
 
     private void onClickStandard() {
         Intent callIntent = DBResourceActivity.getCallIntent(App.getContext());
-        callIntent.putExtra(AppContants.DataBase.KEY_TYPE, AppContants.DataBase.Type.DB_STANDARD);
+        callIntent.putExtra(AppContants.DataBase.KEY_TYPE, AppContants.DataBase.Type.DB_STANDARD.getType());
         callIntent.putExtra(AppContants.DataBase.KEY_RES_TYPE, AppContants.DataBase.Res.RES_STANDARD);
         callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         App.getContext().startActivity(callIntent);
