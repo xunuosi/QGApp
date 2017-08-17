@@ -15,6 +15,7 @@ import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
 import sinolight.cn.qgapp.data.http.entity.TokenEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.L;
+import sinolight.cn.qgapp.utils.MD5;
 import sinolight.cn.qgapp.utils.SharedPfUtil;
 import sinolight.cn.qgapp.views.activity.HomeActivity;
 import sinolight.cn.qgapp.views.view.ILoginActivityView;
@@ -86,7 +87,7 @@ public class LoginActivityPresenter extends BasePresenter<ILoginActivityView, Da
         if (checkData(userName, pwd)) {
             view().showLoading(true);
             this.userName = userName;
-            this.pwd = pwd;
+            this.pwd = MD5.getMessageDigest(pwd);
             HttpManager.getInstance().login(loginObserver, userName, pwd);
         }
     }

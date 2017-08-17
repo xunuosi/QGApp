@@ -21,6 +21,7 @@ import sinolight.cn.qgapp.data.http.entity.TokenEntity;
 import sinolight.cn.qgapp.data.http.entity.VCodeEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.L;
+import sinolight.cn.qgapp.utils.MD5;
 import sinolight.cn.qgapp.utils.TextFormatUtil;
 import sinolight.cn.qgapp.views.activity.LoginActivity;
 import sinolight.cn.qgapp.views.view.IRegisterActivityView;
@@ -115,6 +116,9 @@ public class RegisterActivityPresenter extends BasePresenter<IRegisterActivityVi
     public void registerAccount(String account, String email, String pwd, String rePwd, String vCode) {
         if (checkoutData(account, email, pwd, rePwd, vCode)) {
             view().showLoading(true);
+            // MD5 encode
+            pwd = MD5.getMessageDigest(pwd);
+            rePwd = pwd;
             // 请求注册接口
             HttpManager.getInstance().register(mRegisterObserver, account, email, pwd, rePwd, vCode);
 
