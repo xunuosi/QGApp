@@ -204,6 +204,11 @@ public class HttpManager {
                 subscriber);
     }
 
+    public void getResPicDetailNoCache(Observer<ResImgEntity> subscriber, String token, String id) {
+        toSubscribe(mApiService.getResPicDetail(
+                token, id, AppHelper.getInstance().getCurrentUserName()), subscriber);
+    }
+
     public void getKDBdoPicInfoNoCache(Observer<PageEntity<List<ResImgEntity>>> subscriber, String token,
                                        @Nullable String dbId, @Nullable String themeType,
                                        @Nullable String key, int page, int size) {

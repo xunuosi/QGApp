@@ -100,4 +100,6 @@
     <dimen name="master_home_banner_height">155dp</dimen>
     <dimen name="master_info_iv_width">116dp</dimen>
     <dimen name="master_info_iv_height">155dp</dimen>
+    <!--Pic Detail-->
+    <dimen name="res_pic_detail_height">230dp</dimen>
 </resources>

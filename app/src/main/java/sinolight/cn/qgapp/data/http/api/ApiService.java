@@ -306,6 +306,21 @@ public interface ApiService {
     );
 
     /**
+     * 图片详情信息
+     * @param token
+     * @param id
+     * @param user
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("db/doPicDetail")
+    Observable<ResultEntity<ResImgEntity>> getResPicDetail(
+            @Field("token") String token,
+            @Field("id") String id,
+            @Field("user") String user
+    );
+
+    /**
      * 识库/资源库-某一知识库-词典（推荐词条/全部词条）列表
      * @param token
      * @param dbid
