@@ -87,7 +87,7 @@ public class PicSetActivityPresenter extends BasePresenter<IPicSetActivityView, 
     private void transformKDBResData() {
         List<KDBResData> list = new ArrayList<>();
 
-        list = KDBResDataMapper.transformPicDatas(picDatas, CommonTitleAdapter.TYPE_PIC, false);
+        list = KDBResDataMapper.transformPicDatas(picDatas, CommonTitleAdapter.TYPE_PIC_SET , false);
 
         // Load More Action
         if (action_more) {
@@ -147,7 +147,7 @@ public class PicSetActivityPresenter extends BasePresenter<IPicSetActivityView, 
         }
 
         // 请求资源数据
-        model.getKDBdoPicListNoCache(
+        model.getResPicSetNoCache(
                 mPicObserver,
                 AppHelper.getInstance().getCurrentToken(),
                 key,
@@ -203,7 +203,7 @@ public class PicSetActivityPresenter extends BasePresenter<IPicSetActivityView, 
     }
 
     private void getData() {
-        model.getKDBdoPicListNoCache(
+        model.getResPicSetNoCache(
                 mPicObserver,
                 AppHelper.getInstance().getCurrentToken(),
                 null,

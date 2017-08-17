@@ -16,6 +16,7 @@ import butterknife.OnClick;
 import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.R2;
 import sinolight.cn.qgapp.data.bean.CollectEvent;
 import sinolight.cn.qgapp.data.bean.EventAction;
 import sinolight.cn.qgapp.data.bean.KDBResData;
@@ -32,13 +33,15 @@ import sinolight.cn.qgapp.utils.ScreenUtil;
 public class ResImgHolder extends RecyclerView.ViewHolder {
     private static final String TAG = "ResImgHolder";
 
-    @BindView(R.id.iv_db_res_img)
+    @BindView(R2.id.iv_db_res_img)
     SimpleDraweeView mIvDbResImg;
-    @BindView(R.id.tv_db_res_img_title)
+    @BindView(R2.id.tv_db_res_img_title)
     TextView mTvDbResImgTitle;
-    @BindView(R.id.iv_db_res_img_collect)
+    @BindView(R2.id.iv_db_res_img_collect)
     ImageView mIvDbResImgCollect;
-    @BindView(R.id.db_res_img_root)
+    @BindView(R2.id.tv_db_res_img_abs)
+    TextView mTvDbResImgAbs;
+    @BindView(R2.id.db_res_img_root)
     ConstraintLayout mDbResImgRoot;
 
     private int width;
@@ -70,6 +73,7 @@ public class ResImgHolder extends RecyclerView.ViewHolder {
         );
 
         mTvDbResImgTitle.setText(mData.getName());
+        mTvDbResImgAbs.setText(mData.getAbs());
     }
 
     @OnClick({R.id.iv_db_res_img_collect})

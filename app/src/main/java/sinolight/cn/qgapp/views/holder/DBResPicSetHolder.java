@@ -17,8 +17,12 @@ import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.adapter.CommonTitleAdapter;
 import sinolight.cn.qgapp.adapter.VideoAdapter;
 import sinolight.cn.qgapp.data.bean.KDBResData;
+import sinolight.cn.qgapp.data.http.entity.DBResPicEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
+import sinolight.cn.qgapp.utils.ImageUtil;
+import sinolight.cn.qgapp.utils.ScreenUtil;
 import sinolight.cn.qgapp.views.activity.DBResourceActivity;
+
 
 /**
  * Created by xns on 2017/7/17.
@@ -34,24 +38,53 @@ public class DBResPicSetHolder<T> extends RecyclerView.ViewHolder {
     TextView mTvPicSetTitle;
     @BindView(R.id.root_pic_set)
     ConstraintLayout mRootPicSet;
-    private T data;
-    private int typeTitle;
+    private T mData;
+    private int dataType;
 
     public DBResPicSetHolder(View layout) {
         super(layout);
         ButterKnife.bind(this, layout);
     }
 
-    public void setData(KDBResData<T> data, int typeTitle) {
+    public void setData(KDBResData data, int dataType) {
         if (data != null) {
-            if (typeTitle == VideoAdapter.TYPE_VIDEO_SET) {
-                bindVideoSetData();
+            this.dataType = dataType;
+            this.mData = (T) data.getData();
+            switch (dataType) {
+                case VideoAdapter.TYPE_VIDEO_SET:
+                    bindVideoSetData();
+                    break;
+                case CommonTitleAdapter.TYPE_PIC_SET:
+                    bindPicSetData();
+                    break;
             }
         }
     }
 
+    private void bindPicSetData() {
+        DBResPicEntity picEntity = (DBResPicEntity) mData;
+        mTvPicSetTitle.setText(picEntity.getName());
+        int width = ScreenUtil.getScreenWidth2Dp(App.getContext()) - 32;
+        int height = (int) (App.getContext().getResources().getDimensionPixelOffset(R.dimen.video_set_img_height) /
+                App.getContext().getResources().getDisplayMetrics().density);
+        // Set corner
+        ImageUtil.frescoShowCorner(
+                mIvPicSet,
+                10.0f,
+                R.color.color_collect_divider,
+                1.0f
+        );
+        ImageUtil.frescoShowImageByUri(
+                App.getContext(),
+                picEntity.getCover(),
+                mIvPicSet,
+                width,
+                height
+        );
+    }
+
     private void bindVideoSetData() {
-        DBResVideoEntity videoEntity = (DBResVideoEntity) data;
+        DBResVideoEntity videoEntity = (DBResVideoEntity) mData;
         mTvPicSetTitle.setText(videoEntity.getName());
     }
 
@@ -68,14 +101,9 @@ public class DBResPicSetHolder<T> extends RecyclerView.ViewHolder {
      * 查看全部时跳转到指定的列表页面
      */
     private void gotoAllListActivity() {
-        switch (typeTitle) {
-            case CommonTitleAdapter.TYPE_MATERIAL_TITLE:
-                break;
-            case CommonTitleAdapter.TYPE_ARTICLE_TITLE:
-                gotoArticleListActivity();
-                break;
-            case CommonTitleAdapter.TYPE_PIC_TITLE:
-
+        switch (dataType) {
+            case CommonTitleAdapter.TYPE_PIC_SET:
+                gotoPicListActivity();
                 break;
             case CommonTitleAdapter.TYPE_VIDEO_TITLE:
                 gotoVideoListActivity();
@@ -87,10 +115,11 @@ public class DBResPicSetHolder<T> extends RecyclerView.ViewHolder {
 
     }
 
-    private void gotoArticleListActivity() {
+    private void gotoPicListActivity() {
+        DBResPicEntity picEntity = (DBResPicEntity) mData;
         Intent callIntent = DBResourceActivity.getCallIntent(App.getContext());
-        callIntent.putExtra(AppContants.DataBase.KEY_ID, "");
-        callIntent.putExtra(AppContants.DataBase.KEY_RES_TYPE, AppContants.DataBase.Res.RES_ARTICLE);
+        callIntent.putExtra(AppContants.DataBase.KEY_ID, picEntity.getId());
+        callIntent.putExtra(AppContants.DataBase.KEY_RES_TYPE, AppContants.DataBase.Res.RES_IMG);
         callIntent.putExtra(AppContants.DataBase.KEY_TYPE, "");
         callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         App.getContext().startActivity(callIntent);

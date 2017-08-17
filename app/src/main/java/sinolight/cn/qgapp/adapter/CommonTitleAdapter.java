@@ -12,10 +12,12 @@ import java.util.List;
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.KDBResData;
+import sinolight.cn.qgapp.data.http.entity.DBResPicEntity;
 import sinolight.cn.qgapp.views.holder.DBResHotArticleHolder;
 import sinolight.cn.qgapp.views.holder.DBResHotVideoHolder;
 import sinolight.cn.qgapp.views.holder.DBResMaterialHolder;
 import sinolight.cn.qgapp.views.holder.DBResPicHolder;
+import sinolight.cn.qgapp.views.holder.DBResPicSetHolder;
 import sinolight.cn.qgapp.views.holder.DBResTitleHolder;
 
 /**
@@ -30,8 +32,9 @@ public class CommonTitleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public static final int TYPE_ARTICLE = 303;
     public static final int TYPE_PIC_TITLE = 304;
     public static final int TYPE_PIC = 305;
-    public static final int TYPE_VIDEO_TITLE = 306;
-    public static final int TYPE_VIDEO = 307;
+    public static final int TYPE_PIC_SET = 306;
+    public static final int TYPE_VIDEO_TITLE = 307;
+    public static final int TYPE_VIDEO = 308;
 
 
     private Context mContext;
@@ -67,6 +70,9 @@ public class CommonTitleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             case TYPE_VIDEO:
                 holder = new DBResHotVideoHolder(mInflater.inflate(R.layout.item_db_res_hot_pic, parent, false));
                 break;
+            case TYPE_PIC_SET:
+                holder = new DBResPicSetHolder<DBResPicEntity>(mInflater.inflate(R.layout.item_db_res_pic_set, parent, false));
+                break;
         }
         return holder;
     }
@@ -91,6 +97,9 @@ public class CommonTitleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 break;
             case TYPE_PIC:
                 ((DBResPicHolder) holder).setData(mData.get(position));
+                break;
+            case TYPE_PIC_SET:
+                ((DBResPicSetHolder) holder).setData(mData.get(position), CommonTitleAdapter.TYPE_PIC_SET);
                 break;
             case TYPE_VIDEO_TITLE:
                 ((DBResTitleHolder) holder).setData(mData.get(position), TYPE_VIDEO_TITLE);

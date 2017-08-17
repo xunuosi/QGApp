@@ -9,6 +9,7 @@ public class ResImgEntity {
     private String id;
     private String name;
     private String cover;
+    private String abs;
 
     public ResImgEntity() {
     }
@@ -35,5 +36,13 @@ public class ResImgEntity {
 
     public void setCover(String cover) {
         this.cover = cover;
+    }
+
+    public String getAbs() {
+        return abs;
+    }
+
+    public void setAbs(String abs) {
+        this.abs = abs;
     }
 }
