@@ -188,8 +188,20 @@ public class HttpManager {
     }
 
     public void getResPicSetNoCache(Observer<PageEntity<List<DBResPicEntity>>> subscriber, String token,
-                                       @Nullable String key, int page, int size) {
+                                    @Nullable String key, int page, int size) {
         toSubscribe(mApiService.getResPicSet(token, key, page, size), subscriber);
+    }
+
+    public void getResPicListNoCache(Observer<PageEntity<List<ResImgEntity>>> subscriber, String token, String id,
+                                     @Nullable String key, int page, int size) {
+        toSubscribe(mApiService.getResPicList(
+                token,
+                AppHelper.getInstance().getCurrentUserName(),
+                id,
+                key,
+                page,
+                size),
+                subscriber);
     }
 
     public void getKDBdoPicInfoNoCache(Observer<PageEntity<List<ResImgEntity>>> subscriber, String token,

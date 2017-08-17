@@ -21,7 +21,7 @@ import sinolight.cn.qgapp.data.http.entity.DBResPicEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
 import sinolight.cn.qgapp.utils.ImageUtil;
 import sinolight.cn.qgapp.utils.ScreenUtil;
-import sinolight.cn.qgapp.views.activity.DBResourceActivity;
+import sinolight.cn.qgapp.views.activity.ResPicListActivity;
 
 
 /**
@@ -117,10 +117,8 @@ public class DBResPicSetHolder<T> extends RecyclerView.ViewHolder {
 
     private void gotoPicListActivity() {
         DBResPicEntity picEntity = (DBResPicEntity) mData;
-        Intent callIntent = DBResourceActivity.getCallIntent(App.getContext());
-        callIntent.putExtra(AppContants.DataBase.KEY_ID, picEntity.getId());
-        callIntent.putExtra(AppContants.DataBase.KEY_RES_TYPE, AppContants.DataBase.Res.RES_IMG);
-        callIntent.putExtra(AppContants.DataBase.KEY_TYPE, "");
+        Intent callIntent = ResPicListActivity.getCallIntent(App.getContext());
+        callIntent.putExtra(AppContants.Resource.RES_ID, picEntity.getId());
         callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         App.getContext().startActivity(callIntent);
     }

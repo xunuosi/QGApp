@@ -255,9 +255,30 @@ public interface ApiService {
      * @return
      */
     @FormUrlEncoded
-    @POST("Res/DoPicLdbList")
+    @POST("res/DoPicLdbList")
     Observable<ResultEntity<PageEntity<List<DBResPicEntity>>>> getResPicSet(
             @Field("token") String token,
+            @Field("key") String key,
+            @Field("page") int page,
+            @Field("size") int size
+    );
+
+    /**
+     * 资源库-图片列表
+     * @param token
+     * @param user
+     * @param id
+     * @param key
+     * @param page
+     * @param size
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("Res/doPicList")
+    Observable<ResultEntity<PageEntity<List<ResImgEntity>>>> getResPicList(
+            @Field("token") String token,
+            @Field("user") String user,
+            @Field("dbid") String id,
             @Field("key") String key,
             @Field("page") int page,
             @Field("size") int size

@@ -10,6 +10,7 @@ public class ResImgEntity {
     private String name;
     private String cover;
     private String abs;
+    private boolean isfavor;
 
     public ResImgEntity() {
     }
@@ -44,5 +45,13 @@ public class ResImgEntity {
 
     public void setAbs(String abs) {
         this.abs = abs;
+    }
+
+    public boolean isfavor() {
+        return isfavor;
+    }
+
+    public void setIsfavor(boolean isfavor) {
+        this.isfavor = isfavor;
     }
 }

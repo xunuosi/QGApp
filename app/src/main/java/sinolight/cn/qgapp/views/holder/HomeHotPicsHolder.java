@@ -23,7 +23,7 @@ import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.HomeData;
 import sinolight.cn.qgapp.data.http.entity.BannerEntity;
 import sinolight.cn.qgapp.utils.ScreenUtil;
-import sinolight.cn.qgapp.views.activity.DBResourceActivity;
+import sinolight.cn.qgapp.views.activity.ResPicListActivity;
 import sinolight.cn.qgapp.views.widget.FrescoLoader;
 
 /**
@@ -134,10 +134,8 @@ public class HomeHotPicsHolder extends RecyclerView.ViewHolder implements
     }
 
     private void gotoImgSetInfo(int position) {
-        Intent callIntent = DBResourceActivity.getCallIntent(App.getContext());
-        callIntent.putExtra(AppContants.DataBase.KEY_ID, datas.get(position).getId());
-        callIntent.putExtra(AppContants.DataBase.KEY_RES_TYPE, AppContants.DataBase.Res.RES_IMG);
-        callIntent.putExtra(AppContants.DataBase.KEY_TYPE, "");
+        Intent callIntent = ResPicListActivity.getCallIntent(App.getContext());
+        callIntent.putExtra(AppContants.Resource.RES_ID, datas.get(position).getId());
         callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         App.getContext().startActivity(callIntent);
     }

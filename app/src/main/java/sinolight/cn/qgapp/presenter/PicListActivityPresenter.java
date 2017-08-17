@@ -1,32 +1,35 @@
 package sinolight.cn.qgapp.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
-import sinolight.cn.qgapp.adapter.CommonTitleAdapter;
+import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
 import sinolight.cn.qgapp.data.http.entity.DBResPicEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
+import sinolight.cn.qgapp.data.http.entity.ResImgEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.KDBResDataMapper;
 import sinolight.cn.qgapp.utils.L;
-import sinolight.cn.qgapp.views.view.IPicSetActivityView;
+import sinolight.cn.qgapp.views.view.IPicListActivityView;
 
 /**
  * Created by xns on 2017/6/29.
  * MaterialList Presenter
  */
 
-public class PicSetActivityPresenter extends BasePresenter<IPicSetActivityView, HttpManager> {
-    private static final String TAG = "PicSetActivityPresenter";
+public class PicListActivityPresenter extends BasePresenter<IPicListActivityView, HttpManager> {
+    private static final String TAG = "PicListActivityPresenter";
     private Context mContext;
 
     // 获取资源列表
@@ -38,19 +41,21 @@ public class PicSetActivityPresenter extends BasePresenter<IPicSetActivityView, 
     private boolean action_more = false;
     private boolean action_search = false;
 
-    private List<KDBResData> mDatas = new ArrayList<>();
-    private List<DBResPicEntity> picDatas;
-    private CommonTitleAdapter mAdapter;
+    private String picSetID;
 
-    private HttpSubscriber<PageEntity<List<DBResPicEntity>>> mPicObserver = new HttpSubscriber<>(
-            new OnResultCallBack<PageEntity<List<DBResPicEntity>>>() {
+    private List<KDBResData> mDatas = new ArrayList<>();
+    private List<ResImgEntity> picDatas;
+    private KDBResAdapter mAdapter;
+
+    private HttpSubscriber<PageEntity<List<ResImgEntity>>> mPicObserver = new HttpSubscriber<>(
+            new OnResultCallBack<PageEntity<List<ResImgEntity>>>() {
 
                 @Override
-                public void onSuccess(PageEntity<List<DBResPicEntity>> pageEntity) {
+                public void onSuccess(PageEntity<List<ResImgEntity>> pageEntity) {
                     if (pageEntity != null) {
                         count = pageEntity.getCount();
                         picDatas = pageEntity.getData();
-                        transformKDBResData();
+                        showSuccess();
                     } else {
                         showError(0, null);
                     }
@@ -62,6 +67,10 @@ public class PicSetActivityPresenter extends BasePresenter<IPicSetActivityView, 
                     showError(code, errorMsg);
                 }
             });
+
+    private void showSuccess() {
+        transformKDBResData();
+    }
 
     /**
      * clear data display empty
@@ -86,7 +95,7 @@ public class PicSetActivityPresenter extends BasePresenter<IPicSetActivityView, 
     private void transformKDBResData() {
         List<KDBResData> list = new ArrayList<>();
 
-        list = KDBResDataMapper.transformPicDatas(picDatas, CommonTitleAdapter.TYPE_PIC_SET , false);
+        list = KDBResDataMapper.transformImgDatas(picDatas, KDBResAdapter.TYPE_IMG , false);
 
         // Load More Action
         if (action_more) {
@@ -100,7 +109,7 @@ public class PicSetActivityPresenter extends BasePresenter<IPicSetActivityView, 
 
     private void showWithData() {
         if (mAdapter == null) {
-            mAdapter = new CommonTitleAdapter(mContext, mDatas);
+            mAdapter = new KDBResAdapter(mContext, mDatas);
         } else {
             mAdapter.setData(mDatas);
         }
@@ -113,7 +122,7 @@ public class PicSetActivityPresenter extends BasePresenter<IPicSetActivityView, 
 
     }
 
-    public PicSetActivityPresenter(Context context, IPicSetActivityView view) {
+    public PicListActivityPresenter(Context context, IPicListActivityView view) {
         this.mContext = context;
         setModel(HttpManager.getInstance());
         bindView(view);
@@ -137,7 +146,7 @@ public class PicSetActivityPresenter extends BasePresenter<IPicSetActivityView, 
      *
      * @param key
      */
-    private void loadDataWithPara(@Nullable String key, @Nullable String themeType, boolean isMore, boolean isSearch) {
+    private void loadDataWithPara(@Nullable String key, boolean isMore, boolean isSearch) {
         action_more = isMore;
         action_search = isSearch;
         // If not load more data, need clear data.
@@ -146,9 +155,10 @@ public class PicSetActivityPresenter extends BasePresenter<IPicSetActivityView, 
         }
 
         // 请求资源数据
-        model.getResPicSetNoCache(
+        model.getResPicListNoCache(
                 mPicObserver,
                 AppHelper.getInstance().getCurrentToken(),
+                picSetID,
                 key,
                 page,
                 SIZE
@@ -180,12 +190,12 @@ public class PicSetActivityPresenter extends BasePresenter<IPicSetActivityView, 
         init2Show();
     }
 
-    public void loadMore(@Nullable String key, @Nullable String themeType) {
+    public void loadMore(@Nullable String key) {
         if (mDatas != null && mDatas.size() < count) {
             // 有更多数据可以加载
             page++;
             // Action load more data
-            loadDataWithPara(key, themeType, true, false);
+            loadDataWithPara(key, true, false);
         } else if (mDatas != null && mDatas.size() >= count) {
             // 无更多数据加载
             view().hasMoreData(false);
@@ -202,9 +212,10 @@ public class PicSetActivityPresenter extends BasePresenter<IPicSetActivityView, 
     }
 
     private void getData() {
-        model.getResPicSetNoCache(
+        model.getResPicListNoCache(
                 mPicObserver,
                 AppHelper.getInstance().getCurrentToken(),
+                picSetID,
                 null,
                 page,
                 SIZE
@@ -212,14 +223,14 @@ public class PicSetActivityPresenter extends BasePresenter<IPicSetActivityView, 
 
     }
 
-    public void searchData(String key, String themeType) {
+    public void searchData(String key) {
         if (checkData(key)) {
             view().showToast(R.string.text_search_data_empty);
             return;
         }
         resetState();
         this.action_search = true;
-        this.loadDataWithPara(key, themeType, false, true);
+        this.loadDataWithPara(key, false, true);
     }
 
     private boolean checkData(String key) {
@@ -237,5 +248,12 @@ public class PicSetActivityPresenter extends BasePresenter<IPicSetActivityView, 
         action_search = false;
         mDatas.clear();
         count = 0;
+    }
+
+    public void checkIntent(Intent intent) {
+        if (intent != null) {
+            picSetID = intent.getStringExtra(AppContants.Resource.RES_ID);
+            view().showRefreshing(true);
+        }
     }
 }

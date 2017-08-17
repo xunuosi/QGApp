@@ -11,6 +11,7 @@ public class DBResPicEntity {
     private String abs;
     private String cover;
     private String source;
+    private boolean isfavor;
 
     public DBResPicEntity() {
     }
@@ -53,5 +54,13 @@ public class DBResPicEntity {
 
     public void setSource(String source) {
         this.source = source;
+    }
+
+    public boolean isfavor() {
+        return isfavor;
+    }
+
+    public void setIsfavor(boolean isfavor) {
+        this.isfavor = isfavor;
     }
 }

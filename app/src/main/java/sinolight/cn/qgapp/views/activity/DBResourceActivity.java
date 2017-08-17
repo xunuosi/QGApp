@@ -39,7 +39,6 @@ import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.dagger.component.DaggerDBResActivityComponent;
 import sinolight.cn.qgapp.dagger.module.DBResActivityModule;
 import sinolight.cn.qgapp.data.bean.CollectEvent;
-import sinolight.cn.qgapp.data.bean.EventAction;
 import sinolight.cn.qgapp.presenter.DBResActivityPresenter;
 import sinolight.cn.qgapp.views.holder.TreeParentHolder;
 import sinolight.cn.qgapp.views.view.IDBResActivityView;
