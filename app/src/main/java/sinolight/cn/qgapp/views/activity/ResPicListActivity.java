@@ -15,6 +15,10 @@ import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -24,6 +28,7 @@ import sinolight.cn.qgapp.R2;
 import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.dagger.component.DaggerPicListActivityComponent;
 import sinolight.cn.qgapp.dagger.module.PicListActivityModule;
+import sinolight.cn.qgapp.data.bean.CollectEvent;
 import sinolight.cn.qgapp.presenter.PicListActivityPresenter;
 import sinolight.cn.qgapp.views.view.IPicListActivityView;
 import sinolight.cn.qgapp.views.widget.ItemDivider;
@@ -62,8 +67,19 @@ public class ResPicListActivity extends BaseActivity implements IPicListActivity
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
         mPresenter.clear();
     }
 
@@ -184,5 +200,10 @@ public class ResPicListActivity extends BaseActivity implements IPicListActivity
             }
             mSwipe.setLoadMoreEnabled(hasMore);
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void ActionCollect(CollectEvent event) {
+        mPresenter.collectRes(event);
     }
 }

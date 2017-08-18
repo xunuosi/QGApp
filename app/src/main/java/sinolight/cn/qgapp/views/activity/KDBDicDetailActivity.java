@@ -11,20 +11,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.dagger.component.DaggerKDBDicActivityComponent;
 import sinolight.cn.qgapp.dagger.module.KDBDicActivityModule;
 import sinolight.cn.qgapp.data.http.entity.DicInfoEntity;
 import sinolight.cn.qgapp.presenter.KDBDicActivityPresenter;
-import sinolight.cn.qgapp.utils.ImageUtil;
 import sinolight.cn.qgapp.views.view.IKDBDicDetailActivityView;
 
 /**

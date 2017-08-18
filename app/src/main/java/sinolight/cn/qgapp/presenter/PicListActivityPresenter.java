@@ -12,6 +12,7 @@ import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.adapter.KDBResAdapter;
+import sinolight.cn.qgapp.data.bean.CollectEvent;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
@@ -254,6 +255,39 @@ public class PicListActivityPresenter extends BasePresenter<IPicListActivityView
         if (intent != null) {
             picSetID = intent.getStringExtra(AppContants.Resource.RES_ID);
             view().showRefreshing(true);
+        }
+    }
+
+    private HttpSubscriber<Object> mCollectObserver = new HttpSubscriber<>(
+            new OnResultCallBack<Object>() {
+
+                @Override
+                public void onSuccess(Object o) {
+                    showErrorToast(R.string.text_collect_success);
+                    view().showRefreshing(false);
+                }
+
+                @Override
+                public void onError(int code, String errorMsg) {
+                    L.d(TAG, "mCollectObserver code:" + code + ",errorMsg:" + errorMsg);
+                    checkoutCollectState(code, errorMsg);
+                }
+            });
+
+    public void collectRes(CollectEvent event) {
+        model.collectResNoCache(
+                mCollectObserver,
+                AppHelper.getInstance().getCurrentToken(),
+                event.getResType().getType(),
+                event.getId()
+        );
+    }
+
+    private void checkoutCollectState(int code, String errorMsg) {
+        if (code == AppContants.SUCCESS_CODE) {
+            view().showStrToast(errorMsg);
+        } else {
+            showError(code, errorMsg);
         }
     }
 }

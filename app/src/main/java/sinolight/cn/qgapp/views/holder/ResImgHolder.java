@@ -19,11 +19,9 @@ import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.R2;
 import sinolight.cn.qgapp.data.bean.CollectEvent;
-import sinolight.cn.qgapp.data.bean.EventAction;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.entity.ResImgEntity;
 import sinolight.cn.qgapp.utils.ImageUtil;
-import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.utils.ScreenUtil;
 import sinolight.cn.qgapp.views.activity.ResPicDetailActivity;
 
@@ -76,6 +74,8 @@ public class ResImgHolder extends RecyclerView.ViewHolder {
 
         mTvDbResImgTitle.setText(mData.getName());
         mTvDbResImgAbs.setText(mData.getAbs());
+
+        setCollectState(mData.isfavor());
     }
 
     @OnClick({R2.id.iv_db_res_img_collect, R2.id.db_res_img_root})

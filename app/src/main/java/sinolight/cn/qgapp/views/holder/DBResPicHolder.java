@@ -19,6 +19,7 @@ import sinolight.cn.qgapp.data.http.entity.DBResPicEntity;
 import sinolight.cn.qgapp.utils.ImageUtil;
 import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.views.activity.DBResourceActivity;
+import sinolight.cn.qgapp.views.activity.ResPicListActivity;
 
 /**
  * Created by xns on 2017/7/17.
@@ -86,10 +87,8 @@ public class DBResPicHolder extends RecyclerView.ViewHolder {
     }
 
     private void gotoPicListActivity() {
-        Intent callIntent = DBResourceActivity.getCallIntent(App.getContext());
-        callIntent.putExtra(AppContants.DataBase.KEY_ID, mData.getId());
-        callIntent.putExtra(AppContants.DataBase.KEY_RES_TYPE, AppContants.DataBase.Res.RES_IMG);
-        callIntent.putExtra(AppContants.DataBase.KEY_TYPE, "");
+        Intent callIntent = ResPicListActivity.getCallIntent(App.getContext());
+        callIntent.putExtra(AppContants.Resource.RES_ID, mData.getId());
         callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         App.getContext().startActivity(callIntent);
     }
