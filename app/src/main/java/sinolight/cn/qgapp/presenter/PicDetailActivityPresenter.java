@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import sinolight.cn.qgapp.AppContants;
+import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
 import sinolight.cn.qgapp.data.http.entity.ResImgEntity;
@@ -30,6 +31,7 @@ public class PicDetailActivityPresenter extends BasePresenter<IResPicDetailView,
                 @Override
                 public void onSuccess(ResImgEntity resImgEntity) {
                     if (resImgEntity != null) {
+                        mData = resImgEntity;
                         showSuccess();
                     } else {
                         showError(0, null);
@@ -44,19 +46,13 @@ public class PicDetailActivityPresenter extends BasePresenter<IResPicDetailView,
             });
 
     private void showSuccess() {
-
+        closeRefreshing();
+        view().showView(mData);
     }
 
     private void showError(int code, String msg) {
-
-    }
-
-    private void transformKDBResData() {
-
-    }
-
-    private void showWithData() {
-
+        closeRefreshing();
+        view().showStrToast(msg);
     }
 
     public PicDetailActivityPresenter(Context context, IResPicDetailView view) {
@@ -79,20 +75,7 @@ public class PicDetailActivityPresenter extends BasePresenter<IResPicDetailView,
     }
 
     private void closeRefreshing() {
-
-    }
-
-    private void showErrorToast(int resId) {
-
-    }
-
-    /**
-     * 验证是否获取完数据
-     *
-     * @return
-     */
-    private boolean checkData() {
-        return mData != null;
+        view().showRefreshing(false);
     }
 
     private void init2Show() {
@@ -103,7 +86,11 @@ public class PicDetailActivityPresenter extends BasePresenter<IResPicDetailView,
     }
 
     private void getData() {
-
+        model.getResPicDetailNoCache(
+                mPicObserver,
+                AppHelper.getInstance().getCurrentToken(),
+                picID
+        );
 
     }
 

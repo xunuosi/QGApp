@@ -88,7 +88,7 @@ public class LoginActivityPresenter extends BasePresenter<ILoginActivityView, Da
             view().showLoading(true);
             this.userName = userName;
             this.pwd = MD5.getMessageDigest(pwd);
-            HttpManager.getInstance().login(loginObserver, userName, pwd);
+            HttpManager.getInstance().login(loginObserver, this.userName, this.pwd);
         }
     }
 

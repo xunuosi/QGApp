@@ -103,7 +103,7 @@ public class ResPicDetailActivity extends BaseActivity implements IResPicDetailV
 
     @Override
     public void showView(ResImgEntity imgEntity) {
-        mTvTitle.setText(imgEntity.getName());
+        mTvTitle.setText(imgEntity.getTitle());
 
         int width = ScreenUtil.getScreenWidth2Dp(mContext);
         int height = (int) (getResources().getDimensionPixelOffset(
@@ -115,6 +115,8 @@ public class ResPicDetailActivity extends BaseActivity implements IResPicDetailV
                 width,
                 height
         );
+
+        mTvPicDetailAbs.setText(imgEntity.getAbs());
     }
 
     @Override

@@ -1,5 +1,6 @@
 package sinolight.cn.qgapp.views.holder;
 
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -24,6 +25,7 @@ import sinolight.cn.qgapp.data.http.entity.ResImgEntity;
 import sinolight.cn.qgapp.utils.ImageUtil;
 import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.utils.ScreenUtil;
+import sinolight.cn.qgapp.views.activity.ResPicDetailActivity;
 
 /**
  * Created by xns on 2017/7/19.
@@ -76,13 +78,23 @@ public class ResImgHolder extends RecyclerView.ViewHolder {
         mTvDbResImgAbs.setText(mData.getAbs());
     }
 
-    @OnClick({R.id.iv_db_res_img_collect})
+    @OnClick({R2.id.iv_db_res_img_collect, R2.id.db_res_img_root})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_db_res_img_collect:
                 onCollect();
                 break;
+            case R.id.db_res_img_root:
+                gotoPicDetailActivity();
+                break;
         }
+    }
+
+    private void gotoPicDetailActivity() {
+        Intent callIntent = ResPicDetailActivity.getCallIntent(App.getContext());
+        callIntent.putExtra(AppContants.Resource.RES_ID, mData.getId());
+        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        App.getContext().startActivity(callIntent);
     }
 
     /**
