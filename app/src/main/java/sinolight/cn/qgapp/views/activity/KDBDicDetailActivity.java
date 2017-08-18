@@ -115,6 +115,7 @@ public class KDBDicDetailActivity extends BaseActivity implements IKDBDicDetailA
         mTvKdbDicDetailEnName.setText(String.format(formatENname, dicData.getEnname()));
         String formatRESname = getString(R.string.text_resource_format);
         mTvKdbDicDetailSource.setText(String.format(formatRESname, dicData.getSource()));
+        setCollectState(dicData.isfavor());
 
 //        if (dicData.isPicflag()) {
 //            int width = (int) (App.getContext().getResources().getDimensionPixelOffset(R.dimen.kdb_dic_detail_cover_width) /

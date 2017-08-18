@@ -82,6 +82,7 @@ public class MaterialDetailActivityPresenter extends BasePresenter<IMaterialDeta
     private void showWithData(List<KDBResData> list) {
         mDatas = list;
         view().showTitle(mCookData.getName());
+        view().setCollectState(mCookData.isfavor());
 
         if (mAdapter == null) {
             mAdapter = new CookAdapter(mContext, mDatas);

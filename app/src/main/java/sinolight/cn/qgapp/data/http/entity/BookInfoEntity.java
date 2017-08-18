@@ -8,7 +8,7 @@ import android.os.Parcelable;
  * 图书详情Entity
  */
 
-public class BookInfoEntity implements Parcelable {
+public class BookInfoEntity implements Parcelable{
     private String id;
     private String name;
     private String cover;
@@ -30,6 +30,7 @@ public class BookInfoEntity implements Parcelable {
     private String abs;
     // 目录
     private String catalog;
+    private boolean isfavor;
 
     public BookInfoEntity() {
     }
@@ -50,6 +51,7 @@ public class BookInfoEntity implements Parcelable {
         classification = in.readString();
         abs = in.readString();
         catalog = in.readString();
+        isfavor = in.readByte() != 0;
     }
 
     public static final Creator<BookInfoEntity> CREATOR = new Creator<BookInfoEntity>() {
@@ -63,6 +65,14 @@ public class BookInfoEntity implements Parcelable {
             return new BookInfoEntity[size];
         }
     };
+
+    public boolean isfavor() {
+        return isfavor;
+    }
+
+    public void setIsfavor(boolean isfavor) {
+        this.isfavor = isfavor;
+    }
 
     public String getId() {
         return id;
@@ -206,5 +216,6 @@ public class BookInfoEntity implements Parcelable {
         parcel.writeString(classification);
         parcel.writeString(abs);
         parcel.writeString(catalog);
+        parcel.writeByte((byte) (isfavor ? 1 : 0));
     }
 }

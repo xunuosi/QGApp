@@ -13,9 +13,18 @@ public class CookEntity<T> {
     private String cover;
     private String source;
     private boolean hascover;
+    private boolean isfavor;
     private List<T> data;
 
     public CookEntity() {
+    }
+
+    public boolean isfavor() {
+        return isfavor;
+    }
+
+    public void setIsfavor(boolean isfavor) {
+        this.isfavor = isfavor;
     }
 
     public String getId() {

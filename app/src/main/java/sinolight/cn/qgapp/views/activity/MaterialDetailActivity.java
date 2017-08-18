@@ -121,7 +121,6 @@ public class MaterialDetailActivity extends BaseActivity implements IMaterialDet
     @Override
     public void showTitle(String title) {
         mTvTitle.setText(title);
-
     }
 
     @OnClick({R.id.im_back_arrow, R.id.iv_collect})

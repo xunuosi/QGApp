@@ -212,7 +212,8 @@ public class HttpManager {
     public void getKDBdoPicInfoNoCache(Observer<PageEntity<List<ResImgEntity>>> subscriber, String token,
                                        @Nullable String dbId, @Nullable String themeType,
                                        @Nullable String key, int page, int size) {
-        toSubscribe(mApiService.getKDBPicInfo(token, dbId, themeType, key, page, size), subscriber);
+        toSubscribe(mApiService.getKDBPicInfo(token,
+                AppHelper.getInstance().getCurrentUserName(), dbId, themeType, key, page, size), subscriber);
     }
 
     public void getKDBWordListNoCache(Observer<PageEntity<List<ResWordEntity>>> subscriber, String token,
@@ -221,15 +222,18 @@ public class HttpManager {
     }
 
     public void getKDBBookInfoNoCache(Observer<BookInfoEntity> subscriber, String token, String id) {
-        toSubscribe(mApiService.getKDBBookInfo(token, id), subscriber);
+        toSubscribe(mApiService.getKDBBookInfo(token,
+                AppHelper.getInstance().getCurrentUserName(), id), subscriber);
     }
 
     public void getKDBStdInfoNoCache(Observer<StdInfoEntity> subscriber, String token, String id) {
-        toSubscribe(mApiService.getKDBStdInfo(token, id), subscriber);
+        toSubscribe(mApiService.getKDBStdInfo(token,
+                AppHelper.getInstance().getCurrentUserName(), id), subscriber);
     }
 
     public void getKDBEntryInfoNoCache(Observer<DicInfoEntity> subscriber, String token, String id) {
-        toSubscribe(mApiService.getKDBEntryInfo(token, id), subscriber);
+        toSubscribe(mApiService.getKDBEntryInfo(token,
+                AppHelper.getInstance().getCurrentUserName(), id), subscriber);
     }
 
     public void getVideoLdbListNoCache(Observer<PageEntity<List<DBResVideoEntity>>> subscriber, String token, String key, int page, int size) {
@@ -304,7 +308,8 @@ public class HttpManager {
     }
 
     public void getCookInfoNoCache(Observer<CookEntity<CookContentEntity>> subscriber, String token, String id) {
-        toSubscribe(mApiService.getCookInfo(token, id), subscriber);
+        toSubscribe(mApiService.getCookInfo(token,
+                AppHelper.getInstance().getCurrentUserName(), id), subscriber);
     }
 
     public void changePwdNoCache(Observer<Object> subscriber, String token, String oldPwd, String newPwd,

@@ -156,6 +156,7 @@ public class KDBStdDetailActivity extends BaseActivity implements IKDBStdDetailA
         mTvKdbStdTitle.setText(stdData.getName());
         mTvKdbStdPubName.setText(formatStr(R.string.text_publish_name_format, stdData.getImdate()));
         mTvKdbStdPubTime.setText(formatStr(R.string.text_publish_time_format, stdData.getIssuedate()));
+        setCollectState(stdData.isfavor());
 
         mFragments = new ArrayList<>();
         mFragments.add(StdInfoFragment.newInstance(StdInfoFragment.TYPE_STD_INFO, stdData));

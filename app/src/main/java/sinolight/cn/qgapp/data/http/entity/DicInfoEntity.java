@@ -15,8 +15,17 @@ public class DicInfoEntity {
     private boolean picflag;
     private String picpath;
     private String pictitle;
+    private boolean isfavor;
 
     public DicInfoEntity() {
+    }
+
+    public boolean isfavor() {
+        return isfavor;
+    }
+
+    public void setIsfavor(boolean isfavor) {
+        this.isfavor = isfavor;
     }
 
     public String getId() {

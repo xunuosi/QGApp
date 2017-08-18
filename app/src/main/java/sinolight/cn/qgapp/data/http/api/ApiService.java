@@ -298,6 +298,7 @@ public interface ApiService {
     @POST("db/doPicInfo")
     Observable<ResultEntity<PageEntity<List<ResImgEntity>>>> getKDBPicInfo(
             @Field("token") String token,
+            @Field("user") String user,
             @Field("dbid") String dbid,
             @Field("themeType") String themeType,
             @Field("key") String key,
@@ -352,6 +353,7 @@ public interface ApiService {
     @POST("db/doBookInfo")
     Observable<ResultEntity<BookInfoEntity>> getKDBBookInfo(
             @Field("token") String token,
+            @Field("user") String user,
             @Field("id") String id
     );
 
@@ -365,6 +367,7 @@ public interface ApiService {
     @POST("db/doStdInfo")
     Observable<ResultEntity<StdInfoEntity>> getKDBStdInfo(
             @Field("token") String token,
+            @Field("user") String user,
             @Field("id") String id
     );
 
@@ -378,6 +381,7 @@ public interface ApiService {
     @POST("db/doEntryInfo")
     Observable<ResultEntity<DicInfoEntity>> getKDBEntryInfo(
             @Field("token") String token,
+            @Field("user") String user,
             @Field("id") String id
     );
 
@@ -572,6 +576,7 @@ public interface ApiService {
     @POST("res/doMenuInfo")
     Observable<ResultEntity<CookEntity<CookContentEntity>>> getCookInfo(
             @Field("token") String token,
+            @Field("user") String user,
             @Field("id") String id
     );
 

@@ -27,6 +27,7 @@ public class StdInfoEntity implements Parcelable {
     private String scope;
     // 目录
     private String catalog;
+    private boolean isfavor;
 
     public StdInfoEntity() {
     }
@@ -43,26 +44,7 @@ public class StdInfoEntity implements Parcelable {
         classification = in.readString();
         scope = in.readString();
         catalog = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(name);
-        dest.writeString(cover);
-        dest.writeString(stdno);
-        dest.writeString(restdno);
-        dest.writeString(issuedate);
-        dest.writeString(imdate);
-        dest.writeString(dept);
-        dest.writeString(classification);
-        dest.writeString(scope);
-        dest.writeString(catalog);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
+        isfavor = in.readByte() != 0;
     }
 
     public static final Creator<StdInfoEntity> CREATOR = new Creator<StdInfoEntity>() {
@@ -76,6 +58,14 @@ public class StdInfoEntity implements Parcelable {
             return new StdInfoEntity[size];
         }
     };
+
+    public boolean isfavor() {
+        return isfavor;
+    }
+
+    public void setIsfavor(boolean isfavor) {
+        this.isfavor = isfavor;
+    }
 
     public String getId() {
         return id;
@@ -163,5 +153,26 @@ public class StdInfoEntity implements Parcelable {
 
     public void setCatalog(String catalog) {
         this.catalog = catalog;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(name);
+        parcel.writeString(cover);
+        parcel.writeString(stdno);
+        parcel.writeString(restdno);
+        parcel.writeString(issuedate);
+        parcel.writeString(imdate);
+        parcel.writeString(dept);
+        parcel.writeString(classification);
+        parcel.writeString(scope);
+        parcel.writeString(catalog);
+        parcel.writeByte((byte) (isfavor ? 1 : 0));
     }
 }

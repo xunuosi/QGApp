@@ -179,6 +179,7 @@ public class KDBBookDetailActivity extends BaseActivity implements IKDBBookDetai
                 width,
                 height
         );
+        setCollectState(bookData.isfavor());
         mTvKdbBookTitle.setText(bookData.getName());
 
         mTvKdbBookAuthor.setText(formatStr(R.string.text_author_format, bookData.getAuthor()));
