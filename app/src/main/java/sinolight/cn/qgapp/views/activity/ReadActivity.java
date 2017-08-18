@@ -3,6 +3,7 @@ package sinolight.cn.qgapp.views.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +16,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.common.ResizeOptions;
+import com.facebook.imagepipeline.image.ImageInfo;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
+
 import java.io.InputStream;
 import java.net.URL;
 
@@ -22,12 +33,13 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.dagger.component.DaggerReadActivityComponent;
 import sinolight.cn.qgapp.dagger.module.ReadActivityModule;
 import sinolight.cn.qgapp.data.http.entity.ReaderEntity;
 import sinolight.cn.qgapp.presenter.ReadActivityPresenter;
+import sinolight.cn.qgapp.utils.ImageUtil;
+import sinolight.cn.qgapp.utils.ScreenUtil;
 import sinolight.cn.qgapp.views.view.IReadActivityView;
 
 import static android.text.Html.FROM_HTML_MODE_COMPACT;
@@ -127,34 +139,60 @@ public class ReadActivity extends BaseActivity implements IReadActivityView {
             sp = Html.fromHtml(html, FROM_HTML_MODE_COMPACT, new Html.ImageGetter() {
                 @Override
                 public Drawable getDrawable(String source) {
-                    InputStream is = null;
-                    try {
-                        is = (InputStream) new URL(source).getContent();
-                        Drawable d = Drawable.createFromStream(is, "src");
-                        d.setBounds(0, 0, d.getIntrinsicWidth(),
-                                d.getIntrinsicHeight());
-                        is.close();
-                        return d;
-                    } catch (Exception e) {
-                        return null;
-                    }
+                    SimpleDraweeView simpleDraweeView = new SimpleDraweeView(mContext);
+
+                    int width = ScreenUtil.getScreenWidth2Dp(mContext) - 32;
+                    int height = (int) (getResources().getDimensionPixelOffset(R.dimen.cook_info_item_image_height) /
+                            getResources().getDisplayMetrics().density);
+
+                    Uri uri = Uri.parse(source);
+
+                    ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
+                            .setResizeOptions(new ResizeOptions(
+                                    ScreenUtil.dip2px(mContext, width), ScreenUtil.dip2px(mContext, height)))
+                            .build();
+
+                    PipelineDraweeController controller = (PipelineDraweeController) Fresco.newDraweeControllerBuilder()
+                            .setImageRequest(request)
+                            .setOldController(simpleDraweeView.getController())
+                            .setControllerListener(new BaseControllerListener<ImageInfo>())
+                            .build();
+                    simpleDraweeView.setController(controller);
+                    simpleDraweeView.getHierarchy().setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER);
+
+                    Drawable drawable = simpleDraweeView.getDrawable();
+                    drawable.setBounds(0, 0, ScreenUtil.dip2px(mContext, width), ScreenUtil.dip2px(mContext, height));
+                    return drawable;
                 }
             }, null);
         } else {
             sp = Html.fromHtml(html, new Html.ImageGetter() {
                 @Override
                 public Drawable getDrawable(String source) {
-                    InputStream is = null;
-                    try {
-                        is = (InputStream) new URL(source).getContent();
-                        Drawable d = Drawable.createFromStream(is, "src");
-                        d.setBounds(0, 0, d.getIntrinsicWidth(),
-                                d.getIntrinsicHeight());
-                        is.close();
-                        return d;
-                    } catch (Exception e) {
-                        return null;
-                    }
+                    SimpleDraweeView simpleDraweeView = new SimpleDraweeView(mContext);
+
+                    int width = ScreenUtil.getScreenWidth2Dp(mContext) - 32;
+                    int height = (int) (getResources().getDimensionPixelOffset(R.dimen.cook_info_item_image_height) /
+                            getResources().getDisplayMetrics().density);
+
+                    Uri uri = Uri.parse(source);
+
+                    ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
+                            .setResizeOptions(new ResizeOptions(
+                                    ScreenUtil.dip2px(mContext, width), ScreenUtil.dip2px(mContext, height)))
+                            .build();
+
+                    PipelineDraweeController controller = (PipelineDraweeController) Fresco.newDraweeControllerBuilder()
+                            .setImageRequest(request)
+                            .setOldController(simpleDraweeView.getController())
+                            .setControllerListener(new BaseControllerListener<ImageInfo>())
+                            .build();
+                    simpleDraweeView.setController(controller);
+                    simpleDraweeView.getHierarchy().setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER);
+
+                    Drawable drawable = simpleDraweeView.getDrawable();
+                    drawable.setBounds(0, 0, ScreenUtil.dip2px(mContext, width), ScreenUtil.dip2px(mContext, height));
+                    return drawable;
                 }
             }, null);
         }
