@@ -10,6 +10,7 @@ import sinolight.cn.qgapp.AppContants;
 public class CollectEvent {
     private String id;
     private AppContants.DataBase.Res resType;
+    private int action;
 
     public CollectEvent() {
     }
@@ -28,5 +29,13 @@ public class CollectEvent {
 
     public void setResType(AppContants.DataBase.Res resType) {
         this.resType = resType;
+    }
+
+    public int getAction() {
+        return action;
+    }
+
+    public void setAction(int action) {
+        this.action = action;
     }
 }

@@ -10,6 +10,7 @@ public class ResImgEntity {
     private String name;
     private String cover;
     private String abs;
+    private String author;
     private boolean isfavor;
     private String title;
 
@@ -62,5 +63,13 @@ public class ResImgEntity {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

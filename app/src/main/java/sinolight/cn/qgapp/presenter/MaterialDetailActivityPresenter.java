@@ -169,8 +169,10 @@ public class MaterialDetailActivityPresenter extends BasePresenter<IMaterialDeta
 
     private void checkoutCollectState(int code, String errorMsg) {
         if (code == AppContants.SUCCESS_CODE) {
-            view().setCollectState(true);
+//            view().setCollectState(true);
             view().showStrToast(errorMsg);
+            // refresh
+            getData();
         } else {
             showError();
         }
@@ -181,9 +183,17 @@ public class MaterialDetailActivityPresenter extends BasePresenter<IMaterialDeta
                 mCollectObserver,
                 AppHelper.getInstance().getCurrentToken(),
                 resType.getType(),
-                cookID
+                cookID,
+                getAction()
         );
     }
 
+    private int getAction() {
+        if (mCookData.isfavor()) {
+            return AppContants.Collect.ACTION_UNCOLLECT;
+        } else {
+            return AppContants.Collect.ACTION_COLLECT;
+        }
+    }
 
 }

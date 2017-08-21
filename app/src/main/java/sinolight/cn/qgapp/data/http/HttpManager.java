@@ -329,13 +329,14 @@ public class HttpManager {
         toSubscribe(mApiService.login(name, pwd), subscriber);
     }
 
-    public void collectResNoCache(Observer<Object> subscriber, String token, String resType, String resId) {
+    public void collectResNoCache(Observer<Object> subscriber, String token, String resType, String resId, int action) {
         toSubscribe(mApiService.collectRes(
                 token,
                 resType,
                 resId,
                 "加入收藏",
-                AppHelper.getInstance().getCurrentUserName()),
+                AppHelper.getInstance().getCurrentUserName(),
+                action),
                 subscriber);
     }
 
