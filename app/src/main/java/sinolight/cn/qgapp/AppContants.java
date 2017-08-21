@@ -163,4 +163,9 @@ public interface AppContants {
     interface Master {
         String MASTER_ID = "master_id";
     }
+
+    interface Collect {
+        int ACTION_COLLECT = 0;
+        int ACTION_UNCOLLECT = 1;
+    }
 }

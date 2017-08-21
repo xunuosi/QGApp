@@ -64,6 +64,8 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
     // 判断当前操作是否为加载更多数据
     private boolean action_more = false;
     private boolean action_search = false;
+    private String key;
+    private String themType;
 
     private List<KDBResData> mDatas = new ArrayList<>();
     private List<BookEntity> bookDatas;
@@ -613,6 +615,8 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         // Action is refresh data
         action_more = false;
         action_search = false;
+        key = null;
+        themType = null;
         // Setting LoadMore is true
         view().hasMoreData(true);
         mDatas.clear();
@@ -655,6 +659,8 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
     public void searchData(String key, String themeType) {
         resetState();
         this.action_search = true;
+        this.key = key;
+        this.themType = themeType;
         this.loadDataWithPara(key, themeType, false, true);
     }
 
@@ -692,13 +698,16 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 mCollectObserver,
                 AppHelper.getInstance().getCurrentToken(),
                 event.getResType().getType(),
-                event.getId()
+                event.getId(),
+                event.getAction()
         );
     }
 
     private void checkoutCollectState(int code, String errorMsg) {
         if (code == AppContants.SUCCESS_CODE) {
             view().showStrToast(errorMsg);
+            // refresh adapter
+            loadDataWithPara(key, themType, false, true);
         } else {
             showError();
         }

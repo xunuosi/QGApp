@@ -101,11 +101,21 @@ public class ResImgHolder extends RecyclerView.ViewHolder {
      * Collect action
      */
     private void onCollect() {
-        setCollectState(true);
         CollectEvent event = new CollectEvent();
         event.setId(mData.getId());
         event.setResType(AppContants.DataBase.Res.RES_IMG);
+        event.setAction(getAction());
         EventBus.getDefault().post(event);
+    }
+
+    private int getAction() {
+        if (mData.isfavor()) {
+//            setCollectState(false);
+            return AppContants.Collect.ACTION_UNCOLLECT;
+        } else {
+//            setCollectState(true);
+            return AppContants.Collect.ACTION_COLLECT;
+        }
     }
 
     private void setCollectState(boolean enable) {

@@ -279,13 +279,16 @@ public class PicListActivityPresenter extends BasePresenter<IPicListActivityView
                 mCollectObserver,
                 AppHelper.getInstance().getCurrentToken(),
                 event.getResType().getType(),
-                event.getId()
+                event.getId(),
+                event.getAction()
         );
     }
 
     private void checkoutCollectState(int code, String errorMsg) {
         if (code == AppContants.SUCCESS_CODE) {
             view().showStrToast(errorMsg);
+            // refresh
+           getData();
         } else {
             showError(code, errorMsg);
         }
