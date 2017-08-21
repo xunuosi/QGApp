@@ -80,13 +80,18 @@ public class KDBDicActivityPresenter extends BasePresenter<IKDBDicDetailActivity
             view().showRefreshing(true);
             resId = intent.getStringExtra(AppContants.Resource.RES_ID);
             // Load data
-            model.getKDBEntryInfoNoCache(
-                    mDicObserver,
-                    AppHelper.getInstance().getCurrentToken(),
-                    resId
-            );
+            getData();
         }
     }
+
+    private void getData() {
+        model.getKDBEntryInfoNoCache(
+                mDicObserver,
+                AppHelper.getInstance().getCurrentToken(),
+                resId
+        );
+    }
+
 
     private HttpSubscriber<Object> mCollectObserver = new HttpSubscriber<>(
             new OnResultCallBack<Object>() {
@@ -106,7 +111,7 @@ public class KDBDicActivityPresenter extends BasePresenter<IKDBDicDetailActivity
 
     private void checkoutCollectState(int code, String errorMsg) {
         if (code == AppContants.SUCCESS_CODE) {
-            view().setCollectState(true);
+            getData();
             view().showStrToast(errorMsg);
         } else {
             showError();
@@ -118,7 +123,17 @@ public class KDBDicActivityPresenter extends BasePresenter<IKDBDicDetailActivity
                 mCollectObserver,
                 AppHelper.getInstance().getCurrentToken(),
                 resType.getType(),
-                resId
+                resId,
+                getAction()
         );
     }
+
+    private int getAction() {
+        if (dicData.isfavor()) {
+            return AppContants.Collect.ACTION_UNCOLLECT;
+        } else {
+            return AppContants.Collect.ACTION_COLLECT;
+        }
+    }
+
 }
