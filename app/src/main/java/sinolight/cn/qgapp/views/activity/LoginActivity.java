@@ -58,6 +58,11 @@ public class LoginActivity extends BaseActivity implements ILoginActivityView {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         this.initializeInjector();
         super.onCreate(savedInstanceState);
+        processExtraData(null);
+    }
+
+    private void processExtraData(Intent intent) {
+        mPresenter.init2show(intent);
     }
 
     @Override
@@ -108,7 +113,9 @@ public class LoginActivity extends BaseActivity implements ILoginActivityView {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        mPresenter.init2show(intent);
+//        // must store the new intent unless getIntent() will return the old one
+//        setIntent(intent);
+        processExtraData(intent);
     }
 
     @Override
@@ -133,6 +140,8 @@ public class LoginActivity extends BaseActivity implements ILoginActivityView {
     @Override
     public void initShow(String userName) {
         mEtLoginUser.setText(userName);
+        // focus pw
+        mEtLoginPw.requestFocus();
     }
 
     @Override

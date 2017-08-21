@@ -68,6 +68,8 @@ public class LoginActivityPresenter extends BasePresenter<ILoginActivityView, Da
     public void init2show(Intent intent) {
         if (intent != null) {
             userName = intent.getStringExtra(AppContants.Account.USER_NAME);
+        } else {
+            userName = AppHelper.getInstance().getCurrentUserName();
         }
         if (userName != null) {
             view().initShow(userName);
