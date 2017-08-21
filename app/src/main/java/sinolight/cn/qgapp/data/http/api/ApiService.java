@@ -645,6 +645,7 @@ public interface ApiService {
      * @param resId:资源id
      * @param remark:"加入收藏"
      * @param user:用户名
+     * @param action:0 添加，1 删除
      * @return
      */
     @FormUrlEncoded
@@ -654,7 +655,8 @@ public interface ApiService {
             @Field("resType") String resType,
             @Field("resId") String resId,
             @Field("remark") String remark,
-            @Field("user") String user
+            @Field("user") String user,
+            @Field("action") int action
     );
 
     /**

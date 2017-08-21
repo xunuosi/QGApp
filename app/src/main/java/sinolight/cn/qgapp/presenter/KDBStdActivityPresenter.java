@@ -63,7 +63,7 @@ public class KDBStdActivityPresenter extends BasePresenter<IKDBStdDetailActivity
 
     private void checkoutCollectState(int code, String errorMsg) {
         if (code == AppContants.SUCCESS_CODE) {
-            view().setCollectState(true);
+            getData();
             view().showStrToast(errorMsg);
         } else {
             showError();
@@ -107,14 +107,16 @@ public class KDBStdActivityPresenter extends BasePresenter<IKDBStdDetailActivity
         if (intent != null) {
             view().showRefreshing(true);
             resId = intent.getStringExtra(AppContants.Resource.RES_ID);
-
-            // Load data
-            model.getKDBStdInfoNoCache(
-                    mStdObserver,
-                    AppHelper.getInstance().getCurrentToken(),
-                    resId
-            );
+            getData();
         }
+    }
+
+    private void getData() {
+        model.getKDBStdInfoNoCache(
+                mStdObserver,
+                AppHelper.getInstance().getCurrentToken(),
+                resId
+        );
     }
 
     public Intent gotoActivity() {
@@ -130,7 +132,17 @@ public class KDBStdActivityPresenter extends BasePresenter<IKDBStdDetailActivity
                 mCollectObserver,
                 AppHelper.getInstance().getCurrentToken(),
                 resType.getType(),
-                resId
+                resId,
+                getAction()
         );
     }
+
+    private int getAction() {
+        if (stdData.isfavor()) {
+            return AppContants.Collect.ACTION_UNCOLLECT;
+        } else {
+            return AppContants.Collect.ACTION_COLLECT;
+        }
+    }
+
 }
