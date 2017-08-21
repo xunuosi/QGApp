@@ -123,7 +123,7 @@ public class ReadActivity extends BaseActivity implements IReadActivityView {
     @Override
     public void showData(ReaderEntity readData) {
         mTvTitle.setText(readData.getTitle());
-
+        this.setCollectState(readData.isfavor());
         mTvReadContent.setText(inflateHtmlData(readData.getHtml()));
     }
 
@@ -211,6 +211,15 @@ public class ReadActivity extends BaseActivity implements IReadActivityView {
             ivCollect.setImageDrawable(getDrawable(R.drawable.ic_icon_collected));
         } else {
             ivCollect.setImageDrawable(getDrawable(R.drawable.icon_collect));
+        }
+    }
+
+    @Override
+    public void showCollectBtn(boolean enable) {
+        if (enable) {
+            ivCollect.setVisibility(View.VISIBLE);
+        } else {
+            ivCollect.setVisibility(View.INVISIBLE);
         }
     }
 

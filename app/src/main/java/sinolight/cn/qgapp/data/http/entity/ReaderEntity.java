@@ -9,6 +9,7 @@ public class ReaderEntity {
     private String id;
     private String title;
     private String html;
+    private boolean isfavor;
 
     public ReaderEntity() {
     }
@@ -35,5 +36,13 @@ public class ReaderEntity {
 
     public void setHtml(String html) {
         this.html = html;
+    }
+
+    public boolean isfavor() {
+        return isfavor;
+    }
+
+    public void setIsfavor(boolean isfavor) {
+        this.isfavor = isfavor;
     }
 }

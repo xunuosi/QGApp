@@ -538,6 +538,7 @@ public interface ApiService {
     @POST("db/doReader")
     Observable<ResultEntity<ReaderEntity>> doReader(
             @Field("token") String token,
+            @Field("user") String user,
             @Field("restype") String restype,
             @Field("resid") String resID,
             @Field("chapterid") String chapterid

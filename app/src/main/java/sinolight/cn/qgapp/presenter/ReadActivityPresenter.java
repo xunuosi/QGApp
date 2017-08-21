@@ -129,8 +129,22 @@ public class ReadActivityPresenter extends BasePresenter<IReadActivityView, Http
             chapteredID = intent.getStringExtra(AppContants.Read.CHAPTERED_ID);
             readResType = (AppContants.Read.Type) intent.getSerializableExtra(AppContants.Read.READ_RES_TYPE);
             view().showRefreshing(true);
+            // choose whether or not to display collect button
+            changeCollectBtnState();
             // load data
             this.getData();
+        }
+    }
+
+    private void changeCollectBtnState() {
+        switch (readResType) {
+            case TYPE_INDUSTRY:
+            case TYPE_ARTICLE:
+                view().showCollectBtn(true);
+                break;
+            default:
+                view().showCollectBtn(false);
+                break;
         }
     }
 
@@ -152,7 +166,7 @@ public class ReadActivityPresenter extends BasePresenter<IReadActivityView, Http
 
     private void checkoutCollectState(int code, String errorMsg) {
         if (code == AppContants.SUCCESS_CODE) {
-            view().setCollectState(true);
+            getData();
             view().showStrToast(errorMsg);
         } else {
             showError();
@@ -164,8 +178,17 @@ public class ReadActivityPresenter extends BasePresenter<IReadActivityView, Http
                 mCollectObserver,
                 AppHelper.getInstance().getCurrentToken(),
                 readResType.getType(),
-                readID
+                readID,
+                getAction()
         );
+    }
+
+    private int getAction() {
+        if (readData.isfavor()) {
+            return AppContants.Collect.ACTION_UNCOLLECT;
+        } else {
+            return AppContants.Collect.ACTION_COLLECT;
+        }
     }
 
 }

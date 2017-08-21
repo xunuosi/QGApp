@@ -254,7 +254,9 @@ public class HttpManager {
     }
 
     public void doReadNoCache(Observer<ReaderEntity> subscriber, String token, String restype, String resId, String chapteredID) {
-        toSubscribe(mApiService.doReader(token, restype, resId, chapteredID), subscriber);
+        toSubscribe(mApiService.doReader(token,
+                AppHelper.getInstance().getCurrentUserName(),
+                restype, resId, chapteredID), subscriber);
     }
 
     public void getUserInfoWithCache(Observer<UserEntity> subscriber, String token, String user, boolean update) {

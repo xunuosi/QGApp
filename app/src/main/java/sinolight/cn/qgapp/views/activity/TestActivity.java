@@ -3,12 +3,19 @@ package sinolight.cn.qgapp.views.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.Spanned;
+import android.text.style.ImageSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.URLSpan;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -401,12 +408,20 @@ public class TestActivity extends AppCompatActivity {
     private List<TreeNode> mTrees = new ArrayList<>();
     private List<TreeNode> mRoot;
     private FrameLayout contentLayot;
+    private String html = "<h3 font=\"color=#0000FF;\">第一章 传承脉络</h3><p></p><p></p>" +
+            "<p>惠山泥人是一项民间彩塑艺术，入选首批国家级非物质文化遗产名录，与天津“泥人张”、潮州“大吴泥塑”齐名为中国三大民间泥彩塑。惠山泥人诞生于太湖之滨的无锡城西，那里有一座远近闻名的惠山，在山北麓的稻田中盛产一种乌黑的黏土，可塑性极强。惠山周围的泥人作坊、店铺林立，从业者众多，历经几百年、一代代艺人父子相传、师徒相授，勤奋创作，使惠山泥人得到传承，我们今天还能看到惠山泥人传统艺术。</p>" +
+            "<p><div style=\\\"text-align:center;width:100%;\\\"><a href=\\\"javascript:void(0);\\\"><img src=\\\"http://192.168.25.183:8012/Img/Show?db=12&doi=6F2CE24F-6FDF-437d-B493-BCF9ABBE8299&ptype=0\\\" title=\\\"手捏戏文《 穆桂英》( 喻湘涟塑 王南仙彩 )\\\"/></a><div align=\"center\">手捏戏文《 穆桂英》( 喻湘涟塑 王南仙彩 )</div></div></p>";
+    private TextView mTextView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         contentLayot = (FrameLayout) findViewById(R.id.test_content_root);
+        mTextView = (TextView) findViewById(R.id.tv_test);
+        Spanned spanned = Html.fromHtml(html);
+        mTextView.setText(spanned);
+
         toJson();
     }
 

@@ -21,4 +21,6 @@ public interface IReadActivityView {
     void showStrToast(String msg);
 
     void setCollectState(boolean enable);
+
+    void showCollectBtn(boolean enable);
 }
