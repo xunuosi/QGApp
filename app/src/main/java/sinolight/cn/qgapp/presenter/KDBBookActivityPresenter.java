@@ -64,7 +64,7 @@ public class KDBBookActivityPresenter extends BasePresenter<IKDBBookDetailActivi
 
     private void checkoutCollectState(int code, String errorMsg) {
         if (code == AppContants.SUCCESS_CODE) {
-            view().setCollectState(true);
+            getData();
             view().showStrToast(errorMsg);
         } else {
             showError();
@@ -109,13 +109,18 @@ public class KDBBookActivityPresenter extends BasePresenter<IKDBBookDetailActivi
             resId = intent.getStringExtra(AppContants.Resource.RES_ID);
 
             // Load data
-            model.getKDBBookInfoNoCache(
-                    mBookObserver,
-                    AppHelper.getInstance().getCurrentToken(),
-                    resId
-            );
+            getData();
         }
     }
+
+    private void getData() {
+        model.getKDBBookInfoNoCache(
+                mBookObserver,
+                AppHelper.getInstance().getCurrentToken(),
+                resId
+        );
+    }
+
 
     public Intent gotoActivity() {
         Intent callIntent = ChapterActivity.getCallIntent(mContext);
@@ -130,7 +135,17 @@ public class KDBBookActivityPresenter extends BasePresenter<IKDBBookDetailActivi
                 mCollectObserver,
                 AppHelper.getInstance().getCurrentToken(),
                 resType.getType(),
-                bookData.getId()
+                bookData.getId(),
+                getAction()
         );
     }
+
+    private int getAction() {
+        if (bookData.isfavor()) {
+            return AppContants.Collect.ACTION_UNCOLLECT;
+        } else {
+            return AppContants.Collect.ACTION_COLLECT;
+        }
+    }
+
 }
