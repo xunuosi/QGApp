@@ -78,6 +78,7 @@ public class SystemActivity extends BaseActivity implements ISystemActivityView 
                 mPresenter.gotoAboutActivity();
                 break;
             case R.id.root_sys_clear:
+                mPresenter.clearCache();
                 break;
             case R.id.root_sys_update:
                 break;
@@ -99,6 +100,6 @@ public class SystemActivity extends BaseActivity implements ISystemActivityView 
 
     @Override
     public void showToast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 }

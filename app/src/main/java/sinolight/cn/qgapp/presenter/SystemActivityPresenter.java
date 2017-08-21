@@ -4,9 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 
 
+import java.io.File;
+
+import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.http.HttpManager;
+import sinolight.cn.qgapp.utils.DataCleanManager;
 import sinolight.cn.qgapp.views.activity.AboutActivity;
 import sinolight.cn.qgapp.views.view.ISystemActivityView;
 
@@ -65,5 +69,16 @@ public class SystemActivityPresenter extends BasePresenter<ISystemActivityView, 
     public void gotoAboutActivity() {
         Intent callIntent = AboutActivity.getCallIntent(mContext);
         view().gotoActivity(callIntent);
+    }
+
+    public void clearCache() {
+        String cache = null;
+        try {
+            cache = DataCleanManager.getTotalCacheSize(mContext);
+            DataCleanManager.clearAllCache(mContext);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        view().showToast(String.format(mContext.getString(R.string.text_clear_success_format), cache));
     }
 }
