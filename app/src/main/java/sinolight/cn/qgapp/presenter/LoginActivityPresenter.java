@@ -54,7 +54,9 @@ public class LoginActivityPresenter extends BasePresenter<ILoginActivityView, Da
         view().showLoading(false);
         view().showToastMsg(R.string.text_login_success);
         // Go to HomeActivity
-        view().gotoActivity(HomeActivity.getCallIntent(mContext));
+        Intent callIntent = HomeActivity.getCallIntent(mContext);
+        callIntent.putExtra(AppContants.Account.IS_LOGINED, true);
+        view().gotoActivity(callIntent);
     }
 
     public LoginActivityPresenter(ILoginActivityView view, DaoSession daoSession, Context context) {
