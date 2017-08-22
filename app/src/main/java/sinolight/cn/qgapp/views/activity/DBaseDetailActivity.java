@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.R2;
 import sinolight.cn.qgapp.dagger.component.DaggerActivityComponent;
 import sinolight.cn.qgapp.utils.ImageUtil;
 import sinolight.cn.qgapp.utils.ScreenUtil;
@@ -27,11 +28,9 @@ import sinolight.cn.qgapp.utils.ScreenUtil;
 
 public class DBaseDetailActivity extends BaseActivity {
     private static final String TAG = "DBaseDetailActivity";
-    @BindView(R.id.tv_db_detail_title)
+    @BindView(R2.id.tv_db_detail_title)
     TextView mTvDbDetailTitle;
-    @BindView(R.id.et_db_detail_search)
-    EditText mEtDbDetailSearch;
-    @BindView(R.id.iv_db_detail_banner)
+    @BindView(R2.id.iv_db_detail_banner)
     SimpleDraweeView mIvDbDetailBanner;
 
     private String dbId;
@@ -128,13 +127,11 @@ public class DBaseDetailActivity extends BaseActivity {
                 .inject(this);
     }
 
-    @OnClick({R.id.iv_db_detail_back, R.id.iv_db_detail_search, R.id.tv_db_detail_book, R.id.tv_db_detail_article, R.id.tv_db_detail_dictionary, R.id.tv_db_detail_standard, R.id.tv_db_detail_img, R.id.tv_db_detail_analysis})
+    @OnClick({R.id.iv_db_detail_back, R.id.tv_db_detail_book, R.id.tv_db_detail_article, R.id.tv_db_detail_dictionary, R.id.tv_db_detail_standard, R.id.tv_db_detail_img, R.id.tv_db_detail_analysis})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_db_detail_back:
                 finish();
-                break;
-            case R.id.iv_db_detail_search:
                 break;
             case R.id.tv_db_detail_book:
                 gotoResActivity(AppContants.DataBase.Res.RES_BOOK);
