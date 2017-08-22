@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.R2;
 import sinolight.cn.qgapp.dagger.component.DaggerVideoInfoActivityComponent;
 import sinolight.cn.qgapp.dagger.module.VideoInfoActivityModule;
 import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
@@ -36,15 +37,15 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
     Context mContext;
     @Inject
     VideoInfoActivityPresenter mPresenter;
-    @BindView(R.id.tv_title)
+    @BindView(R2.id.tv_title)
     TextView mTvTitle;
-    @BindView(R.id.tb_video_info)
+    @BindView(R2.id.tb_video_info)
     Toolbar mTbVideoInfo;
-    @BindView(R.id.videoView_video_info)
+    @BindView(R2.id.videoView_video_info)
     VideoView mVideoViewVideoInfo;
-    @BindView(R.id.loading_root)
+    @BindView(R2.id.loading_root)
     RelativeLayout mLoadingRoot;
-    @BindView(R.id.iv_video_info_play)
+    @BindView(R2.id.iv_video_info_play)
     SimpleDraweeView mIvVideoInfoPlay;
 
     private MediaController mMediaController;
