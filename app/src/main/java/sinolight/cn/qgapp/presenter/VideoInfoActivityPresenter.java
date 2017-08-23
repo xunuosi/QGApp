@@ -131,13 +131,7 @@ public class VideoInfoActivityPresenter extends BasePresenter<IVideoInfoActivity
      * @param player
      */
     public void videoOnPrepared(SimpleExoPlayer player) {
-        view().showPlayBtn(true);
         this.closeRefreshing();
         mPlayer = player;
-    }
-
-    public void playVideo() {
-        view().showPlayBtn(false);
-
     }
 }

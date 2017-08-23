@@ -50,7 +50,7 @@ import sinolight.cn.qgapp.views.view.IVideoInfoActivityView;
  * Video info
  */
 
-public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivityView,ExoPlayer.EventListener {
+public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivityView, ExoPlayer.EventListener {
     @Inject
     Context mContext;
     @Inject
@@ -61,8 +61,6 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
     Toolbar mTbVideoInfo;
     @BindView(R2.id.loading_root)
     RelativeLayout mLoadingRoot;
-    @BindView(R2.id.iv_video_info_play)
-    SimpleDraweeView mIvVideoInfoPlay;
     @BindView(R2.id.videoView_video_info)
     SimpleExoPlayerView simpleExoPlayerView;
 
@@ -72,6 +70,8 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
     private SimpleExoPlayer player;
     private DataSource.Factory mediaDataSourceFactory;
     private MediaSource mMediaSource;
+
+    private boolean shouldAutoPlay = true;
 
 
     public static Intent getCallIntent(Context context) {
@@ -116,6 +116,8 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
         trackSelector = new DefaultTrackSelector(adaptiveTrackSelectionFactory);
         // init Player
         player = ExoPlayerFactory.newSimpleInstance(mContext, trackSelector);
+        player.addListener(this);
+        player.setPlayWhenReady(shouldAutoPlay);
         // Bind the player to the view.
         simpleExoPlayerView.setPlayer(player);
 
@@ -175,18 +177,9 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
     }
 
     @Override
-    public void showPlayBtn(boolean enable) {
-        if (enable) {
-            mIvVideoInfoPlay.setVisibility(View.VISIBLE);
-        } else {
-            mIvVideoInfoPlay.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
     protected void onPause() {
         super.onPause();
-
+        player.stop();
     }
 
     @Override
@@ -200,16 +193,13 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
         mPresenter.clear();
     }
 
-    @OnClick({R.id.im_back_arrow, R.id.iv_collect, R.id.iv_video_info_play})
+    @OnClick({R.id.im_back_arrow, R.id.iv_collect})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.im_back_arrow:
                 finish();
                 break;
             case R.id.iv_collect:
-                break;
-            case R.id.iv_video_info_play:
-                mPresenter.playVideo();
                 break;
         }
     }

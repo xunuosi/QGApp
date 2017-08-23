@@ -105,19 +105,4 @@
     <include layout="@layout/layout_loading"
              android:visibility="gone"/>
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/iv_video_info_play"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        app:layout_constraintTop_toTopOf="@+id/guideline29"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="@+id/videoView_video_info"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="@+id/videoView_video_info"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline31"
-        fresco:placeholderImage="@drawable/play"
-        fresco:actualImageScaleType="fitCenter"
-        android:visibility="gone"/>
 </android.support.constraint.ConstraintLayout>

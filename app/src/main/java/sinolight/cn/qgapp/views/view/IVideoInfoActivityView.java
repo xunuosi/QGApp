@@ -16,5 +16,4 @@ public interface IVideoInfoActivityView {
 
     void initVideo(DBResVideoEntity videoData);
 
-    void showPlayBtn(boolean enable);
 }
