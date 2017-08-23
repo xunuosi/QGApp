@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 
+import com.google.android.exoplayer2.SimpleExoPlayer;
+
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
@@ -27,7 +29,7 @@ public class VideoInfoActivityPresenter extends BasePresenter<IVideoInfoActivity
     // VideoParentID
     private String videoID;
     private DBResVideoEntity videoData;
-    private MediaPlayer mp;
+    private SimpleExoPlayer mPlayer;
 
     private HttpSubscriber<DBResVideoEntity> mVideoObserver = new HttpSubscriber<>(
             new OnResultCallBack<DBResVideoEntity>() {
@@ -77,6 +79,7 @@ public class VideoInfoActivityPresenter extends BasePresenter<IVideoInfoActivity
             mVideoObserver.unSubscribe();
         }
 
+        mPlayer.release();
         KDBResDataMapper.reset();
         unbindView();
     }
@@ -125,16 +128,16 @@ public class VideoInfoActivityPresenter extends BasePresenter<IVideoInfoActivity
 
     /**
      * 视频已经加载完毕
-     * @param mp
+     * @param player
      */
-    public void videoOnPrepared(MediaPlayer mp) {
+    public void videoOnPrepared(SimpleExoPlayer player) {
         view().showPlayBtn(true);
         this.closeRefreshing();
-        this.mp = mp;
+        mPlayer = player;
     }
 
     public void playVideo() {
         view().showPlayBtn(false);
-        mp.start();
+
     }
 }

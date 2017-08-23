@@ -5,6 +5,11 @@ import android.content.Context;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.google.android.exoplayer2.upstream.HttpDataSource;
 
 import sinolight.cn.qgapp.dagger.component.ApplicationComponent;
 import sinolight.cn.qgapp.dagger.component.DaggerApplicationComponent;
@@ -21,6 +26,7 @@ public class App extends Application {
 
     private static Context instance;
     private ApplicationComponent mApplicationComponent;
+    private String userAgent;
 
     @Override
     public void onCreate() {
@@ -39,6 +45,8 @@ public class App extends Application {
         HttpManager.init(this);
         initDatabase();
         AppHelper.getInstance().init(instance);
+
+        userAgent = AppHelper.getUserAgent(this, "QGApp");
     }
 
     private void initDatabase() {
@@ -51,5 +59,14 @@ public class App extends Application {
 
     public static Context getContext() {
         return instance;
+    }
+
+    public DataSource.Factory buildDataSourceFactory(DefaultBandwidthMeter bandwidthMeter) {
+        return new DefaultDataSourceFactory(this, bandwidthMeter,
+                buildHttpDataSourceFactory(bandwidthMeter));
+    }
+
+    public HttpDataSource.Factory buildHttpDataSourceFactory(DefaultBandwidthMeter bandwidthMeter) {
+        return new DefaultHttpDataSourceFactory(userAgent, bandwidthMeter);
     }
 }
