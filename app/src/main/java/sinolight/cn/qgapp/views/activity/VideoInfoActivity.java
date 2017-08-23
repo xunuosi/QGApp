@@ -13,11 +13,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.PlaybackParameters;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
@@ -43,6 +43,7 @@ import sinolight.cn.qgapp.dagger.component.DaggerVideoInfoActivityComponent;
 import sinolight.cn.qgapp.dagger.module.VideoInfoActivityModule;
 import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
 import sinolight.cn.qgapp.presenter.VideoInfoActivityPresenter;
+import sinolight.cn.qgapp.utils.CommonUtil;
 import sinolight.cn.qgapp.views.view.IVideoInfoActivityView;
 
 /**
@@ -50,7 +51,8 @@ import sinolight.cn.qgapp.views.view.IVideoInfoActivityView;
  * Video info
  */
 
-public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivityView, ExoPlayer.EventListener {
+public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivityView, Player.EventListener {
+    private static final String TAG = "VideoInfoActivity";
     @Inject
     Context mContext;
     @Inject
@@ -72,6 +74,9 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
     private MediaSource mMediaSource;
 
     private boolean shouldAutoPlay = true;
+    private boolean onResumePlay;
+    private int resumeWindow;
+    private long resumePosition;
 
 
     public static Intent getCallIntent(Context context) {
@@ -96,6 +101,7 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
     @Override
     protected void onStart() {
         super.onStart();
+        initializePlayer();
     }
 
     @Override
@@ -105,30 +111,40 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
 
     @Override
     protected void initViews() {
-        initializePlayer();
+
     }
 
     private void initializePlayer() {
-        mainHandler = new Handler();
-        // init Track 选择MediaSource中的轨道（Track）交由TrackRenderer负责渲染,这里包括音频轨道和视频轨道。
-        TrackSelection.Factory adaptiveTrackSelectionFactory =
-                new AdaptiveTrackSelection.Factory(BANDWIDTH_METER);
-        trackSelector = new DefaultTrackSelector(adaptiveTrackSelectionFactory);
-        // init Player
-        player = ExoPlayerFactory.newSimpleInstance(mContext, trackSelector);
-        player.addListener(this);
-        player.setPlayWhenReady(shouldAutoPlay);
-        // Bind the player to the view.
-        simpleExoPlayerView.setPlayer(player);
+        boolean needNewPlayer = player == null;
+        if (needNewPlayer) {
+            mainHandler = new Handler();
+            // init Track 选择MediaSource中的轨道（Track）交由TrackRenderer负责渲染,这里包括音频轨道和视频轨道。
+            TrackSelection.Factory adaptiveTrackSelectionFactory =
+                    new AdaptiveTrackSelection.Factory(BANDWIDTH_METER);
+            trackSelector = new DefaultTrackSelector(adaptiveTrackSelectionFactory);
+            // init Player
+            player = ExoPlayerFactory.newSimpleInstance(mContext, trackSelector);
+            player.addListener(this);
+            player.setPlayWhenReady(shouldAutoPlay);
+            // Bind the player to the view.
+            simpleExoPlayerView.setPlayer(player);
 
-        mediaDataSourceFactory = buildDataSourceFactory(true);
+            mediaDataSourceFactory = buildDataSourceFactory(true);
+        }
+        if (onResumePlay) {
+            boolean haveResumePosition = resumeWindow != C.INDEX_UNSET;
+            if (haveResumePosition) {
+                player.seekTo(resumeWindow, resumePosition);
+            }
+            player.prepare(mMediaSource, !haveResumePosition, false);
+        }
     }
 
     /**
      * Returns a new DataSource factory.
      *
      * @param useBandwidthMeter Whether to set {@link #BANDWIDTH_METER} as a listener to the new
-     *     DataSource factory.
+     *                          DataSource factory.
      * @return A new DataSource factory.
      */
     private DataSource.Factory buildDataSourceFactory(boolean useBandwidthMeter) {
@@ -177,14 +193,45 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        player.stop();
+    protected void onResume() {
+        super.onResume();
+        onResumePlay = true;
+        if (player == null) {
+            initializePlayer();
+        }
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onPause() {
+        super.onPause();
+        if (CommonUtil.SDK_INT <= 23) {
+            releasePlayer();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+//        Before API Level 24 there is no guarantee of onStop being called.
+        if (CommonUtil.SDK_INT > 23) {
+            releasePlayer();
+        }
+    }
+
+    private void releasePlayer() {
+        if (player != null) {
+            shouldAutoPlay = player.getPlayWhenReady();
+            updateResumePosition();
+            player.release();
+            player = null;
+            trackSelector = null;
+        }
+    }
+
+    private void updateResumePosition() {
+        resumeWindow = player.getCurrentWindowIndex();
+        resumePosition = player.isCurrentWindowSeekable() ? Math.max(0, player.getCurrentPosition())
+                : C.TIME_UNSET;
     }
 
     @Override
