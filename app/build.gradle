@@ -78,6 +78,5 @@ dependencies {
     // ExoPlay
     compile 'com.google.android.exoplayer:exoplayer:r2.5.1'
     compile 'com.google.android.exoplayer:exoplayer-core:r2.5.1'
-    compile 'com.google.android.exoplayer:exoplayer-dash:r2.5.1'
     compile 'com.google.android.exoplayer:exoplayer-ui:r2.5.1'
 }

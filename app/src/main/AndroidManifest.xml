@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="sinolight.cn.qgapp" >
+          package="sinolight.cn.qgapp">
+
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -8,157 +9,187 @@
     <application
         android:name=".App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/qg_app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/qg_app_icon"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".views.activity.SplashActivity"
-                  android:screenOrientation="portrait">
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".views.activity.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
 
             </intent-filter>
         </activity>
-        <activity android:name=".views.activity.HomeActivity"
-                  android:screenOrientation="portrait"
-                  android:launchMode="singleTask">
+        <activity
+            android:name=".views.activity.HomeActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".views.activity.DBaseDetailActivity"
+        <activity
+            android:name=".views.activity.DBaseDetailActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".views.activity.DBResourceActivity"
-                  android:screenOrientation="portrait"
-                  android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".views.activity.LoginActivity"
-                  android:screenOrientation="portrait"
-                  android:launchMode="singleTask"
-                  android:windowSoftInputMode="stateVisible"/>
-        <activity android:name=".views.activity.RegisterActivity"
-                  android:screenOrientation="portrait"
-                  android:windowSoftInputMode="stateVisible"/>
-        <activity android:name=".views.activity.KDBDicDetailActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".views.activity.DBResourceActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".views.activity.LoginActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible"/>
+        <activity
+            android:name=".views.activity.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible"/>
+        <activity
+            android:name=".views.activity.KDBDicDetailActivity"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".views.activity.KDBStdDetailActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".views.activity.KDBStdDetailActivity"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".views.activity.KDBBookDetailActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".views.activity.KDBBookDetailActivity"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".views.activity.UserHomeActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".views.activity.UserHomeActivity"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".views.activity.VideoListSetActivity"
-                  android:screenOrientation="portrait"
-                  android:windowSoftInputMode="stateHidden">
+        <activity
+            android:name=".views.activity.VideoListSetActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
 
         </activity>
-        <activity android:name=".views.activity.VideoListActivity"
-                  android:screenOrientation="portrait"
-                  android:windowSoftInputMode="stateHidden">
+        <activity
+            android:name=".views.activity.VideoListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
 
         </activity>
-        <activity android:name=".views.activity.VideoInfoActivity"
-                  android:screenOrientation="portrait">
-
-        </activity>
-
-        <activity android:name=".views.activity.ChapterActivity"
-                  android:screenOrientation="portrait">
-
-        </activity>
-
-        <activity android:name=".views.activity.ReadActivity"
-                  android:screenOrientation="portrait">
-
-        </activity>
-
-        <activity android:name=".views.activity.EBookActivity"
-                  android:screenOrientation="portrait"
-                  android:windowSoftInputMode="stateHidden">
+        <activity
+            android:name=".views.activity.VideoInfoActivity"
+            android:screenOrientation="fullSensor"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
 
         </activity>
 
-        <activity android:name=".views.activity.MaterialListActivity"
-                  android:screenOrientation="portrait"
-                  android:windowSoftInputMode="stateHidden">
-
-        </activity>
-        <activity android:name=".views.activity.MaterialDetailActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".views.activity.ChapterActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".views.activity.MasterHomeActivity"
-                  android:screenOrientation="portrait"
-                  android:windowSoftInputMode="stateHidden">
+        <activity
+            android:name=".views.activity.ReadActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".views.activity.MasterListActivity"
-                  android:screenOrientation="portrait"
-                  android:windowSoftInputMode="stateHidden">
+        <activity
+            android:name=".views.activity.EBookActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
 
         </activity>
 
-        <activity android:name=".views.activity.MasterInfoActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".views.activity.MaterialListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
+
+        </activity>
+        <activity
+            android:name=".views.activity.MaterialDetailActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".views.activity.BaiKeActivity"
-                  android:screenOrientation="portrait"
-                  android:windowSoftInputMode="stateHidden">
+        <activity
+            android:name=".views.activity.MasterHomeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
 
         </activity>
 
-        <activity android:name=".views.activity.PicSetActivity"
-                  android:screenOrientation="portrait"
-                  android:windowSoftInputMode="stateHidden">
+        <activity
+            android:name=".views.activity.MasterListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
 
         </activity>
 
-        <activity android:name=".views.activity.ResPicListActivity"
-                  android:screenOrientation="portrait"
-                  android:windowSoftInputMode="stateHidden">
+        <activity
+            android:name=".views.activity.MasterInfoActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".views.activity.CollectActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".views.activity.BaiKeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
 
         </activity>
 
-        <activity android:name=".views.activity.MyDatabaseActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".views.activity.PicSetActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
 
         </activity>
 
-        <activity android:name=".views.activity.SystemActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".views.activity.ResPicListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
 
         </activity>
 
-        <activity android:name=".views.activity.AboutActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".views.activity.CollectActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".views.activity.ResPicDetailActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".views.activity.MyDatabaseActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".views.activity.SystemActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".views.activity.AboutActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".views.activity.ResPicDetailActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
         <activity android:name=".views.activity.TestActivity">
 
-            </activity>
+        </activity>
     </application>
 
 </manifest>

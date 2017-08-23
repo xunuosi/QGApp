@@ -2,6 +2,7 @@ package sinolight.cn.qgapp.views.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +10,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +49,8 @@ import sinolight.cn.qgapp.presenter.VideoInfoActivityPresenter;
 import sinolight.cn.qgapp.utils.CommonUtil;
 import sinolight.cn.qgapp.views.view.IVideoInfoActivityView;
 
+import static com.google.android.exoplayer2.ui.AspectRatioFrameLayout.RESIZE_MODE_FILL;
+
 /**
  * Created by xns on 2017/8/2.
  * Video info
@@ -78,6 +83,9 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
     private int resumeWindow;
     private long resumePosition;
 
+    private ViewGroup.LayoutParams portParams;
+    private ViewGroup.LayoutParams landParams;
+
 
     public static Intent getCallIntent(Context context) {
         return new Intent(context, VideoInfoActivity.class);
@@ -87,6 +95,7 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         this.initializeInjector();
         super.onCreate(savedInstanceState);
+        this.clearResumePosition();
         mPresenter.checkoutIntent(getIntent());
     }
 
@@ -110,6 +119,31 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
     }
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mTbVideoInfo.setVisibility(View.GONE);
+            if (landParams == null) {
+                ViewGroup.LayoutParams layoutParams = simpleExoPlayerView.getLayoutParams();
+                layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+                layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+                landParams = layoutParams;
+                simpleExoPlayerView.setLayoutParams(layoutParams);
+            }
+        }
+        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            mTbVideoInfo.setVisibility(View.VISIBLE);
+            if (portParams == null) {
+                ViewGroup.LayoutParams layoutParams = simpleExoPlayerView.getLayoutParams();
+                layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+                layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                portParams = layoutParams;
+                simpleExoPlayerView.setLayoutParams(portParams);
+            }
+        }
+    }
+
+    @Override
     protected void initViews() {
 
     }
@@ -128,6 +162,7 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
             player.setPlayWhenReady(shouldAutoPlay);
             // Bind the player to the view.
             simpleExoPlayerView.setPlayer(player);
+            simpleExoPlayerView.setResizeMode(RESIZE_MODE_FILL);
 
             mediaDataSourceFactory = buildDataSourceFactory(true);
         }
@@ -238,6 +273,11 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
     protected void onDestroy() {
         super.onDestroy();
         mPresenter.clear();
+    }
+
+    private void clearResumePosition() {
+        resumeWindow = C.INDEX_UNSET;
+        resumePosition = C.TIME_UNSET;
     }
 
     @OnClick({R.id.im_back_arrow, R.id.iv_collect})
