@@ -7,7 +7,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +49,7 @@ import sinolight.cn.qgapp.dagger.module.VideoInfoActivityModule;
 import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
 import sinolight.cn.qgapp.presenter.VideoInfoActivityPresenter;
 import sinolight.cn.qgapp.utils.CommonUtil;
+import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.views.view.IVideoInfoActivityView;
 
 import static com.google.android.exoplayer2.ui.AspectRatioFrameLayout.RESIZE_MODE_FILL;
@@ -83,10 +86,6 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
     private int resumeWindow;
     private long resumePosition;
 
-    private ViewGroup.LayoutParams portParams;
-    private ViewGroup.LayoutParams landParams;
-
-
     public static Intent getCallIntent(Context context) {
         return new Intent(context, VideoInfoActivity.class);
     }
@@ -121,25 +120,23 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             mTbVideoInfo.setVisibility(View.GONE);
-            if (landParams == null) {
-                ViewGroup.LayoutParams layoutParams = simpleExoPlayerView.getLayoutParams();
-                layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-                layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
-                landParams = layoutParams;
-                simpleExoPlayerView.setLayoutParams(layoutParams);
-            }
+            ViewGroup.LayoutParams layoutParams = simpleExoPlayerView.getLayoutParams();
+            layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+            layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+            simpleExoPlayerView.setLayoutParams(layoutParams);
+            simpleExoPlayerView.showController();
         }
         if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             mTbVideoInfo.setVisibility(View.VISIBLE);
-            if (portParams == null) {
-                ViewGroup.LayoutParams layoutParams = simpleExoPlayerView.getLayoutParams();
-                layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-                layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                portParams = layoutParams;
-                simpleExoPlayerView.setLayoutParams(portParams);
-            }
+            ViewGroup.LayoutParams layoutParams = simpleExoPlayerView.getLayoutParams();
+            layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+            layoutParams.height = (int) TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP, 228, getResources().getDisplayMetrics());
+            simpleExoPlayerView.setLayoutParams(layoutParams);
+            simpleExoPlayerView.showController();
         }
     }
 
