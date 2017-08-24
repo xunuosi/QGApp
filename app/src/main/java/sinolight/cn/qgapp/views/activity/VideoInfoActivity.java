@@ -49,7 +49,6 @@ import sinolight.cn.qgapp.dagger.module.VideoInfoActivityModule;
 import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
 import sinolight.cn.qgapp.presenter.VideoInfoActivityPresenter;
 import sinolight.cn.qgapp.utils.CommonUtil;
-import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.views.view.IVideoInfoActivityView;
 
 import static com.google.android.exoplayer2.ui.AspectRatioFrameLayout.RESIZE_MODE_FILL;
@@ -73,6 +72,8 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
     RelativeLayout mLoadingRoot;
     @BindView(R2.id.videoView_video_info)
     SimpleExoPlayerView simpleExoPlayerView;
+    @BindView(R2.id.root_video_play)
+    ConstraintLayout mRootVideoPlay;
 
     private static final DefaultBandwidthMeter BANDWIDTH_METER = new DefaultBandwidthMeter();
     private DefaultTrackSelector trackSelector;
@@ -123,20 +124,34 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
 
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             mTbVideoInfo.setVisibility(View.GONE);
+            // Dynamic layout
             ViewGroup.LayoutParams layoutParams = simpleExoPlayerView.getLayoutParams();
             layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
             layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
             simpleExoPlayerView.setLayoutParams(layoutParams);
             simpleExoPlayerView.showController();
+            // hide status bar
+            changeStatusBarState(false);
         }
         if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             mTbVideoInfo.setVisibility(View.VISIBLE);
+            // Dynamic layout
             ViewGroup.LayoutParams layoutParams = simpleExoPlayerView.getLayoutParams();
             layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
             layoutParams.height = (int) TypedValue.applyDimension(
                     TypedValue.COMPLEX_UNIT_DIP, 228, getResources().getDisplayMetrics());
             simpleExoPlayerView.setLayoutParams(layoutParams);
             simpleExoPlayerView.showController();
+            // show status bar
+            changeStatusBarState(true);
+        }
+    }
+
+    private void changeStatusBarState(boolean enable) {
+        if (enable) { // show status bar
+            mRootVideoPlay.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+        } else { // hide status bar
+            mRootVideoPlay.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         }
     }
 
