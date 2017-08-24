@@ -231,6 +231,10 @@
         <item name="android:textSize">18sp</item>
         <item name="android:gravity">center</item>
     </style>
+    <style name="ExoMediaButton.Full">
+        <item name="android:src">@drawable/full_screen</item>
+        <item name="android:contentDescription">@string/exo_controls_full_screen_description</item>
+    </style>
     <!--Read-->
     <style name="read_footer">
         <item name="android:textColor">@color/mask_color</item>
@@ -266,4 +270,6 @@
         <item name="android:textColor">@color/mask_color</item>
         <item name="android:gravity">left</item>
     </style>
+
+    <string name="exo_controls_full_screen_description">全屏播放</string>
 </resources>

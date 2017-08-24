@@ -2,6 +2,7 @@ package sinolight.cn.qgapp.views.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +51,8 @@ import sinolight.cn.qgapp.dagger.module.VideoInfoActivityModule;
 import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
 import sinolight.cn.qgapp.presenter.VideoInfoActivityPresenter;
 import sinolight.cn.qgapp.utils.CommonUtil;
+import sinolight.cn.qgapp.utils.L;
+import sinolight.cn.qgapp.utils.ScreenUtil;
 import sinolight.cn.qgapp.views.view.IVideoInfoActivityView;
 
 import static com.google.android.exoplayer2.ui.AspectRatioFrameLayout.RESIZE_MODE_FILL;
@@ -292,7 +296,7 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
         resumePosition = C.TIME_UNSET;
     }
 
-    @OnClick({R.id.im_back_arrow, R.id.iv_collect})
+    @OnClick({R.id.im_back_arrow, R.id.iv_collect, R.id.exo_full})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.im_back_arrow:
@@ -300,6 +304,18 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
                 break;
             case R.id.iv_collect:
                 break;
+            case R.id.exo_full:
+                changeScreenDirection();
+                break;
+        }
+    }
+
+    private void changeScreenDirection() {
+        int orient = getRequestedOrientation();
+        if (orient == ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
         }
     }
 
