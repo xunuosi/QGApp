@@ -1,5 +1,7 @@
 package sinolight.cn.qgapp.views.view;
 
+import android.content.Intent;
+
 import sinolight.cn.qgapp.adapter.HomeAdapter;
 
 /**
@@ -12,4 +14,7 @@ public interface IHomeFragmentView {
     void showView(HomeAdapter adapter);
 
     void showLoading(boolean enable);
+
+    void gotoActivity(Intent callIntent);
+
 }

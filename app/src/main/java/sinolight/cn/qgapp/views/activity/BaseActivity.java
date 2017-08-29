@@ -50,9 +50,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        ActivityCollector.addActivity(this);
-
         this.getApplicationComponent().inject(this);
+
+        ActivityCollector.addActivity(this);
 
         initData();
         initViews();

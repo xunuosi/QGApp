@@ -8,4 +8,17 @@
         <item>电子书城</item>
         <item>行业专家</item>
     </string-array>
+
+    <string-array name="data_base_name">
+        <item>食品数据库</item>
+        <item>工艺美术/艺术设计数据库</item>
+        <item>造纸数据库</item>
+        <item>皮革数据库</item>
+        <item>家具数据库</item>
+        <item>包装数据库</item>
+        <item>服装数据库</item>
+        <item>机电数据库</item>
+        <item>衡器数据库</item>
+    </string-array>
+
 </resources>

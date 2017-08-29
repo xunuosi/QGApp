@@ -1,6 +1,7 @@
 package sinolight.cn.qgapp.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import sinolight.cn.qgapp.data.http.entity.StandardEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.HomeDataMapper;
 import sinolight.cn.qgapp.utils.L;
+import sinolight.cn.qgapp.views.activity.SearchActivity;
 import sinolight.cn.qgapp.views.view.IHomeFragmentView;
 
 /**
@@ -396,5 +398,10 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
                 mNewBooks !=null &&
                 mArticles != null
         );
+    }
+
+    public void gotoActivity() {
+        Intent callIntent = SearchActivity.getCallIntent(mContext);
+        view().gotoActivity(callIntent);
     }
 }

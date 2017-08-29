@@ -18,6 +18,7 @@ import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.R2;
 import sinolight.cn.qgapp.dagger.component.DaggerActivityComponent;
+import sinolight.cn.qgapp.dagger.component.DaggerDBaseDetailActivityComponent;
 import sinolight.cn.qgapp.utils.ImageUtil;
 import sinolight.cn.qgapp.utils.ScreenUtil;
 
@@ -119,7 +120,7 @@ public class DBaseDetailActivity extends BaseActivity {
 
     @Override
     protected void initializeInjector() {
-        DaggerActivityComponent
+        DaggerDBaseDetailActivityComponent
                 .builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())

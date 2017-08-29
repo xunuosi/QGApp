@@ -1,6 +1,7 @@
 package sinolight.cn.qgapp.views.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -123,6 +124,11 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, OnR
     }
 
     @Override
+    public void gotoActivity(Intent callIntent) {
+        getActivity().startActivity(callIntent);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
@@ -138,6 +144,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, OnR
 
     @OnClick(R.id.iv_hf_search)
     public void onViewClicked() {
+        mPresenter.gotoActivity();
     }
 
     @Override

@@ -175,5 +175,6 @@
     <string name="text_update">版本更新</string>
     <string name="text_quit">退出登录</string>
     <string name="text_clear_success_format">成功清理%1$s缓存</string>
+    <string name="text_search">搜索</string>
 
 </resources>
