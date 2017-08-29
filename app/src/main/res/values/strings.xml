@@ -43,7 +43,6 @@
     <string name="text_all_word">全部词条</string>
     <string name="text_material">素材</string>
     <string name="text_material_list">素材列表</string>
-    <string name="text_video">视频</string>
     <string name="text_cn_name_format">中文名称：%1$s</string>
     <string name="text_en_name_format">英文名称：%1$s</string>
     <string name="text_two_empty_format">\u3000\u3000%1$s</string>
@@ -94,6 +93,7 @@
     <string name="text_img">图片</string>
     <string name="text_analysis">行业分析</string>
     <string name="text_cook">菜谱</string>
+    <string name="text_video">视频</string>
     <!--行业知识库-->
     <string name="text_database_food">食品数据库</string>
     <string name="text_database_paper">造纸数据库</string>

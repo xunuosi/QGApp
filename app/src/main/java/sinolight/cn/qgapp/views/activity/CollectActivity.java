@@ -30,6 +30,7 @@ import sinolight.cn.qgapp.views.fragment.CollectDicFragment;
 import sinolight.cn.qgapp.views.fragment.CollectIndustryAnalysisFragment;
 import sinolight.cn.qgapp.views.fragment.CollectPicFragment;
 import sinolight.cn.qgapp.views.fragment.CollectStdFragment;
+import sinolight.cn.qgapp.views.fragment.CollectVideoFragment;
 
 /**
  * Created by xns on 2017/8/14.
@@ -90,6 +91,7 @@ public class CollectActivity extends BaseActivity implements HasComponent<UserCo
         mTitles.add(getString(R.string.text_dictionary));
         mTitles.add(getString(R.string.text_analysis));
         mTitles.add(getString(R.string.text_cook));
+        mTitles.add(getString(R.string.text_video));
 
         mFragments = new ArrayList<>();
         mFragments.add(CollectBookFragment.newInstance());
@@ -99,6 +101,7 @@ public class CollectActivity extends BaseActivity implements HasComponent<UserCo
         mFragments.add(CollectDicFragment.newInstance());
         mFragments.add(CollectIndustryAnalysisFragment.newInstance());
         mFragments.add(CollectCookFragment.newInstance());
+        mFragments.add(CollectVideoFragment.newInstance());
 
         mTabAdapter = new MyTabAdapter(
                 getSupportFragmentManager(),

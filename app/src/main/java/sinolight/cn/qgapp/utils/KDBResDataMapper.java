@@ -565,6 +565,17 @@ public class KDBResDataMapper {
                         resDataCollection.add(transformMaterialData(transformBean, adapterType, isSpan));
                     }
                     break;
+                case CommonTitleAdapter.TYPE_VIDEO:
+                    for (CollectEntity bean : beans) {
+                        DBResVideoEntity transformBean = new DBResVideoEntity();
+                        transformBean.setId(bean.getId());
+                        transformBean.setName(bean.getName());
+                        transformBean.setCover(bean.getCover());
+                        transformBean.setSource(bean.getSource());
+                        transformBean.setAbs(bean.getAbs());
+                        resDataCollection.add(transformVideoData(transformBean, adapterType, isSpan));
+                    }
+                    break;
             }
             mKDBResDataMap.put(adapterType, resDataCollection);
             return resDataCollection;

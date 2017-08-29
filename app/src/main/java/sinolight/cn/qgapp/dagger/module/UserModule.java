@@ -16,6 +16,7 @@ import sinolight.cn.qgapp.presenter.CollectDicPresenter;
 import sinolight.cn.qgapp.presenter.CollectIndustryAnalysisPresenter;
 import sinolight.cn.qgapp.presenter.CollectPicPresenter;
 import sinolight.cn.qgapp.presenter.CollectStdPresenter;
+import sinolight.cn.qgapp.presenter.CollectVideoPresenter;
 import sinolight.cn.qgapp.presenter.DBResArticlePresenter;
 import sinolight.cn.qgapp.presenter.DBResMaterialPresenter;
 import sinolight.cn.qgapp.presenter.DBResPicPresenter;
@@ -134,5 +135,11 @@ public class UserModule {
     @PerActivity
     CollectCookPresenter provideCollectCookPresenter(Context context) {
         return new CollectCookPresenter(context);
+    }
+
+    @Provides
+    @PerActivity
+    CollectVideoPresenter provideCollectVideoPresenter(Context context) {
+        return new CollectVideoPresenter(context);
     }
 }

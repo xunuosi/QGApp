@@ -13,6 +13,7 @@ import sinolight.cn.qgapp.views.fragment.CollectDicFragment;
 import sinolight.cn.qgapp.views.fragment.CollectIndustryAnalysisFragment;
 import sinolight.cn.qgapp.views.fragment.CollectPicFragment;
 import sinolight.cn.qgapp.views.fragment.CollectStdFragment;
+import sinolight.cn.qgapp.views.fragment.CollectVideoFragment;
 import sinolight.cn.qgapp.views.fragment.DBResArticleFragment;
 import sinolight.cn.qgapp.views.fragment.DBResMaterialFragment;
 import sinolight.cn.qgapp.views.fragment.DBResPicFragment;
@@ -64,4 +65,6 @@ public interface UserComponent extends ActivityComponent {
     void inject(CollectIndustryAnalysisFragment collectIndustryAnalysisFragment);
 
     void inject(CollectCookFragment collectCookFragment);
+
+    void inject(CollectVideoFragment collectVideoFragment);
 }
