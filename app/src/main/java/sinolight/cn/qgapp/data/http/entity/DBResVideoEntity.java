@@ -13,6 +13,7 @@ public class DBResVideoEntity {
     private String abs;
     // Video Url
     private String video;
+    private boolean isfavor;
 
     public DBResVideoEntity() {
     }
@@ -63,5 +64,13 @@ public class DBResVideoEntity {
 
     public void setVideo(String video) {
         this.video = video;
+    }
+
+    public boolean isfavor() {
+        return isfavor;
+    }
+
+    public void setIsfavor(boolean isfavor) {
+        this.isfavor = isfavor;
     }
 }

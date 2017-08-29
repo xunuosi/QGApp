@@ -24,6 +24,9 @@ import sinolight.cn.qgapp.views.view.IVideoInfoActivityView;
 
 public class VideoInfoActivityPresenter extends BasePresenter<IVideoInfoActivityView, HttpManager> {
     private static final String TAG = "VideoListActivityPresenter";
+    private static final int ACTION_COLLECT = 100;
+
+    private int actionType;
     private Context mContext;
 
     // VideoParentID
@@ -59,7 +62,11 @@ public class VideoInfoActivityPresenter extends BasePresenter<IVideoInfoActivity
     }
 
     private void showWithData() {
-        view().initVideo(videoData);
+        if (actionType == ACTION_COLLECT) {
+            view().setCollectState(videoData.isfavor());
+        } else {
+            view().initVideo(videoData);
+        }
     }
 
     public VideoInfoActivityPresenter(IVideoInfoActivityView view, Context context) {
@@ -78,6 +85,7 @@ public class VideoInfoActivityPresenter extends BasePresenter<IVideoInfoActivity
         if (mVideoObserver != null) {
             mVideoObserver.unSubscribe();
         }
+        mCollectObserver.unSubscribe();
 
         mPlayer.release();
         KDBResDataMapper.reset();
@@ -133,5 +141,49 @@ public class VideoInfoActivityPresenter extends BasePresenter<IVideoInfoActivity
     public void videoOnPrepared(SimpleExoPlayer player) {
         this.closeRefreshing();
         mPlayer = player;
+    }
+
+    private HttpSubscriber<Object> mCollectObserver = new HttpSubscriber<>(
+            new OnResultCallBack<Object>() {
+
+                @Override
+                public void onSuccess(Object o) {
+                    showErrorToast(R.string.text_collect_success);
+                    view().showRefreshing(false);
+                }
+
+                @Override
+                public void onError(int code, String errorMsg) {
+                    L.d(TAG, "mCollectObserver code:" + code + ",errorMsg:" + errorMsg);
+                    checkoutCollectState(code, errorMsg);
+                }
+            });
+
+    private void checkoutCollectState(int code, String errorMsg) {
+        if (code == AppContants.SUCCESS_CODE) {
+            getData();
+            view().showStrToast(errorMsg);
+        } else {
+            showError();
+        }
+    }
+
+    public void collectRes(AppContants.DataBase.Res resType) {
+        actionType = ACTION_COLLECT;
+        model.collectResNoCache(
+                mCollectObserver,
+                AppHelper.getInstance().getCurrentToken(),
+                resType.getType(),
+                videoData.getId(),
+                getAction()
+        );
+    }
+
+    private int getAction() {
+        if (videoData.isfavor()) {
+            return AppContants.Collect.ACTION_UNCOLLECT;
+        } else {
+            return AppContants.Collect.ACTION_COLLECT;
+        }
     }
 }

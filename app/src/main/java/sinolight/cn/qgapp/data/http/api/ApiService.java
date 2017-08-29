@@ -508,7 +508,8 @@ public interface ApiService {
     @POST("res/doVideoInfo")
     Observable<ResultEntity<DBResVideoEntity>> getVideoInfo(
             @Field("token") String token,
-            @Field("id") String id
+            @Field("id") String id,
+            @Field("user") String user
     );
 
     /**

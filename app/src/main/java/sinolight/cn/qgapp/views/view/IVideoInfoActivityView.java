@@ -16,4 +16,8 @@ public interface IVideoInfoActivityView {
 
     void initVideo(DBResVideoEntity videoData);
 
+    void setCollectState(boolean enable);
+
+    void showStrToast(String msg);
+
 }

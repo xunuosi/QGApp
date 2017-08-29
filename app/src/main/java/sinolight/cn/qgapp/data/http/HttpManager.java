@@ -246,7 +246,10 @@ public class HttpManager {
     }
 
     public void getVideoInfoNoCache(Observer<DBResVideoEntity> subscriber, String token, String id) {
-        toSubscribe(mApiService.getVideoInfo(token, id), subscriber);
+        toSubscribe(mApiService.getVideoInfo(
+                token,
+                id,
+                AppHelper.getInstance().getCurrentUserName()), subscriber);
     }
 
     public void getCatalogListNoCache(Observer<List<ChapterEntity>> subscriber, String token, String pid, String type) {

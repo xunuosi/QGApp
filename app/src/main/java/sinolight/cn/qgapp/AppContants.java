@@ -55,7 +55,7 @@ public interface AppContants {
         enum Res implements DataBase {
             RES_BOOK("1"), RES_STANDARD("2"), RES_ARTICLE("19"),
             RES_IMG("12"), RES_DIC("22"), RES_INDUSTRY("32"),
-            RES_COOK("35"), RES_VIDEO("100");
+            RES_COOK("35"), RES_VIDEO("10");
 
             private final String type;
 

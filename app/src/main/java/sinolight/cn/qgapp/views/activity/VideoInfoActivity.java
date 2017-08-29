@@ -15,7 +15,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +44,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 import sinolight.cn.qgapp.App;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.R2;
 import sinolight.cn.qgapp.dagger.component.DaggerVideoInfoActivityComponent;
@@ -51,8 +52,6 @@ import sinolight.cn.qgapp.dagger.module.VideoInfoActivityModule;
 import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
 import sinolight.cn.qgapp.presenter.VideoInfoActivityPresenter;
 import sinolight.cn.qgapp.utils.CommonUtil;
-import sinolight.cn.qgapp.utils.L;
-import sinolight.cn.qgapp.utils.ScreenUtil;
 import sinolight.cn.qgapp.views.view.IVideoInfoActivityView;
 
 import static com.google.android.exoplayer2.ui.AspectRatioFrameLayout.RESIZE_MODE_FILL;
@@ -78,6 +77,8 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
     SimpleExoPlayerView simpleExoPlayerView;
     @BindView(R2.id.root_video_play)
     ConstraintLayout mRootVideoPlay;
+    @BindView(R.id.iv_collect)
+    ImageView mIvCollect;
 
     private static final DefaultBandwidthMeter BANDWIDTH_METER = new DefaultBandwidthMeter();
     private DefaultTrackSelector trackSelector;
@@ -222,7 +223,7 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
     @Override
     public void showToast(int msgId) {
         String msg = getString(msgId);
-        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+        this.showStrToast(msg);
     }
 
     @Override
@@ -237,10 +238,25 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
     @Override
     public void initVideo(DBResVideoEntity videoData) {
         mTvTitle.setText(videoData.getName());
+        setCollectState(videoData.isfavor());
         Uri uri = Uri.parse(videoData.getVideo());
         mMediaSource = new ExtractorMediaSource(uri, mediaDataSourceFactory, new DefaultExtractorsFactory(), mainHandler, null);
         player.prepare(mMediaSource);
         mPresenter.videoOnPrepared(player);
+    }
+
+    @Override
+    public void setCollectState(boolean enable) {
+        if (enable) {
+            mIvCollect.setImageDrawable(getDrawable(R.drawable.ic_icon_collected));
+        } else {
+            mIvCollect.setImageDrawable(getDrawable(R.drawable.icon_collect));
+        }
+    }
+
+    @Override
+    public void showStrToast(String msg) {
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -303,6 +319,7 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
                 finish();
                 break;
             case R.id.iv_collect:
+                mPresenter.collectRes(AppContants.DataBase.Res.RES_VIDEO);
                 break;
             case R.id.exo_full:
                 changeScreenDirection();
