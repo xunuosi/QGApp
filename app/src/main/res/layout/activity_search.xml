@@ -8,7 +8,7 @@
     android:background="@color/color_white">
 
     <Spinner
-        android:id="@+id/spinner_search_dis"
+        android:id="@+id/spinner_search"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginEnd="16dp"
@@ -30,7 +30,7 @@
         app:layout_constraintRight_toRightOf="parent">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/tb_search_dis"
+            android:id="@+id/tb_search"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
@@ -48,7 +48,6 @@
 
     </FrameLayout>
 
-
     <View
         android:id="@+id/empty_view1"
         android:layout_width="0dp"
@@ -57,8 +56,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_container"/>
-
-
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline40"
@@ -70,7 +67,4 @@
         tools:layout_editor_absoluteY="91dp"/>
 
 
-    <include
-        layout="@layout/layout_loading"
-        android:visibility="gone"/>
 </android.support.constraint.ConstraintLayout>

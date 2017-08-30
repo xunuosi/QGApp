@@ -9,15 +9,13 @@ import java.util.List;
  * SearchActivity View
  */
 
-public interface ISearchDisplayActivityView {
+public interface ISearchActivityView {
 
     void showToast(int msgId);
 
     void showStrToast(String msg);
 
     void gotoActivity(Intent intent);
-
-    void showLoading(boolean enable);
 
     void loadSearchDataHistory(List<String> data);
 }

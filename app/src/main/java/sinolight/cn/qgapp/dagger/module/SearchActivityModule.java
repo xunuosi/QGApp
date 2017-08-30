@@ -6,35 +6,34 @@ import android.widget.ArrayAdapter;
 
 import dagger.Module;
 import dagger.Provides;
-import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.dagger.PerActivity;
 import sinolight.cn.qgapp.data.db.DaoSession;
-import sinolight.cn.qgapp.presenter.SearchDisplayActivityPresenter;
-import sinolight.cn.qgapp.views.view.ISearchDisplayActivityView;
+import sinolight.cn.qgapp.presenter.SearchActivityPresenter;
+import sinolight.cn.qgapp.views.view.ISearchActivityView;
 
 /**
  * Created by xns on 2017/6/29.
  * HomeActivity的Module
  */
 @Module
-public class SearchDisplayActivityModule {
-    private ISearchDisplayActivityView view;
+public class SearchActivityModule {
+    private ISearchActivityView view;
 
-    public SearchDisplayActivityModule(ISearchDisplayActivityView view) {
+    public SearchActivityModule(ISearchActivityView view) {
         this.view = view;
     }
 
     @Provides
     @PerActivity
-    ISearchDisplayActivityView provideISearchActivityView() {
+    ISearchActivityView provideISearchActivityView() {
         return this.view;
     }
 
     @Provides
     @PerActivity
-    SearchDisplayActivityPresenter provideSearchActivityPresenter(Context context, ISearchDisplayActivityView view, DaoSession daoSession) {
-        return new SearchDisplayActivityPresenter(context, view, daoSession);
+    SearchActivityPresenter provideSearchActivityPresenter(Context context, ISearchActivityView view, DaoSession daoSession) {
+        return new SearchActivityPresenter(context, view, daoSession);
     }
 
     @Provides

@@ -7,11 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -23,38 +20,35 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.R2;
-import sinolight.cn.qgapp.dagger.component.DaggerSearchDisplayActivityComponent;
-import sinolight.cn.qgapp.dagger.module.SearchDisplayActivityModule;
-import sinolight.cn.qgapp.presenter.SearchDisplayActivityPresenter;
-import sinolight.cn.qgapp.utils.L;
-import sinolight.cn.qgapp.views.view.ISearchDisplayActivityView;
+import sinolight.cn.qgapp.dagger.component.DaggerSearchActivityComponent;
+import sinolight.cn.qgapp.dagger.module.SearchActivityModule;
+import sinolight.cn.qgapp.presenter.SearchActivityPresenter;
+import sinolight.cn.qgapp.views.view.ISearchActivityView;
 
 /**
  * Created by xns on 2017/8/29.
  * Search Activity
  */
 
-public class SearchDisplayActivity extends BaseActivity implements ISearchDisplayActivityView,
+public class SearchActivity extends BaseActivity implements ISearchActivityView,
         MaterialSearchView.OnQueryTextListener, MaterialSearchView.SearchViewListener {
-    private static final String TAG = "SearchDisplayActivity";
+    private static final String TAG = "SearchActivity";
     @Inject
     Context mContext;
     @Inject
-    SearchDisplayActivityPresenter mPresenter;
+    SearchActivityPresenter mPresenter;
     @Inject
     ArrayAdapter<CharSequence> spinnerAdapter;
 
-    @BindView(R2.id.loading_root)
-    RelativeLayout mLoadingRoot;
-    @BindView(R2.id.tb_search_dis)
+    @BindView(R2.id.tb_search)
     Toolbar mTbSearch;
-    @BindView(R2.id.spinner_search_dis)
+    @BindView(R2.id.spinner_search)
     Spinner mSpinner;
     @BindView(R2.id.search_view)
     MaterialSearchView mSearchView;
 
     public static Intent getCallIntent(Context context) {
-        return new Intent(context, SearchDisplayActivity.class);
+        return new Intent(context, SearchActivity.class);
     }
 
     @Override
@@ -83,7 +77,7 @@ public class SearchDisplayActivity extends BaseActivity implements ISearchDispla
 
     @Override
     public int setLayoutId() {
-        return R.layout.activity_search_display;
+        return R.layout.activity_search;
     }
 
     @Override
@@ -104,11 +98,11 @@ public class SearchDisplayActivity extends BaseActivity implements ISearchDispla
 
     @Override
     protected void initializeInjector() {
-        DaggerSearchDisplayActivityComponent
+        DaggerSearchActivityComponent
                 .builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
-                .searchDisplayActivityModule(new SearchDisplayActivityModule(this))
+                .searchActivityModule(new SearchActivityModule(this))
                 .build()
                 .inject(this);
     }
@@ -130,22 +124,12 @@ public class SearchDisplayActivity extends BaseActivity implements ISearchDispla
     }
 
     @Override
-    public void showLoading(boolean enable) {
-        if (enable) {
-            mLoadingRoot.setVisibility(View.VISIBLE);
-        } else {
-            mLoadingRoot.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
     public void loadSearchDataHistory(List<String> data) {
         mSearchView.setSuggestions(data.toArray(new String[data.size()]));
     }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        L.d(TAG, "onQueryTextSubmit");
         mPresenter.queryData(query);
         return false;
     }

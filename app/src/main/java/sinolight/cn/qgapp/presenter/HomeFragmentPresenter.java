@@ -25,7 +25,7 @@ import sinolight.cn.qgapp.data.http.entity.StandardEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.HomeDataMapper;
 import sinolight.cn.qgapp.utils.L;
-import sinolight.cn.qgapp.views.activity.SearchDisplayActivity;
+import sinolight.cn.qgapp.views.activity.SearchActivity;
 import sinolight.cn.qgapp.views.view.IHomeFragmentView;
 
 /**
@@ -401,7 +401,7 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
     }
 
     public void gotoActivity() {
-        Intent callIntent = SearchDisplayActivity.getCallIntent(mContext);
+        Intent callIntent = SearchActivity.getCallIntent(mContext);
         view().gotoActivity(callIntent);
     }
 }
