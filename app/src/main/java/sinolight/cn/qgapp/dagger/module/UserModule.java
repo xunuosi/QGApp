@@ -23,6 +23,7 @@ import sinolight.cn.qgapp.presenter.DBResPicPresenter;
 import sinolight.cn.qgapp.presenter.DBResVideoPresenter;
 import sinolight.cn.qgapp.presenter.HomeFragmentPresenter;
 import sinolight.cn.qgapp.presenter.KnowledgePresenter;
+import sinolight.cn.qgapp.presenter.ResultArticlePresenter;
 import sinolight.cn.qgapp.presenter.UserFragmentPresenter;
 import sinolight.cn.qgapp.presenter.UserHomeFragmentPresenter;
 
@@ -141,5 +142,11 @@ public class UserModule {
     @PerActivity
     CollectVideoPresenter provideCollectVideoPresenter(Context context) {
         return new CollectVideoPresenter(context);
+    }
+
+    @Provides
+    @PerActivity
+    ResultArticlePresenter provideResultArticlePresenter(Context context) {
+        return new ResultArticlePresenter(context);
     }
 }

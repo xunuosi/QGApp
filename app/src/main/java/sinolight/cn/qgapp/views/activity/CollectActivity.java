@@ -17,6 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.R2;
 import sinolight.cn.qgapp.adapter.MyTabAdapter;
 import sinolight.cn.qgapp.dagger.HasComponent;
 import sinolight.cn.qgapp.dagger.component.DaggerUserComponent;
@@ -39,13 +40,13 @@ import sinolight.cn.qgapp.views.fragment.CollectVideoFragment;
 
 public class CollectActivity extends BaseActivity implements HasComponent<UserComponent> {
 
-    @BindView(R.id.tv_title)
+    @BindView(R2.id.tv_title)
     TextView mTvTitle;
-    @BindView(R.id.tool_bar_collect)
+    @BindView(R2.id.tool_bar_collect)
     Toolbar mToolBarCollect;
-    @BindView(R.id.tabLayout_collect)
+    @BindView(R2.id.tabLayout_collect)
     TabLayout mTabLayoutCollect;
-    @BindView(R.id.vp_collect)
+    @BindView(R2.id.vp_collect)
     ViewPager mVpCollect;
 
     private List<String> mTitles = new ArrayList<>();

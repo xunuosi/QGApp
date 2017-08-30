@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -31,7 +33,7 @@ import sinolight.cn.qgapp.views.view.ISearchActivityView;
  */
 
 public class SearchActivity extends BaseActivity implements ISearchActivityView,
-        MaterialSearchView.OnQueryTextListener, MaterialSearchView.SearchViewListener {
+        MaterialSearchView.OnQueryTextListener, MaterialSearchView.SearchViewListener, AdapterView.OnItemSelectedListener {
     private static final String TAG = "SearchActivity";
     @Inject
     Context mContext;
@@ -95,12 +97,14 @@ public class SearchActivity extends BaseActivity implements ISearchActivityView,
     @Override
     protected void initViews() {
         mSpinner.setAdapter(spinnerAdapter);
+        mSpinner.setOnItemSelectedListener(this);
 
         setSupportActionBar(mTbSearch);
         mTbSearch.setNavigationIcon(R.drawable.icon_back_arrow);
 
         mSearchView.setOnQueryTextListener(this);
         mSearchView.setOnSearchViewListener(this);
+
     }
 
     @Override
@@ -162,4 +166,13 @@ public class SearchActivity extends BaseActivity implements ISearchActivityView,
 
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        mPresenter.chooseDataBase(i);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
 }
