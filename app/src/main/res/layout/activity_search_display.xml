@@ -7,24 +7,35 @@
     android:layout_height="match_parent"
     android:background="@color/color_white">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/tb_search"
+    <FrameLayout
+        android:id="@+id/toolbar_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:contentInsetEnd="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetRight="0dp"
-        app:contentInsetStart="0dp"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginLeft="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="0dp"
+        app:layout_constraintRight_toRightOf="parent">
 
-        <include layout="@layout/layout_toolbar_no_collect"/>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tb_search_dis"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            app:contentInsetEnd="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetStart="0dp"/>
 
-    </android.support.v7.widget.Toolbar>
+
+        <com.miguelcatalan.materialsearchview.MaterialSearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </FrameLayout>
+
 
     <View
         android:id="@+id/empty_view1"
@@ -33,36 +44,38 @@
         android:background="@color/color_bottom_divider"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tb_search"/>
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_container"/>
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spinner_search_dis"
         android:layout_width="0dp"
-        android:layout_height="35dp"
-        android:layout_marginLeft="8dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/guideline41"
-        app:layout_constraintTop_toTopOf="@+id/guideline40"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginStart="8dp"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline40"/>
 
     <android.support.constraint.Guideline
+        android:id="@+id/guideline40"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/guideline40"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.16"
-        />
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="91dp"/>
 
     <android.support.constraint.Guideline
+        android:id="@+id/guideline41"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/guideline41"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.4"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="154dp"/>
+        tools:layout_editor_absoluteX="154dp"
+        tools:layout_editor_absoluteY="0dp"/>
 
-    <include layout="@layout/layout_loading"
+    <include
+        layout="@layout/layout_loading"
         android:visibility="gone"/>
 </android.support.constraint.ConstraintLayout>
