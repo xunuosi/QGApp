@@ -7,6 +7,12 @@ import android.os.Build;
 
 import com.google.android.exoplayer2.ExoPlayerLibraryInfo;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import sinolight.cn.qgapp.data.bean.SearchData;
 import sinolight.cn.qgapp.utils.L;
 
 /**
@@ -21,6 +27,7 @@ public class AppHelper {
     private String userName;
     private String pwd;
     private String token;
+    private List<String> mSearchDatas = new ArrayList<>();
 
     private AppHelper() {
     }
@@ -96,5 +103,25 @@ public class AppHelper {
                 + ") " + ExoPlayerLibraryInfo.VERSION_SLASHY;
     }
 
+    public void saveSearchData(String key) {
+        if (!mSearchDatas.contains(key)) {
+            SearchData data = new SearchData();
+            data.setKey(key);
+            mSearchDatas.add(key);
+            mModel.setSearchData(data);
+        }
+    }
+
+    public List<String> getSearchDatas() {
+        if (mSearchDatas == null || mSearchDatas.isEmpty()) {
+            List<SearchData> dataList = mModel.getSearchData();
+            if (dataList != null && !dataList.isEmpty()) {
+                for (SearchData bean : dataList) {
+                    mSearchDatas.add(bean.getKey());
+                }
+            }
+        }
+        return mSearchDatas;
+    }
 }
 

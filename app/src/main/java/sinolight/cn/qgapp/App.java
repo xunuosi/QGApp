@@ -44,6 +44,7 @@ public class App extends Application {
         Fresco.initialize(this, config);
         HttpManager.init(this);
         initDatabase();
+
         AppHelper.getInstance().init(instance);
 
         userAgent = AppHelper.getUserAgent(this, "QGApp");

@@ -2,6 +2,10 @@ package sinolight.cn.qgapp;
 
 import android.content.Context;
 
+import java.util.List;
+
+import sinolight.cn.qgapp.data.bean.SearchData;
+import sinolight.cn.qgapp.data.db.GreenDaoHelper;
 import sinolight.cn.qgapp.utils.SharedPfUtil;
 
 /**
@@ -38,5 +42,13 @@ public class AppModel {
 
     public void setCurrentPW(String pwd) {
         SharedPfUtil.setParam(mContext, AppContants.Account.PASS_WORD, pwd);
+    }
+
+    public void setSearchData(SearchData data) {
+        GreenDaoHelper.getDaoSession().getSearchDataDao().insertOrReplace(data);
+    }
+
+    public List<SearchData> getSearchData() {
+        return GreenDaoHelper.getDaoSession().getSearchDataDao().loadAll();
     }
 }

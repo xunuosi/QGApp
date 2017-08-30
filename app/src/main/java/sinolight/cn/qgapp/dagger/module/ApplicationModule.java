@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import sinolight.cn.qgapp.App;
+import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.data.db.DaoSession;
 import sinolight.cn.qgapp.data.db.GreenDaoHelper;
 import sinolight.cn.qgapp.utils.ToastUtil;
@@ -37,6 +38,11 @@ public class ApplicationModule {
     @Provides @Singleton
     DaoSession provideDaoSession() {
         return GreenDaoHelper.getDaoSession();
+    }
+
+    @Provides @Singleton
+    AppHelper provideAppHelper() {
+        return AppHelper.getInstance();
     }
 
 }

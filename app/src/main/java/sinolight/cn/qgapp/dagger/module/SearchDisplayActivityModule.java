@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter;
 
 import dagger.Module;
 import dagger.Provides;
+import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.dagger.PerActivity;
 import sinolight.cn.qgapp.data.db.DaoSession;

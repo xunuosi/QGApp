@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -59,7 +61,7 @@ public class SearchDisplayActivity extends BaseActivity implements ISearchDispla
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         this.initializeInjector();
         super.onCreate(savedInstanceState);
-
+        mPresenter.init2Show();
     }
 
     @Override
@@ -68,6 +70,15 @@ public class SearchDisplayActivity extends BaseActivity implements ISearchDispla
         MenuItem item = menu.findItem(R.id.action_search);
         mSearchView.setMenuItem(item);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mSearchView.isSearchOpen()) {
+            mSearchView.closeSearch();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -81,7 +92,6 @@ public class SearchDisplayActivity extends BaseActivity implements ISearchDispla
 
         setSupportActionBar(mTbSearch);
         mTbSearch.setNavigationIcon(R.drawable.icon_back_arrow);
-        mTbSearch.setTitle(R.string.text_search);
 
         mSearchView.setOnQueryTextListener(this);
         mSearchView.setOnSearchViewListener(this);
@@ -129,7 +139,14 @@ public class SearchDisplayActivity extends BaseActivity implements ISearchDispla
     }
 
     @Override
+    public void loadSearchDataHistory(List<String> data) {
+        mSearchView.setSuggestions(data.toArray(new String[data.size()]));
+    }
+
+    @Override
     public boolean onQueryTextSubmit(String query) {
+        L.d(TAG, "onQueryTextSubmit");
+        mPresenter.queryData(query);
         return false;
     }
 
@@ -145,7 +162,7 @@ public class SearchDisplayActivity extends BaseActivity implements ISearchDispla
 
     @Override
     public void onSearchViewClosed() {
-        L.d(TAG, "onSearchViewClosed");
+
 
     }
 
