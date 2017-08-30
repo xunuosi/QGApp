@@ -59,6 +59,12 @@ public class SearchActivity extends BaseActivity implements ISearchActivityView,
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        mPresenter.loadSearchHistory();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
         MenuItem item = menu.findItem(R.id.action_search);
@@ -73,6 +79,12 @@ public class SearchActivity extends BaseActivity implements ISearchActivityView,
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.clear();
     }
 
     @Override

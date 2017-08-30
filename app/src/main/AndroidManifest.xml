@@ -196,6 +196,13 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".views.activity.SearchDisplayActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+
         <activity android:name=".views.activity.TestActivity">
 
         </activity>

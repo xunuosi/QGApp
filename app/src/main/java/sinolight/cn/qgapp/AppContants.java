@@ -170,4 +170,8 @@ public interface AppContants {
         int ACTION_COLLECT = 0;
         int ACTION_UNCOLLECT = 1;
     }
+
+    interface Search {
+        String SEARCH_KEY = "search_key";
+    }
 }
