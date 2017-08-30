@@ -3,17 +3,17 @@ package sinolight.cn.qgapp.presenter;
 import android.content.Context;
 
 import sinolight.cn.qgapp.data.db.DaoSession;
-import sinolight.cn.qgapp.views.view.ISearchActivityView;
+import sinolight.cn.qgapp.views.view.ISearchDisplayActivityView;
 
 /**
  * Created by xns on 2017/8/29.
  * Search Presenter
  */
 
-public class SearchActivityPresenter extends BasePresenter<ISearchActivityView, DaoSession> {
+public class SearchDisplayActivityPresenter extends BasePresenter<ISearchDisplayActivityView, DaoSession> {
     private Context mContext;
 
-    public SearchActivityPresenter(Context context, ISearchActivityView view, DaoSession daoSession) {
+    public SearchDisplayActivityPresenter(Context context, ISearchDisplayActivityView view, DaoSession daoSession) {
         mContext = context;
         bindView(view);
         setModel(daoSession);

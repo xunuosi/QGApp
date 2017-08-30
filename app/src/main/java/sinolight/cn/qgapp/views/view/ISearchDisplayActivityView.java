@@ -7,7 +7,7 @@ import android.content.Intent;
  * SearchActivity View
  */
 
-public interface ISearchActivityView {
+public interface ISearchDisplayActivityView {
 
     void showToast(int msgId);
 

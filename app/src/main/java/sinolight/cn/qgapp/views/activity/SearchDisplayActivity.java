@@ -18,21 +18,21 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.R2;
-import sinolight.cn.qgapp.dagger.component.DaggerSearchActivityComponent;
-import sinolight.cn.qgapp.dagger.module.SearchActivityModule;
-import sinolight.cn.qgapp.presenter.SearchActivityPresenter;
-import sinolight.cn.qgapp.views.view.ISearchActivityView;
+import sinolight.cn.qgapp.dagger.component.DaggerSearchDisplayActivityComponent;
+import sinolight.cn.qgapp.dagger.module.SearchDisplayActivityModule;
+import sinolight.cn.qgapp.presenter.SearchDisplayActivityPresenter;
+import sinolight.cn.qgapp.views.view.ISearchDisplayActivityView;
 
 /**
  * Created by xns on 2017/8/29.
  * Search Activity
  */
 
-public class SearchActivity extends BaseActivity implements ISearchActivityView {
+public class SearchDisplayActivity extends BaseActivity implements ISearchDisplayActivityView {
     @Inject
     Context mContext;
     @Inject
-    SearchActivityPresenter mPresenter;
+    SearchDisplayActivityPresenter mPresenter;
     @Inject
     ArrayAdapter<CharSequence> spinnerAdapter;
 
@@ -46,7 +46,7 @@ public class SearchActivity extends BaseActivity implements ISearchActivityView 
     TextView mTvTitle;
 
     public static Intent getCallIntent(Context context) {
-        return new Intent(context, SearchActivity.class);
+        return new Intent(context, SearchDisplayActivity.class);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class SearchActivity extends BaseActivity implements ISearchActivityView 
 
     @Override
     public int setLayoutId() {
-        return R.layout.activity_search;
+        return R.layout.activity_search_display;
     }
 
     @Override
@@ -74,11 +74,11 @@ public class SearchActivity extends BaseActivity implements ISearchActivityView 
 
     @Override
     protected void initializeInjector() {
-        DaggerSearchActivityComponent
+        DaggerSearchDisplayActivityComponent
                 .builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
-                .searchActivityModule(new SearchActivityModule(this))
+                .searchDisplayActivityModule(new SearchDisplayActivityModule(this))
                 .build()
                 .inject(this);
     }
