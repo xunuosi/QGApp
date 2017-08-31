@@ -35,12 +35,11 @@ import sinolight.cn.qgapp.views.view.ISearchActivityView;
 public class SearchActivity extends BaseActivity implements ISearchActivityView,
         MaterialSearchView.OnQueryTextListener, MaterialSearchView.SearchViewListener, AdapterView.OnItemSelectedListener {
     private static final String TAG = "SearchActivity";
+
     @Inject
     Context mContext;
     @Inject
     SearchActivityPresenter mPresenter;
-    @Inject
-    ArrayAdapter<CharSequence> spinnerAdapter;
 
     @BindView(R2.id.tb_search)
     Toolbar mTbSearch;
@@ -96,7 +95,7 @@ public class SearchActivity extends BaseActivity implements ISearchActivityView,
 
     @Override
     protected void initViews() {
-        mSpinner.setAdapter(spinnerAdapter);
+
         mSpinner.setOnItemSelectedListener(this);
 
         setSupportActionBar(mTbSearch);
@@ -142,6 +141,11 @@ public class SearchActivity extends BaseActivity implements ISearchActivityView,
     @Override
     public void loadSearchDataHistory(List<String> data) {
         mSearchView.setSuggestions(data.toArray(new String[data.size()]));
+    }
+
+    @Override
+    public void showView(ArrayAdapter<String> adapter) {
+        mSpinner.setAdapter(adapter);
     }
 
     @Override

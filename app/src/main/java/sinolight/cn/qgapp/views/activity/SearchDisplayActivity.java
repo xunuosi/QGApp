@@ -15,6 +15,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.R2;
 import sinolight.cn.qgapp.adapter.MyTabAdapter;
@@ -31,6 +32,7 @@ import sinolight.cn.qgapp.views.fragment.CollectIndustryAnalysisFragment;
 import sinolight.cn.qgapp.views.fragment.CollectPicFragment;
 import sinolight.cn.qgapp.views.fragment.CollectStdFragment;
 import sinolight.cn.qgapp.views.fragment.CollectVideoFragment;
+import sinolight.cn.qgapp.views.fragment.ResultArticleFragment;
 
 /**
  * Created by xns on 2017/8/30.
@@ -52,6 +54,8 @@ public class SearchDisplayActivity extends BaseActivity implements HasComponent<
     private MyTabAdapter mTabAdapter;
     private List<Fragment> mFragments;
     private UserComponent userComponent;
+    private String dbID;
+    private String key;
 
     public static Intent getCallIntent(Context context) {
         return new Intent(context, SearchDisplayActivity.class);
@@ -61,6 +65,28 @@ public class SearchDisplayActivity extends BaseActivity implements HasComponent<
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         this.initializeInjector();
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        if (intent != null) {
+            dbID = intent.getStringExtra(AppContants.Search.SEARCH_DB_ID);
+            key = intent.getStringExtra(AppContants.Search.SEARCH_KEY);
+        }
+        createFragment();
+    }
+
+    private void createFragment() {
+        mFragments = new ArrayList<>();
+        mFragments.add(ResultArticleFragment.newInstance(dbID, key));
+        mFragments.add(ResultArticleFragment.newInstance(dbID, key));
+        mFragments.add(ResultArticleFragment.newInstance(dbID, key));
+        mFragments.add(ResultArticleFragment.newInstance(dbID, key));
+        mFragments.add(ResultArticleFragment.newInstance(dbID, key));
+        mFragments.add(ResultArticleFragment.newInstance(dbID, key));
+
+        mTabAdapter = new MyTabAdapter(
+                getSupportFragmentManager(),
+                mFragments,
+                mTitles
+        );
     }
 
     @Override
@@ -90,20 +116,6 @@ public class SearchDisplayActivity extends BaseActivity implements HasComponent<
         mTitles.add(getString(R.string.text_article));
         mTitles.add(getString(R.string.text_dictionary));
         mTitles.add(getString(R.string.text_analysis));
-
-        mFragments = new ArrayList<>();
-        mFragments.add(CollectBookFragment.newInstance());
-        mFragments.add(CollectStdFragment.newInstance());
-        mFragments.add(CollectPicFragment.newInstance());
-        mFragments.add(CollectArticleFragment.newInstance());
-        mFragments.add(CollectDicFragment.newInstance());
-        mFragments.add(CollectIndustryAnalysisFragment.newInstance());
-
-        mTabAdapter = new MyTabAdapter(
-                getSupportFragmentManager(),
-                mFragments,
-                mTitles
-        );
     }
 
     @Override

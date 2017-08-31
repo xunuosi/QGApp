@@ -18,6 +18,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.R2;
 import sinolight.cn.qgapp.adapter.KDBResAdapter;
@@ -34,6 +35,10 @@ import sinolight.cn.qgapp.views.widget.ItemDivider;
 
 public class ResultArticleFragment extends BaseCollectFragment implements ICollectBookFragmentView,
         OnRefreshListener, OnLoadMoreListener {
+
+    private String key;
+    private String dbId;
+
     @Inject
     CollectArticlePresenter mPresenter;
     @BindView(R2.id.swipe_target)
@@ -46,11 +51,11 @@ public class ResultArticleFragment extends BaseCollectFragment implements IColle
 
     private RecyclerView.LayoutManager mLayoutManager;
 
-    public static ResultArticleFragment newInstance() {
+    public static ResultArticleFragment newInstance(String dbId, String key) {
         ResultArticleFragment fragment = new ResultArticleFragment();
         Bundle bundle = new Bundle();
-//        bundle.putInt(TYPE_KEY, type);
-//        bundle.putParcelable(DATA_KEY, bookData);
+        bundle.putSerializable(AppContants.Search.SEARCH_DB_ID, dbId);
+        bundle.putString(AppContants.Search.SEARCH_KEY, key);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -58,6 +63,10 @@ public class ResultArticleFragment extends BaseCollectFragment implements IColle
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            dbId = savedInstanceState.getString(AppContants.Search.SEARCH_DB_ID);
+            key = savedInstanceState.getString(AppContants.Search.SEARCH_KEY);
+        }
     }
 
     @Nullable
@@ -108,7 +117,7 @@ public class ResultArticleFragment extends BaseCollectFragment implements IColle
 
     @Override
     public void onRefresh() {
-        mPresenter.refreshView();
+        mPresenter.refreshView(dbId, key);
     }
 
     @Override

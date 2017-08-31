@@ -2,13 +2,21 @@ package sinolight.cn.qgapp.presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
+import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.data.bean.DataBaseBean;
 import sinolight.cn.qgapp.data.db.DaoSession;
+import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
+import sinolight.cn.qgapp.data.http.entity.PageEntity;
+import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.views.activity.SearchDisplayActivity;
 import sinolight.cn.qgapp.views.view.ISearchActivityView;
@@ -21,20 +29,50 @@ import sinolight.cn.qgapp.views.view.ISearchActivityView;
 public class SearchActivityPresenter extends BasePresenter<ISearchActivityView, DaoSession> {
     private static final String TAG = "SearchActivityPresenter";
     private Context mContext;
-    // Default value DB_FOOD
-    private AppContants.DataBase.Type mDataBaseType = AppContants.DataBase.Type.DB_FOOD;
-    private AppContants.DataBase.Type[] dbArr = {
-            AppContants.DataBase.Type.DB_FOOD,
-            AppContants.DataBase.Type.DB_ART,
-            AppContants.DataBase.Type.DB_PAPER,
-            AppContants.DataBase.Type.DB_LEATHER,
-            AppContants.DataBase.Type.DB_FURNITURE,
-            AppContants.DataBase.Type.DB_PACK,
-            AppContants.DataBase.Type.DB_CLOTHING,
-            AppContants.DataBase.Type.DB_ELECTROMECHANICAL,
-            AppContants.DataBase.Type.DB_WEIGHING
+    private List<DataBaseBean> mDataInternet;
+    private List<String> mDbNameList;
+    private String dbId;
+    private ArrayAdapter<String> adapter;
 
-    };
+    private HttpSubscriber databaseObserver = new HttpSubscriber(new OnResultCallBack<PageEntity<List<DataBaseBean>>>() {
+        @Override
+        public void onSuccess(PageEntity<List<DataBaseBean>> pageEntity) {
+            if (pageEntity != null) {
+                mDataInternet = pageEntity.getData();
+            }
+            showSuccess();
+        }
+
+        @Override
+        public void onError(int code, String errorMsg) {
+            L.d(TAG, "databaseObserver code:" + code + ",errorMsg:" + errorMsg);
+            showError(code, errorMsg);
+        }
+    });
+
+    private void showError(int code, String errorMsg) {
+        if (code == AppContants.SUCCESS_CODE) {
+            view().showStrToast(errorMsg);
+        } else {
+            view().showToast(R.string.error_internet);
+        }
+    }
+
+    private void showSuccess() {
+        transformData();
+    }
+
+    private void transformData() {
+        mDbNameList = new ArrayList<>();
+        for (DataBaseBean bean : mDataInternet) {
+            mDbNameList.add(bean.getName());
+        }
+
+        adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_item, mDbNameList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        view().showView(adapter);
+    }
 
     public SearchActivityPresenter(Context context, ISearchActivityView view, DaoSession daoSession) {
         mContext = context;
@@ -49,6 +87,7 @@ public class SearchActivityPresenter extends BasePresenter<ISearchActivityView, 
 
     @Override
     public void clear() {
+        databaseObserver.unSubscribe();
         unbindView();
     }
 
@@ -58,7 +97,7 @@ public class SearchActivityPresenter extends BasePresenter<ISearchActivityView, 
         // goto display activity
         Intent callIntent = SearchDisplayActivity.getCallIntent(mContext);
         callIntent.putExtra(AppContants.Search.SEARCH_KEY, key);
-        callIntent.putExtra(AppContants.Search.SEARCH_DB_TYPE, mDataBaseType);
+        callIntent.putExtra(AppContants.Search.SEARCH_DB_ID, dbId);
         view().gotoActivity(callIntent);
     }
 
@@ -75,6 +114,6 @@ public class SearchActivityPresenter extends BasePresenter<ISearchActivityView, 
     }
 
     public void chooseDataBase(int dbIndex) {
-        mDataBaseType = dbArr[dbIndex];
+        dbId = mDataInternet.get(dbIndex).getId();
     }
 }

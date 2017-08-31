@@ -99,7 +99,7 @@ public class CollectArticleFragment extends BaseCollectFragment implements IColl
 
     @Override
     public void onRefresh() {
-        mPresenter.refreshView();
+        mPresenter.refreshView(dbType, key);
     }
 
     @Override

@@ -26,6 +26,7 @@ import sinolight.cn.qgapp.views.view.ICollectBookFragmentView;
 
 public class ResultArticlePresenter extends BasePresenter<ICollectBookFragmentView, HttpManager> {
     private static final String TAG = "CollectArticlePresenter";
+    private static final int TYPE_ARTICLE = 0;
     private Context mContext;
 
     // 获取资源列表
@@ -42,7 +43,7 @@ public class ResultArticlePresenter extends BasePresenter<ICollectBookFragmentVi
     private List<CollectEntity> collectDatas;
     private KDBResAdapter mAdapter;
 
-    private HttpSubscriber<PageEntity<List<CollectEntity>>> mCollectObserver = new HttpSubscriber<>(
+    private HttpSubscriber<PageEntity<List<CollectEntity>>> mResultObserver = new HttpSubscriber<>(
             new OnResultCallBack<PageEntity<List<CollectEntity>>>() {
 
                 @Override
@@ -125,7 +126,7 @@ public class ResultArticlePresenter extends BasePresenter<ICollectBookFragmentVi
 
     @Override
     public void clear() {
-        mCollectObserver.unSubscribe();
+        mResultObserver.unSubscribe();
 
         unbindView();
     }
@@ -142,13 +143,16 @@ public class ResultArticlePresenter extends BasePresenter<ICollectBookFragmentVi
         }
 
         // 请求资源数据
-        model.getCollectDataNoCache(
-                mCollectObserver,
-                AppHelper.getInstance().getCurrentToken(),
-                resType,
-                page,
-                SIZE
-        );
+//        model.getKDBIndustryAnalysisListNoCache(
+//                mResultObserver,
+//                AppHelper.getInstance().getCurrentToken(),
+//                dbId,
+//                null,
+//                null,
+//                TYPE_ARTICLE,
+//                page,
+//                SIZE
+//        );
 
     }
 
@@ -198,13 +202,13 @@ public class ResultArticlePresenter extends BasePresenter<ICollectBookFragmentVi
     }
 
     private void getData() {
-        model.getCollectDataNoCache(
-                mCollectObserver,
-                AppHelper.getInstance().getCurrentToken(),
-                resType,
-                page,
-                SIZE
-        );
+//        model.getCollectDataNoCache(
+//                mCollectObserver,
+//                AppHelper.getInstance().getCurrentToken(),
+//                resType,
+//                page,
+//                SIZE
+//        );
 
     }
 

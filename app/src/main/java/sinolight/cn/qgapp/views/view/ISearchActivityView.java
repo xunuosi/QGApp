@@ -1,6 +1,7 @@
 package sinolight.cn.qgapp.views.view;
 
 import android.content.Intent;
+import android.widget.ArrayAdapter;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface ISearchActivityView {
     void gotoActivity(Intent intent);
 
     void loadSearchDataHistory(List<String> data);
+
+    void showView(ArrayAdapter<String> adapter);
 }

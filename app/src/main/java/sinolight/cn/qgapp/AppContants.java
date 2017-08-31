@@ -173,6 +173,6 @@ public interface AppContants {
 
     interface Search {
         String SEARCH_KEY = "search_key";
-        String SEARCH_DB_TYPE = "search_db_type";
+        String SEARCH_DB_ID = "search_db_id";
     }
 }
