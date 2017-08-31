@@ -14,6 +14,7 @@ import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
 import sinolight.cn.qgapp.data.http.entity.CollectEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
+import sinolight.cn.qgapp.data.http.entity.ResArticleEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.KDBResDataMapper;
 import sinolight.cn.qgapp.utils.L;
@@ -28,6 +29,8 @@ public class ResultArticlePresenter extends BasePresenter<ICollectBookFragmentVi
     private static final String TAG = "CollectArticlePresenter";
     private static final int TYPE_ARTICLE = 0;
     private Context mContext;
+    private String dbId;
+    private String key;
 
     // 获取资源列表
     private int page = 1;
@@ -37,20 +40,18 @@ public class ResultArticlePresenter extends BasePresenter<ICollectBookFragmentVi
     // 判断当前操作是否为加载更多数据
     private boolean action_more = false;
 
-    private String resType;
-
     private List<KDBResData> mDatas = new ArrayList<>();
-    private List<CollectEntity> collectDatas;
+    private List<ResArticleEntity> resultDatas;
     private KDBResAdapter mAdapter;
 
-    private HttpSubscriber<PageEntity<List<CollectEntity>>> mResultObserver = new HttpSubscriber<>(
-            new OnResultCallBack<PageEntity<List<CollectEntity>>>() {
+    private HttpSubscriber<PageEntity<List<ResArticleEntity>>> mResultObserver = new HttpSubscriber<>(
+            new OnResultCallBack<PageEntity<List<ResArticleEntity>>>() {
 
                 @Override
-                public void onSuccess(PageEntity<List<CollectEntity>> pageEntity) {
+                public void onSuccess(PageEntity<List<ResArticleEntity>> pageEntity) {
                     if (pageEntity != null) {
                         count = pageEntity.getCount();
-                        collectDatas = pageEntity.getData();
+                        resultDatas = pageEntity.getData();
                         transformKDBResData();
                     } else {
                         showError(0, null);
@@ -86,7 +87,7 @@ public class ResultArticlePresenter extends BasePresenter<ICollectBookFragmentVi
     private void transformKDBResData() {
         view().setHideEmpty(true);
         List<KDBResData> list = new ArrayList<>();
-        list = KDBResDataMapper.transformCollectDatas(collectDatas, KDBResAdapter.TYPE_ARTICLE, false);
+        list = KDBResDataMapper.transformArticleDatas(resultDatas, KDBResAdapter.TYPE_ARTICLE, false);
 
         // Load More Action
         if (action_more) {
@@ -116,7 +117,6 @@ public class ResultArticlePresenter extends BasePresenter<ICollectBookFragmentVi
     public ResultArticlePresenter(Context context) {
         this.mContext = context;
         setModel(HttpManager.getInstance());
-        resType = AppContants.DataBase.Res.RES_ARTICLE.getType();
     }
 
     @Override
@@ -143,16 +143,16 @@ public class ResultArticlePresenter extends BasePresenter<ICollectBookFragmentVi
         }
 
         // 请求资源数据
-//        model.getKDBIndustryAnalysisListNoCache(
-//                mResultObserver,
-//                AppHelper.getInstance().getCurrentToken(),
-//                dbId,
-//                null,
-//                null,
-//                TYPE_ARTICLE,
-//                page,
-//                SIZE
-//        );
+        model.getKDBIndustryAnalysisListNoCache(
+                mResultObserver,
+                AppHelper.getInstance().getCurrentToken(),
+                dbId,
+                null,
+                key,
+                TYPE_ARTICLE,
+                page,
+                SIZE
+        );
 
     }
 
@@ -176,7 +176,8 @@ public class ResultArticlePresenter extends BasePresenter<ICollectBookFragmentVi
         return mDatas != null;
     }
 
-    public void refreshView() {
+    public void refreshView(String dbId, String key) {
+
         init2Show();
     }
 
@@ -202,13 +203,16 @@ public class ResultArticlePresenter extends BasePresenter<ICollectBookFragmentVi
     }
 
     private void getData() {
-//        model.getCollectDataNoCache(
-//                mCollectObserver,
-//                AppHelper.getInstance().getCurrentToken(),
-//                resType,
-//                page,
-//                SIZE
-//        );
+        model.getKDBIndustryAnalysisListNoCache(
+                mResultObserver,
+                AppHelper.getInstance().getCurrentToken(),
+                dbId,
+                null,
+                key,
+                TYPE_ARTICLE,
+                page,
+                SIZE
+        );
 
     }
 

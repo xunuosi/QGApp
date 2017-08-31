@@ -28,9 +28,6 @@ public class CollectArticlePresenter extends BasePresenter<ICollectBookFragmentV
     private static final String TAG = "CollectArticlePresenter";
     private Context mContext;
 
-    private String key;
-    private String dbId;
-
     // 获取资源列表
     private int page = 1;
     private static final int SIZE = 10;
@@ -175,9 +172,7 @@ public class CollectArticlePresenter extends BasePresenter<ICollectBookFragmentV
         return mDatas != null;
     }
 
-    public void refreshView(String dbId, String key) {
-        this.dbId = dbId;
-        this.key = key;
+    public void refreshView() {
         init2Show();
     }
 
