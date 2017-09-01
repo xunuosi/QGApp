@@ -12,8 +12,8 @@ import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
+import sinolight.cn.qgapp.data.http.entity.BookEntity;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
-import sinolight.cn.qgapp.data.http.entity.ResArticleEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.KDBResDataMapper;
 import sinolight.cn.qgapp.utils.L;
@@ -24,9 +24,8 @@ import sinolight.cn.qgapp.views.view.ICollectBookFragmentView;
  * MaterialList Presenter
  */
 
-public class ResultArticlePresenter extends BasePresenter<ICollectBookFragmentView, HttpManager> {
-    private static final String TAG = "ResultArticlePresenter";
-    private static final int TYPE_ARTICLE = 0;
+public class ResultBookPresenter extends BasePresenter<ICollectBookFragmentView, HttpManager> {
+    private static final String TAG = "ResultBookPresenter";
     private Context mContext;
     private String dbId;
     private String key;
@@ -40,14 +39,14 @@ public class ResultArticlePresenter extends BasePresenter<ICollectBookFragmentVi
     private boolean action_more = false;
 
     private List<KDBResData> mDatas = new ArrayList<>();
-    private List<ResArticleEntity> resultDatas;
+    private List<BookEntity> resultDatas;
     private KDBResAdapter mAdapter;
 
-    private HttpSubscriber<PageEntity<List<ResArticleEntity>>> mResultObserver = new HttpSubscriber<>(
-            new OnResultCallBack<PageEntity<List<ResArticleEntity>>>() {
+    private HttpSubscriber<PageEntity<List<BookEntity>>> mResultObserver = new HttpSubscriber<>(
+            new OnResultCallBack<PageEntity<List<BookEntity>>>() {
 
                 @Override
-                public void onSuccess(PageEntity<List<ResArticleEntity>> pageEntity) {
+                public void onSuccess(PageEntity<List<BookEntity>> pageEntity) {
                     if (pageEntity != null) {
                         count = pageEntity.getCount();
                         resultDatas = pageEntity.getData();
@@ -86,7 +85,7 @@ public class ResultArticlePresenter extends BasePresenter<ICollectBookFragmentVi
     private void transformKDBResData() {
         view().setHideEmpty(true);
         List<KDBResData> list = new ArrayList<>();
-        list = KDBResDataMapper.transformArticleDatas(resultDatas, KDBResAdapter.TYPE_ARTICLE, false);
+        list = KDBResDataMapper.transformBookDatas(resultDatas, KDBResAdapter.TYPE_BOOK, false);
 
         // Load More Action
         if (action_more) {
@@ -113,7 +112,7 @@ public class ResultArticlePresenter extends BasePresenter<ICollectBookFragmentVi
 
     }
 
-    public ResultArticlePresenter(Context context) {
+    public ResultBookPresenter(Context context) {
         this.mContext = context;
         setModel(HttpManager.getInstance());
     }
@@ -142,13 +141,12 @@ public class ResultArticlePresenter extends BasePresenter<ICollectBookFragmentVi
         }
 
         // 请求资源数据
-        model.getKDBIndustryAnalysisListNoCache(
+        model.getKDBBookListNoCache(
                 mResultObserver,
                 AppHelper.getInstance().getCurrentToken(),
                 dbId,
                 null,
                 key,
-                TYPE_ARTICLE,
                 page,
                 SIZE
         );
@@ -203,17 +201,15 @@ public class ResultArticlePresenter extends BasePresenter<ICollectBookFragmentVi
     }
 
     private void getData() {
-        model.getKDBIndustryAnalysisListNoCache(
+        model.getKDBBookListNoCache(
                 mResultObserver,
                 AppHelper.getInstance().getCurrentToken(),
                 dbId,
                 null,
                 key,
-                TYPE_ARTICLE,
                 page,
                 SIZE
         );
-
     }
 
     /**

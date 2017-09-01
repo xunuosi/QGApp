@@ -33,6 +33,11 @@ import sinolight.cn.qgapp.views.fragment.CollectPicFragment;
 import sinolight.cn.qgapp.views.fragment.CollectStdFragment;
 import sinolight.cn.qgapp.views.fragment.CollectVideoFragment;
 import sinolight.cn.qgapp.views.fragment.ResultArticleFragment;
+import sinolight.cn.qgapp.views.fragment.ResultBookFragment;
+import sinolight.cn.qgapp.views.fragment.ResultDicFragment;
+import sinolight.cn.qgapp.views.fragment.ResultIndustryAnalysisFragment;
+import sinolight.cn.qgapp.views.fragment.ResultPicFragment;
+import sinolight.cn.qgapp.views.fragment.ResultStdFragment;
 
 /**
  * Created by xns on 2017/8/30.
@@ -75,12 +80,12 @@ public class SearchDisplayActivity extends BaseActivity implements HasComponent<
 
     private void createFragment() {
         mFragments = new ArrayList<>();
+        mFragments.add(ResultBookFragment.newInstance(dbID, key));
         mFragments.add(ResultArticleFragment.newInstance(dbID, key));
-        mFragments.add(ResultArticleFragment.newInstance(dbID, key));
-        mFragments.add(ResultArticleFragment.newInstance(dbID, key));
-        mFragments.add(ResultArticleFragment.newInstance(dbID, key));
-        mFragments.add(ResultArticleFragment.newInstance(dbID, key));
-        mFragments.add(ResultArticleFragment.newInstance(dbID, key));
+        mFragments.add(ResultDicFragment.newInstance(dbID, key));
+        mFragments.add(ResultStdFragment.newInstance(dbID, key));
+        mFragments.add(ResultPicFragment.newInstance(dbID, key));
+        mFragments.add(ResultIndustryAnalysisFragment.newInstance(dbID, key));
 
         mTabAdapter = new MyTabAdapter(
                 getSupportFragmentManager(),

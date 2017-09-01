@@ -21,6 +21,11 @@ import sinolight.cn.qgapp.views.fragment.DBResVideoFragment;
 import sinolight.cn.qgapp.views.fragment.HomeFragment;
 import sinolight.cn.qgapp.views.fragment.KnowledgeFragment;
 import sinolight.cn.qgapp.views.fragment.ResultArticleFragment;
+import sinolight.cn.qgapp.views.fragment.ResultBookFragment;
+import sinolight.cn.qgapp.views.fragment.ResultDicFragment;
+import sinolight.cn.qgapp.views.fragment.ResultIndustryAnalysisFragment;
+import sinolight.cn.qgapp.views.fragment.ResultPicFragment;
+import sinolight.cn.qgapp.views.fragment.ResultStdFragment;
 import sinolight.cn.qgapp.views.fragment.UserFragment;
 import sinolight.cn.qgapp.views.fragment.UserHomeFragment;
 
@@ -70,4 +75,14 @@ public interface UserComponent extends ActivityComponent {
     void inject(CollectVideoFragment collectVideoFragment);
 
     void inject(ResultArticleFragment resultArticleFragment);
+
+    void inject(ResultBookFragment resultBookFragment);
+
+    void inject(ResultDicFragment resultDicFragment);
+
+    void inject(ResultPicFragment resultPicFragment);
+
+    void inject(ResultStdFragment resultStdFragment);
+
+    void inject(ResultIndustryAnalysisFragment resultIndustryAnalysisFragment);
 }

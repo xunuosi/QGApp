@@ -18,12 +18,13 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.R2;
 import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.dagger.HasComponent;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
-import sinolight.cn.qgapp.presenter.CollectArticlePresenter;
+import sinolight.cn.qgapp.presenter.ResultIndustryAnalysisPresenter;
 import sinolight.cn.qgapp.views.view.ICollectBookFragmentView;
 import sinolight.cn.qgapp.views.widget.ItemDivider;
 
@@ -32,10 +33,10 @@ import sinolight.cn.qgapp.views.widget.ItemDivider;
  * Collect Book
  */
 
-public class CollectArticleFragment extends BaseCollectFragment implements ICollectBookFragmentView,
+public class ResultIndustryAnalysisFragment extends BaseCollectFragment implements ICollectBookFragmentView,
         OnRefreshListener, OnLoadMoreListener {
     @Inject
-    CollectArticlePresenter mPresenter;
+    ResultIndustryAnalysisPresenter mPresenter;
     @BindView(R2.id.swipe_target)
     RecyclerView mSwipeTarget;
     @BindView(R2.id.swipe_collect)
@@ -45,9 +46,15 @@ public class CollectArticleFragment extends BaseCollectFragment implements IColl
     TextView mTvCollectEmpty;
 
     private RecyclerView.LayoutManager mLayoutManager;
+    private String key;
+    private String dbId;
 
-    public static CollectArticleFragment newInstance() {
-        CollectArticleFragment fragment = new CollectArticleFragment();
+    public static ResultIndustryAnalysisFragment newInstance(String dbId, String key) {
+        ResultIndustryAnalysisFragment fragment = new ResultIndustryAnalysisFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(AppContants.Search.SEARCH_DB_ID, dbId);
+        bundle.putString(AppContants.Search.SEARCH_KEY, key);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -99,7 +106,7 @@ public class CollectArticleFragment extends BaseCollectFragment implements IColl
 
     @Override
     public void onRefresh() {
-        mPresenter.refreshView();
+        mPresenter.refreshView(dbId, key);
     }
 
     @Override
@@ -155,17 +162,17 @@ public class CollectArticleFragment extends BaseCollectFragment implements IColl
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @Override
     public void setHideEmpty(boolean enable) {
         if (enable) {
             mTvCollectEmpty.setVisibility(View.GONE);
         } else {
             mTvCollectEmpty.setVisibility(View.VISIBLE);
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 }

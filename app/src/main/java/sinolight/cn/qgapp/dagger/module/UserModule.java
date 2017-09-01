@@ -24,6 +24,11 @@ import sinolight.cn.qgapp.presenter.DBResVideoPresenter;
 import sinolight.cn.qgapp.presenter.HomeFragmentPresenter;
 import sinolight.cn.qgapp.presenter.KnowledgePresenter;
 import sinolight.cn.qgapp.presenter.ResultArticlePresenter;
+import sinolight.cn.qgapp.presenter.ResultBookPresenter;
+import sinolight.cn.qgapp.presenter.ResultDicPresenter;
+import sinolight.cn.qgapp.presenter.ResultIndustryAnalysisPresenter;
+import sinolight.cn.qgapp.presenter.ResultPicPresenter;
+import sinolight.cn.qgapp.presenter.ResultStdPresenter;
 import sinolight.cn.qgapp.presenter.UserFragmentPresenter;
 import sinolight.cn.qgapp.presenter.UserHomeFragmentPresenter;
 
@@ -148,5 +153,35 @@ public class UserModule {
     @PerActivity
     ResultArticlePresenter provideResultArticlePresenter(Context context) {
         return new ResultArticlePresenter(context);
+    }
+
+    @Provides
+    @PerActivity
+    ResultBookPresenter provideResultBookPresenter(Context context) {
+        return new ResultBookPresenter(context);
+    }
+
+    @Provides
+    @PerActivity
+    ResultDicPresenter provideResultDicPresenter(Context context) {
+        return new ResultDicPresenter(context);
+    }
+
+    @Provides
+    @PerActivity
+    ResultPicPresenter provideResultPicPresenter(Context context) {
+        return new ResultPicPresenter(context);
+    }
+
+    @Provides
+    @PerActivity
+    ResultStdPresenter provideResultStdPresenter(Context context) {
+        return new ResultStdPresenter(context);
+    }
+
+    @Provides
+    @PerActivity
+    ResultIndustryAnalysisPresenter provideResultIndustryAnalysisPresenter(Context context) {
+        return new ResultIndustryAnalysisPresenter(context);
     }
 }

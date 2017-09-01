@@ -24,7 +24,6 @@ import sinolight.cn.qgapp.R2;
 import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.dagger.HasComponent;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
-import sinolight.cn.qgapp.presenter.CollectArticlePresenter;
 import sinolight.cn.qgapp.presenter.ResultArticlePresenter;
 import sinolight.cn.qgapp.views.view.ICollectBookFragmentView;
 import sinolight.cn.qgapp.views.widget.ItemDivider;
@@ -37,11 +36,9 @@ import sinolight.cn.qgapp.views.widget.ItemDivider;
 public class ResultArticleFragment extends BaseCollectFragment implements ICollectBookFragmentView,
         OnRefreshListener, OnLoadMoreListener {
 
-    private String key;
-    private String dbId;
-
     @Inject
     ResultArticlePresenter mPresenter;
+
     @BindView(R2.id.swipe_target)
     RecyclerView mSwipeTarget;
     @BindView(R2.id.swipe_collect)
@@ -51,6 +48,8 @@ public class ResultArticleFragment extends BaseCollectFragment implements IColle
     TextView mTvCollectEmpty;
 
     private RecyclerView.LayoutManager mLayoutManager;
+    private String key;
+    private String dbId;
 
     public static ResultArticleFragment newInstance(String dbId, String key) {
         ResultArticleFragment fragment = new ResultArticleFragment();
