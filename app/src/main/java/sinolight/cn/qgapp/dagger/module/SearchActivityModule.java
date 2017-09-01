@@ -5,7 +5,6 @@ import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
 import sinolight.cn.qgapp.dagger.PerActivity;
-import sinolight.cn.qgapp.data.db.DaoSession;
 import sinolight.cn.qgapp.presenter.SearchActivityPresenter;
 import sinolight.cn.qgapp.views.view.ISearchActivityView;
 
@@ -29,7 +28,7 @@ public class SearchActivityModule {
 
     @Provides
     @PerActivity
-    SearchActivityPresenter provideSearchActivityPresenter(Context context, ISearchActivityView view, DaoSession daoSession) {
-        return new SearchActivityPresenter(context, view, daoSession);
+    SearchActivityPresenter provideSearchActivityPresenter(Context context, ISearchActivityView view) {
+        return new SearchActivityPresenter(context, view);
     }
 }

@@ -21,4 +21,5 @@ public interface ISearchActivityView {
     void loadSearchDataHistory(List<String> data);
 
     void showView(ArrayAdapter<String> adapter);
+
 }

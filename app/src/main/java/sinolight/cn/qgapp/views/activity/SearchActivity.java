@@ -48,6 +48,7 @@ public class SearchActivity extends BaseActivity implements ISearchActivityView,
     @BindView(R2.id.search_view)
     MaterialSearchView mSearchView;
 
+
     public static Intent getCallIntent(Context context) {
         return new Intent(context, SearchActivity.class);
     }
@@ -100,6 +101,7 @@ public class SearchActivity extends BaseActivity implements ISearchActivityView,
 
         setSupportActionBar(mTbSearch);
         mTbSearch.setNavigationIcon(R.drawable.icon_back_arrow);
+        mTbSearch.setNavigationOnClickListener(view -> finish());
 
         mSearchView.setOnQueryTextListener(this);
         mSearchView.setOnSearchViewListener(this);

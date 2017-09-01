@@ -3,17 +3,15 @@ package sinolight.cn.qgapp.presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.DataBaseBean;
-import sinolight.cn.qgapp.data.db.DaoSession;
+import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
@@ -26,7 +24,7 @@ import sinolight.cn.qgapp.views.view.ISearchActivityView;
  * Search Presenter
  */
 
-public class SearchActivityPresenter extends BasePresenter<ISearchActivityView, DaoSession> {
+public class SearchActivityPresenter extends BasePresenter<ISearchActivityView, HttpManager> {
     private static final String TAG = "SearchActivityPresenter";
     private Context mContext;
     private List<DataBaseBean> mDataInternet;
@@ -39,6 +37,10 @@ public class SearchActivityPresenter extends BasePresenter<ISearchActivityView, 
         public void onSuccess(PageEntity<List<DataBaseBean>> pageEntity) {
             if (pageEntity != null) {
                 mDataInternet = pageEntity.getData();
+            }
+            mDbNameList = new ArrayList<>();
+            for (DataBaseBean bean : mDataInternet) {
+                mDbNameList.add(bean.getName());
             }
             showSuccess();
         }
@@ -68,16 +70,16 @@ public class SearchActivityPresenter extends BasePresenter<ISearchActivityView, 
             mDbNameList.add(bean.getName());
         }
 
-        adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_item, mDbNameList);
+        adapter = new ArrayAdapter<>(mContext, R.layout.spinner_layout, mDbNameList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         view().showView(adapter);
+
     }
 
-    public SearchActivityPresenter(Context context, ISearchActivityView view, DaoSession daoSession) {
+    public SearchActivityPresenter(Context context, ISearchActivityView view) {
         mContext = context;
         bindView(view);
-        setModel(daoSession);
+        setModel(HttpManager.getInstance());
     }
 
     @Override
@@ -103,6 +105,16 @@ public class SearchActivityPresenter extends BasePresenter<ISearchActivityView, 
 
     public void init2Show() {
         loadSearchHistory();
+        loadDataBase();
+    }
+
+    private void loadDataBase() {
+        model.getKDBWithCache(
+                databaseObserver,
+                AppHelper.getInstance().getCurrentToken(),
+                1,
+                10,
+                false);
     }
 
     public void loadSearchHistory() {
@@ -114,6 +126,8 @@ public class SearchActivityPresenter extends BasePresenter<ISearchActivityView, 
     }
 
     public void chooseDataBase(int dbIndex) {
-        dbId = mDataInternet.get(dbIndex).getId();
+        if (mDataInternet != null) {
+            dbId = mDataInternet.get(dbIndex).getId();
+        }
     }
 }

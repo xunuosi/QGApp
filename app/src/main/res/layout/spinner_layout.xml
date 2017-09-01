@@ -2,9 +2,11 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
           android:id="@android:id/text1"
           style="?android:attr/spinnerItemStyle"
-          android:maxLines="1"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="40dp"
+          android:background="@drawable/rect_white"
           android:ellipsize="marquee"
+          android:maxLines="1"
           android:textAlignment="inherit"
-    android:background="@drawable/rect_white"/>
+          android:textColor="@color/color_selected_bottom_text"
+          android:gravity="center"/>
