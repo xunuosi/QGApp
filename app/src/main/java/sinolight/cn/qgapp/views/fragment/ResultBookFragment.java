@@ -24,6 +24,7 @@ import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.dagger.HasComponent;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
 import sinolight.cn.qgapp.presenter.ResultBookPresenter;
+import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.views.view.ICollectBookFragmentView;
 import sinolight.cn.qgapp.views.widget.ItemDivider;
 
@@ -34,6 +35,8 @@ import sinolight.cn.qgapp.views.widget.ItemDivider;
 
 public class ResultBookFragment extends BaseCollectFragment implements ICollectBookFragmentView,
         OnRefreshListener, OnLoadMoreListener {
+    private static final String TAG = "ResultBookFragment";
+
     @Inject
     ResultBookPresenter mPresenter;
     @BindView(R.id.swipe_target)
@@ -51,7 +54,7 @@ public class ResultBookFragment extends BaseCollectFragment implements ICollectB
     public static ResultBookFragment newInstance(String dbId, String key) {
         ResultBookFragment fragment = new ResultBookFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(AppContants.Search.SEARCH_DB_ID, dbId);
+        bundle.putString(AppContants.Search.SEARCH_DB_ID, dbId);
         bundle.putString(AppContants.Search.SEARCH_KEY, key);
         fragment.setArguments(bundle);
         return fragment;
@@ -60,9 +63,10 @@ public class ResultBookFragment extends BaseCollectFragment implements ICollectB
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            dbId = savedInstanceState.getString(AppContants.Search.SEARCH_DB_ID);
-            key = savedInstanceState.getString(AppContants.Search.SEARCH_KEY);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            dbId = bundle.getString(AppContants.Search.SEARCH_DB_ID);
+            key = bundle.getString(AppContants.Search.SEARCH_KEY);
         }
     }
 

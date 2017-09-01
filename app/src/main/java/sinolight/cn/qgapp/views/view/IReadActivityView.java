@@ -1,6 +1,8 @@
 package sinolight.cn.qgapp.views.view;
 
 
+import android.text.Spanned;
+
 import sinolight.cn.qgapp.data.http.entity.ReaderEntity;
 
 /**
@@ -15,6 +17,8 @@ public interface IReadActivityView {
     void showRefreshing(boolean enable);
 
     void showData(ReaderEntity readData);
+
+    void showReadContent(Spanned spanned);
 
     void showFooter(String name);
 

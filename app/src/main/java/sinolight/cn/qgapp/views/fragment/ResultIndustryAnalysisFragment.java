@@ -52,10 +52,20 @@ public class ResultIndustryAnalysisFragment extends BaseCollectFragment implemen
     public static ResultIndustryAnalysisFragment newInstance(String dbId, String key) {
         ResultIndustryAnalysisFragment fragment = new ResultIndustryAnalysisFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(AppContants.Search.SEARCH_DB_ID, dbId);
+        bundle.putString(AppContants.Search.SEARCH_DB_ID, dbId);
         bundle.putString(AppContants.Search.SEARCH_KEY, key);
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            dbId = bundle.getString(AppContants.Search.SEARCH_DB_ID);
+            key = bundle.getString(AppContants.Search.SEARCH_KEY);
+        }
     }
 
     @Nullable

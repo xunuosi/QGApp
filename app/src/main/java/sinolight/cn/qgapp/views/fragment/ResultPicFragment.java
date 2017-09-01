@@ -53,7 +53,7 @@ public class ResultPicFragment extends BaseCollectFragment implements ICollectBo
     public static ResultPicFragment newInstance(String dbId, String key) {
         ResultPicFragment fragment = new ResultPicFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(AppContants.Search.SEARCH_DB_ID, dbId);
+        bundle.putString(AppContants.Search.SEARCH_DB_ID, dbId);
         bundle.putString(AppContants.Search.SEARCH_KEY, key);
         fragment.setArguments(bundle);
         return fragment;
@@ -62,9 +62,10 @@ public class ResultPicFragment extends BaseCollectFragment implements ICollectBo
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            dbId = savedInstanceState.getString(AppContants.Search.SEARCH_DB_ID);
-            key = savedInstanceState.getString(AppContants.Search.SEARCH_KEY);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            dbId = bundle.getString(AppContants.Search.SEARCH_DB_ID);
+            key = bundle.getString(AppContants.Search.SEARCH_KEY);
         }
     }
 

@@ -61,9 +61,10 @@ public class ResultDicFragment extends BaseCollectFragment implements ICollectBo
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            dbId = savedInstanceState.getString(AppContants.Search.SEARCH_DB_ID);
-            key = savedInstanceState.getString(AppContants.Search.SEARCH_KEY);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            dbId = bundle.getString(AppContants.Search.SEARCH_DB_ID);
+            key = bundle.getString(AppContants.Search.SEARCH_KEY);
         }
     }
 

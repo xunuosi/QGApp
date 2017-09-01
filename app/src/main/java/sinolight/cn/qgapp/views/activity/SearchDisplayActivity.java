@@ -74,17 +74,17 @@ public class SearchDisplayActivity extends BaseActivity implements HasComponent<
         if (intent != null) {
             dbID = intent.getStringExtra(AppContants.Search.SEARCH_DB_ID);
             key = intent.getStringExtra(AppContants.Search.SEARCH_KEY);
+            createFragment();
         }
-        createFragment();
     }
 
     private void createFragment() {
         mFragments = new ArrayList<>();
         mFragments.add(ResultBookFragment.newInstance(dbID, key));
-        mFragments.add(ResultArticleFragment.newInstance(dbID, key));
-        mFragments.add(ResultDicFragment.newInstance(dbID, key));
         mFragments.add(ResultStdFragment.newInstance(dbID, key));
         mFragments.add(ResultPicFragment.newInstance(dbID, key));
+        mFragments.add(ResultArticleFragment.newInstance(dbID, key));
+        mFragments.add(ResultDicFragment.newInstance(dbID, key));
         mFragments.add(ResultIndustryAnalysisFragment.newInstance(dbID, key));
 
         mTabAdapter = new MyTabAdapter(
@@ -92,6 +92,9 @@ public class SearchDisplayActivity extends BaseActivity implements HasComponent<
                 mFragments,
                 mTitles
         );
+
+        mVpResearchDis.setAdapter(mTabAdapter);
+        mTabLayoutResearchDis.setupWithViewPager(mVpResearchDis);
     }
 
     @Override
@@ -107,10 +110,7 @@ public class SearchDisplayActivity extends BaseActivity implements HasComponent<
 
     @Override
     protected void initViews() {
-        mTvTitle.setText(R.string.text_my_collect);
-
-        mVpResearchDis.setAdapter(mTabAdapter);
-        mTabLayoutResearchDis.setupWithViewPager(mVpResearchDis);
+        mTvTitle.setText(R.string.text_research_result);
     }
 
     @Override

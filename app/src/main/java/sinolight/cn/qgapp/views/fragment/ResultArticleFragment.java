@@ -54,7 +54,7 @@ public class ResultArticleFragment extends BaseCollectFragment implements IColle
     public static ResultArticleFragment newInstance(String dbId, String key) {
         ResultArticleFragment fragment = new ResultArticleFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(AppContants.Search.SEARCH_DB_ID, dbId);
+        bundle.putString(AppContants.Search.SEARCH_DB_ID, dbId);
         bundle.putString(AppContants.Search.SEARCH_KEY, key);
         fragment.setArguments(bundle);
         return fragment;
@@ -63,9 +63,10 @@ public class ResultArticleFragment extends BaseCollectFragment implements IColle
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            dbId = savedInstanceState.getString(AppContants.Search.SEARCH_DB_ID);
-            key = savedInstanceState.getString(AppContants.Search.SEARCH_KEY);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            dbId = bundle.getString(AppContants.Search.SEARCH_DB_ID);
+            key = bundle.getString(AppContants.Search.SEARCH_KEY);
         }
     }
 

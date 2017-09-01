@@ -2,7 +2,22 @@ package sinolight.cn.qgapp.presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Build;
+import android.text.Html;
+import android.text.Spanned;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.common.ResizeOptions;
+import com.facebook.imagepipeline.image.ImageInfo;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
@@ -13,7 +28,10 @@ import sinolight.cn.qgapp.data.http.entity.ReaderEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.KDBResDataMapper;
 import sinolight.cn.qgapp.utils.L;
+import sinolight.cn.qgapp.utils.ScreenUtil;
 import sinolight.cn.qgapp.views.view.IReadActivityView;
+
+import static android.text.Html.FROM_HTML_MODE_COMPACT;
 
 /**
  * Created by xns on 2017/6/29.
@@ -30,6 +48,7 @@ public class ReadActivityPresenter extends BasePresenter<IReadActivityView, Http
     private String chapteredID;
     private ReaderEntity readData;
     private String footerName;
+    private Spanned spanned;
 
     private HttpSubscriber<ReaderEntity> mReadObserver = new HttpSubscriber<>(
             new OnResultCallBack<ReaderEntity>() {
@@ -59,7 +78,9 @@ public class ReadActivityPresenter extends BasePresenter<IReadActivityView, Http
     }
 
     private void showWithData() {
+        spanned = this.inflateHtmlData(readData.getHtml());
         view().showData(readData);
+        view().showReadContent(spanned);
         view().showFooter(footerName);
         this.closeRefreshing();
     }
@@ -190,5 +211,79 @@ public class ReadActivityPresenter extends BasePresenter<IReadActivityView, Http
             return AppContants.Collect.ACTION_COLLECT;
         }
     }
+
+    /**
+     * 解析html中包含的图片
+     *
+     * @param html
+     * @return
+     */
+    private Spanned inflateHtmlData(String html) {
+        Spanned sp = null;
+        if (Build.VERSION.SDK_INT >= 24) {
+            sp = Html.fromHtml(html, FROM_HTML_MODE_COMPACT, new Html.ImageGetter() {
+                @Override
+                public Drawable getDrawable(String source) {
+                    SimpleDraweeView simpleDraweeView = new SimpleDraweeView(mContext);
+
+                    int width = ScreenUtil.getScreenWidth2Dp(mContext) - 32;
+                    int height = (int) (mContext.getResources().getDimensionPixelOffset(R.dimen.cook_info_item_image_height) /
+                            mContext.getResources().getDisplayMetrics().density);
+
+                    Uri uri = Uri.parse(source);
+
+                    ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
+                            .setResizeOptions(new ResizeOptions(
+                                    ScreenUtil.dip2px(mContext, width), ScreenUtil.dip2px(mContext, height)))
+                            .build();
+
+                    PipelineDraweeController controller = (PipelineDraweeController) Fresco.newDraweeControllerBuilder()
+                            .setImageRequest(request)
+                            .setOldController(simpleDraweeView.getController())
+                            .setControllerListener(new BaseControllerListener<ImageInfo>())
+                            .build();
+                    simpleDraweeView.setController(controller);
+                    simpleDraweeView.getHierarchy().setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER);
+
+                    Drawable drawable = simpleDraweeView.getDrawable();
+                    drawable.setBounds(0, 0, ScreenUtil.dip2px(mContext, width), ScreenUtil.dip2px(mContext, height));
+                    return drawable;
+                }
+            }, null);
+        } else {
+            sp = Html.fromHtml(html, new Html.ImageGetter() {
+                @Override
+                public Drawable getDrawable(String source) {
+                    SimpleDraweeView simpleDraweeView = new SimpleDraweeView(mContext);
+
+                    int width = ScreenUtil.getScreenWidth2Dp(mContext) - 32;
+                    int height = (int) (mContext.getResources().getDimensionPixelOffset(R.dimen.cook_info_item_image_height) /
+                            mContext.getResources().getDisplayMetrics().density);
+
+                    Uri uri = Uri.parse(source);
+
+                    ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
+                            .setResizeOptions(new ResizeOptions(
+                                    ScreenUtil.dip2px(mContext, width), ScreenUtil.dip2px(mContext, height)))
+                            .build();
+
+                    PipelineDraweeController controller = (PipelineDraweeController) Fresco.newDraweeControllerBuilder()
+                            .setImageRequest(request)
+                            .setOldController(simpleDraweeView.getController())
+                            .setControllerListener(new BaseControllerListener<ImageInfo>())
+                            .build();
+                    simpleDraweeView.setController(controller);
+                    simpleDraweeView.getHierarchy().setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER);
+
+                    Drawable drawable = simpleDraweeView.getDrawable();
+                    drawable.setBounds(0, 0, ScreenUtil.dip2px(mContext, width), ScreenUtil.dip2px(mContext, height));
+                    return drawable;
+                }
+            }, null);
+        }
+
+        return sp;
+    }
+
 
 }
