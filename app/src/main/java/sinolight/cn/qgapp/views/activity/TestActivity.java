@@ -1,16 +1,33 @@
 package sinolight.cn.qgapp.views.activity;
 
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ImageSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.URLSpan;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.common.ResizeOptions;
+import com.facebook.imagepipeline.image.ImageInfo;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.unnamed.b.atv.model.TreeNode;
@@ -22,13 +39,18 @@ import java.util.List;
 
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
+import sinolight.cn.qgapp.utils.L;
+import sinolight.cn.qgapp.utils.ScreenUtil;
 import sinolight.cn.qgapp.views.holder.TreeParentHolder;
+import sinolight.cn.qgapp.views.widget.popmenu.PopWindowUtil;
+
+import static android.text.Html.FROM_HTML_MODE_COMPACT;
 
 /**
  * Created by admin on 2017/7/16.
  */
 
-public class TestActivity extends AppCompatActivity {
+public class TestActivity extends AppCompatActivity implements PopWindowUtil.PopActionListener {
     private String json = "[\n" +
             "        {\n" +
             "            \"id\": \"12.\",\n" +
@@ -410,8 +432,13 @@ public class TestActivity extends AppCompatActivity {
     private FrameLayout contentLayot;
     private String html = "<h3 font=\"color=#0000FF;\">第一章 传承脉络</h3><p></p><p></p>" +
             "<p>惠山泥人是一项民间彩塑艺术，入选首批国家级非物质文化遗产名录，与天津“泥人张”、潮州“大吴泥塑”齐名为中国三大民间泥彩塑。惠山泥人诞生于太湖之滨的无锡城西，那里有一座远近闻名的惠山，在山北麓的稻田中盛产一种乌黑的黏土，可塑性极强。惠山周围的泥人作坊、店铺林立，从业者众多，历经几百年、一代代艺人父子相传、师徒相授，勤奋创作，使惠山泥人得到传承，我们今天还能看到惠山泥人传统艺术。</p>" +
-            "<p><div style=\\\"text-align:center;width:100%;\\\"><a href=\\\"javascript:void(0);\\\"><img src=\\\"http://192.168.25.183:8012/Img/Show?db=12&doi=6F2CE24F-6FDF-437d-B493-BCF9ABBE8299&ptype=0\\\" title=\\\"手捏戏文《 穆桂英》( 喻湘涟塑 王南仙彩 )\\\"/></a><div align=\"center\">手捏戏文《 穆桂英》( 喻湘涟塑 王南仙彩 )</div></div></p>";
+            "<p><div style=\\\"text-align:center;width:100%;\\\"><a href=\\\"javascript:void(0);\\\"><img src=\\\"http://www.fotor.com/images2/features/photo_effects/e_bw.jpg\\\" title=\\\"手捏戏文《 穆桂英》( 喻湘涟塑 王南仙彩 )\\\"/></a><div align=\"center\">手捏戏文《 穆桂英》( 喻湘涟塑 王南仙彩 )</div></div></p>" +
+            "<p>惠山泥人是一项民间彩塑艺术，入选首批国家级非物质文化遗产名录，与天津“泥人张”、潮州“大吴泥塑”齐名为中国三大民间泥彩塑。惠山泥人诞生于太湖之滨的无锡城西，那里有一座远近闻名的惠山，在山北麓的稻田中盛产一种乌黑的黏土，可塑性极强。惠山周围的泥人作坊、店铺林立，从业者众多，历经几百年、一代代艺人父子相传、师徒相授，勤奋创作，使惠山泥人得到传承，我们今天还能看到惠山泥人传统艺术。</p>";
     private TextView mTextView;
+    private ImageView mFont;
+
+    private PopWindowUtil popWindow;
+    private static final String TAG = "TestActivity";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -419,10 +446,122 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test);
         contentLayot = (FrameLayout) findViewById(R.id.test_content_root);
         mTextView = (TextView) findViewById(R.id.tv_test);
-        Spanned spanned = Html.fromHtml(html);
-        mTextView.setText(spanned);
+
+        mFont = (ImageView) findViewById(R.id.iv_font);
+        mFont.setOnClickListener(view -> {
+            L.d(TAG, "onClick");
+            popActionMenu(view);
+        });
+
+        mTextView.setText(inflateHtmlData(html));
 
         toJson();
+    }
+
+    private void popActionMenu(View view) {
+        popWindow = new PopWindowUtil(TestActivity.this, R.layout.layout_pop_menu, mFont);
+        popWindow.setListener(this);
+        popWindow.showAsDropDown(mFont, 100, 0);
+    }
+
+    @Override
+    public void onItemClick(View view, int index) {
+        switch (index) {
+            case 0:
+                changeFont(16);
+                break;
+            case 1:
+                changeFont(18);
+                break;
+            case 2:
+                changeFont(20);
+                break;
+        }
+    }
+
+    @Override
+    public void onItemAndAdapterClick(View view, int index, int adapterPosition) {
+
+    }
+
+    private void changeFont(int dp) {
+        CharSequence text = mTextView.getText();
+        Spannable span = new SpannableString(text);
+        span.setSpan(new AbsoluteSizeSpan(dp, true), 0, text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mTextView.setText(span);
+    }
+
+    /**
+     * 解析html中包含的图片
+     *
+     * @param html
+     * @return
+     */
+    private Spanned inflateHtmlData(String html) {
+        Spanned sp = null;
+        if (Build.VERSION.SDK_INT >= 24) {
+            sp = Html.fromHtml(html, FROM_HTML_MODE_COMPACT, new Html.ImageGetter() {
+                @Override
+                public Drawable getDrawable(String source) {
+                    SimpleDraweeView simpleDraweeView = new SimpleDraweeView(TestActivity.this);
+
+                    int width = ScreenUtil.getScreenWidth2Dp(TestActivity.this) - 32;
+                    int height = (int) (getResources().getDimensionPixelOffset(R.dimen.cook_info_item_image_height) /
+                            getResources().getDisplayMetrics().density);
+
+                    Uri uri = Uri.parse(source);
+
+                    ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
+                            .setResizeOptions(new ResizeOptions(
+                                    ScreenUtil.dip2px(TestActivity.this, width), ScreenUtil.dip2px(TestActivity.this, height)))
+                            .build();
+
+                    PipelineDraweeController controller = (PipelineDraweeController) Fresco.newDraweeControllerBuilder()
+                            .setImageRequest(request)
+                            .setOldController(simpleDraweeView.getController())
+                            .setControllerListener(new BaseControllerListener<ImageInfo>())
+                            .build();
+                    simpleDraweeView.setController(controller);
+                    simpleDraweeView.getHierarchy().setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER);
+
+                    Drawable drawable = simpleDraweeView.getDrawable();
+                    drawable.setBounds(0, 0, ScreenUtil.dip2px(TestActivity.this, width), ScreenUtil.dip2px(TestActivity.this, height));
+                    return drawable;
+                }
+            }, null);
+        } else {
+            sp = Html.fromHtml(html, new Html.ImageGetter() {
+                @Override
+                public Drawable getDrawable(String source) {
+                    SimpleDraweeView simpleDraweeView = new SimpleDraweeView(TestActivity.this);
+
+                    int width = ScreenUtil.getScreenWidth2Dp(TestActivity.this) - 32;
+                    int height = (int) (getResources().getDimensionPixelOffset(R.dimen.cook_info_item_image_height) /
+                            getResources().getDisplayMetrics().density);
+
+                    Uri uri = Uri.parse(source);
+
+                    ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
+                            .setResizeOptions(new ResizeOptions(
+                                    ScreenUtil.dip2px(TestActivity.this, width), ScreenUtil.dip2px(TestActivity.this, height)))
+                            .build();
+
+                    PipelineDraweeController controller = (PipelineDraweeController) Fresco.newDraweeControllerBuilder()
+                            .setImageRequest(request)
+                            .setOldController(simpleDraweeView.getController())
+                            .setControllerListener(new BaseControllerListener<ImageInfo>())
+                            .build();
+                    simpleDraweeView.setController(controller);
+                    simpleDraweeView.getHierarchy().setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER);
+
+                    Drawable drawable = simpleDraweeView.getDrawable();
+                    drawable.setBounds(0, 0, ScreenUtil.dip2px(TestActivity.this, width), ScreenUtil.dip2px(TestActivity.this, height));
+                    return drawable;
+                }
+            }, null);
+        }
+
+        return sp;
     }
 
     private void toJson() {
@@ -489,4 +628,5 @@ public class TestActivity extends AppCompatActivity {
         TreeParentHolder.IconTreeItem value = (TreeParentHolder.IconTreeItem) node.getValue();
         return value.id;
     }
+
 }

@@ -179,4 +179,9 @@
     <string name="text_research_result">查询结果</string>
     <string name="text_data_is_empty">暂无资源</string>
 
+    <string name="exo_controls_full_screen_description">全屏播放</string>
+    <string name="text_font_small">小</string>
+    <string name="text_font_middle">中</string>
+    <string name="text_font_large">大</string>
+
 </resources>

@@ -271,5 +271,15 @@
         <item name="android:gravity">left</item>
     </style>
 
-    <string name="exo_controls_full_screen_description">全屏播放</string>
+    <!-- selectable TextView -->
+    <style name="OperateTextView">
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:textColor">@color/color_hf_article_info_text</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/bg_gray_rect_selector</item>
+    </style>
 </resources>
