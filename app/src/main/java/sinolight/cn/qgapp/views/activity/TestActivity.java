@@ -450,7 +450,7 @@ public class TestActivity extends AppCompatActivity implements PopWindowUtil.Pop
         mFont = (ImageView) findViewById(R.id.iv_font);
         mFont.setOnClickListener(view -> {
             L.d(TAG, "onClick");
-            popActionMenu(view);
+            popActionMenu();
         });
 
         mTextView.setText(inflateHtmlData(html));
@@ -458,7 +458,7 @@ public class TestActivity extends AppCompatActivity implements PopWindowUtil.Pop
         toJson();
     }
 
-    private void popActionMenu(View view) {
+    private void popActionMenu() {
         popWindow = new PopWindowUtil(TestActivity.this, R.layout.layout_pop_menu, mFont);
         popWindow.setListener(this);
         popWindow.showAsDropDown(mFont, 100, 0);

@@ -5,24 +5,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.R2;
 import sinolight.cn.qgapp.dagger.component.DaggerReadActivityComponent;
 import sinolight.cn.qgapp.dagger.module.ReadActivityModule;
 import sinolight.cn.qgapp.data.http.entity.ReaderEntity;
 import sinolight.cn.qgapp.presenter.ReadActivityPresenter;
 import sinolight.cn.qgapp.views.view.IReadActivityView;
+import sinolight.cn.qgapp.views.widget.popmenu.PopWindowUtil;
 
 
 /**
@@ -30,23 +34,27 @@ import sinolight.cn.qgapp.views.view.IReadActivityView;
  * ReadActivity
  */
 
-public class ReadActivity extends BaseActivity implements IReadActivityView {
+public class ReadActivity extends BaseActivity implements IReadActivityView, PopWindowUtil.PopActionListener {
     @Inject
     Context mContext;
     @Inject
     ReadActivityPresenter mPresenter;
-    @BindView(R.id.tv_title)
+    @BindView(R2.id.tv_title)
     TextView mTvTitle;
-    @BindView(R.id.tb_read_info)
+    @BindView(R2.id.tb_read_info)
     Toolbar mTbReadInfo;
-    @BindView(R.id.tv_read_content)
+    @BindView(R2.id.tv_read_content)
     TextView mTvReadContent;
-    @BindView(R.id.tv_read_footer)
+    @BindView(R2.id.tv_read_footer)
     TextView mTvReadFooter;
-    @BindView(R.id.loading_root)
+    @BindView(R2.id.loading_root)
     RelativeLayout mLoadingRoot;
-    @BindView(R.id.iv_collect)
+    @BindView(R2.id.iv_collect)
     ImageView ivCollect;
+    @BindView(R2.id.iv_font)
+    ImageView mIvFont;
+
+    private PopWindowUtil popWindow;
 
 
     public static Intent getCallIntent(Context context) {
@@ -58,6 +66,15 @@ public class ReadActivity extends BaseActivity implements IReadActivityView {
         this.initializeInjector();
         super.onCreate(savedInstanceState);
         mPresenter.checkoutIntent(getIntent());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.clear();
+        if (popWindow != null) {
+            popWindow.recycle();
+        }
     }
 
     @Override
@@ -141,7 +158,7 @@ public class ReadActivity extends BaseActivity implements IReadActivityView {
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick({R.id.im_back_arrow, R.id.iv_collect})
+    @OnClick({R.id.im_back_arrow, R.id.iv_collect, R.id.iv_font})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.im_back_arrow:
@@ -150,6 +167,44 @@ public class ReadActivity extends BaseActivity implements IReadActivityView {
             case R.id.iv_collect:
                 mPresenter.collectRes();
                 break;
+            case R.id.iv_font:
+                popActionMenu();
+                break;
         }
+    }
+
+    private void popActionMenu() {
+        popWindow = new PopWindowUtil(ReadActivity.this, R.layout.layout_pop_menu, mIvFont);
+        popWindow.setListener(this);
+        popWindow.showAsDropDown(mIvFont, -200, 0);
+    }
+
+    @Override
+    public void onItemClick(View view, int index) {
+        switch (index) {
+            case 0:
+                changeFont(14);
+                break;
+            case 1:
+                changeFont(18);
+                break;
+            case 2:
+                changeFont(20);
+                break;
+        }
+    }
+
+    private void changeFont(int dp) {
+        CharSequence text = mTvReadContent.getText();
+        Spannable span = new SpannableString(text);
+        span.setSpan(new AbsoluteSizeSpan(dp, true), 0, text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mTvReadContent.setText(span);
+        // Dismiss popWindow
+        popWindow.dismiss();
+    }
+
+    @Override
+    public void onItemAndAdapterClick(View view, int index, int adapterPosition) {
+
     }
 }

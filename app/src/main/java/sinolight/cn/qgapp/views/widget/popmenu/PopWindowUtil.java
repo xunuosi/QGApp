@@ -9,7 +9,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
-import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.utils.ScreenUtil;
 
@@ -145,6 +144,12 @@ public class PopWindowUtil implements View.OnClickListener {
     public void setAdapterPosi(int adapterPosi) {
         isPopAdapter = true;
         this.adapterPosi = adapterPosi;
+    }
+
+    public void recycle() {
+        context = null;
+        mWindow = null;
+        listener = null;
     }
 
 }
