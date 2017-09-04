@@ -43,6 +43,7 @@ import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
 import sinolight.cn.qgapp.data.http.entity.DicInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.EBookEntity;
+import sinolight.cn.qgapp.data.http.entity.HelpDataEntity;
 import sinolight.cn.qgapp.data.http.entity.MasterEntity;
 import sinolight.cn.qgapp.data.http.entity.MaterialEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
@@ -362,5 +363,9 @@ public class HttpManager {
 
     public void getAboutWithCache(Observer<List<AboutEntity>> subscriber, String token, boolean update) {
         toSubscribe(cacheProvider.getAbout(mApiService.getAbout(token), new EvictProvider(update)), subscriber);
+    }
+
+    public void getHelpWithCache(Observer<List<HelpDataEntity>> subscriber, String token, boolean update) {
+        toSubscribe(cacheProvider.getHelp(mApiService.getHelp(token), new EvictProvider(update)), subscriber);
     }
 }

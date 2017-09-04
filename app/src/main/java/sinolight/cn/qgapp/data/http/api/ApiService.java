@@ -23,6 +23,7 @@ import sinolight.cn.qgapp.data.http.entity.DBResTypeEntity;
 import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
 import sinolight.cn.qgapp.data.http.entity.DicInfoEntity;
 import sinolight.cn.qgapp.data.http.entity.EBookEntity;
+import sinolight.cn.qgapp.data.http.entity.HelpDataEntity;
 import sinolight.cn.qgapp.data.http.entity.MasterEntity;
 import sinolight.cn.qgapp.data.http.entity.MaterialEntity;
 import sinolight.cn.qgapp.data.http.entity.NewBookEntity;
@@ -701,6 +702,12 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("account/doAbout")
     Observable<ResultEntity<List<AboutEntity>>> getAbout(
+            @Field("token") String token
+    );
+
+    @FormUrlEncoded
+    @POST("account/doHelp")
+    Observable<ResultEntity<List<HelpDataEntity>>> getHelp(
             @Field("token") String token
     );
 }

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:swipe="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tool_bar_help"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include layout="@layout/layout_toolbar_no_collect"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <View
+        android:id="@+id/empty_view"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/color_bottom_divider"
+        app:layout_constraintTop_toBottomOf="@+id/tool_bar_help"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+        android:id="@+id/swipe_help"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        swipe:default_to_loading_more_scrolling_duration="500"
+        swipe:load_more_complete_delay_duration="0"
+        swipe:load_more_final_drag_offset="@dimen/load_more_final_offset_google"
+        swipe:load_more_trigger_offset="@dimen/load_more_trigger_offset_google"
+        swipe:refresh_final_drag_offset="@dimen/refresh_final_offset_google"
+        swipe:refresh_trigger_offset="@dimen/refresh_trigger_offset_google"
+        swipe:swipe_style="above"
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/empty_view"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="0dp"
+        android:layout_marginRight="0dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="0dp">
+
+        <include
+            android:id="@id/swipe_refresh_header"
+            layout="@layout/layout_google_hook_header"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@id/swipe_target"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+</android.support.constraint.ConstraintLayout>

@@ -20,11 +20,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.R2;
 import sinolight.cn.qgapp.dagger.HasComponent;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
 import sinolight.cn.qgapp.data.http.entity.UserEntity;
 import sinolight.cn.qgapp.presenter.UserFragmentPresenter;
-import sinolight.cn.qgapp.views.activity.LoginActivity;
 import sinolight.cn.qgapp.views.view.IUserFragmentView;
 
 /**
@@ -37,13 +37,13 @@ public class UserFragment extends BaseFragment implements IUserFragmentView {
     Context mContext;
     @Inject
     UserFragmentPresenter mPresenter;
-    @BindView(R.id.tv_my_center_title)
+    @BindView(R2.id.tv_my_center_title)
     TextView mTvMyCenterTitle;
-    @BindView(R.id.iv_my_fragment_ivator)
+    @BindView(R2.id.iv_my_fragment_ivator)
     SimpleDraweeView mIvMyFragmentIvator;
-    @BindView(R.id.tv_my_fragment_head_name)
+    @BindView(R2.id.tv_my_fragment_head_name)
     TextView mTvMyFragmentHeadName;
-    @BindView(R.id.tb_my_center)
+    @BindView(R2.id.tb_my_center)
     Toolbar mTbMyCenter;
     Unbinder unbinder;
 
@@ -114,9 +114,10 @@ public class UserFragment extends BaseFragment implements IUserFragmentView {
                 mPresenter.gotoSysActivity();
                 break;
             case R.id.root_my_center_help:
+                mPresenter.gotoHelpActivity();
                 break;
             case R.id.btn_my_center_change_account:
-                this.gotoActivity(LoginActivity.getCallIntent(mContext));
+                mPresenter.gotoLoginActivity();
                 break;
         }
     }

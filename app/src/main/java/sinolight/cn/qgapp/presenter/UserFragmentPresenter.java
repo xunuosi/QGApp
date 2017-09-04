@@ -12,6 +12,7 @@ import sinolight.cn.qgapp.data.http.entity.UserEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.views.activity.CollectActivity;
+import sinolight.cn.qgapp.views.activity.HelpActivity;
 import sinolight.cn.qgapp.views.activity.LoginActivity;
 import sinolight.cn.qgapp.views.activity.MyDatabaseActivity;
 import sinolight.cn.qgapp.views.activity.SystemActivity;
@@ -102,6 +103,16 @@ public class UserFragmentPresenter extends BasePresenter<IUserFragmentView, Http
 
     public void gotoSysActivity() {
         Intent callIntent = SystemActivity.getCallIntent(mContext);
+        view().gotoActivity(callIntent);
+    }
+
+    public void gotoHelpActivity() {
+        Intent callIntent = HelpActivity.getCallIntent(mContext);
+        view().gotoActivity(callIntent);
+    }
+
+    public void gotoLoginActivity() {
+        Intent callIntent = LoginActivity.getCallIntent(mContext);
         view().gotoActivity(callIntent);
     }
 }
