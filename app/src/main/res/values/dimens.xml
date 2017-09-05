@@ -102,4 +102,6 @@
     <dimen name="master_info_iv_height">155dp</dimen>
     <!--Pic Detail-->
     <dimen name="res_pic_detail_height">230dp</dimen>
+    <!--Pic Display-->
+    <dimen name="pic_display_height">355dp</dimen>
 </resources>

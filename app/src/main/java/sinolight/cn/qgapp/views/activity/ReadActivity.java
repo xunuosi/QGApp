@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
 import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,12 +22,15 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.R2;
 import sinolight.cn.qgapp.dagger.component.DaggerReadActivityComponent;
 import sinolight.cn.qgapp.dagger.module.ReadActivityModule;
 import sinolight.cn.qgapp.data.http.entity.ReaderEntity;
 import sinolight.cn.qgapp.presenter.ReadActivityPresenter;
+import sinolight.cn.qgapp.utils.ImgTagHandler;
+import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.views.view.IReadActivityView;
 import sinolight.cn.qgapp.views.widget.popmenu.PopWindowUtil;
 
@@ -34,7 +40,9 @@ import sinolight.cn.qgapp.views.widget.popmenu.PopWindowUtil;
  * ReadActivity
  */
 
-public class ReadActivity extends BaseActivity implements IReadActivityView, PopWindowUtil.PopActionListener {
+public class ReadActivity extends BaseActivity implements IReadActivityView, PopWindowUtil.PopActionListener,
+        ImgTagHandler.OnImgClickListener {
+    private static final String TAG = "ReadActivity";
     @Inject
     Context mContext;
     @Inject
@@ -65,7 +73,7 @@ public class ReadActivity extends BaseActivity implements IReadActivityView, Pop
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         this.initializeInjector();
         super.onCreate(savedInstanceState);
-        mPresenter.checkoutIntent(getIntent());
+        mPresenter.checkoutIntent(getIntent(), this);
     }
 
     @Override
@@ -84,7 +92,8 @@ public class ReadActivity extends BaseActivity implements IReadActivityView, Pop
 
     @Override
     protected void initViews() {
-
+        // Make textView can response onClick event
+        mTvReadContent.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override
@@ -206,5 +215,25 @@ public class ReadActivity extends BaseActivity implements IReadActivityView, Pop
     @Override
     public void onItemAndAdapterClick(View view, int index, int adapterPosition) {
 
+    }
+
+    @Override
+    public void onImgOnClick(View view, String imgUrl) {
+//        L.d(TAG, "url:" + imgUrl);
+        startPictureActivity(view, imgUrl);
+    }
+
+    private void startPictureActivity(View view, String url) {
+        Intent intent = PictureDisplayActivity.getCallIntent(mContext);
+        intent.putExtra(AppContants.Img.IMG_URL, url);
+        //android V4包的类,用于两个activity转场时的缩放效果实现
+        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                ReadActivity.this, view, PictureDisplayActivity.TRANSIT_PIC);
+        try {
+            ActivityCompat.startActivity(ReadActivity.this, intent, optionsCompat.toBundle());
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            startActivity(intent);
+        }
     }
 }

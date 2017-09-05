@@ -26,9 +26,11 @@ import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
 import sinolight.cn.qgapp.data.http.entity.ReaderEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
+import sinolight.cn.qgapp.utils.ImgTagHandler;
 import sinolight.cn.qgapp.utils.KDBResDataMapper;
 import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.utils.ScreenUtil;
+import sinolight.cn.qgapp.views.activity.ReadActivity;
 import sinolight.cn.qgapp.views.view.IReadActivityView;
 
 import static android.text.Html.FROM_HTML_MODE_COMPACT;
@@ -49,6 +51,7 @@ public class ReadActivityPresenter extends BasePresenter<IReadActivityView, Http
     private ReaderEntity readData;
     private String footerName;
     private Spanned spanned;
+    private ReadActivity mReadActivity;
 
     private HttpSubscriber<ReaderEntity> mReadObserver = new HttpSubscriber<>(
             new OnResultCallBack<ReaderEntity>() {
@@ -103,6 +106,7 @@ public class ReadActivityPresenter extends BasePresenter<IReadActivityView, Http
         }
 
         mCollectObserver.unSubscribe();
+        mReadActivity = null;
 
         KDBResDataMapper.reset();
         unbindView();
@@ -141,10 +145,11 @@ public class ReadActivityPresenter extends BasePresenter<IReadActivityView, Http
         super.resetState();
     }
 
-    public void checkoutIntent(Intent intent) {
+    public void checkoutIntent(Intent intent, ReadActivity readActivity) {
         if (intent == null) {
             view().showRefreshing(false);
         } else {
+            mReadActivity = readActivity;
             footerName = intent.getStringExtra(AppContants.Read.READ_NAME);
             readID = intent.getStringExtra(AppContants.Read.READ_ID);
             chapteredID = intent.getStringExtra(AppContants.Read.CHAPTERED_ID);
@@ -249,7 +254,7 @@ public class ReadActivityPresenter extends BasePresenter<IReadActivityView, Http
                     drawable.setBounds(0, 0, ScreenUtil.dip2px(mContext, width), ScreenUtil.dip2px(mContext, height));
                     return drawable;
                 }
-            }, null);
+            }, new ImgTagHandler(mContext, mReadActivity));
         } else {
             sp = Html.fromHtml(html, new Html.ImageGetter() {
                 @Override
@@ -279,7 +284,7 @@ public class ReadActivityPresenter extends BasePresenter<IReadActivityView, Http
                     drawable.setBounds(0, 0, ScreenUtil.dip2px(mContext, width), ScreenUtil.dip2px(mContext, height));
                     return drawable;
                 }
-            }, null);
+            }, new ImgTagHandler(mContext, mReadActivity));
         }
 
         return sp;

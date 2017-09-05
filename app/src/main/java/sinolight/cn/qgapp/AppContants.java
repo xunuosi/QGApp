@@ -179,4 +179,8 @@ public interface AppContants {
     interface Help {
         String HELP_ID = "help_id";
     }
+
+    interface Img {
+        String IMG_URL = "img_url";
+    }
 }
