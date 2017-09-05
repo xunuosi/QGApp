@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import sinolight.cn.qgapp.dagger.component.DaggerHelpActivityComponent;
 import sinolight.cn.qgapp.dagger.module.HelpActivityModule;
 import sinolight.cn.qgapp.presenter.HelpActivityPresenter;
 import sinolight.cn.qgapp.views.view.IHelpActivityView;
+import sinolight.cn.qgapp.views.widget.ItemDivider;
 
 /**
  * Created by xns on 2017/9/4.
@@ -44,6 +46,8 @@ public class HelpActivity extends BaseActivity implements IHelpActivityView, OnR
     @BindView(R2.id.swipe_help)
     SwipeToLoadLayout mSwipe;
 
+    private LinearLayoutManager mLayoutManager;
+
     public static Intent getCallIntent(Context context) {
         return new Intent(context, HelpActivity.class);
     }
@@ -64,7 +68,17 @@ public class HelpActivity extends BaseActivity implements IHelpActivityView, OnR
         setSupportActionBar(mToolBarHelp);
         mTvTitle.setText(R.string.text_help);
 
+        mSwipe.setOnRefreshListener(this);
         mSwipe.setRefreshing(true);
+
+        initRecyclerView();
+    }
+
+    private void initRecyclerView() {
+        mLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+        mSwipeTarget.setHasFixedSize(true);
+        mSwipeTarget.setLayoutManager(mLayoutManager);
+        mSwipeTarget.addItemDecoration(new ItemDivider(mContext));
     }
 
     @Override
@@ -123,7 +137,9 @@ public class HelpActivity extends BaseActivity implements IHelpActivityView, OnR
 
     @Override
     public void showListView(RecyclerView.Adapter adapter) {
-
+        if (mSwipeTarget != null && mSwipeTarget.getAdapter() == null) {
+            mSwipeTarget.setAdapter(adapter);
+        }
     }
 
     @Override

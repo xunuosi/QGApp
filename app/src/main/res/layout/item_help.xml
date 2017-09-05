@@ -22,7 +22,7 @@
         android:id="@+id/iv_message"/>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_item_help_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         tools:text="TextView"

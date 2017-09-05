@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sinolight.cn.qgapp.R;
-import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.data.http.entity.HelpDataEntity;
-import sinolight.cn.qgapp.views.holder.DatabaseHolder;
 import sinolight.cn.qgapp.views.holder.HelpHolder;
 
 /**
@@ -35,7 +33,7 @@ public class HelpAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holder = null;
-        holder = new DatabaseHolder(mInflater.inflate(R.layout.item_help, parent, false));
+        holder = new HelpHolder(mInflater.inflate(R.layout.item_help, parent, false));
         return holder;
     }
 

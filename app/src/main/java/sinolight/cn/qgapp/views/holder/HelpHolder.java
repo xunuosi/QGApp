@@ -12,7 +12,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.R2;
-import sinolight.cn.qgapp.data.bean.DataBaseBean;
 import sinolight.cn.qgapp.data.http.entity.HelpDataEntity;
 
 /**
@@ -23,16 +22,13 @@ import sinolight.cn.qgapp.data.http.entity.HelpDataEntity;
 public class HelpHolder extends RecyclerView.ViewHolder {
     @BindView(R2.id.iv_message)
     SimpleDraweeView mIvMessage;
-    @BindView(R2.id.textView)
-    TextView mTextView;
+    @BindView(R2.id.tv_item_help_title)
+    TextView mTvTitle;
     @BindView(R2.id.iv_help_arrow)
     SimpleDraweeView mIvHelpArrow;
     @BindView(R2.id.root_item_help)
     ConstraintLayout mRootItemHelp;
     private HelpDataEntity bean;
-    private String id;
-    private String name;
-
 
     public HelpHolder(View layout) {
         super(layout);
@@ -47,7 +43,7 @@ public class HelpHolder extends RecyclerView.ViewHolder {
     }
 
     private void bindData() {
-
+        mTvTitle.setText(bean.getTitle());
     }
 
     @OnClick(R.id.root_item_help)
