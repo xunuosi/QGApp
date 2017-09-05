@@ -185,6 +185,6 @@ public class ResultArticleFragment extends BaseCollectFragment implements IColle
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+//        unbinder.unbind();
     }
 }

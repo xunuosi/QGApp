@@ -175,7 +175,7 @@ public class ResultPicFragment extends BaseCollectFragment implements ICollectBo
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+//        unbinder.unbind();
     }
 
     @Override
