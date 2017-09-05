@@ -710,4 +710,11 @@ public interface ApiService {
     Observable<ResultEntity<List<HelpDataEntity>>> getHelp(
             @Field("token") String token
     );
+
+    @FormUrlEncoded
+    @POST("account/doHelpDetail")
+    Observable<ResultEntity<HelpDataEntity>> getHelpDetail(
+            @Field("token") String token,
+            @Field("id") String id
+    );
 }

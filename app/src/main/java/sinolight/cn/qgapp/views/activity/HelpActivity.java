@@ -46,8 +46,6 @@ public class HelpActivity extends BaseActivity implements IHelpActivityView, OnR
     @BindView(R2.id.swipe_help)
     SwipeToLoadLayout mSwipe;
 
-    private LinearLayoutManager mLayoutManager;
-
     public static Intent getCallIntent(Context context) {
         return new Intent(context, HelpActivity.class);
     }
@@ -56,6 +54,12 @@ public class HelpActivity extends BaseActivity implements IHelpActivityView, OnR
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         this.initializeInjector();
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.clear();
     }
 
     @Override
@@ -75,9 +79,9 @@ public class HelpActivity extends BaseActivity implements IHelpActivityView, OnR
     }
 
     private void initRecyclerView() {
-        mLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         mSwipeTarget.setHasFixedSize(true);
-        mSwipeTarget.setLayoutManager(mLayoutManager);
+        mSwipeTarget.setLayoutManager(layoutManager);
         mSwipeTarget.addItemDecoration(new ItemDivider(mContext));
     }
 

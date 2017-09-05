@@ -8,6 +8,7 @@ package sinolight.cn.qgapp.data.http.entity;
 public class HelpDataEntity {
     private String id;
     private String title;
+    private String content;
 
     public HelpDataEntity() {
     }
@@ -26,5 +27,13 @@ public class HelpDataEntity {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

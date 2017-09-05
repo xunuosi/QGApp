@@ -175,4 +175,8 @@ public interface AppContants {
         String SEARCH_KEY = "search_key";
         String SEARCH_DB_ID = "search_db_id";
     }
+
+    interface Help {
+        String HELP_ID = "help_id";
+    }
 }

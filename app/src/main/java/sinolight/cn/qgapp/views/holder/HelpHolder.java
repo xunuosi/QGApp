@@ -1,5 +1,6 @@
 package sinolight.cn.qgapp.views.holder;
 
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,9 +11,12 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import sinolight.cn.qgapp.App;
+import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.R2;
 import sinolight.cn.qgapp.data.http.entity.HelpDataEntity;
+import sinolight.cn.qgapp.views.activity.HelpInfoActivity;
 
 /**
  * Created by xns on 2017/7/6.
@@ -48,6 +52,13 @@ public class HelpHolder extends RecyclerView.ViewHolder {
 
     @OnClick(R.id.root_item_help)
     public void onViewClicked() {
+        gotoHelpInfoActivity();
+    }
 
+    private void gotoHelpInfoActivity() {
+        Intent callIntent = HelpInfoActivity.getCallIntent(App.getContext());
+        callIntent.putExtra(AppContants.Help.HELP_ID, bean.getId());
+        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        App.getContext().startActivity(callIntent);
     }
 }

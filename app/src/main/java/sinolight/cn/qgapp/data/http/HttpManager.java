@@ -356,6 +356,10 @@ public class HttpManager {
                 subscriber);
     }
 
+    public void getHelpDetailNoCache(Observer<HelpDataEntity> subscriber, String token, String id) {
+        toSubscribe(mApiService.getHelpDetail(token, id), subscriber);
+    }
+
     public void getMyDataBaseWithCache(Observer<List<DataBaseBean>> subscriber, String token, boolean update) {
         toSubscribe(cacheProvider.getMyDataBase(mApiService.getMyDataBase(token, AppHelper.getInstance().getCurrentUserName()),
                 new EvictProvider(update)), subscriber);
