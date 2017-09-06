@@ -12,6 +12,8 @@ public interface IVideoListActivityView {
 
     void showToast(int msgId);
 
+    void showToastByStr(String msg);
+
     void showListView(VideoAdapter adapter);
 
     void showRefreshing(boolean enable);

@@ -57,18 +57,24 @@ public class VideoListSetActivityPresenter extends BasePresenter<IVideoListSetAc
             if (PageEntity != null) {
                 count = PageEntity.getCount();
                 videoDatas = PageEntity.getData();
-                transformKDBResData(AppContants.DataBase.Res.RES_VIDEO);
-            } else {
-                showError();
+                showSuccess();
             }
         }
 
         @Override
         public void onError(int code, String errorMsg) {
             L.d(TAG, "mBookObserver code:" + code + ",errorMsg:" + errorMsg);
-            showError();
+            showError(code, errorMsg);
         }
     });
+
+    private void showSuccess() {
+        if (videoDatas != null && videoDatas.size() != 0) {
+            transformKDBResData(AppContants.DataBase.Res.RES_VIDEO);
+        } else {
+            view().showToast(R.string.attention_data_is_empty);
+        }
+    }
 
     /**
      * clear data display empty
@@ -79,10 +85,12 @@ public class VideoListSetActivityPresenter extends BasePresenter<IVideoListSetAc
         }
     }
 
-    private void showError() {
+    private void showError(int code, String errorMsg) {
         view().showRefreshing(false);
-        if (action_search) {
+        if (code==AppContants.SUCCESS_CODE && action_search) {
             showErrorToast(R.string.attention_data_is_empty);
+        } else if (code == AppContants.SUCCESS_CODE) {
+            view().showToastByStr(errorMsg);
         } else {
             showErrorToast(R.string.attention_data_refresh_error);
         }

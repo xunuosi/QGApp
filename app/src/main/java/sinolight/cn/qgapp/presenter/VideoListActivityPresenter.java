@@ -51,22 +51,29 @@ public class VideoListActivityPresenter extends BasePresenter<IVideoListActivity
             new OnResultCallBack<PageEntity<List<DBResVideoEntity>>>() {
 
         @Override
-        public void onSuccess(PageEntity<List<DBResVideoEntity>> PageEntity) {
-            if (PageEntity != null) {
-                count = PageEntity.getCount();
-                videoDatas = PageEntity.getData();
-                transformKDBResData(AppContants.DataBase.Res.RES_VIDEO);
-            } else {
-                showError();
+        public void onSuccess(PageEntity<List<DBResVideoEntity>> pageEntity) {
+            if (pageEntity != null) {
+                count = pageEntity.getCount();
+                videoDatas = pageEntity.getData();
+                showSuccess();
             }
+
         }
 
         @Override
         public void onError(int code, String errorMsg) {
             L.d(TAG, "mVideoObserver code:" + code + ",errorMsg:" + errorMsg);
-            showError();
+            showError(code, errorMsg);
         }
     });
+
+    private void showSuccess() {
+        if (videoDatas != null && videoDatas.size() != 0) {
+            transformKDBResData(AppContants.DataBase.Res.RES_VIDEO);
+        } else {
+            view().showToast(R.string.attention_data_is_empty);
+        }
+    }
 
     /**
      * clear data display empty
@@ -77,10 +84,12 @@ public class VideoListActivityPresenter extends BasePresenter<IVideoListActivity
         }
     }
 
-    private void showError() {
+    private void showError(int code, String errorMsg) {
         view().showRefreshing(false);
-        if (action_search) {
+        if (code==AppContants.SUCCESS_CODE && action_search) {
             showErrorToast(R.string.attention_data_is_empty);
+        } else if (code == AppContants.SUCCESS_CODE) {
+            view().showToastByStr(errorMsg);
         } else {
             showErrorToast(R.string.attention_data_refresh_error);
         }

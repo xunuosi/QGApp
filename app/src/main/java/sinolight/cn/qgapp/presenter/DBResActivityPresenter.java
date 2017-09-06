@@ -12,7 +12,6 @@ import java.util.List;
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
-import sinolight.cn.qgapp.adapter.HomeAdapter;
 import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.data.bean.CollectEvent;
 import sinolight.cn.qgapp.data.bean.KDBResData;
@@ -94,7 +93,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         @Override
         public void onError(int code, String errorMsg) {
             L.d(TAG, "mDBResTypeObserver code:" + code + ",errorMsg:" + errorMsg);
-            showError();
+            showError(code, errorMsg);
         }
     });
 
@@ -115,7 +114,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         @Override
         public void onError(int code, String errorMsg) {
             L.d(TAG, "mBookObserver code:" + code + ",errorMsg:" + errorMsg);
-            showError();
+            showError(code, errorMsg);
         }
     });
 
@@ -136,7 +135,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 @Override
                 public void onError(int code, String errorMsg) {
                     L.d(TAG, "mStandObserver code:" + code + ",errorMsg:" + errorMsg);
-                    showError();
+                    showError(code, errorMsg);
                 }
             });
 
@@ -157,7 +156,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 @Override
                 public void onError(int code, String errorMsg) {
                     L.d(TAG, "mArticleObserver code:" + code + ",errorMsg:" + errorMsg);
-                    showError();
+                    showError(code, errorMsg);
                 }
             });
 
@@ -178,7 +177,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 @Override
                 public void onError(int code, String errorMsg) {
                     L.d(TAG, "mArticleObserver code:" + code + ",errorMsg:" + errorMsg);
-                    showError();
+                    showError(code, errorMsg);
                 }
             });
 
@@ -199,7 +198,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 @Override
                 public void onError(int code, String errorMsg) {
                     L.d(TAG, "mImgObserver code:" + code + ",errorMsg:" + errorMsg);
-                    showError();
+                    showError(code, errorMsg);
                 }
             });
 
@@ -220,7 +219,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 @Override
                 public void onError(int code, String errorMsg) {
                     L.d(TAG, "mWordObserver code:" + code + ",errorMsg:" + errorMsg);
-                    showError();
+                    showError(code, errorMsg);
                 }
             });
 
@@ -237,10 +236,12 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         }
     }
 
-    private void showError() {
+    private void showError(int code, String errorMsg) {
         view().showRefreshing(false);
-        if (action_search) {
+        if (code==AppContants.SUCCESS_CODE && action_search) {
             showErrorToast(R.string.attention_data_is_empty);
+        } else if (code == AppContants.SUCCESS_CODE) {
+            view().showStrToast(errorMsg);
         } else {
             showErrorToast(R.string.attention_data_refresh_error);
         }
@@ -709,7 +710,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
             // refresh adapter
             loadDataWithPara(key, themType, false, true);
         } else {
-            showError();
+            showError(code, errorMsg);
         }
     }
 }

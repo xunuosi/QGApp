@@ -143,6 +143,11 @@ public class VideoListActivity extends BaseActivity implements IVideoListActivit
     @Override
     public void showToast(int msgId) {
         String msg = getString(msgId);
+        this.showToastByStr(msg);
+    }
+
+    @Override
+    public void showToastByStr(String msg) {
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 
@@ -195,6 +200,7 @@ public class VideoListActivity extends BaseActivity implements IVideoListActivit
 
     @Override
     public void onRefresh() {
+        mEtVideoListSetSearch.setText(null);
         mPresenter.refreshView();
     }
 
