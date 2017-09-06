@@ -158,7 +158,7 @@ public class ReadActivity extends BaseActivity implements IReadActivityView, Pop
         if (enable) {
             ivCollect.setVisibility(View.VISIBLE);
         } else {
-            ivCollect.setVisibility(View.INVISIBLE);
+            ivCollect.setVisibility(View.GONE);
         }
     }
 
