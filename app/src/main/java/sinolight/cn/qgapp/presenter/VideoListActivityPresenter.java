@@ -68,10 +68,10 @@ public class VideoListActivityPresenter extends BasePresenter<IVideoListActivity
     });
 
     private void showSuccess() {
-        if (videoDatas != null && videoDatas.size() != 0) {
-            transformKDBResData(AppContants.DataBase.Res.RES_VIDEO);
+        if (videoDatas == null || videoDatas.size() == 0) {
+            showError(AppContants.SUCCESS_CODE, mContext.getString(R.string.attention_data_is_empty));
         } else {
-            view().showToast(R.string.attention_data_is_empty);
+            transformKDBResData(AppContants.DataBase.Res.RES_VIDEO);
         }
     }
 
