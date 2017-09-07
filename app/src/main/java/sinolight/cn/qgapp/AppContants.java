@@ -183,4 +183,11 @@ public interface AppContants {
     interface Img {
         String IMG_URL = "img_url";
     }
+
+    interface Sort {
+        String TYPE_PB_TIME = "time";
+        String TYPE_BROWSE = "click";
+        String SORT_ASC = "asc";
+        String SORT_DESC = "desc";
+    }
 }

@@ -189,12 +189,16 @@ public interface ApiService {
      * @param key
      * @param page
      * @param size
+     * @param sortType: "time":出版时间; "click":浏览次数
+     * @param sortOrder: "asc":正序; "desc": 倒序
      * @return
      */
     @FormUrlEncoded
     @POST("db/doBookList")
     Observable<ResultEntity<PageEntity<List<BookEntity>>>> getKDBBookList(
             @Field("token") String token,
+            @Field("sortType") String sortType,
+            @Field("sortOrder") String sortOrder,
             @Field("dbid") String dbid,
             @Field("themeType") String themeType,
             @Field("key") String key,

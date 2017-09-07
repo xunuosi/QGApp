@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 
+import com.github.zagum.expandicon.ExpandIconView;
 import com.unnamed.b.atv.model.TreeNode;
 
 import java.util.ArrayList;
@@ -44,6 +45,15 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
     private static final int TYPE_INDUSTRY = 1;
     private static final int TYPE_RECO_DIC = 0;
     private static final int TYPE_ALL_DIC = 1;
+
+    public static final int SORT_ACTION_TIME = 200;
+    public static final int SORT_ACTION_BROWSE = 201;
+    private static final int SORT_MODE_ASC = 301;
+    private static final int SORT_MODE_DESC = 302;
+    private int currentSortAction;
+    private int currentSortMode;
+    private String sortType = AppContants.Sort.TYPE_PB_TIME;
+    private String sortMode = AppContants.Sort.SORT_DESC;
 
     private int dicType = TYPE_RECO_DIC;
     private Context mContext;
@@ -408,6 +418,8 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 model.getKDBBookListNoCache(
                         mBookObserver,
                         AppHelper.getInstance().getCurrentToken(),
+                        sortType,
+                        sortMode,
                         dbId,
                         null,
                         null,
@@ -501,6 +513,8 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
     public void loadDataWithPara(@Nullable String key, @Nullable String themeType, boolean isMore, boolean isSearch) {
         action_more = isMore;
         action_search = isSearch;
+        this.key = key;
+        this.themType = themeType;
         // If not load more data, need clear data.
         if (!isMore) {
             mDatas.clear();
@@ -511,6 +525,8 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 model.getKDBBookListNoCache(
                         mBookObserver,
                         AppHelper.getInstance().getCurrentToken(),
+                        sortType,
+                        sortMode,
                         dbId,
                         themeType,
                         key,
@@ -612,16 +628,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
     }
 
     public void refreshView() {
-        // 恢复页初始值
-        page = 1;
-        // Action is refresh data
-        action_more = false;
-        action_search = false;
-        key = null;
-        themType = null;
-        // Setting LoadMore is true
-        view().hasMoreData(true);
-        mDatas.clear();
+        resetState();
         initData2Show();
     }
 
@@ -630,7 +637,9 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
             // 有更多数据可以加载
             page++;
             // Action load more data
-            loadDataWithPara(key, themeType, true, false);
+            this.key = key;
+            this.themType = themeType;
+            loadDataWithPara(this.key, this.themType, true, false);
         } else if (mDatas != null && mDatas.size() >= count) {
             // 无更多数据加载
             view().hasMoreData(false);
@@ -672,10 +681,23 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
     @Override
     protected void resetState() {
         super.resetState();
+        // 恢复页初始值
         page = 1;
+        // Action is refresh data
         action_more = false;
         action_search = false;
+        key = null;
+        themType = null;
+        // Setting LoadMore is true
+        view().hasMoreData(true);
         mDatas.clear();
+        // Sort init
+        sortType = AppContants.Sort.TYPE_PB_TIME;
+        sortMode = AppContants.Sort.SORT_DESC;
+        currentSortMode = 0;
+        currentSortAction = 0;
+        view().initSortView();
+
         count = 0;
     }
 
@@ -712,6 +734,67 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
             loadDataWithPara(key, themType, false, true);
         } else {
             showError(code, errorMsg);
+        }
+    }
+
+    /**
+     * By publish time to sort list.
+     * @param sortAction
+     */
+    public void sortByAction(int sortAction) {
+        switch (sortAction) {
+            case SORT_ACTION_TIME:
+                getDataByPbTime(sortAction);
+                break;
+            case SORT_ACTION_BROWSE:
+                getDataByBrowse(sortAction);
+                break;
+        }
+    }
+
+    private void getDataByPbTime(int sortAction) {
+        currentSortAction = sortAction;
+        sortType = AppContants.Sort.TYPE_PB_TIME;
+        changeSortMode(sortAction);
+        this.loadDataWithPara(
+                this.key,
+                this.themType,
+                action_more,
+                action_search
+        );
+    }
+
+    private void getDataByBrowse(int sortAction) {
+        currentSortAction = sortAction;
+        sortType = AppContants.Sort.TYPE_BROWSE;
+        changeSortMode(sortAction);
+        this.loadDataWithPara(
+                this.key,
+                this.themType,
+                action_more,
+                action_search
+        );
+    }
+
+    private void changeSortMode(int sortAction) {
+        int state = ExpandIconView.LESS;
+        if (currentSortMode == SORT_MODE_DESC) {
+            sortMode = AppContants.Sort.SORT_ASC;
+            state = ExpandIconView.LESS;
+            currentSortMode = SORT_MODE_ASC;
+        } else {
+            sortMode = AppContants.Sort.SORT_DESC;
+            state = ExpandIconView.MORE;
+            currentSortMode = SORT_MODE_DESC;
+        }
+
+        switch (sortAction) {
+            case SORT_ACTION_TIME:
+                view().changeTimeSortView(state);
+                break;
+            case SORT_ACTION_BROWSE:
+                view().changeBrowseView(state);
+                break;
         }
     }
 }

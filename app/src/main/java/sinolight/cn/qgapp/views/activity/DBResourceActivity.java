@@ -82,10 +82,10 @@ public class DBResourceActivity extends BaseActivity implements
     TextView mTvCountDbRes;
     @BindView(R.id.db_res_root_action)
     ConstraintLayout mDbResRootAction;
-    @BindView(R.id.tv_db_res_pb_name)
-    TextView mTvDbResPbName;
-    @BindView(R.id.ex_icon_de_res_pb_name)
-    ExpandIconView mExIconDeResPbName;
+    @BindView(R.id.tv_db_res_pb_time)
+    TextView mTvDbResPbTime;
+    @BindView(R.id.ex_icon_de_res_pb_time)
+    ExpandIconView mExIconDeResPbTime;
     @BindView(R.id.tv_db_res_browse_count)
     TextView mTvDbResBrowseCount;
     @BindView(R.id.ex_icon_de_res_browse_count)
@@ -130,6 +130,8 @@ public class DBResourceActivity extends BaseActivity implements
 
         mSwipeDbRes.setOnRefreshListener(DBResourceActivity.this);
         mSwipeDbRes.setOnLoadMoreListener(DBResourceActivity.this);
+
+        initSortView();
     }
 
     @Override
@@ -168,7 +170,7 @@ public class DBResourceActivity extends BaseActivity implements
         }
     }
 
-    @OnClick({R.id.im_back_arrow, R.id.iv_menu, R.id.iv_db_detail_search, R.id.tv_db_res_pb_name, R.id.tv_db_res_browse_count})
+    @OnClick({R.id.im_back_arrow, R.id.iv_menu, R.id.iv_db_detail_search, R.id.tv_db_res_pb_time, R.id.tv_db_res_browse_count})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.im_back_arrow:
@@ -180,9 +182,13 @@ public class DBResourceActivity extends BaseActivity implements
             case R.id.iv_db_detail_search:
                 searchData();
                 break;
-            case R.id.tv_db_res_pb_name:
+            case R.id.tv_db_res_pb_time:
+                mPresenter.sortByAction(DBResActivityPresenter.SORT_ACTION_TIME);
+                mExIconDeResBrowseCount.setFraction(0.5f, false);
                 break;
             case R.id.tv_db_res_browse_count:
+                mPresenter.sortByAction(DBResActivityPresenter.SORT_ACTION_BROWSE);
+                mExIconDeResPbTime.setFraction(0.5f, false);
                 break;
         }
     }
@@ -284,6 +290,9 @@ public class DBResourceActivity extends BaseActivity implements
 
     @Override
     public void hasMoreData(boolean hasMore) {
+        if (mSwipeDbRes == null) {
+            return;
+        }
         if (mSwipeDbRes.isLoadingMore()) {
             showLoadMoreing(false);
         }
@@ -310,15 +319,15 @@ public class DBResourceActivity extends BaseActivity implements
     public void showSortTab(boolean enable) {
         if (enable) {
             mDbResRootAction.setVisibility(View.VISIBLE);
-            mTvDbResPbName.setVisibility(View.VISIBLE);
+            mTvDbResPbTime.setVisibility(View.VISIBLE);
             mTvDbResBrowseCount.setVisibility(View.VISIBLE);
-            mExIconDeResPbName.setVisibility(View.VISIBLE);
+            mExIconDeResPbTime.setVisibility(View.VISIBLE);
             mExIconDeResBrowseCount.setVisibility(View.VISIBLE);
         } else {
             mDbResRootAction.setVisibility(View.GONE);
-            mTvDbResPbName.setVisibility(View.GONE);
+            mTvDbResPbTime.setVisibility(View.GONE);
             mTvDbResBrowseCount.setVisibility(View.GONE);
-            mExIconDeResPbName.setVisibility(View.GONE);
+            mExIconDeResPbTime.setVisibility(View.GONE);
             mExIconDeResBrowseCount.setVisibility(View.GONE);
         }
     }
@@ -417,6 +426,28 @@ public class DBResourceActivity extends BaseActivity implements
     @Override
     public void showStrToast(String msg) {
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void changeTimeSortView(int state) {
+        if (mExIconDeResPbTime != null) {
+            mExIconDeResPbTime.setState(state, true);
+        }
+    }
+
+    @Override
+    public void changeBrowseView(int state) {
+        if (mExIconDeResBrowseCount != null) {
+            mExIconDeResBrowseCount.setState(state, true);
+        }
+    }
+
+    @Override
+    public void initSortView() {
+        if (mExIconDeResPbTime != null && mExIconDeResBrowseCount != null) {
+            mExIconDeResPbTime.setFraction(0.5f, false);
+            mExIconDeResBrowseCount.setFraction(0.5f, false);
+        }
     }
 
     private class LinearDivider extends Y_DividerItemDecoration {

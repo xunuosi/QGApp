@@ -171,9 +171,9 @@ public class HttpManager {
     }
 
     public void getKDBBookListNoCache(Observer<PageEntity<List<BookEntity>>> subscriber, String token,
-                                      @Nullable String dbId, @Nullable String type, @Nullable String key,
-                                      int page, int size) {
-        toSubscribe(mApiService.getKDBBookList(token, dbId, type, key, page, size), subscriber);
+                                      @Nullable String sortType, @Nullable String sortOrder, @Nullable String dbId,
+                                      @Nullable String type, @Nullable String key, int page, int size) {
+        toSubscribe(mApiService.getKDBBookList(token, sortType, sortOrder, dbId, type, key, page, size), subscriber);
     }
 
     public void getKDBStdListNoCache(Observer<PageEntity<List<ResStandardEntity>>> subscriber, String token,

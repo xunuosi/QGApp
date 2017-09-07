@@ -34,4 +34,10 @@ public interface IDBResActivityView {
 
     void showStrToast(String msg);
 
+    void changeTimeSortView(int state);
+
+    void changeBrowseView(int state);
+
+    void initSortView();
+
 }
