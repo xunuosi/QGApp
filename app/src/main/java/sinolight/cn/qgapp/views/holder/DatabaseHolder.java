@@ -84,7 +84,7 @@ public class DatabaseHolder extends RecyclerView.ViewHolder {
             type = AppContants.DataBase.Type.DB_FURNITURE;
             return type;
         } else if (dbName.contains("包装")) {
-            type = AppContants.DataBase.Type.DB_FURNITURE;
+            type = AppContants.DataBase.Type.DB_PACK;
             return type;
         } else if (dbName.contains("服装")) {
             type = AppContants.DataBase.Type.DB_CLOTHING;
