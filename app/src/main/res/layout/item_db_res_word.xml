@@ -10,18 +10,20 @@
     <TextView
         android:id="@+id/tv_db_res_word_indicator"
         style="@style/hf_banner_title_text"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:background="@drawable/rect_orange_no_radiu"
         android:gravity="center"
-        tools:text="1"
+        tools:text="1000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5"/>
+        app:layout_constraintHorizontal_bias="0.5"/>
 
     <android.support.constraint.Guideline
         android:layout_width="0dp"
