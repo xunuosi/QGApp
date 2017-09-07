@@ -26,6 +26,8 @@ public interface IDBResActivityView {
 
     void showTab(boolean enable);
 
+    void showSortTab(boolean enable);
+
     void showFooterView(boolean enable, String msg);
 
     void hideTreeMenu(boolean isHide);

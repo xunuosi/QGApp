@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+import com.github.zagum.expandicon.ExpandIconView;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 import com.yanyusong.y_divideritemdecoration.Y_Divider;
@@ -78,6 +80,16 @@ public class DBResourceActivity extends BaseActivity implements
     TabLayout mTabDbRes;
     @BindView(R.id.tv_count_db_res)
     TextView mTvCountDbRes;
+    @BindView(R.id.db_res_root_action)
+    ConstraintLayout mDbResRootAction;
+    @BindView(R.id.tv_db_res_pb_name)
+    TextView mTvDbResPbName;
+    @BindView(R.id.ex_icon_de_res_pb_name)
+    ExpandIconView mExIconDeResPbName;
+    @BindView(R.id.tv_db_res_browse_count)
+    TextView mTvDbResBrowseCount;
+    @BindView(R.id.ex_icon_de_res_browse_count)
+    ExpandIconView mExIconDeResBrowseCount;
 
     public static Intent getCallIntent(Context context) {
         return new Intent(context, DBResourceActivity.class);
@@ -156,7 +168,7 @@ public class DBResourceActivity extends BaseActivity implements
         }
     }
 
-    @OnClick({R.id.im_back_arrow, R.id.iv_menu, R.id.iv_db_detail_search})
+    @OnClick({R.id.im_back_arrow, R.id.iv_menu, R.id.iv_db_detail_search, R.id.tv_db_res_pb_name, R.id.tv_db_res_browse_count})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.im_back_arrow:
@@ -167,6 +179,10 @@ public class DBResourceActivity extends BaseActivity implements
                 break;
             case R.id.iv_db_detail_search:
                 searchData();
+                break;
+            case R.id.tv_db_res_pb_name:
+                break;
+            case R.id.tv_db_res_browse_count:
                 break;
         }
     }
@@ -282,14 +298,34 @@ public class DBResourceActivity extends BaseActivity implements
     @Override
     public void showTab(boolean enable) {
         if (enable) {
+            mDbResRootAction.setVisibility(View.VISIBLE);
             mTabDbRes.setVisibility(View.VISIBLE);
         } else {
+            mDbResRootAction.setVisibility(View.GONE);
             mTabDbRes.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void showSortTab(boolean enable) {
+        if (enable) {
+            mDbResRootAction.setVisibility(View.VISIBLE);
+            mTvDbResPbName.setVisibility(View.VISIBLE);
+            mTvDbResBrowseCount.setVisibility(View.VISIBLE);
+            mExIconDeResPbName.setVisibility(View.VISIBLE);
+            mExIconDeResBrowseCount.setVisibility(View.VISIBLE);
+        } else {
+            mDbResRootAction.setVisibility(View.GONE);
+            mTvDbResPbName.setVisibility(View.GONE);
+            mTvDbResBrowseCount.setVisibility(View.GONE);
+            mExIconDeResPbName.setVisibility(View.GONE);
+            mExIconDeResBrowseCount.setVisibility(View.GONE);
         }
     }
 
     /**
      * 显示词条页脚信息
+     *
      * @param enable
      * @param msg
      */
@@ -305,6 +341,7 @@ public class DBResourceActivity extends BaseActivity implements
 
     /**
      * Hide popTreeMenuView
+     *
      * @param isHide
      */
     @Override
@@ -359,7 +396,7 @@ public class DBResourceActivity extends BaseActivity implements
         mPresenter.tabWordShow(
                 tab.getPosition(),
                 mEtDbDetailSearch.getText().toString().trim()
-                );
+        );
     }
 
     @Override
@@ -374,7 +411,7 @@ public class DBResourceActivity extends BaseActivity implements
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void ActionCollect(CollectEvent event) {
-       mPresenter.collectRes(event);
+        mPresenter.collectRes(event);
     }
 
     @Override

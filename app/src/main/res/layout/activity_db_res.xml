@@ -63,18 +63,133 @@
         android:scaleType="fitCenter"
         android:layout_marginEnd="16dp"/>
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_db_res"
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/db_res_root_action"
         android:layout_width="0dp"
         android:layout_height="44dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/et_db_detail_search"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_db_detail_search"
-        app:tabIndicatorColor="@color/color_login_blue"
-        app:tabGravity="fill"
-        app:tabTextColor="@color/color_hf_title_text"
-        app:tabSelectedTextColor="@color/color_login_blue"
-        android:visibility="gone"/>
+        android:visibility="gone">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline42"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline43"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.4"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline45"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9"/>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_db_res"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:tabIndicatorColor="@color/color_login_blue"
+            app:tabGravity="fill"
+            app:tabTextColor="@color/color_hf_title_text"
+            app:tabSelectedTextColor="@color/color_login_blue"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_db_res_pb_name"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="0dp"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintRight_toLeftOf="@+id/guideline43"
+            android:layout_marginRight="0dp"
+            android:text="@string/text_publish_time2"
+            style="@style/text_sort"
+            android:visibility="gone"/>
+
+        <com.github.zagum.expandicon.ExpandIconView
+            android:id="@+id/ex_icon_de_res_pb_name"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            app:eiv_animationDuration="300"
+            app:eiv_color="#000"
+            app:eiv_colorLess="@color/google_blue"
+            app:eiv_colorMore="@color/google_red"
+            app:eiv_roundedCorners="false"
+            app:eiv_switchColor="true"
+            app:eiv_padding="8dp"
+            app:layout_constraintRight_toLeftOf="@+id/guideline42"
+            android:layout_marginRight="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="0dp"
+            app:layout_constraintVertical_bias="0.526"
+            android:layout_marginLeft="0dp"
+            app:layout_constraintLeft_toLeftOf="@+id/guideline43"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_db_res_browse_count"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="0dp"
+            app:layout_constraintRight_toLeftOf="@+id/guideline45"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="0dp"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintLeft_toRightOf="@+id/guideline42"
+            android:layout_marginRight="0dp"
+            android:text="@string/text_browse_count"
+            style="@style/text_sort"
+            android:visibility="gone"/>
+
+        <com.github.zagum.expandicon.ExpandIconView
+            android:id="@+id/ex_icon_de_res_browse_count"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            app:eiv_animationDuration="300"
+            app:eiv_color="#000"
+            app:eiv_colorLess="@color/google_blue"
+            app:eiv_colorMore="@color/google_red"
+            app:eiv_roundedCorners="false"
+            app:eiv_switchColor="true"
+            app:eiv_padding="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="0dp"
+            app:layout_constraintVertical_bias="0.526"
+            android:layout_marginLeft="0dp"
+            app:layout_constraintLeft_toRightOf="@+id/guideline45"
+            android:visibility="gone"/>
+
+    </android.support.constraint.ConstraintLayout>
 
     <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
         android:id="@+id/swipe_db_res"
@@ -91,7 +206,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintBottom_toTopOf="@+id/tv_count_db_res"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tab_db_res">
+        app:layout_constraintTop_toBottomOf="@+id/db_res_root_action">
 
         <include
             android:id="@id/swipe_refresh_header"
@@ -110,14 +225,10 @@
     <TextView
         android:id="@+id/tv_count_db_res"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="44dp"
         app:layout_constraintTop_toBottomOf="@+id/swipe_db_res"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginRight="0dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:background="@color/color_bottom_divider"
         tools:text="@string/text_word_footer_holder"
@@ -125,4 +236,5 @@
         android:paddingLeft="16dp"
         style="@style/hf_standard_text"
         android:visibility="gone"/>
+
 </android.support.constraint.ConstraintLayout>

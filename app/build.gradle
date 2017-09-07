@@ -81,4 +81,6 @@ dependencies {
     compile 'com.google.android.exoplayer:exoplayer-ui:r2.5.1'
     // SearchView
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
+    // ExpandIcon
+    compile 'com.github.zagum:Android-ExpandIcon:1.2.0'
 }

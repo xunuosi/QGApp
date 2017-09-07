@@ -403,6 +403,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         switch (resType) {
             case RES_BOOK:
                 view().initShow(mContext.getString(R.string.text_book));
+                view().showSortTab(true);
                 // 请求资源数据
                 model.getKDBBookListNoCache(
                         mBookObserver,

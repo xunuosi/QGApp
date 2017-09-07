@@ -283,4 +283,9 @@
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/bg_gray_rect_selector</item>
     </style>
+    <style name="text_sort">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/color_login_blue</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

@@ -30,7 +30,6 @@ import sinolight.cn.qgapp.dagger.module.ReadActivityModule;
 import sinolight.cn.qgapp.data.http.entity.ReaderEntity;
 import sinolight.cn.qgapp.presenter.ReadActivityPresenter;
 import sinolight.cn.qgapp.utils.ImgTagHandler;
-import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.views.view.IReadActivityView;
 import sinolight.cn.qgapp.views.widget.popmenu.PopWindowUtil;
 
