@@ -1,7 +1,9 @@
 package sinolight.cn.qgapp.views.activity;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -160,6 +162,10 @@ public class DBaseDetailActivity extends BaseActivity {
         intent.putExtra(AppContants.DataBase.KEY_ID, dbId);
         intent.putExtra(AppContants.DataBase.KEY_RES_TYPE, resType);
         intent.putExtra(AppContants.DataBase.KEY_TYPE, dbType.getType());
-        startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(DBaseDetailActivity.this).toBundle());
+        } else {
+            startActivity(intent);
+        }
     }
 }
