@@ -7,3 +7,7 @@
 /captures
 .externalNativeBuild
 app/app-release.apk
+.idea/misc.xml
+app/app-customer.apk
+app/app-test.apk
+
