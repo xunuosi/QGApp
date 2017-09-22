@@ -116,9 +116,7 @@ public class RegisterActivityPresenter extends BasePresenter<IRegisterActivityVi
     public void registerAccount(String account, String email, String pwd, String rePwd, String vCode) {
         if (checkoutData(account, email, pwd, rePwd, vCode)) {
             view().showLoading(true);
-            // MD5 encode
-            pwd = MD5.getMessageDigest(pwd);
-            rePwd = pwd;
+
             // 请求注册接口
             HttpManager.getInstance().register(mRegisterObserver, account, email, pwd, rePwd, vCode);
 

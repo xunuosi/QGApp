@@ -6,10 +6,14 @@ import android.view.View;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.R;
+import sinolight.cn.qgapp.data.bean.EventImg;
 import sinolight.cn.qgapp.data.bean.KDBResData;
 import sinolight.cn.qgapp.utils.ImageUtil;
 
@@ -51,6 +55,15 @@ public class CookImgHolder extends RecyclerView.ViewHolder {
                 width,
                 height
         );
+    }
+
+    @OnClick(R.id.iv_item_cook_info_image)
+    public void onViewClicked() {
+        gotoDisplayActivity();
+    }
+
+    private void gotoDisplayActivity() {
+        EventBus.getDefault().post(new EventImg(cover, mIvItemCookInfoImage));
     }
 
 }

@@ -14,6 +14,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -39,6 +40,7 @@ import sinolight.cn.qgapp.data.http.entity.TokenEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.utils.PermissionListener;
+import sinolight.cn.qgapp.utils.RSA;
 import sinolight.cn.qgapp.views.fragment.BaseFragment;
 import sinolight.cn.qgapp.views.fragment.HomeFragment;
 import sinolight.cn.qgapp.views.fragment.KnowledgeFragment;
@@ -108,9 +110,16 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
             isSplashActivity = intent.getBooleanExtra(AppContants.Account.IS_SPLASHACTIVITY, false);
             if (isSplashActivity) {
                 if (isLogined) {
-                    HttpManager.getInstance().login(loginObserver,
-                            AppHelper.getInstance().getCurrentUserName(),
-                            AppHelper.getInstance().getCurrentPW());
+                    try {
+                        String rsa = AppHelper.getInstance().getCurrentPW();
+                        byte[] bytes = RSA.decryptBASE64(rsa);
+                        String pw = new String(bytes);
+                        HttpManager.getInstance().login(loginObserver,
+                                AppHelper.getInstance().getCurrentUserName(),
+                                pw);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     // Go to LoginActivity
                     startActivity(LoginActivity.getCallIntent(mContext));

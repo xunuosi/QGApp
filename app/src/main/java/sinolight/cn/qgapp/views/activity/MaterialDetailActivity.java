@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +20,10 @@ import com.yanyusong.y_divideritemdecoration.Y_Divider;
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder;
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -27,6 +33,7 @@ import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.adapter.CookAdapter;
 import sinolight.cn.qgapp.dagger.component.DaggerMaterialInfoActivityComponent;
 import sinolight.cn.qgapp.dagger.module.MaterialInfoActivityModule;
+import sinolight.cn.qgapp.data.bean.EventImg;
 import sinolight.cn.qgapp.presenter.MaterialDetailActivityPresenter;
 import sinolight.cn.qgapp.views.view.IMaterialDetailActivityView;
 
@@ -64,6 +71,38 @@ public class MaterialDetailActivity extends BaseActivity implements IMaterialDet
         this.initializeInjector();
         super.onCreate(savedInstanceState);
         mPresenter.checkoutIntent(getIntent());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void displayImg(EventImg event) {
+        Intent intent = PictureDisplayActivity.getCallIntent(mContext);
+        intent.putExtra(AppContants.Img.IMG_URL, event.getUrl());
+        //android V4包的类,用于两个activity转场时的缩放效果实现
+        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                MaterialDetailActivity.this, event.getView(), PictureDisplayActivity.TRANSIT_PIC);
+        try {
+            ActivityCompat.startActivity(MaterialDetailActivity.this, intent, optionsCompat.toBundle());
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            startActivity(intent);
+        }
+
     }
 
     @Override

@@ -17,9 +17,7 @@ import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
 import sinolight.cn.qgapp.data.http.entity.TokenEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.L;
-import sinolight.cn.qgapp.utils.MD5;
 import sinolight.cn.qgapp.utils.RSA;
-import sinolight.cn.qgapp.utils.SharedPfUtil;
 import sinolight.cn.qgapp.views.activity.HomeActivity;
 import sinolight.cn.qgapp.views.view.ILoginActivityView;
 
@@ -41,8 +39,9 @@ public class LoginActivityPresenter extends BasePresenter<ILoginActivityView, Da
 
             AppHelper.getInstance().setCurrentUserName(userName);
             AppHelper.getInstance().setCurrentToken(token);
+            String rsa = null;
             try {
-                String rsa = RSA.encryptBASE64(pwd.getBytes());
+                rsa = RSA.encryptBASE64(pwd.getBytes());
                 AppHelper.getInstance().setCurrentPW(rsa);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -100,17 +99,8 @@ public class LoginActivityPresenter extends BasePresenter<ILoginActivityView, Da
             view().showLoading(true);
             this.userName = userName;
             this.pwd = pwd;
-            String rsa = null;
-            try {
-                rsa = RSA.encryptBASE64(pwd.getBytes());
-                L.d(TAG, "RSA:" + rsa);
-                byte[] bytes = RSA.decryptBASE64(rsa);
-                String pw = new BigInteger(1, bytes).toString(16);
-                L.d(TAG,"PW:" + pwd);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
             HttpManager.getInstance().login(loginObserver, this.userName, this.pwd);
+
         }
     }
 
