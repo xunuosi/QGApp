@@ -185,5 +185,6 @@
     <string name="text_font_middle">中</string>
     <string name="text_font_large">大</string>
     <string name="text_browse_count">浏览次数</string>
+    <string name="text_search_history">搜索历史</string>
 
 </resources>

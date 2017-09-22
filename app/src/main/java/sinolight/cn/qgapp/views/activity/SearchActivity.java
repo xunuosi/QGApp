@@ -5,21 +5,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.zhy.view.flowlayout.FlowLayout;
+import com.zhy.view.flowlayout.TagAdapter;
+import com.zhy.view.flowlayout.TagFlowLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.R2;
 import sinolight.cn.qgapp.dagger.component.DaggerSearchActivityComponent;
@@ -47,6 +54,8 @@ public class SearchActivity extends BaseActivity implements ISearchActivityView,
     Spinner mSpinner;
     @BindView(R2.id.search_view)
     MaterialSearchView mSearchView;
+    @BindView(R.id.id_flowlayout)
+    TagFlowLayout mIdFlowlayout;
 
 
     public static Intent getCallIntent(Context context) {
@@ -63,7 +72,6 @@ public class SearchActivity extends BaseActivity implements ISearchActivityView,
     @Override
     protected void onStart() {
         super.onStart();
-        mPresenter.loadSearchHistory();
     }
 
     @Override
@@ -106,6 +114,14 @@ public class SearchActivity extends BaseActivity implements ISearchActivityView,
         mSearchView.setOnQueryTextListener(this);
         mSearchView.setOnSearchViewListener(this);
 
+        mIdFlowlayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+            @Override
+            public boolean onTagClick(View view, int position, FlowLayout parent) {
+                mPresenter.selectSearchTag(position);
+                return true;
+            }
+        });
+
     }
 
     @Override
@@ -143,11 +159,39 @@ public class SearchActivity extends BaseActivity implements ISearchActivityView,
     @Override
     public void loadSearchDataHistory(List<String> data) {
         mSearchView.setSuggestions(data.toArray(new String[data.size()]));
+        initFlowTagLayout(data);
+    }
+
+    private void initFlowTagLayout(List<String> data) {
+        ArrayList<String> tempList = new ArrayList<>();
+        for (int i = 0; i < data.size() - 1 && i < 10; i++) {
+            tempList.add(data.get(i));
+        }
+        mIdFlowlayout.setAdapter(new TagAdapter<String>(tempList) {
+            @Override
+            public View getView(FlowLayout parent, int position, String s) {
+                TextView content = (TextView) LayoutInflater.from(mContext).inflate(R.layout.item_tag,
+                        mIdFlowlayout, false);
+                content.setText(s);
+                return content;
+            }
+        });
     }
 
     @Override
     public void showView(ArrayAdapter<String> adapter) {
         mSpinner.setAdapter(adapter);
+    }
+
+    @Override
+    public void setSearchView(String key) {
+        mSearchView.showSearch(true);
+        mSearchView.setQuery(key, false);
+    }
+
+    @Override
+    public void clearHisData() {
+        mPresenter.init2Show();
     }
 
     @Override
@@ -180,5 +224,10 @@ public class SearchActivity extends BaseActivity implements ISearchActivityView,
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    @OnClick(R.id.iv_search_delete)
+    public void onViewClicked() {
+        mPresenter.deleteSearchHistory();
     }
 }

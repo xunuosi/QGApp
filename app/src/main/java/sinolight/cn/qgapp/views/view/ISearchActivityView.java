@@ -22,4 +22,7 @@ public interface ISearchActivityView {
 
     void showView(ArrayAdapter<String> adapter);
 
+    void setSearchView(String key);
+
+    void clearHisData();
 }

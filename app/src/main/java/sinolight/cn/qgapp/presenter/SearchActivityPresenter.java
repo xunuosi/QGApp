@@ -2,15 +2,22 @@ package sinolight.cn.qgapp.presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
 import android.widget.ArrayAdapter;
 
+import com.zhy.view.flowlayout.FlowLayout;
+import com.zhy.view.flowlayout.TagAdapter;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
+import sinolight.cn.qgapp.AppModel;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.DataBaseBean;
+import sinolight.cn.qgapp.data.db.GreenDaoHelper;
 import sinolight.cn.qgapp.data.http.HttpManager;
 import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
 import sinolight.cn.qgapp.data.http.entity.PageEntity;
@@ -31,6 +38,7 @@ public class SearchActivityPresenter extends BasePresenter<ISearchActivityView, 
     private List<String> mDbNameList;
     private String dbId;
     private ArrayAdapter<String> adapter;
+    private List<String> historyData;
 
     private HttpSubscriber databaseObserver = new HttpSubscriber(new OnResultCallBack<PageEntity<List<DataBaseBean>>>() {
         @Override
@@ -119,9 +127,10 @@ public class SearchActivityPresenter extends BasePresenter<ISearchActivityView, 
 
     public void loadSearchHistory() {
         // load search history
-        List<String> data = AppHelper.getInstance().getSearchDatas();
-        if (data != null && !data.isEmpty()) {
-            view().loadSearchDataHistory(data);
+        historyData = AppHelper.getInstance().getSearchDatas();
+        Collections.reverse(historyData);
+        if (historyData != null && !historyData.isEmpty()) {
+            view().loadSearchDataHistory(historyData);
         }
     }
 
@@ -129,5 +138,22 @@ public class SearchActivityPresenter extends BasePresenter<ISearchActivityView, 
         if (mDataInternet != null) {
             dbId = mDataInternet.get(dbIndex).getId();
         }
+    }
+
+    public void selectSearchTag(int position) {
+        if (position >= 0 && position < historyData.size() - 1) {
+            view().setSearchView(historyData.get(position));
+        }
+    }
+
+    public void deleteSearchHistory() {
+        // clear database
+        GreenDaoHelper.getDaoSession().getSearchDataDao().deleteAll();
+        // clear memory
+        if (historyData != null) {
+            historyData.clear();
+        }
+        // clear view
+        view().clearHisData();
     }
 }
