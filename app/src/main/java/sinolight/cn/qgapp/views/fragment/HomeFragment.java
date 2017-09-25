@@ -129,6 +129,11 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, OnR
     }
 
     @Override
+    public void showMsgByStr(String msg) {
+        this.showToastMessage(msg);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();

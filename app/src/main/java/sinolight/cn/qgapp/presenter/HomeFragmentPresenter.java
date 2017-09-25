@@ -104,11 +104,9 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         @Override
         public void onError(int code, String errorMsg) {
             L.d(TAG, "homeBannerObserver code:" + code + ",errorMsg:" + errorMsg);
-            mHomeBannerDatas = new ArrayList<>();
-            transformHomeData(mHomeBannerDatas, HomeAdapter.TYPE_BANNER, true);
             // 初始化本地Item数据
             initLocalData();
-            Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
+            showError(code, errorMsg);
         }
     });
 
@@ -124,10 +122,7 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         @Override
         public void onError(int code, String errorMsg) {
             L.d(TAG, "hotPicsObserver code:" + code + ",errorMsg:" + errorMsg);
-            mHotPicsDatas = new ArrayList<>();
-            transformHomeData(mHotPicsDatas, HomeAdapter.TYPE_HOT_PICS, true);
-            loadTitle(TYPE_STANDARD, HomeAdapter.TYPE_COMMON_TITLE, true);
-            showError(code,errorMsg);
+            showError(code, errorMsg);
         }
     });
 
@@ -143,10 +138,7 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         @Override
         public void onError(int code, String errorMsg) {
             L.d(TAG, "standardObserver code:" + code + ",errorMsg:" + errorMsg);
-            mStandardDatas = new ArrayList<>();
-            transformHomeData(mStandardDatas, HomeAdapter.TYPE_STANDARD, true);
-            loadRecoWordsData();
-            showError(code,errorMsg);
+            showError(code, errorMsg);
         }
     });
 
@@ -162,10 +154,7 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         @Override
         public void onError(int code, String errorMsg) {
             L.d(TAG, "recWordsObserver code:" + code + ",errorMsg:" + errorMsg);
-            mRecoDatas = new ArrayList<>();
-            transformHomeData(mRecoDatas, HomeAdapter.TYPE_BANNER_WORDS, true);
-            loadTitle(TYPE_NEW_BOOKS, HomeAdapter.TYPE_COMMON_TITLE, true);
-            showError(code,errorMsg);
+            showError(code, errorMsg);
         }
     });
 
@@ -181,10 +170,7 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         @Override
         public void onError(int code, String errorMsg) {
             L.d(TAG, "newBooksObserver code:" + code + ",errorMsg:" + errorMsg);
-            mNewBooks = new ArrayList<>();
-            transformHomeData(mNewBooks, HomeAdapter.TYPE_NEW_BOOKS, true);
-            loadTitle(TYPE_HOT_ARTICLE, HomeAdapter.TYPE_COMMON_TITLE, true);
-            showError(code,errorMsg);
+            showError(code, errorMsg);
         }
     });
 
@@ -199,14 +185,14 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         @Override
         public void onError(int code, String errorMsg) {
             L.d(TAG, "articleObserver code:" + code + ",errorMsg:" + errorMsg);
-            mArticles = new ArrayList<>();
-            transformHomeData(mArticles, HomeAdapter.TYPE_ARTICLE, true);
-            showError(code,errorMsg);
+            showError(code, errorMsg);
         }
     });
 
     private void showError(int code, String errorMsg) {
-
+        if (code != AppContants.SUCCESS_CODE) {
+            view().showMsgByStr(errorMsg);
+        }
     }
 
     /**

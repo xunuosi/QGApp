@@ -17,4 +17,5 @@ public interface IHomeFragmentView {
 
     void gotoActivity(Intent callIntent);
 
+    void showMsgByStr(String msg);
 }
