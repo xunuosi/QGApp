@@ -186,5 +186,6 @@
     <string name="text_font_large">大</string>
     <string name="text_browse_count">浏览次数</string>
     <string name="text_search_history">搜索历史</string>
+    <string name="text_clear_search_history_data_success">清除搜索历史成功</string>
 
 </resources>

@@ -157,17 +157,13 @@ public class SearchActivity extends BaseActivity implements ISearchActivityView,
     }
 
     @Override
-    public void loadSearchDataHistory(List<String> data) {
+    public void loadSearchDataHistory(List<String> data, List<String> hotData) {
         mSearchView.setSuggestions(data.toArray(new String[data.size()]));
-        initFlowTagLayout(data);
+        initFlowTagLayout(hotData);
     }
 
-    private void initFlowTagLayout(List<String> data) {
-        ArrayList<String> tempList = new ArrayList<>();
-        for (int i = 0; i < data.size() - 1 && i < 10; i++) {
-            tempList.add(data.get(i));
-        }
-        mIdFlowlayout.setAdapter(new TagAdapter<String>(tempList) {
+    private void initFlowTagLayout(List<String> hotData) {
+       mIdFlowlayout.setAdapter(new TagAdapter<String>(hotData) {
             @Override
             public View getView(FlowLayout parent, int position, String s) {
                 TextView content = (TextView) LayoutInflater.from(mContext).inflate(R.layout.item_tag,
@@ -191,7 +187,10 @@ public class SearchActivity extends BaseActivity implements ISearchActivityView,
 
     @Override
     public void clearHisData() {
-        mPresenter.init2Show();
+        mSearchView.setSuggestions(null);
+        if (mIdFlowlayout.getAdapter() != null) {
+            mIdFlowlayout.getAdapter().notifyDataChanged();
+        }
     }
 
     @Override

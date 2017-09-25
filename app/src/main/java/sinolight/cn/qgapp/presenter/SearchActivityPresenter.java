@@ -39,6 +39,7 @@ public class SearchActivityPresenter extends BasePresenter<ISearchActivityView, 
     private String dbId;
     private ArrayAdapter<String> adapter;
     private List<String> historyData;
+    private List<String> hotSearchData;
 
     private HttpSubscriber databaseObserver = new HttpSubscriber(new OnResultCallBack<PageEntity<List<DataBaseBean>>>() {
         @Override
@@ -129,8 +130,12 @@ public class SearchActivityPresenter extends BasePresenter<ISearchActivityView, 
         // load search history
         historyData = AppHelper.getInstance().getSearchDatas();
         Collections.reverse(historyData);
+        hotSearchData = new ArrayList<>();
+        for (int i = 0; i < historyData.size() && i < 10; i++) {
+            hotSearchData.add(historyData.get(i));
+        }
         if (historyData != null && !historyData.isEmpty()) {
-            view().loadSearchDataHistory(historyData);
+            view().loadSearchDataHistory(historyData, hotSearchData);
         }
     }
 
@@ -153,7 +158,11 @@ public class SearchActivityPresenter extends BasePresenter<ISearchActivityView, 
         if (historyData != null) {
             historyData.clear();
         }
+        if (hotSearchData != null) {
+            hotSearchData.clear();
+        }
         // clear view
         view().clearHisData();
+        view().showToast(R.string.text_clear_search_history_data_success);
     }
 }

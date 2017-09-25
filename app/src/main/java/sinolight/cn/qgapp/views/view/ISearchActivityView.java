@@ -18,7 +18,7 @@ public interface ISearchActivityView {
 
     void gotoActivity(Intent intent);
 
-    void loadSearchDataHistory(List<String> data);
+    void loadSearchDataHistory(List<String> data, List<String> hotData);
 
     void showView(ArrayAdapter<String> adapter);
 
