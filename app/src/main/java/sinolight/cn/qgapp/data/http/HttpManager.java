@@ -65,7 +65,7 @@ import sinolight.cn.qgapp.data.http.parser.GsonTSpeaker;
 
 public class HttpManager {
     public static final String TAG = HttpManager.class.getSimpleName();
-    private static final int DEFAULT_TIMEOUT = 5;
+    private static final int DEFAULT_TIMEOUT = 10;
     private Retrofit mRetrofit;
     private ApiService mApiService;
     private final CacheProvider cacheProvider;

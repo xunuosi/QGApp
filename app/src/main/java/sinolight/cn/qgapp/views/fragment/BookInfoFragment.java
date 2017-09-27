@@ -137,7 +137,7 @@ public class BookInfoFragment extends ResBaseFragment {
         mTvBookFragmentPackage = view.findViewById(R.id.tv_book_fragment_package);
 
         mTvBookFragmentEditionNum.setText(formatStr(R.string.text_edition_num_format, getVersionNum()));
-        mTvBookFragmentPrintTime.setText(formatStr(R.string.text_print_time_format, mBookData.getPrinttime()));
+        mTvBookFragmentPrintTime.setText(formatStr(R.string.text_publish_time_format, mBookData.getIssuedate()));
         mTvBookFragmentPrintNum.setText(formatStr(R.string.text_print_num_format, getPrintNum()));
         mTvBookFragmentIsn.setText(formatStr(R.string.text_isn_format, mBookData.getIsbn()));
         mTvBookFragmentClassificationInfo.setText(mBookData.getClassification());
