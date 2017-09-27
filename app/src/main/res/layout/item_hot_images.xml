@@ -22,7 +22,8 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1">
+        tools:layout_constraintTop_creator="1"
+        tools:background="@color/color_login_gray">
     </com.youth.banner.Banner>
     <TextView
         android:id="@+id/tv_hot_imgs_banner_title"
@@ -38,7 +39,10 @@
     <TextView
         android:id="@+id/tv_hot_imgs_banner_center_title"
         android:layout_width="@dimen/hf_item_banner_center_title_width"
-        android:layout_height="@dimen/hf_item_banner_center_title_height"
+        android:layout_height="wrap_content"
+        android:lines="2"
+        android:ellipsize="end"
+        tools:text="@string/text_title_holder"
         android:text="@string/text_technics_beautiful"
         style="@style/hf_banner_center_title_text"
         app:layout_constraintLeft_toLeftOf="parent"
