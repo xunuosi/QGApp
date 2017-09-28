@@ -15,6 +15,7 @@ import com.facebook.imagepipeline.common.ResizeOptions;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.facebook.samples.zoomable.ZoomableDraweeView;
 
 import sinolight.cn.qgapp.utils.fresco.CutProcess;
 
@@ -63,6 +64,41 @@ public class ImageUtil {
      * @param height
      */
     public static void frescoShowImageByUri(Context activity, String path, SimpleDraweeView view,
+                                            int width, int height) {
+
+        if (path == null || activity == null || view == null) {
+            return;
+        }
+        if (width == 0 || height == 0) {
+            width = 70;
+            height = 70;
+        }
+
+        Uri uri = Uri.parse(path);
+
+        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
+                .setResizeOptions(new ResizeOptions(
+                        ScreenUtil.dip2px(activity, width), ScreenUtil.dip2px(activity, height)))
+                .build();
+
+        PipelineDraweeController controller = (PipelineDraweeController) Fresco.newDraweeControllerBuilder()
+                .setImageRequest(request)
+                .setOldController(view.getController())
+                .setControllerListener(new BaseControllerListener<ImageInfo>())
+                .build();
+
+        view.setController(controller);
+    }
+
+    /**
+     * Fresco框架显示图片的方法
+     * @param activity
+     * @param path
+     * @param view
+     * @param width
+     * @param height
+     */
+    public static void zoomableViewShowImageByUri(Context activity, String path, ZoomableDraweeView view,
                                             int width, int height) {
 
         if (path == null || activity == null || view == null) {

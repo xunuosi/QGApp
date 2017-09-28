@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 
 import com.facebook.drawee.drawable.ScalingUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.samples.zoomable.ZoomableDraweeView;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.utils.ImageUtil;
@@ -24,7 +26,9 @@ public class PictureDisplayActivity extends BaseActivity {
     public static final String TRANSIT_PIC = "picture";
 
     @BindView(R.id.iv_pic_display)
-    SimpleDraweeView mIvPicDisplay;
+    ZoomableDraweeView mIvPicDisplay;
+    @BindView(R.id.root_ac_pic_display)
+    ConstraintLayout mRootAcPicDisplay;
 
     public static Intent getCallIntent(Context context) {
         return new Intent(context, PictureDisplayActivity.class);
@@ -47,10 +51,10 @@ public class PictureDisplayActivity extends BaseActivity {
         int height = (int) (getResources().getDimensionPixelOffset(R.dimen.pic_display_height) /
                 getResources().getDisplayMetrics().density);
 
-        mIvPicDisplay.getHierarchy().setActualImageFocusPoint(new PointF(0f,0f));
+        mIvPicDisplay.getHierarchy().setActualImageFocusPoint(new PointF(0f, 0f));
         mIvPicDisplay.getHierarchy().setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER);
 
-        ImageUtil.frescoShowImageByUri(
+        ImageUtil.zoomableViewShowImageByUri(
                 PictureDisplayActivity.this,
                 imgUrl,
                 mIvPicDisplay,
@@ -77,5 +81,10 @@ public class PictureDisplayActivity extends BaseActivity {
     @Override
     protected void initializeInjector() {
 
+    }
+
+    @OnClick(R.id.root_ac_pic_display)
+    public void onViewClicked() {
+        finish();
     }
 }

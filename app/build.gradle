@@ -86,4 +86,5 @@ dependencies {
     // flowLayout
     compile 'com.hyman:flowlayout-lib:1.1.2'
     compile 'com.android.support:cardview-v7:26.0.0-alpha1'
+    compile project(path: ':samples:zoomable')
 }

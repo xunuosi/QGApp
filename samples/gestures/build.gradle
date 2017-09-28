@@ -8,6 +8,8 @@ dependencies {
         exclude group: 'commons-logging', module: 'commons-logging'
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
     }
+    // fresco
+    compile 'com.facebook.fresco:fresco:1.3.0'
 }
 
 android {
