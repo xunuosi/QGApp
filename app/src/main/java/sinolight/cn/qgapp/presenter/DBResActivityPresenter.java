@@ -43,7 +43,6 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
     private static final String TAG = "DBResActivityPresenter";
     private static final int TYPE_ARTICLE = 0;
     private static final int TYPE_INDUSTRY = 1;
-    private static final int TYPE_RECO_DIC = 0;
     private static final int TYPE_ALL_DIC = 1;
 
     public static final int SORT_ACTION_TIME = 200;
@@ -55,7 +54,7 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
     private String sortType = AppContants.Sort.TYPE_PB_TIME;
     private String sortMode = AppContants.Sort.SORT_DESC;
 
-    private int dicType = TYPE_RECO_DIC;
+    private int dicType = TYPE_ALL_DIC;
     private Context mContext;
     private String dbType;
     private String dbId;
@@ -467,7 +466,6 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
                 break;
             case RES_DIC:
                 view().initShow(mContext.getString(R.string.text_dictionary));
-                view().showTab(true);
                 view().showFooterView(true, String.valueOf(count));
                 model.getKDBWordListNoCache(
                         mWordObserver,
@@ -646,25 +644,6 @@ public class DBResActivityPresenter extends BasePresenter<IDBResActivityView, Ht
         } else {
             view().hasMoreData(false);
         }
-    }
-
-    /**
-     * Word Res tab change
-     *
-     * @param position
-     */
-    public void tabWordShow(int position, @Nullable String key) {
-        switch (position) {
-            case 0:
-                dicType = TYPE_RECO_DIC;
-                loadDataWithPara(key, null, false, false);
-                break;
-            case 1:
-                dicType = TYPE_ALL_DIC;
-                loadDataWithPara(key, null, false, false);
-                break;
-        }
-
     }
 
     public void searchData(String key, String themeType) {

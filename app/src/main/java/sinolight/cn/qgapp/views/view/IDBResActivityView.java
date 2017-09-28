@@ -24,8 +24,6 @@ public interface IDBResActivityView {
 
     void hasMoreData(boolean hasMore);
 
-    void showTab(boolean enable);
-
     void showSortTab(boolean enable);
 
     void showFooterView(boolean enable, String msg);

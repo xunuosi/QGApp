@@ -95,20 +95,6 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.9"/>
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_db_res"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:tabIndicatorColor="@color/color_login_blue"
-            app:tabGravity="fill"
-            app:tabTextColor="@color/color_hf_title_text"
-            app:tabSelectedTextColor="@color/color_login_blue"
-            android:visibility="gone"/>
-
         <TextView
             android:id="@+id/tv_db_res_pb_time"
             android:layout_width="0dp"

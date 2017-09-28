@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -53,7 +52,7 @@ import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
 
 public class DBResourceActivity extends BaseActivity implements
         IDBResActivityView, TreeNode.TreeNodeClickListener, OnRefreshListener, OnLoadMoreListener,
-        PopupWindow.OnDismissListener, TabLayout.OnTabSelectedListener {
+        PopupWindow.OnDismissListener {
     private static final String TAG = "DBResourceActivity";
 
     private TopRightMenu mTopRightMenu;
@@ -76,8 +75,6 @@ public class DBResourceActivity extends BaseActivity implements
     TextView tvTitle;
     @BindView(R.id.et_db_detail_search)
     EditText mEtDbDetailSearch;
-    @BindView(R.id.tab_db_res)
-    TabLayout mTabDbRes;
     @BindView(R.id.tv_count_db_res)
     TextView mTvCountDbRes;
     @BindView(R.id.db_res_root_action)
@@ -118,10 +115,6 @@ public class DBResourceActivity extends BaseActivity implements
 
     @Override
     protected void initViews() {
-        // init TabLayout
-        mTabDbRes.addTab(mTabDbRes.newTab().setText(R.string.text_reco_words), true);
-        mTabDbRes.addTab(mTabDbRes.newTab().setText(R.string.text_all_word));
-        mTabDbRes.addOnTabSelectedListener(DBResourceActivity.this);
 
         mLayoutManager = new LinearLayoutManager(DBResourceActivity.this, LinearLayoutManager.VERTICAL, false);
         mSwipeTarget.setLayoutManager(mLayoutManager);
@@ -299,22 +292,6 @@ public class DBResourceActivity extends BaseActivity implements
         mSwipeDbRes.setLoadMoreEnabled(hasMore);
     }
 
-    /**
-     * 显示TabLayout的方法
-     *
-     * @param enable
-     */
-    @Override
-    public void showTab(boolean enable) {
-        if (enable) {
-            mDbResRootAction.setVisibility(View.VISIBLE);
-            mTabDbRes.setVisibility(View.VISIBLE);
-        } else {
-            mDbResRootAction.setVisibility(View.GONE);
-            mTabDbRes.setVisibility(View.GONE);
-        }
-    }
-
     @Override
     public void showSortTab(boolean enable) {
         if (enable) {
@@ -398,24 +375,6 @@ public class DBResourceActivity extends BaseActivity implements
                 false,
                 true
         );
-    }
-
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-        mPresenter.tabWordShow(
-                tab.getPosition(),
-                mEtDbDetailSearch.getText().toString().trim()
-        );
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
