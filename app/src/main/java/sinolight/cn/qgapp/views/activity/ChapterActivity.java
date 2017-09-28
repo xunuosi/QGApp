@@ -11,6 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
+import com.aspsine.swipetoloadlayout.OnRefreshListener;
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.yanyusong.y_divideritemdecoration.Y_Divider;
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder;
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration;
@@ -31,7 +34,8 @@ import sinolight.cn.qgapp.views.view.IChapterActivityView;
  * 章节界面
  */
 
-public class ChapterActivity extends BaseActivity implements IChapterActivityView {
+public class ChapterActivity extends BaseActivity implements IChapterActivityView,
+        OnRefreshListener, OnLoadMoreListener {
     @Inject
     Context context;
     @Inject
@@ -40,8 +44,10 @@ public class ChapterActivity extends BaseActivity implements IChapterActivityVie
     TextView mTvChapterTitle;
     @BindView(R.id.tool_bar_chapter)
     Toolbar mToolBarChapter;
-    @BindView(R.id.rv_chapter)
-    RecyclerView mRvChapter;
+    @BindView(R.id.swipe_target)
+    RecyclerView mSwipeTarget;
+    @BindView(R.id.swipe_chapter_list_set)
+    SwipeToLoadLayout mSwipe;
     private LinearLayoutManager mLayoutManager;
 
     public static Intent getCallIntent(Context context) {
@@ -56,6 +62,12 @@ public class ChapterActivity extends BaseActivity implements IChapterActivityVie
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.clear();
+    }
+
+    @Override
     public int setLayoutId() {
         return R.layout.activity_chapter;
     }
@@ -63,9 +75,12 @@ public class ChapterActivity extends BaseActivity implements IChapterActivityVie
     @Override
     protected void initViews() {
         mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        mRvChapter.setLayoutManager(mLayoutManager);
-        mRvChapter.addItemDecoration(new ChapterActivity.LinearDivider(ChapterActivity.this));
-        mRvChapter.setHasFixedSize(true);
+        mSwipeTarget.setLayoutManager(mLayoutManager);
+        mSwipeTarget.addItemDecoration(new LinearDivider(ChapterActivity.this));
+        mSwipeTarget.setHasFixedSize(true);
+
+        mSwipe.setOnRefreshListener(ChapterActivity.this);
+        mSwipe.setOnLoadMoreListener(ChapterActivity.this);
     }
 
     @Override
@@ -92,8 +107,8 @@ public class ChapterActivity extends BaseActivity implements IChapterActivityVie
 
     @Override
     public void showListView(KDBResAdapter adapter, String title) {
-        if (mRvChapter != null && mRvChapter.getAdapter() == null) {
-            mRvChapter.setAdapter(adapter);
+        if (mSwipeTarget != null && mSwipeTarget.getAdapter() == null) {
+            mSwipeTarget.setAdapter(adapter);
             mTvChapterTitle.setText(title);
         }
     }
@@ -103,9 +118,61 @@ public class ChapterActivity extends BaseActivity implements IChapterActivityVie
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void showRefreshing(boolean enable) {
+        if (enable) {
+            mSwipe.post(new Runnable() {
+                @Override
+                public void run() {
+                    mSwipe.setRefreshing(true);
+                }
+            });
+        } else {
+            mSwipe.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void showLoadMoreing(boolean enable) {
+        if (!mSwipe.isLoadMoreEnabled()) {
+            return;
+        }
+        if (enable) {
+            mSwipe.post(new Runnable() {
+                @Override
+                public void run() {
+                    mSwipe.setLoadingMore(true);
+                }
+            });
+        } else {
+            mSwipe.setLoadingMore(false);
+        }
+    }
+
+    @Override
+    public void hasMoreData(boolean hasMore) {
+        if (mSwipe == null) {
+            return;
+        }
+        if (mSwipe.isLoadingMore()) {
+            showLoadMoreing(false);
+        }
+        mSwipe.setLoadMoreEnabled(hasMore);
+    }
+
     @OnClick(R.id.iv_chapter_back)
     public void onViewClicked() {
         finish();
+    }
+
+    @Override
+    public void onLoadMore() {
+        mPresenter.loadMore();
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.refreshData();
     }
 
     private class LinearDivider extends Y_DividerItemDecoration {

@@ -14,4 +14,10 @@ public interface IChapterActivityView {
     void showListView(KDBResAdapter adapter, String title);
 
     void showToastStr(String msg);
+
+    void showRefreshing(boolean enable);
+
+    void showLoadMoreing(boolean enable);
+
+    void hasMoreData(boolean hasMore);
 }

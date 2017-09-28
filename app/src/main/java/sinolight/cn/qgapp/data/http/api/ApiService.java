@@ -526,10 +526,13 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("db/doCatalogList")
-    Observable<ResultEntity<List<ChapterEntity>>> getCatalogList(
+    Observable<ResultEntity<PageEntity<List<ChapterEntity>>>> getCatalogList(
             @Field("token") String token,
             @Field("pid") String pid,
-            @Field("type") String type
+            @Field("type") String type,
+            @Field("key") String key,
+            @Field("page") int page,
+            @Field("size") int size
     );
 
     /**

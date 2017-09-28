@@ -253,8 +253,9 @@ public class HttpManager {
                 AppHelper.getInstance().getCurrentUserName()), subscriber);
     }
 
-    public void getCatalogListNoCache(Observer<List<ChapterEntity>> subscriber, String token, String pid, String type) {
-        toSubscribe(mApiService.getCatalogList(token, pid, type), subscriber);
+    public void getCatalogListNoCache(Observer<PageEntity<List<ChapterEntity>>> subscriber, String token, String pid,
+                                      String type, int page, int size) {
+        toSubscribe(mApiService.getCatalogList(token, pid, type, null, page, size), subscriber);
     }
 
     public void doReadNoCache(Observer<ReaderEntity> subscriber, String token, String restype, String resId, String chapteredID) {
