@@ -8,7 +8,6 @@ import com.unnamed.b.atv.model.TreeNode;
 import java.util.ArrayList;
 import java.util.List;
 
-import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.AppHelper;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.adapter.MasterAdapter;
@@ -21,7 +20,6 @@ import sinolight.cn.qgapp.data.http.entity.PageEntity;
 import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.KDBResDataMapper;
 import sinolight.cn.qgapp.utils.L;
-import sinolight.cn.qgapp.views.holder.TreeChildHolder;
 import sinolight.cn.qgapp.views.holder.TreeParentHolder;
 import sinolight.cn.qgapp.views.view.IMasterListActivityView;
 
