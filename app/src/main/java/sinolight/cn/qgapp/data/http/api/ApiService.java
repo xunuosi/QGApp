@@ -181,6 +181,17 @@ public interface ApiService {
     );
 
     /**
+     * 专家库-分类树
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("expert/doExpertTypeInfo")
+    Observable<ResultEntity<List<DBResTypeEntity>>> getMasterType(
+            @Field("token") String token
+    );
+
+    /**
      * 知识库-某一知识库-图书列表
      * @param token
      * @param token

@@ -35,8 +35,6 @@ public class MasterListActivityPresenter extends BasePresenter<IMasterListActivi
     private Context mContext;
     // TreeMenu
     private List<DBResTypeEntity> mTreeTypeList;
-    private List<TreeNode> mTreeNodes;
-    private List<TreeNode> mRoot;
     private List<TreeNode> mTrees;
     private final TreeNode root = TreeNode.root();
 
@@ -102,38 +100,15 @@ public class MasterListActivityPresenter extends BasePresenter<IMasterListActivi
     private void disposeData() {
         mTrees = new ArrayList<>();
         for (DBResTypeEntity bean : mTreeTypeList) {
-            if (bean.getPid().equals(AppContants.DataBase.TREE_PID)) {
-                TreeNode p = new TreeNode(new TreeParentHolder.IconTreeItem(
-                        bean.getId(),
-                        bean.getPid(),
-                        bean.getName(),
-                        bean.isHaschild())).setViewHolder(new TreeParentHolder(mContext));
-                mTrees.add(p);
-            } else {
-                TreeNode c = new TreeNode(new TreeParentHolder.IconTreeItem(
-                        bean.getId(),
-                        bean.getPid(),
-                        bean.getName(),
-                        bean.isHaschild())).setViewHolder(new TreeChildHolder(mContext));
-                mTrees.add(c);
-            }
+            TreeNode p = new TreeNode(new TreeParentHolder.IconTreeItem(
+                    bean.getId(),
+                    bean.getPid(),
+                    bean.getName(),
+                    bean.isHaschild())).setViewHolder(new TreeParentHolder(mContext));
+            mTrees.add(p);
+
         }
 
-        mRoot = createTree(AppContants.DataBase.TREE_PID, mTrees);
-//        TreeNode treeNode = mRoot.get(0);
-        mTreeNodes = mRoot;
-    }
-
-    public List<TreeNode> createTree(String pid, List<TreeNode> treeRes) {
-        List<TreeNode> temp = new ArrayList<>();
-        for (TreeNode treeRe : treeRes) {
-            if (pid.equals(getPid(treeRe))) {
-                List<TreeNode> child = this.createTree(getId(treeRe), treeRes);
-                treeRe.addChildren(child);
-                temp.add(treeRe);
-            }
-        }
-        return temp;
     }
 
     private String getPid(TreeNode node) {
@@ -319,15 +294,15 @@ public class MasterListActivityPresenter extends BasePresenter<IMasterListActivi
      * Load TreeMenu data
      */
     public void loadTreeMenu() {
-        model.getKDBResTypeNoCache(
+        model.getMasterTypeNoCache(
                 mDBResTypeObserver,
-                AppHelper.getInstance().getCurrentToken(),
-                "");
+                AppHelper.getInstance().getCurrentToken()
+        );
     }
 
     public TreeNode popTreeMenu() {
-        if (mTreeNodes != null && mTreeNodes.size() != 0) {
-            root.addChildren(mTreeNodes);
+        if (mTrees != null && !mTrees.isEmpty()) {
+            root.addChildren(mTrees);
             return root;
         } else {
             return null;

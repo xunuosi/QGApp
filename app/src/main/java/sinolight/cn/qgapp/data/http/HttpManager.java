@@ -65,7 +65,7 @@ import sinolight.cn.qgapp.data.http.parser.GsonTSpeaker;
 
 public class HttpManager {
     public static final String TAG = HttpManager.class.getSimpleName();
-    private static final int DEFAULT_TIMEOUT = 10;
+    private static final int DEFAULT_TIMEOUT = 5;
     private Retrofit mRetrofit;
     private ApiService mApiService;
     private final CacheProvider cacheProvider;
@@ -168,6 +168,10 @@ public class HttpManager {
 
     public void getKDBResTypeNoCache(Observer<List<DBResTypeEntity>> subscriber, String token, String type) {
         toSubscribe(mApiService.getKDBResType(token, type), subscriber);
+    }
+
+    public void getMasterTypeNoCache(Observer<List<DBResTypeEntity>> subscriber, String token) {
+        toSubscribe(mApiService.getMasterType(token), subscriber);
     }
 
     public void getKDBBookListNoCache(Observer<PageEntity<List<BookEntity>>> subscriber, String token,
