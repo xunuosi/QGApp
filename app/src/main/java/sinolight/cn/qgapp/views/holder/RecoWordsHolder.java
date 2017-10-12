@@ -77,7 +77,7 @@ public class RecoWordsHolder extends RecyclerView.ViewHolder implements
         } else {
             for (RecommendEntity bean : datas) {
                 titles.add(bean.getTitle());
-                imgList.add(R.drawable.recwords_bg);
+                imgList.add(R.drawable.home_hot_word_banner);
             }
         }
         bindData();
