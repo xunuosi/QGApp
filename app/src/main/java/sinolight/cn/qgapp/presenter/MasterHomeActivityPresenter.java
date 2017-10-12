@@ -30,29 +30,29 @@ public class MasterHomeActivityPresenter extends BasePresenter<IMasterHomeActivi
 
     private final Context mContext;
     private MasterAdapter mAdapter;
-    private MasterEntity mTopMaster;
+//    private MasterEntity mTopMaster;
     private List<MasterEntity> masterList;
     private List<KDBResData> mDatas = new ArrayList<>();
 
-    private HttpSubscriber<MasterEntity> topObserver = new HttpSubscriber<>(
-            new OnResultCallBack<MasterEntity>() {
-
-                @Override
-                public void onSuccess(MasterEntity masterEntity) {
-                    if (masterEntity != null) {
-                        mTopMaster = masterEntity;
-                        showSuccess(TYPE_TOP_BANNER);
-                    } else {
-                        showError(0, "数据未获取成功!");
-                    }
-                }
-
-                @Override
-                public void onError(int code, String errorMsg) {
-                    L.d(TAG, "chapterObserver code:" + code + ",errorMsg:" + errorMsg);
-                    showError(code, errorMsg);
-                }
-            });
+//    private HttpSubscriber<MasterEntity> topObserver = new HttpSubscriber<>(
+//            new OnResultCallBack<MasterEntity>() {
+//
+//                @Override
+//                public void onSuccess(MasterEntity masterEntity) {
+//                    if (masterEntity != null) {
+//                        mTopMaster = masterEntity;
+//                        showSuccess(TYPE_TOP_BANNER);
+//                    } else {
+//                        showError(0, "数据未获取成功!");
+//                    }
+//                }
+//
+//                @Override
+//                public void onError(int code, String errorMsg) {
+//                    L.d(TAG, "chapterObserver code:" + code + ",errorMsg:" + errorMsg);
+//                    showError(code, errorMsg);
+//                }
+//            });
 
     private HttpSubscriber<List<MasterEntity>> masterListObserver = new HttpSubscriber<>(
             new OnResultCallBack<List<MasterEntity>>() {
@@ -101,21 +101,21 @@ public class MasterHomeActivityPresenter extends BasePresenter<IMasterHomeActivi
 
     private void showSuccess(int type) {
         switch (type) {
-            case TYPE_TOP_BANNER:
-                showTopMaster();
-                break;
+//            case TYPE_TOP_BANNER:
+//                showTopMaster();
+//                break;
             case TYPE_MASTER_LIST:
                 transformKDBResData();
                 break;
         }
     }
 
-    private void showTopMaster() {
-        if (mTopMaster.getCover() != null) {
-            view().showTopBanner(mTopMaster.getCover());
-        }
-        closeRefreshView();
-    }
+//    private void showTopMaster() {
+//        if (mTopMaster.getCover() != null) {
+//            view().showTopBanner(mTopMaster.getCover());
+//        }
+//        closeRefreshView();
+//    }
 
     private void closeRefreshView() {
         if (checkData()) {
@@ -124,7 +124,7 @@ public class MasterHomeActivityPresenter extends BasePresenter<IMasterHomeActivi
     }
 
     private boolean checkData() {
-        return mTopMaster != null && masterList != null && masterList.size() != 0;
+        return masterList != null && masterList.size() != 0;
     }
 
     private void showError(int code, String errorMsg) {
@@ -138,7 +138,7 @@ public class MasterHomeActivityPresenter extends BasePresenter<IMasterHomeActivi
 
     @Override
     public void clear() {
-        topObserver.unSubscribe();
+//        topObserver.unSubscribe();
         mDatas.clear();
         KDBResDataMapper.reset();
         unbindView();
@@ -146,13 +146,13 @@ public class MasterHomeActivityPresenter extends BasePresenter<IMasterHomeActivi
 
 
     private void getData() {
-        // Get TopMaster
-        model.getMasterTopWithCache(
-                topObserver,
-                AppHelper.getInstance().getCurrentToken(),
-                null,
-                false
-        );
+//        // Get TopMaster
+//        model.getMasterTopWithCache(
+//                topObserver,
+//                AppHelper.getInstance().getCurrentToken(),
+//                null,
+//                false
+//        );
 
         // Get MasterList
         model.getMasterHotListWithCache(

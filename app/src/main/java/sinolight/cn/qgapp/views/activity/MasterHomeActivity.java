@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -57,6 +58,7 @@ public class MasterHomeActivity extends BaseActivity implements IMasterHomeActiv
     RecyclerView mRvMasterHome;
     @BindView(R.id.swipe_master_home)
     SwipeToLoadLayout mSwipeMasterHome;
+
     private LinearLayoutManager mLayoutManager;
 
     public static Intent getCallIntent(Context context) {
@@ -79,8 +81,12 @@ public class MasterHomeActivity extends BaseActivity implements IMasterHomeActiv
         mTvTitle.setText(R.string.text_master_store);
 
         mLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+        mLayoutManager.setSmoothScrollbarEnabled(true);
+        mLayoutManager.setAutoMeasureEnabled(true);
+
         mRvMasterHome.setLayoutManager(mLayoutManager);
         mRvMasterHome.setHasFixedSize(true);
+        mRvMasterHome.setNestedScrollingEnabled(true);
         mRvMasterHome.addItemDecoration(new LinearDivider(mContext));
         // Handle conflict about recyclerView and SwipeView
         mRvMasterHome.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -107,8 +113,27 @@ public class MasterHomeActivity extends BaseActivity implements IMasterHomeActiv
             }
         });
 
+//        mScrollViewMasterHome.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+//            @Override
+//            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                mSwipeMasterHome.setRefreshEnabled(scrollY == 0);
+//            }
+//        });
+
         mSwipeMasterHome.setOnRefreshListener(this);
         mSwipeMasterHome.setRefreshing(true);
+
+        int width = ScreenUtil.getScreenWidth2Dp(mContext);
+        int height = (int) (getResources().getDimensionPixelOffset(R.dimen.master_home_banner_height) /
+                getResources().getDisplayMetrics().density);
+
+        ImageUtil.frescoShowImageByResId(
+                mContext,
+                R.drawable.master_home_banner,
+                mIvMasterHomeBanner,
+                width,
+                height
+        );
     }
 
     @Override
@@ -161,17 +186,7 @@ public class MasterHomeActivity extends BaseActivity implements IMasterHomeActiv
 
     @Override
     public void showTopBanner(String cover) {
-        int width = ScreenUtil.getScreenWidth2Dp(mContext);
-        int height = (int) (getResources().getDimensionPixelOffset(R.dimen.master_home_banner_height) /
-                getResources().getDisplayMetrics().density);
 
-        ImageUtil.frescoShowImageByUri(
-                mContext,
-                cover,
-                mIvMasterHomeBanner,
-                width,
-                height
-        );
     }
 
     @Override
