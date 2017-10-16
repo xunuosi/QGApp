@@ -85,6 +85,6 @@ public class PictureDisplayActivity extends BaseActivity {
 
     @OnClick(R.id.root_ac_pic_display)
     public void onViewClicked() {
-        finish();
+        onBackPressed();
     }
 }
