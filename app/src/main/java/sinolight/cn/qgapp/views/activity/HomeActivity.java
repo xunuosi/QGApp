@@ -67,6 +67,7 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
         public void onSuccess(TokenEntity tokenEntity) {
             String token = tokenEntity.getToken();
             AppHelper.getInstance().setCurrentToken(token);
+            showView();
         }
 
         @Override
@@ -124,6 +125,8 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
                     // Go to LoginActivity
                     startActivity(LoginActivity.getCallIntent(mContext));
                 }
+            } else {
+                showView();
             }
         }
     }
@@ -176,13 +179,6 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
                 .addItem(newItem(R.drawable.tab_user, R.drawable.tab_user_pre, getString(R.string.bottomBar_user)))
                 .build();
 
-        if (!mHomeFragment.isAdded()) {
-            addFragment(R.id.home_activity_container, mHomeFragment);
-            isHomeFragment = true;
-            currentFragment = mHomeFragment;
-        }
-        mNavigationController.setSelect(0);
-
         mNavigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
             @Override
             public void onSelected(int index, int old) {
@@ -213,6 +209,17 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
 
             }
         });
+    }
+
+    private void showView() {
+        if (!mHomeFragment.isAdded()) {
+            addFragment(R.id.home_activity_container, mHomeFragment);
+            isHomeFragment = true;
+            currentFragment = mHomeFragment;
+        }
+        mNavigationController.setSelect(0);
+
+
     }
 
     private void clickUserFragment() {

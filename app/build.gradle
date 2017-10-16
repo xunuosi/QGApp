@@ -52,7 +52,6 @@ dependencies {
     compile 'com.github.Aspsine:SwipeToLoadLayout:1.0.4'
     compile 'me.majiajie:pager-bottom-tab-strip:2.1.0'
     compile 'com.youth.banner:banner:1.4.9'
-    compile 'com.yanyusong.y_divideritemdecoration:y_divideritemdecoration:2.0'
     // AndroidViewTree
     compile 'com.github.bmelnychuk:atv:1.2.+'
     // fresco
@@ -87,4 +86,7 @@ dependencies {
     compile 'com.hyman:flowlayout-lib:1.1.2'
     compile 'com.android.support:cardview-v7:26.0.0-alpha1'
     compile project(path: ':samples:zoomable')
+    // leakcanary
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -23,7 +24,6 @@ import sinolight.cn.qgapp.dagger.component.DaggerMyDataBaseActivityComponent;
 import sinolight.cn.qgapp.dagger.module.MyDataBaseActivityModule;
 import sinolight.cn.qgapp.presenter.MyDatabaseActivityPresenter;
 import sinolight.cn.qgapp.views.view.IMyDatabaseActivityView;
-import sinolight.cn.qgapp.views.widget.ItemDivider;
 
 /**
  * Created by xns on 2017/8/14.
@@ -70,7 +70,7 @@ public class MyDatabaseActivity extends BaseActivity implements IMyDatabaseActiv
         mLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         mSwipeTarget.setLayoutManager(mLayoutManager);
         mSwipeTarget.setHasFixedSize(true);
-        mSwipeTarget.addItemDecoration(new ItemDivider(mContext));
+        mSwipeTarget.addItemDecoration(new DividerItemDecoration(MyDatabaseActivity.this, DividerItemDecoration.VERTICAL));
 
         mSwipe.setOnRefreshListener(this);
         mSwipe.setRefreshing(true);

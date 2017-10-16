@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -31,7 +32,6 @@ import sinolight.cn.qgapp.dagger.module.PicListActivityModule;
 import sinolight.cn.qgapp.data.bean.CollectEvent;
 import sinolight.cn.qgapp.presenter.PicListActivityPresenter;
 import sinolight.cn.qgapp.views.view.IPicListActivityView;
-import sinolight.cn.qgapp.views.widget.ItemDivider;
 
 /**
  * Created by xns on 2017/8/17.
@@ -93,7 +93,7 @@ public class ResPicListActivity extends BaseActivity implements IPicListActivity
         mLayoutManager = new LinearLayoutManager(mContext);
         mSwipeTarget.setHasFixedSize(true);
         mSwipeTarget.setLayoutManager(mLayoutManager);
-        mSwipeTarget.addItemDecoration(new ItemDivider(mContext));
+        mSwipeTarget.addItemDecoration(new DividerItemDecoration(ResPicListActivity.this, DividerItemDecoration.VERTICAL));
 
         mSwipe.setOnRefreshListener(this);
         mSwipe.setOnLoadMoreListener(this);

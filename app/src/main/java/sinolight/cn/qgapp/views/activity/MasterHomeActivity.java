@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -18,9 +19,6 @@ import android.widget.Toast;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.yanyusong.y_divideritemdecoration.Y_Divider;
-import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder;
-import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration;
 
 import javax.inject.Inject;
 
@@ -87,7 +85,7 @@ public class MasterHomeActivity extends BaseActivity implements IMasterHomeActiv
         mRvMasterHome.setLayoutManager(mLayoutManager);
         mRvMasterHome.setHasFixedSize(true);
         mRvMasterHome.setNestedScrollingEnabled(true);
-        mRvMasterHome.addItemDecoration(new LinearDivider(mContext));
+        mRvMasterHome.addItemDecoration(new DividerItemDecoration(MasterHomeActivity.this, DividerItemDecoration.VERTICAL));
         // Handle conflict about recyclerView and SwipeView
         mRvMasterHome.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private int firstVisibleItemPosition;
@@ -225,24 +223,4 @@ public class MasterHomeActivity extends BaseActivity implements IMasterHomeActiv
         mPresenter.init2Show();
     }
 
-    private class LinearDivider extends Y_DividerItemDecoration {
-        private Context context;
-
-        public LinearDivider(Context context) {
-            super(context);
-            this.context = context;
-        }
-
-        @Override
-        public Y_Divider getDivider(int itemPosition) {
-            Y_Divider divider = null;
-            divider = new Y_DividerBuilder()
-                    .setLeftSideLine(false, ContextCompat.getColor(context, R.color.color_transparent_all), 0.5f, 0, 0)
-                    .setBottomSideLine(true, ContextCompat.getColor(context, R.color.color_bottom_divider), 0.5f, 0, 0)
-                    .setRightSideLine(false, ContextCompat.getColor(context, R.color.color_transparent_all), 0.5f, 0, 0)
-                    .setTopSideLine(false, ContextCompat.getColor(context, R.color.color_transparent_all), 0.5f, 0, 0)
-                    .create();
-            return divider;
-        }
-    }
 }

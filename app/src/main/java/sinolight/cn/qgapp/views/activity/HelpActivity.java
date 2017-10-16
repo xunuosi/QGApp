@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -23,7 +24,6 @@ import sinolight.cn.qgapp.dagger.component.DaggerHelpActivityComponent;
 import sinolight.cn.qgapp.dagger.module.HelpActivityModule;
 import sinolight.cn.qgapp.presenter.HelpActivityPresenter;
 import sinolight.cn.qgapp.views.view.IHelpActivityView;
-import sinolight.cn.qgapp.views.widget.ItemDivider;
 
 /**
  * Created by xns on 2017/9/4.
@@ -82,7 +82,7 @@ public class HelpActivity extends BaseActivity implements IHelpActivityView, OnR
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         mSwipeTarget.setHasFixedSize(true);
         mSwipeTarget.setLayoutManager(layoutManager);
-        mSwipeTarget.addItemDecoration(new ItemDivider(mContext));
+        mSwipeTarget.addItemDecoration(new DividerItemDecoration(HelpActivity.this, DividerItemDecoration.VERTICAL));
     }
 
     @Override

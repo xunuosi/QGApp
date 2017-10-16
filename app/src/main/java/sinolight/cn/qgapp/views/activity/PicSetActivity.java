@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -15,9 +16,6 @@ import android.widget.Toast;
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
-import com.yanyusong.y_divideritemdecoration.Y_Divider;
-import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder;
-import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration;
 
 import javax.inject.Inject;
 
@@ -73,7 +71,7 @@ public class PicSetActivity extends BaseActivity implements IPicSetActivityView,
         mLayoutManager = new LinearLayoutManager(mContext);
         mSwipeTarget.setHasFixedSize(true);
         mSwipeTarget.setLayoutManager(mLayoutManager);
-        mSwipeTarget.addItemDecoration(new LinearDivider(mContext));
+        mSwipeTarget.addItemDecoration(new DividerItemDecoration(PicSetActivity.this, DividerItemDecoration.VERTICAL));
 
         mSwipe.setOnRefreshListener(this);
         mSwipe.setOnLoadMoreListener(this);
@@ -179,27 +177,6 @@ public class PicSetActivity extends BaseActivity implements IPicSetActivityView,
                         null
                 );
                 break;
-        }
-    }
-
-    private class LinearDivider extends Y_DividerItemDecoration {
-        private Context context;
-
-        public LinearDivider(Context context) {
-            super(context);
-            this.context = context;
-        }
-
-        @Override
-        public Y_Divider getDivider(int itemPosition) {
-            Y_Divider divider = null;
-            divider = new Y_DividerBuilder()
-                    .setLeftSideLine(false, ContextCompat.getColor(context, R.color.color_transparent_all), 0.5f, 0, 0)
-                    .setBottomSideLine(true, ContextCompat.getColor(context, R.color.color_bottom_divider), 0.5f, 0, 0)
-                    .setRightSideLine(false, ContextCompat.getColor(context, R.color.color_transparent_all), 0.5f, 0, 0)
-                    .setTopSideLine(false, ContextCompat.getColor(context, R.color.color_transparent_all), 0.5f, 0, 0)
-                    .create();
-            return divider;
         }
     }
 }

@@ -10,6 +10,7 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.upstream.HttpDataSource;
+import com.squareup.leakcanary.LeakCanary;
 
 import sinolight.cn.qgapp.dagger.component.ApplicationComponent;
 import sinolight.cn.qgapp.dagger.component.DaggerApplicationComponent;
@@ -31,6 +32,12 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
         instance = this;
 
         mApplicationComponent = DaggerApplicationComponent.builder()

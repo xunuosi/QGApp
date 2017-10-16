@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -22,9 +23,6 @@ import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
-import com.yanyusong.y_divideritemdecoration.Y_Divider;
-import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder;
-import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration;
 
 import javax.inject.Inject;
 
@@ -32,7 +30,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.adapter.CommonTitleAdapter;
-import sinolight.cn.qgapp.adapter.VideoAdapter;
 import sinolight.cn.qgapp.dagger.component.DaggerMaterialListActivityComponent;
 import sinolight.cn.qgapp.dagger.module.MaterialListActivityModule;
 import sinolight.cn.qgapp.presenter.MaterialListActivityPresenter;
@@ -102,7 +99,7 @@ public class MaterialListActivity extends BaseActivity implements IMaterialListA
         mLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         mSwipeTarget.setLayoutManager(mLayoutManager);
         mSwipeTarget.setHasFixedSize(true);
-        mSwipeTarget.addItemDecoration(new LinearDivider(mContext));
+        mSwipeTarget.addItemDecoration(new DividerItemDecoration(MaterialListActivity.this, DividerItemDecoration.VERTICAL));
 
         mSwipeMaterialList.setOnRefreshListener(MaterialListActivity.this);
         mSwipeMaterialList.setOnLoadMoreListener(MaterialListActivity.this);
@@ -272,26 +269,5 @@ public class MaterialListActivity extends BaseActivity implements IMaterialListA
         TreeParentHolder.IconTreeItem item = (TreeParentHolder.IconTreeItem) value;
         themeType = item.id;
         themeName = item.name;
-    }
-
-    private class LinearDivider extends Y_DividerItemDecoration {
-        private Context context;
-
-        public LinearDivider(Context context) {
-            super(context);
-            this.context = context;
-        }
-
-        @Override
-        public Y_Divider getDivider(int itemPosition) {
-            Y_Divider divider = null;
-            divider = new Y_DividerBuilder()
-                    .setLeftSideLine(false, ContextCompat.getColor(context, R.color.color_transparent_all), 0.5f, 0, 0)
-                    .setBottomSideLine(true, ContextCompat.getColor(context, R.color.color_bottom_divider), 0.5f, 0, 0)
-                    .setRightSideLine(false, ContextCompat.getColor(context, R.color.color_transparent_all), 0.5f, 0, 0)
-                    .setTopSideLine(false, ContextCompat.getColor(context, R.color.color_transparent_all), 0.5f, 0, 0)
-                    .create();
-            return divider;
-        }
     }
 }

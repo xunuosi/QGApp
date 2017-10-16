@@ -25,8 +25,8 @@ import sinolight.cn.qgapp.adapter.HomeAdapter;
 import sinolight.cn.qgapp.dagger.HasComponent;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
 import sinolight.cn.qgapp.presenter.HomeFragmentPresenter;
-import sinolight.cn.qgapp.utils.MyItemDivider;
 import sinolight.cn.qgapp.views.view.IHomeFragmentView;
+import sinolight.cn.qgapp.views.widget.DividerGridItemDecoration;
 
 /**
  * Created by xns on 2017/6/29.
@@ -76,7 +76,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, OnR
         mLayoutManager = new GridLayoutManager(mContext, 3);
         mRvHf.setLayoutManager(mLayoutManager);
         mRvHf.setHasFixedSize(true);
-        mRvHf.addItemDecoration(new MyItemDivider(mContext));
+        mRvHf.addItemDecoration(new DividerGridItemDecoration(mContext));
     }
 
     @Override

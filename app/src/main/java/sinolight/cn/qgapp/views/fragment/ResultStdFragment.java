@@ -2,6 +2,7 @@ package sinolight.cn.qgapp.views.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,10 +25,8 @@ import sinolight.cn.qgapp.R2;
 import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.dagger.HasComponent;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
-import sinolight.cn.qgapp.presenter.CollectStdPresenter;
 import sinolight.cn.qgapp.presenter.ResultStdPresenter;
 import sinolight.cn.qgapp.views.view.ICollectBookFragmentView;
-import sinolight.cn.qgapp.views.widget.ItemDivider;
 
 /**
  * Created by xns on 2017/8/14.
@@ -91,7 +90,7 @@ public class ResultStdFragment extends BaseCollectFragment implements ICollectBo
         mLayoutManager = new LinearLayoutManager(getActivity());
         mSwipeTarget.setHasFixedSize(true);
         mSwipeTarget.setLayoutManager(mLayoutManager);
-        mSwipeTarget.addItemDecoration(new ItemDivider(getActivity()));
+        mSwipeTarget.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
         mSwipe.setOnRefreshListener(this);
         mSwipe.setOnLoadMoreListener(this);
