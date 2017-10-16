@@ -75,7 +75,8 @@
             android:layout_height="match_parent"
             style="@style/login_edit_text"
             android:hint="@string/user_name"
-            android:background="@null"/>
+            android:background="@null"
+            android:inputType="text"/>
     </LinearLayout>
 
     <LinearLayout

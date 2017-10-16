@@ -68,7 +68,8 @@
             android:id="@+id/et_register_user"
             style="@style/register_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:inputType="text"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/register_email_root"
@@ -93,7 +94,8 @@
             android:id="@+id/et_email"
             style="@style/register_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:inputType="text"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/register_pw_root"
@@ -180,7 +182,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:maxLength="5"/>
+            android:maxLength="5"
+            android:inputType="text"/>
         <ImageView
             android:id="@+id/iv_register_code"
             android:layout_width="120dp"
