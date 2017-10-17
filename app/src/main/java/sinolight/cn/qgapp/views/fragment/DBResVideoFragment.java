@@ -101,15 +101,17 @@ public class DBResVideoFragment extends BaseFragment implements IDBResVideoFragm
 
     @Override
     public void showRefreshing(boolean enable) {
-        if (enable) {
-            mSwipeDbResVideo.post(new Runnable() {
-                @Override
-                public void run() {
-                    mSwipeDbResVideo.setRefreshing(true);
-                }
-            });
-        } else {
-            mSwipeDbResVideo.setRefreshing(false);
+        if (mSwipeDbResVideo != null) {
+            if (enable) {
+                mSwipeDbResVideo.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeDbResVideo.setRefreshing(true);
+                    }
+                });
+            } else {
+                mSwipeDbResVideo.setRefreshing(false);
+            }
         }
     }
 
