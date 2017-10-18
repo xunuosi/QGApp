@@ -179,6 +179,10 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
                 .addItem(newItem(R.drawable.tab_user, R.drawable.tab_user_pre, getString(R.string.bottomBar_user)))
                 .build();
 
+
+    }
+
+    private void showView() {
         mNavigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
             @Override
             public void onSelected(int index, int old) {
@@ -209,9 +213,7 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
 
             }
         });
-    }
 
-    private void showView() {
         if (!mHomeFragment.isAdded()) {
             addFragment(R.id.home_activity_container, mHomeFragment);
             isHomeFragment = true;
