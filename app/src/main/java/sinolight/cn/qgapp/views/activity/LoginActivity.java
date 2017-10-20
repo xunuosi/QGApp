@@ -58,7 +58,7 @@ public class LoginActivity extends BaseActivity implements ILoginActivityView {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         this.initializeInjector();
         super.onCreate(savedInstanceState);
-        processExtraData(null);
+        processExtraData(getIntent());
     }
 
     private void processExtraData(Intent intent) {

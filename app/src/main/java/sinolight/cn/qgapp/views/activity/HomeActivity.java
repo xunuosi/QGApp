@@ -57,27 +57,9 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
 
     private NavigationController mNavigationController;
     private UserComponent userComponent;
-    private boolean isLogined;
-    private boolean isSplashActivity;
     // 标志位表示当前是否为HomeFragment
     private boolean isHomeFragment = false;
-    private HttpSubscriber loginObserver = new HttpSubscriber(new OnResultCallBack<TokenEntity>() {
 
-        @Override
-        public void onSuccess(TokenEntity tokenEntity) {
-            String token = tokenEntity.getToken();
-            AppHelper.getInstance().setCurrentToken(token);
-            showView();
-        }
-
-        @Override
-        public void onError(int code, String errorMsg) {
-            L.d(TAG, "code:" + code + ",errorMsg:" + errorMsg);
-            Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
-            startActivity(LoginActivity.getCallIntent(mContext).putExtra(AppContants.Account.USER_NAME, 
-                    AppHelper.getInstance().getCurrentUserName()));
-        }
-    }); 
     @Inject
     Context mContext;
     @Inject
@@ -105,30 +87,6 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
         this.initializeInjector();
         super.onCreate(savedInstanceState);
         checkAppPermission();
-        Intent intent = getIntent();
-        if (intent != null) {
-            isLogined = intent.getBooleanExtra(AppContants.Account.IS_LOGINED, false);
-            isSplashActivity = intent.getBooleanExtra(AppContants.Account.IS_SPLASHACTIVITY, false);
-            if (isSplashActivity) {
-                if (isLogined) {
-                    try {
-                        String rsa = AppHelper.getInstance().getCurrentPW();
-                        byte[] bytes = RSA.decryptBASE64(rsa);
-                        String pw = new String(bytes);
-                        HttpManager.getInstance().login(loginObserver,
-                                AppHelper.getInstance().getCurrentUserName(),
-                                pw);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    // Go to LoginActivity
-                    startActivity(LoginActivity.getCallIntent(mContext));
-                }
-            } else {
-                showView();
-            }
-        }
     }
 
     @Override
@@ -142,7 +100,6 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        loginObserver.unSubscribe();
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
@@ -178,11 +135,6 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
                 .addItem(newItem(R.drawable.tab_resource, R.drawable.tab_resource_pre, getString(R.string.bottomBar_res)))
                 .addItem(newItem(R.drawable.tab_user, R.drawable.tab_user_pre, getString(R.string.bottomBar_user)))
                 .build();
-
-
-    }
-
-    private void showView() {
         mNavigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
             @Override
             public void onSelected(int index, int old) {
@@ -198,7 +150,7 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
                         clickResourceFragment();
                         break;
                     case FRAGMENT_USER:
-                        if (isLogined) {
+                        if (AppHelper.getInstance().isLogined()) {
                             clickUserFragment();
                         } else {
                             startActivity(LoginActivity.getCallIntent(mContext));

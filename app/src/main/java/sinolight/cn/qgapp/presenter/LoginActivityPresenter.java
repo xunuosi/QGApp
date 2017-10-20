@@ -31,6 +31,7 @@ public class LoginActivityPresenter extends BasePresenter<ILoginActivityView, Da
     private Context mContext;
     private String userName;
     private String pwd;
+    private boolean isLogined;
     private HttpSubscriber loginObserver = new HttpSubscriber(new OnResultCallBack<TokenEntity>() {
 
         @Override
@@ -39,12 +40,14 @@ public class LoginActivityPresenter extends BasePresenter<ILoginActivityView, Da
 
             AppHelper.getInstance().setCurrentUserName(userName);
             AppHelper.getInstance().setCurrentToken(token);
-            String rsa = null;
-            try {
-                rsa = RSA.encryptBASE64(pwd.getBytes());
-                AppHelper.getInstance().setCurrentPW(rsa);
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (!isLogined) {
+                String rsa = null;
+                try {
+                    rsa = RSA.encryptBASE64(pwd.getBytes());
+                    AppHelper.getInstance().setCurrentPW(rsa);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
             showSuccess();
         }
@@ -54,6 +57,9 @@ public class LoginActivityPresenter extends BasePresenter<ILoginActivityView, Da
             L.d(TAG, "code:" + code + ",errorMsg:" + errorMsg);
             view().showLoading(false);
             Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
+            if (userName != null) {
+                view().initShow(userName);
+            }
         }
     });
 
@@ -73,14 +79,26 @@ public class LoginActivityPresenter extends BasePresenter<ILoginActivityView, Da
     }
 
     public void init2show(Intent intent) {
+        userName = AppHelper.getInstance().getCurrentUserName();
         if (intent != null) {
-            userName = intent.getStringExtra(AppContants.Account.USER_NAME);
-        } else {
-            userName = AppHelper.getInstance().getCurrentUserName();
+            isLogined = intent.getBooleanExtra(AppContants.Account.IS_LOGINED, false);
         }
-        if (userName != null) {
+        // auto login app
+        if (isLogined) {
+            view().showLoading(true);
             view().initShow(userName);
+            try {
+                String rsa = AppHelper.getInstance().getCurrentPW();
+                byte[] bytes = RSA.decryptBASE64(rsa);
+                String pw = new String(bytes);
+                HttpManager.getInstance().login(loginObserver,
+                        AppHelper.getInstance().getCurrentUserName(),
+                        pw);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
     @Override

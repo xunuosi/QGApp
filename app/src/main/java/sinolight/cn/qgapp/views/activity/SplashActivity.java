@@ -82,9 +82,8 @@ public class SplashActivity extends BaseActivity {
                         }
                     }
                     //enter main screen
-                    Intent callIntent = HomeActivity.getCallIntent(mContext);
+                    Intent callIntent = LoginActivity.getCallIntent(mContext);
                     callIntent.putExtra(AppContants.Account.IS_LOGINED, true);
-                    callIntent.putExtra(AppContants.Account.IS_SPLASHACTIVITY, true);
                     startActivity(callIntent);
                     finish();
                 } else {

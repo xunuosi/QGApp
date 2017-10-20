@@ -195,6 +195,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         ActivityCollector.removeActivity(this);
+        mListener = null;
         super.onDestroy();
     }
 
