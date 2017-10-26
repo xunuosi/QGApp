@@ -164,5 +164,8 @@ public class LoginActivity extends BaseActivity implements ILoginActivityView {
     @Override
     public void gotoActivity(Intent callIntent) {
         startActivity(callIntent);
+        // finish self
+        finish();
     }
+
 }
