@@ -86,8 +86,9 @@ public class VideoInfoActivityPresenter extends BasePresenter<IVideoInfoActivity
             mVideoObserver.unSubscribe();
         }
         mCollectObserver.unSubscribe();
-
-        mPlayer.release();
+        if (mPlayer != null) {
+            mPlayer.release();
+        }
         KDBResDataMapper.reset();
         unbindView();
     }
