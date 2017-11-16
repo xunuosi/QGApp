@@ -213,7 +213,7 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
         addPermissions(new String[]{
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.INTERNET}, this);
+                Manifest.permission.INTERNET}, HomeActivity.this);
     }
 
     @Override
