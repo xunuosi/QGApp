@@ -1,5 +1,6 @@
 package sinolight.cn.qgapp.views.holder;
 
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,6 +16,7 @@ import sinolight.cn.qgapp.AppContants;
 import sinolight.cn.qgapp.R;
 import sinolight.cn.qgapp.data.bean.DataBaseBean;
 import sinolight.cn.qgapp.utils.ImageUtil;
+import sinolight.cn.qgapp.views.activity.DBaseDetailActivity;
 
 /**
  * Created by xns on 2017/7/6.
@@ -99,11 +101,11 @@ public class MyDatabaseHolder extends RecyclerView.ViewHolder {
 
     @OnClick(R.id.item_my_database_root)
     public void onViewClicked() {
-//        Intent callIntent = DBaseDetailActivity.getCallIntent(App.getContext());
-//        callIntent.putExtra(AppContants.DataBase.KEY_ID, dbId);
-//        callIntent.putExtra(AppContants.DataBase.KEY_NAME, dbName);
-//        callIntent.putExtra(AppContants.DataBase.KEY_TYPE, dbType);
-//        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        App.getContext().startActivity(callIntent);
+        Intent callIntent = DBaseDetailActivity.getCallIntent(App.getContext());
+        callIntent.putExtra(AppContants.DataBase.KEY_ID, dbId);
+        callIntent.putExtra(AppContants.DataBase.KEY_NAME, dbName);
+        callIntent.putExtra(AppContants.DataBase.KEY_TYPE, dbType);
+        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        App.getContext().startActivity(callIntent);
     }
 }

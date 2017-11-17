@@ -124,7 +124,9 @@ public class MyDatabaseActivity extends BaseActivity implements IMyDatabaseActiv
 
     @Override
     public void showListView(MyDatabaseAdapter adapter) {
-
+        if (mSwipeTarget != null && mSwipeTarget.getAdapter() == null) {
+            mSwipeTarget.setAdapter(adapter);
+        }
     }
 
     @Override

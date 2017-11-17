@@ -89,10 +89,9 @@ public class MyDatabaseActivityPresenter extends BasePresenter<IMyDatabaseActivi
     }
 
     private void getData() {
-        model.getMyDataBaseWithCache(
+        model.getMyDataBaseNoCache(
                 databaseObserver,
-                AppHelper.getInstance().getCurrentToken(),
-                false);
+                AppHelper.getInstance().getCurrentToken());
     }
 
     @Override

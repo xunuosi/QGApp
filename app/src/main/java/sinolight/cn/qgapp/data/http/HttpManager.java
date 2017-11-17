@@ -370,6 +370,10 @@ public class HttpManager {
                 new EvictProvider(update)), subscriber);
     }
 
+    public void getMyDataBaseNoCache(Observer<List<DataBaseBean>> subscriber, String token) {
+        toSubscribe(mApiService.getMyDataBase(token, AppHelper.getInstance().getCurrentUserName()), subscriber);
+    }
+
     public void getAboutWithCache(Observer<List<AboutEntity>> subscriber, String token, boolean update) {
         toSubscribe(cacheProvider.getAbout(mApiService.getAbout(token), new EvictProvider(update)), subscriber);
     }
