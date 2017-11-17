@@ -153,6 +153,7 @@
     <string name="text_video_set">视频集合</string>
     <string name="text_video_list">视频列表</string>
     <string name="attention_exit_app">再按一次退出程序</string>
+    <string name="attention_permission_denied">某些权限被拒绝,可能影响程序的一些功能使用。建议您重新授予程序该权限！</string>
     <!--My center-->
     <string name="text_collect_success">加入收藏成功</string>
     <string name="text_collect_is_empty">暂无收藏资源</string>

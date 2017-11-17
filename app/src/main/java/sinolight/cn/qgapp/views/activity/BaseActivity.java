@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ import sinolight.cn.qgapp.App;
 import sinolight.cn.qgapp.dagger.component.ApplicationComponent;
 import sinolight.cn.qgapp.dagger.module.ActivityModule;
 import sinolight.cn.qgapp.utils.ActivityCollector;
+import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.utils.PermissionListener;
 
 /**
@@ -37,7 +39,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 1;
     public static List<String> listPermission;
-    public static PermissionListener mListener;
+    public static WeakReference<PermissionListener> mListener;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -159,7 +161,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public static void addPermissions(String[] permisses, PermissionListener listener) {
         listPermission = new ArrayList<>();
-        mListener = listener;
+        mListener = new WeakReference<>(listener);
         for (String per : permisses) {
             if (ContextCompat.checkSelfPermission(ActivityCollector.getTopActivity(), per) != PackageManager.PERMISSION_GRANTED) {
                 listPermission.add(per);
@@ -168,7 +170,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (!listPermission.isEmpty()) {
             ActivityCompat.requestPermissions(ActivityCollector.getTopActivity(),listPermission.toArray(new String[listPermission.size()]),REQUEST_CODE);
         } else {
-            mListener.onGranted();
+            mListener.get().onGranted();
         }
     }
 
@@ -184,9 +186,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                     }
                 }
                 if (!deniedList.isEmpty()) {
-                    mListener.onDenied(deniedList);
+                    mListener.get().onDenied(deniedList);
                 } else {
-                    mListener.onGranted();
+                    mListener.get().onGranted();
                 }
             }
         }
@@ -195,7 +197,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         ActivityCollector.removeActivity(this);
-        mListener = null;
         super.onDestroy();
     }
 

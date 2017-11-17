@@ -3,6 +3,7 @@ package sinolight.cn.qgapp.views.activity;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -14,7 +15,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.math.BigInteger;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -34,13 +34,7 @@ import sinolight.cn.qgapp.dagger.component.DaggerUserComponent;
 import sinolight.cn.qgapp.dagger.component.UserComponent;
 import sinolight.cn.qgapp.dagger.module.HomeActivityModule;
 import sinolight.cn.qgapp.dagger.module.UserModule;
-import sinolight.cn.qgapp.data.http.HttpManager;
-import sinolight.cn.qgapp.data.http.callback.OnResultCallBack;
-import sinolight.cn.qgapp.data.http.entity.TokenEntity;
-import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
-import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.utils.PermissionListener;
-import sinolight.cn.qgapp.utils.RSA;
 import sinolight.cn.qgapp.views.fragment.BaseFragment;
 import sinolight.cn.qgapp.views.fragment.HomeFragment;
 import sinolight.cn.qgapp.views.fragment.KnowledgeFragment;
@@ -228,7 +222,12 @@ public class HomeActivity extends BaseActivity implements PermissionListener, IH
 
     @Override
     public void onDenied(List<String> deniedPermission) {
+        Toast.makeText(mContext, R.string.attention_permission_denied, Toast.LENGTH_SHORT).show();
+    }
 
+    private String formatStr(int baseStrId, String child) {
+        String local = getString(baseStrId);
+        return String.format(local, child);
     }
 
     @Override
