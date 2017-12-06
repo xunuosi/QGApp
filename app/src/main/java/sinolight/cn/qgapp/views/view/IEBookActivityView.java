@@ -1,6 +1,7 @@
 package sinolight.cn.qgapp.views.view;
 
 
+
 import sinolight.cn.qgapp.adapter.KDBResAdapter;
 
 /**
@@ -23,5 +24,7 @@ public interface IEBookActivityView {
     void showLoadMoreing(boolean enable);
 
     void hasMoreData(boolean hasMore);
+
+    void changeSortView(int position, int state);
 
 }

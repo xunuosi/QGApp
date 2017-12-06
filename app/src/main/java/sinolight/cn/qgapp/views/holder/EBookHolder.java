@@ -69,7 +69,7 @@ public class EBookHolder extends RecyclerView.ViewHolder {
         mTvItemEbookTitle.setText(mData.getName());
         mTvItemEbookInfo.setText(mData.getAbs());
 //        mTvItemEbookPriceHolder.setText(App.getContext().getString(R.string.text_price2));
-        mTvItemEbookPrice.setText(formatStr(R.string.text_price_format, String.valueOf(mData.getPrice())));
+        mTvItemEbookPrice.setText(formatStr(R.string.text_price_format, mData.getPrice()));
     }
 
     private String formatStr(int baseStrId, String child) {

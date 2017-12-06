@@ -3,6 +3,7 @@ package sinolight.cn.qgapp.presenter;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
+import com.github.zagum.expandicon.ExpandIconView;
 import com.unnamed.b.atv.model.TreeNode;
 
 import java.util.ArrayList;
@@ -349,9 +350,37 @@ public class EBookActivityPresenter extends BasePresenter<IEBookActivityView, Ht
         view().hasMoreData(true);
     }
 
-    public void setDataType(AppContants.EBook.SortType type) {
+    public void setDataType(AppContants.EBook.SortType type, boolean isChangeSort) {
         sortType = type;
+        if (isChangeSort) {
+            if (AppContants.EBook.SortOrder.SORT_POSITIVE.getType().equals(sortOrder.getType())) {
+                sortOrder = AppContants.EBook.SortOrder.SORT_REVERSE;
+                view().changeSortView(getActionTabItemPosi(type), ExpandIconView.MORE);
+            } else {
+                sortOrder = AppContants.EBook.SortOrder.SORT_POSITIVE;
+                view().changeSortView(getActionTabItemPosi(type), ExpandIconView.LESS);
+            }
+        } else {
+            sortOrder = AppContants.EBook.SortOrder.SORT_POSITIVE;
+            view().changeSortView(getActionTabItemPosi(type), ExpandIconView.LESS);
+        }
         // Update Data
         this.loadDataWithPara(null, null, false, false);
+    }
+
+    private int getActionTabItemPosi(AppContants.EBook.SortType type) {
+        int position = 0;
+        switch (type) {
+            case SORT_COMPREHENSIVE:
+                position = 0;
+                break;
+            case SORT_NEWGOODS:
+                position = 1;
+                break;
+            case SORT_PRICE:
+                position = 2;
+                break;
+        }
+        return position;
     }
 }

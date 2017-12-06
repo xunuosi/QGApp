@@ -10,7 +10,7 @@ public class EBookEntity {
     private String name;
     private String cover;
     private String abs;
-    private double price;
+    private String price;
     private String url;
 
     public EBookEntity() {
@@ -48,11 +48,11 @@ public class EBookEntity {
         this.abs = abs;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 

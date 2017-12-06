@@ -11,17 +11,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+import com.github.zagum.expandicon.ExpandIconView;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 
@@ -38,6 +41,8 @@ import sinolight.cn.qgapp.presenter.EBookActivityPresenter;
 import sinolight.cn.qgapp.views.holder.TreeParentHolder;
 import sinolight.cn.qgapp.views.view.IEBookActivityView;
 import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
+
+import static com.umeng.socialize.utils.DeviceConfig.context;
 
 /**
  * Created by xns on 2017/8/2.
@@ -108,9 +113,14 @@ public class EBookActivity extends BaseActivity implements IEBookActivityView,
 
     @Override
     protected void initViews() {
-        mTabLayoutEbook.addTab(mTabLayoutEbook.newTab().setText(R.string.text_comprehensive), true);
-        mTabLayoutEbook.addTab(mTabLayoutEbook.newTab().setText(R.string.text_new_goods));
-        mTabLayoutEbook.addTab(mTabLayoutEbook.newTab().setText(R.string.text_price));
+        for (int i = 0; i < 3; i++) {
+            TabLayout.Tab tab = mTabLayoutEbook.newTab();
+            tab.setCustomView(getCustomView(i));
+            if (i == 0) {
+                tab.select();
+            }
+            mTabLayoutEbook.addTab(tab);
+        }
         // Add line divider
         addTabLayoutDivider();
         mTabLayoutEbook.addOnTabSelectedListener(EBookActivity.this);
@@ -271,17 +281,28 @@ public class EBookActivity extends BaseActivity implements IEBookActivityView,
     }
 
     @Override
+    public void changeSortView(int position, int state) {
+        TabLayout.Tab tab = mTabLayoutEbook.getTabAt(position);
+        if (tab != null) {
+            View view = tab.getCustomView();
+            if (view != null) {
+                ((ExpandIconView) view.findViewById(R.id.tab_item_ex_icon)).setState(state, true);
+            }
+        }
+    }
+
+    @Override
     public void onTabSelected(TabLayout.Tab tab) {
         //change data type
         switch (tab.getPosition()) {
             case TYPE_COMPREHENSIVE:
-                mPresenter.setDataType(AppContants.EBook.SortType.SORT_COMPREHENSIVE);
+                mPresenter.setDataType(AppContants.EBook.SortType.SORT_COMPREHENSIVE, false);
                 break;
             case TYPE_NEWGOODS:
-                mPresenter.setDataType(AppContants.EBook.SortType.SORT_NEWGOODS);
+                mPresenter.setDataType(AppContants.EBook.SortType.SORT_NEWGOODS, false);
                 break;
             case TYPE_PRICE:
-                mPresenter.setDataType(AppContants.EBook.SortType.SORT_PRICE);
+                mPresenter.setDataType(AppContants.EBook.SortType.SORT_PRICE, false);
                 break;
         }
     }
@@ -293,7 +314,17 @@ public class EBookActivity extends BaseActivity implements IEBookActivityView,
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
-
+        switch (tab.getPosition()) {
+            case TYPE_COMPREHENSIVE:
+                mPresenter.setDataType(AppContants.EBook.SortType.SORT_COMPREHENSIVE, true);
+                break;
+            case TYPE_NEWGOODS:
+                mPresenter.setDataType(AppContants.EBook.SortType.SORT_NEWGOODS, true);
+                break;
+            case TYPE_PRICE:
+                mPresenter.setDataType(AppContants.EBook.SortType.SORT_PRICE, true);
+                break;
+        }
     }
 
     @Override
@@ -332,4 +363,24 @@ public class EBookActivity extends BaseActivity implements IEBookActivityView,
         themeName = item.name;
     }
 
+    private View getCustomView(int position) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.tab_item, null);
+        TextView tv = view.findViewById(R.id.tab_item_tv);
+        ExpandIconView exView = view.findViewById(R.id.tab_item_ex_icon);
+        switch (position) {
+            case 0:
+                tv.setText(getText(R.string.text_comprehensive));
+                exView.setState(ExpandIconView.LESS, false);
+                break;
+            case 1:
+                tv.setText(getText(R.string.text_new_goods));
+                exView.setState(ExpandIconView.LESS, false);
+                break;
+            case 2:
+                tv.setText(getText(R.string.text_price));
+                exView.setState(ExpandIconView.LESS, false);
+                break;
+        }
+        return view;
+    }
 }

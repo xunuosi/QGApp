@@ -292,6 +292,12 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="text_tab_item_srot">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black_to_blue</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="text_tag">
         <item name="android:textSize">16sp</item>
         <item name="android:gravity">center</item>
