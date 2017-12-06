@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_tab_item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tab_item_tv"
+        style="@style/text_tab_item_srot"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tab_item_ex_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="0"
+        android:clickable="true"
+        android:focusable="true"/>
+
+    <com.github.zagum.expandicon.ExpandIconView
+        android:id="@+id/tab_item_ex_icon"
+        android:layout_width="35dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        app:eiv_animationDuration="300"
+        app:eiv_color="#000"
+        app:eiv_colorLess="@color/google_blue"
+        app:eiv_colorMore="@color/google_red"
+        app:eiv_padding="8dp"
+        app:eiv_roundedCorners="false"
+        app:eiv_switchColor="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+</android.support.constraint.ConstraintLayout>
