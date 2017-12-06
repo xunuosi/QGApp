@@ -4,6 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
+import com.umeng.socialize.shareboard.ShareBoardConfig;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +33,7 @@ import sinolight.cn.qgapp.data.http.subscriber.HttpSubscriber;
 import sinolight.cn.qgapp.utils.HomeDataMapper;
 import sinolight.cn.qgapp.utils.L;
 import sinolight.cn.qgapp.views.activity.SearchActivity;
+import sinolight.cn.qgapp.views.fragment.HomeFragment;
 import sinolight.cn.qgapp.views.view.IHomeFragmentView;
 
 /**
@@ -33,7 +41,8 @@ import sinolight.cn.qgapp.views.view.IHomeFragmentView;
  * HomeFragment Presenter
  */
 
-public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, HttpManager> {
+public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, HttpManager>
+        implements UMShareListener {
     private static final String TAG = "HomeFragmentPresenter";
     private static final int TYPE_STANDARD = 0;
     private static final int TYPE_NEW_BOOKS = 1;
@@ -389,5 +398,51 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
     public void gotoActivity() {
         Intent callIntent = SearchActivity.getCallIntent(mContext);
         view().gotoActivity(callIntent);
+    }
+
+    public void shareApp() {
+//        //新建ShareBoardConfig
+//        ShareBoardConfig config = new ShareBoardConfig();
+//        // config.setShareboardPostion(ShareBoardConfig.SHAREBOARD_POSITION_CENTER);//设置位置
+//        config.setTitleText(mContext.getString(R.string.app_name));
+//        config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_CIRCULAR);
+//        config.setCancelButtonVisibility(true);
+
+        UMWeb web = new UMWeb("http://www.chlip.com.cn");
+        web.setTitle(mContext.getString(R.string.app_name));//标题
+        web.setThumb(new UMImage(mContext,R.mipmap.qg_app_icon));  //缩略图
+        web.setDescription(mContext.getString(R.string.text_book_resource_holder));//描述
+
+        new ShareAction(((HomeFragment)view()).getActivity())
+                .withMedia(web)
+                .setDisplayList(
+                        SHARE_MEDIA.WEIXIN,
+                        SHARE_MEDIA.WEIXIN_CIRCLE,
+                        SHARE_MEDIA.QQ,
+                        SHARE_MEDIA.QZONE,
+                        SHARE_MEDIA.SINA)
+                .setCallback(this)
+                .open();
+
+    }
+
+    @Override
+    public void onStart(SHARE_MEDIA share_media) {
+
+    }
+
+    @Override
+    public void onResult(SHARE_MEDIA share_media) {
+
+    }
+
+    @Override
+    public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+
+    }
+
+    @Override
+    public void onCancel(SHARE_MEDIA share_media) {
+
     }
 }

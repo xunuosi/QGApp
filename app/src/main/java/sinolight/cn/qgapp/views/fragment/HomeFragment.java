@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -147,13 +146,20 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, OnR
         }
     }
 
-    @OnClick(R.id.iv_hf_search)
-    public void onViewClicked() {
-        mPresenter.gotoActivity();
-    }
-
     @Override
     public void onRefresh() {
         mPresenter.initData();
+    }
+
+    @OnClick({R.id.iv_hf_search, R.id.iv_hf_share})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_hf_search:
+                mPresenter.gotoActivity();
+                break;
+            case R.id.iv_hf_share:
+                mPresenter.shareApp();
+                break;
+        }
     }
 }

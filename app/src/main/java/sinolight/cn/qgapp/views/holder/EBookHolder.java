@@ -92,7 +92,7 @@ public class EBookHolder extends RecyclerView.ViewHolder {
         if (mData.getUrl() != null && !mData.getUrl().isEmpty()) {
             url = mData.getUrl();
         } else {
-            url = "http://www.taobao.com";
+            url = "https://zgqgycbs.tmall.com/";
         }
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));

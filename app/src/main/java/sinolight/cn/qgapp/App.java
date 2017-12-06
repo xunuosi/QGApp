@@ -11,6 +11,9 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.upstream.HttpDataSource;
 import com.squareup.leakcanary.LeakCanary;
+import com.umeng.socialize.Config;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 
 import sinolight.cn.qgapp.dagger.component.ApplicationComponent;
 import sinolight.cn.qgapp.dagger.component.DaggerApplicationComponent;
@@ -28,6 +31,13 @@ public class App extends Application {
     private static Context instance;
     private ApplicationComponent mApplicationComponent;
     private String userAgent;
+
+    {
+        PlatformConfig.setWeixin("wx979afbfaa12ec30d", "45bfeeb7ea9ef55f71884601cb6093e5");
+        PlatformConfig.setQQZone("1106566458", "4oLLikvYDHq5S7XF");
+        PlatformConfig.
+                setSinaWeibo("1922998406", "608371766b36beaf5cf252196f9fe225", "http://www.sinolight.cn");
+    }
 
     @Override
     public void onCreate() {
@@ -55,6 +65,9 @@ public class App extends Application {
         AppHelper.getInstance().init(instance);
 
         userAgent = AppHelper.getUserAgent(this, "QGApp");
+
+        UMShareAPI.get(this);
+        Config.DEBUG = true;
     }
 
     private void initDatabase() {
