@@ -14,7 +14,10 @@
     </style>
 
     <style name="NoTitleTheme" parent="AppTheme">
-
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <style name="tool_bar">
@@ -235,6 +238,7 @@
         <item name="android:textSize">18sp</item>
         <item name="android:gravity">center</item>
     </style>
+
     <style name="ExoMediaButton.Full">
         <item name="android:src">@drawable/full_screen</item>
         <item name="android:contentDescription">@string/exo_controls_full_screen_description</item>
@@ -251,6 +255,7 @@
         <item name="android:gravity">center_vertical|left</item>
         <item name="android:textColor">@color/color_hf_article_info_text</item>
     </style>
+
     <style name="ebook_item_price_red" parent="ebook_item_price">
         <item name="android:textColor">@color/color_red</item>
     </style>
@@ -264,11 +269,13 @@
         <item name="android:textColor">@color/color_login_blue</item>
         <item name="android:gravity">center</item>
     </style>
+
     <style name="master_info_text">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/color_hf_article_info_text</item>
         <item name="android:gravity">center</item>
     </style>
+
     <style name="master_info_text_gray">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/mask_color</item>
@@ -286,6 +293,7 @@
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/bg_gray_rect_selector</item>
     </style>
+
     <style name="text_sort">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/color_login_blue</item>

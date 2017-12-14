@@ -35,7 +35,6 @@
             android:name=".views.activity.HomeActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
-
         </activity>
         <activity
             android:name=".views.activity.DBaseDetailActivity"
@@ -88,8 +87,8 @@
         <activity
             android:name=".views.activity.VideoInfoActivity"
             android:screenOrientation="fullSensor"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
-
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:theme="@style/NoTitleTheme">
         </activity>
 
         <activity

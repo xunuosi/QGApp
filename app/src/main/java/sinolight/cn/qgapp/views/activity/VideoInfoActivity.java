@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
@@ -52,6 +55,7 @@ import sinolight.cn.qgapp.dagger.module.VideoInfoActivityModule;
 import sinolight.cn.qgapp.data.http.entity.DBResVideoEntity;
 import sinolight.cn.qgapp.presenter.VideoInfoActivityPresenter;
 import sinolight.cn.qgapp.utils.CommonUtil;
+import sinolight.cn.qgapp.utils.VideoSystemUIHelper;
 import sinolight.cn.qgapp.views.view.IVideoInfoActivityView;
 
 import static com.google.android.exoplayer2.ui.AspectRatioFrameLayout.RESIZE_MODE_FILL;
@@ -61,7 +65,8 @@ import static com.google.android.exoplayer2.ui.AspectRatioFrameLayout.RESIZE_MOD
  * Video info
  */
 
-public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivityView, Player.EventListener {
+public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivityView, Player.EventListener,
+    VideoSystemUIHelper.IOnSystemUIChangeListener {
     private static final String TAG = "VideoInfoActivity";
     @Inject
     Context mContext;
@@ -92,6 +97,8 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
     private int resumeWindow;
     private long resumePosition;
 
+    private VideoSystemUIHelper mSystemUIHelper;
+
     public static Intent getCallIntent(Context context) {
         return new Intent(context, VideoInfoActivity.class);
     }
@@ -101,6 +108,7 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
         this.initializeInjector();
         super.onCreate(savedInstanceState);
         this.clearResumePosition();
+        mSystemUIHelper = new VideoSystemUIHelper(getWindow().getDecorView(), this);
         mPresenter.checkoutIntent(getIntent());
     }
 
@@ -136,7 +144,7 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
             simpleExoPlayerView.setLayoutParams(layoutParams);
             simpleExoPlayerView.showController();
             // hide status bar
-            changeStatusBarState(false);
+            hideBottomNavigationAndFullScreen(true);
         }
         if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             mTbVideoInfo.setVisibility(View.VISIBLE);
@@ -148,7 +156,7 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
             simpleExoPlayerView.setLayoutParams(layoutParams);
             simpleExoPlayerView.showController();
             // show status bar
-            changeStatusBarState(true);
+            hideBottomNavigationAndFullScreen(false);
         }
     }
 
@@ -329,10 +337,45 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
 
     private void changeScreenDirection() {
         int orient = getRequestedOrientation();
-        if (orient == ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT) {
+        if (orient != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT &&
+                orient != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+            orient = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        }
+        if (orient == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            hideBottomNavigationAndFullScreen(true);
         } else {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            hideBottomNavigationAndFullScreen(false);
+        }
+    }
+
+    private void hideBottomNavigationAndFullScreen(boolean isHide) {
+//        if (isHide) {
+//            View decorView = getWindow().getDecorView();
+//            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+//                    | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+//                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+//        } else {
+//            View decorView = getWindow().getDecorView();
+//            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+//        }
+        if (isHide) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//            mSystemUIHelper.handleSystemUI(VideoSystemUIHelper.L_HIDE_STATUS);
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        } else {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            mSystemUIHelper.handleSystemUI(VideoSystemUIHelper.P_SHOW_STATUS);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            }
         }
     }
 
@@ -373,6 +416,11 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
 
     @Override
     public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
+
+    }
+
+    @Override
+    public void onSystemUIChange(int status) {
 
     }
 }

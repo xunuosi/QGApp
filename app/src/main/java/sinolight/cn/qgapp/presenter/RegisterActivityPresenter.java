@@ -128,7 +128,7 @@ public class RegisterActivityPresenter extends BasePresenter<IRegisterActivityVi
 
     }
 
-    private boolean checkoutData(String account, String email, String pwd, String rePwd, String vCode) {
+    public boolean checkoutData(String account, String email, String pwd, String rePwd, String vCode) {
         if (TextUtils.isEmpty(account)) {
             view().showToastMsg(R.string.text_user_empty);
             return false;
