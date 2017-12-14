@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<sinolight.cn.qgapp.views.widget.MyConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_video_play"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
     <android.support.v7.widget.Toolbar
         android:id="@+id/tb_video_info"
         android:layout_width="0dp"
@@ -105,4 +106,4 @@
         app:layout_constraintVertical_bias="0.5"
         app:controller_layout_id="@layout/custom_playback_control_view"/>
 
-</android.support.constraint.ConstraintLayout>
+</sinolight.cn.qgapp.views.widget.MyConstraintLayout>

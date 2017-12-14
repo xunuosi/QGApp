@@ -365,11 +365,11 @@ public class VideoInfoActivity extends BaseActivity implements IVideoInfoActivit
 //        }
         if (isHide) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//            mSystemUIHelper.handleSystemUI(VideoSystemUIHelper.L_HIDE_STATUS);
-            View decorView = getWindow().getDecorView();
-            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+            mSystemUIHelper.handleSystemUI(VideoSystemUIHelper.L_HIDE_STATUS);
+//            View decorView = getWindow().getDecorView();
+//            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         } else {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             mSystemUIHelper.handleSystemUI(VideoSystemUIHelper.P_SHOW_STATUS);
