@@ -9,7 +9,9 @@ public class EBookEntity {
     private String id;
     private String name;
     private String cover;
-    private String abs;
+    private String author;
+    private String issuedate;
+    private String isbn;
     private String price;
     private String url;
 
@@ -40,12 +42,28 @@ public class EBookEntity {
         this.cover = cover;
     }
 
-    public String getAbs() {
-        return abs;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setAbs(String abs) {
-        this.abs = abs;
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getIssuedate() {
+        return issuedate;
+    }
+
+    public void setIssuedate(String issuedate) {
+        this.issuedate = issuedate;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public String getPrice() {

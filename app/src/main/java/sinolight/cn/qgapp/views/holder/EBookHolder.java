@@ -32,14 +32,18 @@ public class EBookHolder extends RecyclerView.ViewHolder {
     SimpleDraweeView mIvItemEbook;
     @BindView(R.id.tv_item_ebook_title)
     TextView mTvItemEbookTitle;
-    @BindView(R.id.tv_item_ebook_info)
-    TextView mTvItemEbookInfo;
     @BindView(R.id.tv_item_ebook_price)
     TextView mTvItemEbookPrice;
     @BindView(R.id.tv_item_ebook_price_holder)
     TextView mTvItemEbookPriceHolder;
     @BindView(R.id.item_root_ebook)
     ConstraintLayout mItemRootEbook;
+    @BindView(R.id.tv_item_ebook_author)
+    TextView mTvItemEbookAuthor;
+    @BindView(R.id.tv_item_ebook_publish_date)
+    TextView mTvItemEbookPublishDate;
+    @BindView(R.id.tv_item_ebook_isbn)
+    TextView mTvItemEbookIsbn;
 
     public EBookHolder(View layout) {
         super(layout);
@@ -67,8 +71,9 @@ public class EBookHolder extends RecyclerView.ViewHolder {
         );
 
         mTvItemEbookTitle.setText(mData.getName());
-        mTvItemEbookInfo.setText(mData.getAbs());
-//        mTvItemEbookPriceHolder.setText(App.getContext().getString(R.string.text_price2));
+        mTvItemEbookAuthor.setText(formatStr(R.string.text_author_format, mData.getAuthor()));
+        mTvItemEbookPublishDate.setText(formatStr(R.string.text_publish_time_format, mData.getIssuedate()));
+        mTvItemEbookIsbn.setText(formatStr(R.string.text_isbn_format, mData.getIsbn()));
         mTvItemEbookPrice.setText(formatStr(R.string.text_price_format, mData.getPrice()));
     }
 

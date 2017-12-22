@@ -71,6 +71,7 @@
     <string name="text_price">价格</string>
     <string name="text_price_two">定价：</string>
     <string name="text_price_format">¥%1$s</string>
+    <string name="text_isbn_format">ISBN:%1$s</string>
     <!--Master-->
     <string name="text_master_product">代表作品：</string>
     <string name="text_master_field_format">研究领域：%1$s</string>
