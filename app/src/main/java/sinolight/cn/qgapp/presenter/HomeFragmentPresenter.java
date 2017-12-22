@@ -99,22 +99,28 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
     private List<StandardEntity> mStandardDatas;
     private List<LocalDataBean> mStoreDatas;
     private List<LocalDataBean> mTitleDatas;
+    // 访问多个接口的标志位
+    private boolean mHomeBannerFlag;
+    private boolean mHotPicsFlag;
+    private boolean mStandardFlag;
+    private boolean mRecoFlag;
+    private boolean mNewBooksFlag;
+    private boolean mArticlesFlag;
 
     private HttpSubscriber homeBannerObserver = new HttpSubscriber(new OnResultCallBack<List<BannerEntity>>() {
 
         @Override
         public void onSuccess(List<BannerEntity> bannerEntities) {
             mHomeBannerDatas = bannerEntities;
-            transformHomeData(mHomeBannerDatas, HomeAdapter.TYPE_BANNER, true);
-            // 初始化本地Item数据
-            initLocalData();
+            mHomeBannerFlag = true;
+            createHomeListView();
         }
 
         @Override
         public void onError(int code, String errorMsg) {
             L.d(TAG, "homeBannerObserver code:" + code + ",errorMsg:" + errorMsg);
-            // 初始化本地Item数据
-            initLocalData();
+            mHomeBannerFlag = true;
+            createHomeListView();
             showError(code, errorMsg);
         }
     });
@@ -124,13 +130,15 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         @Override
         public void onSuccess(List<BannerEntity> bannerEntities) {
             mHotPicsDatas = bannerEntities;
-            transformHomeData(mHotPicsDatas, HomeAdapter.TYPE_HOT_PICS, true);
-            loadTitle(TYPE_STANDARD, HomeAdapter.TYPE_COMMON_TITLE, true);
+            mHotPicsFlag = true;
+            createHomeListView();
         }
 
         @Override
         public void onError(int code, String errorMsg) {
             L.d(TAG, "hotPicsObserver code:" + code + ",errorMsg:" + errorMsg);
+            mHotPicsFlag = true;
+            createHomeListView();
             showError(code, errorMsg);
         }
     });
@@ -140,13 +148,15 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         @Override
         public void onSuccess(List<StandardEntity> bannerEntities) {
             mStandardDatas = bannerEntities;
-            transformHomeData(mStandardDatas, HomeAdapter.TYPE_STANDARD, true);
-            loadRecoWordsData();
+            mStandardFlag = true;
+            createHomeListView();
         }
 
         @Override
         public void onError(int code, String errorMsg) {
             L.d(TAG, "standardObserver code:" + code + ",errorMsg:" + errorMsg);
+            mStandardFlag = true;
+            createHomeListView();
             showError(code, errorMsg);
         }
     });
@@ -156,13 +166,15 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         @Override
         public void onSuccess(List<RecommendEntity> bannerEntities) {
             mRecoDatas = bannerEntities;
-            transformHomeData(mRecoDatas, HomeAdapter.TYPE_BANNER_WORDS, true);
-            loadTitle(TYPE_NEW_BOOKS, HomeAdapter.TYPE_COMMON_TITLE, true);
+            mRecoFlag = true;
+            createHomeListView();
         }
 
         @Override
         public void onError(int code, String errorMsg) {
             L.d(TAG, "recWordsObserver code:" + code + ",errorMsg:" + errorMsg);
+            mRecoFlag = true;
+            createHomeListView();
             showError(code, errorMsg);
         }
     });
@@ -172,13 +184,15 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         @Override
         public void onSuccess(List<NewBookEntity> bannerEntities) {
             mNewBooks = bannerEntities;
-            transformHomeData(mNewBooks, HomeAdapter.TYPE_NEW_BOOKS, true);
-            loadTitle(TYPE_HOT_ARTICLE, HomeAdapter.TYPE_COMMON_TITLE, true);
+            mNewBooksFlag = true;
+            createHomeListView();
         }
 
         @Override
         public void onError(int code, String errorMsg) {
             L.d(TAG, "newBooksObserver code:" + code + ",errorMsg:" + errorMsg);
+            mNewBooksFlag = true;
+            createHomeListView();
             showError(code, errorMsg);
         }
     });
@@ -188,12 +202,15 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         @Override
         public void onSuccess(List<ArticleEntity> bannerEntities) {
             mArticles = bannerEntities;
-            transformHomeData(mArticles, HomeAdapter.TYPE_ARTICLE, true);
+            mArticlesFlag = true;
+            createHomeListView();
         }
 
         @Override
         public void onError(int code, String errorMsg) {
             L.d(TAG, "articleObserver code:" + code + ",errorMsg:" + errorMsg);
+            mArticlesFlag = true;
+            createHomeListView();
             showError(code, errorMsg);
         }
     });
@@ -214,17 +231,27 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         switch (titleType) {
             case TYPE_STANDARD:
                 insertHomeData(mTitleDatas.get(TYPE_STANDARD), adapterType, span);
-                loadStandardData();
+                insertStandard();
                 break;
             case TYPE_NEW_BOOKS:
                 insertHomeData(mTitleDatas.get(TYPE_NEW_BOOKS), adapterType, span);
-                loadNewBooksData();
+                insertNewBooks();
                 break;
             case TYPE_HOT_ARTICLE:
                 insertHomeData(mTitleDatas.get(TYPE_HOT_ARTICLE), adapterType, span);
-                loadArticleData();
+                insertArticles();
                 break;
         }
+    }
+
+    /**
+     * 获取热门图集
+     */
+    private void loadHotPicsData() {
+        model.getHotPicsWithCache(
+                hotPicsObserver,
+                AppHelper.getInstance().getCurrentToken(),
+                false);
     }
 
     /**
@@ -280,6 +307,81 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         setModel(HttpManager.getInstance());
     }
 
+    /**
+     * 创建首页列表View的方法
+     */
+    private void createHomeListView() {
+        if (checkData()) {
+            // Load Home Banner
+            insertHomeBanner();
+        }
+    }
+
+    private void insertHomeBanner() {
+        if (mHomeBannerDatas == null) {
+            mHomeBannerDatas = new ArrayList<>();
+        } else {
+            transformHomeData(mHomeBannerDatas, HomeAdapter.TYPE_BANNER, true);
+        }
+        insertStore();
+    }
+
+    private void insertStore() {
+        transformHomeData(mStoreDatas, HomeAdapter.TYPE_STORE, false);
+
+        insertHotPics();
+    }
+
+    private void insertHotPics() {
+        if (mHotPicsDatas == null) {
+            mHotPicsDatas = new ArrayList<>();
+        } else {
+            transformHomeData(mHotPicsDatas, HomeAdapter.TYPE_HOT_PICS, true);
+        }
+        loadTitle(TYPE_STANDARD, HomeAdapter.TYPE_COMMON_TITLE, true);
+    }
+
+
+
+    private void insertStandard() {
+        if (mStandardDatas == null) {
+            mStandardDatas = new ArrayList<>();
+        } else {
+            transformHomeData(mStandardDatas, HomeAdapter.TYPE_STANDARD, true);
+        }
+
+        insertRecoDics();
+    }
+
+    private void insertRecoDics() {
+        if (mRecoDatas == null) {
+            mRecoDatas = new ArrayList<>();
+        } else {
+            transformHomeData(mRecoDatas, HomeAdapter.TYPE_BANNER_WORDS, true);
+        }
+        loadTitle(TYPE_NEW_BOOKS, HomeAdapter.TYPE_COMMON_TITLE, true);
+    }
+
+    private void insertNewBooks() {
+        if (mNewBooks == null) {
+            mNewBooks = new ArrayList<>();
+        } else {
+            transformHomeData(mNewBooks, HomeAdapter.TYPE_NEW_BOOKS, true);
+        }
+        loadTitle(TYPE_HOT_ARTICLE, HomeAdapter.TYPE_COMMON_TITLE, true);
+    }
+
+    private void insertArticles() {
+        if (mArticles == null) {
+            mArticles = new ArrayList<>();
+        } else {
+            transformHomeData(mArticles, HomeAdapter.TYPE_ARTICLE, true);
+        }
+
+        // 数据加载完毕
+        closeLoading();
+    }
+
     @Override
     protected void updateView() {
 
@@ -296,23 +398,53 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
         articleObserver.unSubscribe();
         // 清理内存数据
         HomeDataMapper.reset();
+        mHomeBannerDatas = null;
         mStoreDatas = null;
+        mHotPicsDatas = null;
+        mTitleDatas = null;
+        mStandardDatas = null;
+        mRecoDatas = null;
+        mNewBooks = null;
+        mArticles = null;
     }
 
     /**
      * 初始化数据
      */
     public void initData() {
+        resetState();
+
+        loadData();
+    }
+
+    private void loadData() {
+        model.getHomeBannerWithCache(homeBannerObserver,
+                AppHelper.getInstance().getCurrentToken(),
+                false);
+        loadLocalData();
+        loadHotPicsData();
+        loadStandardData();
+        loadRecoWordsData();
+        loadNewBooksData();
+        loadArticleData();
+    }
+
+    @Override
+    protected void resetState() {
+        super.resetState();
         // 清理内存首页数据
         HomeDataMapper.reset();
         homeDatas = new ArrayList<>();
 
-        model.getHomeBannerWithCache(homeBannerObserver,
-                AppHelper.getInstance().getCurrentToken(),
-                false);
+        mHomeBannerFlag = false;
+        mHotPicsFlag = false;
+        mStandardFlag = false;
+        mRecoFlag = false;
+        mNewBooksFlag = false;
+        mArticlesFlag = false;
     }
 
-    private void initLocalData() {
+    private void loadLocalData() {
         mStoreDatas = new ArrayList<>();
         for (int i=0;i<storeImgArr.length;i++) {
             LocalDataBean bean = new LocalDataBean();
@@ -330,11 +462,6 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
             bean.setResId(titleImgArr[i]);
             mTitleDatas.add(bean);
         }
-
-        transformHomeData(mStoreDatas, HomeAdapter.TYPE_STORE, false);
-
-        // 获取热门图集
-        model.getHotPicsWithCache(hotPicsObserver, AppHelper.getInstance().getCurrentToken(), false);
     }
 
     /**
@@ -367,15 +494,17 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
                 homeDatas.addAll(HomeDataMapper.transformArticleDatas(list, type, isSpan));
                 break;
         }
-        // 数据加载完毕
-        closeLoading();
     }
 
     private void closeLoading() {
         if (checkData() && view() != null) {
-            mHomeAdapter = new HomeAdapter(mContext, homeDatas);
+            if (mHomeAdapter == null) {
+                mHomeAdapter = new HomeAdapter(mContext, homeDatas);
+                view().showView(mHomeAdapter);
+            } else {
+                mHomeAdapter.setData(homeDatas);
+            }
             view().showLoading(false);
-            view().showView(mHomeAdapter);
         }
     }
 
@@ -384,14 +513,12 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
      * @return
      */
     private boolean checkData() {
-        return (mHomeBannerDatas != null &&
-                mStoreDatas != null &&
-                mStandardDatas !=null &&
-                mHotPicsDatas != null &&
-                mTitleDatas !=null &&
-                mRecoDatas !=null &&
-                mNewBooks !=null &&
-                mArticles != null
+        return (mHomeBannerFlag &&
+                mHotPicsFlag &&
+                mStandardFlag &&
+                mRecoFlag &&
+                mNewBooksFlag &&
+                mArticlesFlag
         );
     }
 

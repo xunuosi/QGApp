@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import sinolight.cn.qgapp.R;
@@ -148,5 +149,15 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private boolean isFullSpanType(int pos) {
         return homeDatas.get(pos).isSpan();
+    }
+
+    public void setData(List<HomeData> data) {
+        if (homeDatas != null) {
+            homeDatas.clear();
+        } else {
+            homeDatas = new ArrayList<>();
+        }
+        homeDatas.addAll(data);
+        notifyDataSetChanged();
     }
 }
