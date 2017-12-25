@@ -13,12 +13,12 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion "26.0.2"
 
     defaultConfig {
         applicationId "sinolight.cn.qgapp"
         minSdkVersion 21
-        targetSdkVersion 26
+            targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         multiDexEnabled = true
@@ -68,8 +68,8 @@ dependencies {
     testCompile 'org.robolectric:robolectric:3.5.1'
     testCompile 'org.robolectric:shadows-support-v4:3.4-rc2'
     // butterknife
-    compile 'com.jakewharton:butterknife:8.6.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     // dagger2
     compile 'com.google.dagger:dagger:2.11'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
@@ -77,12 +77,12 @@ dependencies {
     compile 'org.greenrobot:greendao:3.2.2'
     // widget
     compile 'com.github.Aspsine:SwipeToLoadLayout:1.0.4'
-    compile 'me.majiajie:pager-bottom-tab-strip:2.1.0'
+    compile 'me.majiajie:pager-bottom-tab-strip:2.2.1'
     compile 'com.youth.banner:banner:1.4.9'
     // AndroidViewTree
     compile 'com.github.bmelnychuk:atv:1.2.+'
     // fresco
-    compile 'com.facebook.fresco:fresco:1.3.0'
+    compile 'com.facebook.fresco:fresco:1.7.1'
     // retrofit2
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
@@ -97,10 +97,10 @@ dependencies {
     //RxCache
     compile 'com.github.VictorAlbertos.RxCache:runtime:1.8.0-2.x'
     compile 'com.github.VictorAlbertos.Jolyglot:gson:0.0.3'
-    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
-    compile 'com.android.support:recyclerview-v7:26.0.0-alpha1'
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:recyclerview-v7:26.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:design:26.0.0-alpha1'
+    compile 'com.android.support:design:26.1.0'
     // ExoPlay
     compile 'com.google.android.exoplayer:exoplayer:r2.5.1'
     // SearchView
@@ -109,10 +109,12 @@ dependencies {
     compile 'com.github.zagum:Android-ExpandIcon:1.2.0'
     // flowLayout
     compile 'com.hyman:flowlayout-lib:1.1.2'
-    compile 'com.android.support:cardview-v7:26.0.0-alpha1'
+    compile 'com.android.support:cardview-v7:26.1.0'
     compile project(path: ':samples:zoomable')
     // leakcanary
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    // bugly
+    compile 'com.tencent.bugly:crashreport:latest.release'
     compile project(':sharemodule')
 }
