@@ -210,7 +210,7 @@ public class MaterialListActivity extends BaseActivity implements IMaterialListA
                 mTopRightMenu = new TopRightMenu(this, tView.getView());
                 mTopRightMenu
                         .setHeight(ScreenUtil.getScreenHeight(mContext)/3*2)     //默认高度480
-                        .setWidth(ScreenUtil.getScreenHeight(mContext)/3*2)      //默认宽度wrap_content
+                        .setWidth(ScreenUtil.getScreenWidth(mContext)/3*2)      //默认宽度wrap_content
                         .showIcon(true)     //显示菜单图标，默认为true
                         .dimBackground(true)           //背景变暗，默认为true
                         .needAnimationStyle(true)   //显示动画，默认为true
