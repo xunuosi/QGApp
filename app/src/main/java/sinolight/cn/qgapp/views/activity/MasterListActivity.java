@@ -34,6 +34,7 @@ import sinolight.cn.qgapp.adapter.MasterAdapter;
 import sinolight.cn.qgapp.dagger.component.DaggerMasterListActivityComponent;
 import sinolight.cn.qgapp.dagger.module.MasterListActivityModule;
 import sinolight.cn.qgapp.presenter.MasterListActivityPresenter;
+import sinolight.cn.qgapp.utils.ScreenUtil;
 import sinolight.cn.qgapp.views.holder.TreeParentHolder;
 import sinolight.cn.qgapp.views.view.IMasterListActivityView;
 import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
@@ -230,8 +231,8 @@ public class MasterListActivity extends BaseActivity implements IMasterListActiv
             if (mTopRightMenu == null) {
                 mTopRightMenu = new TopRightMenu(this, tView.getView());
                 mTopRightMenu
-                        .setHeight(850)     //默认高度480
-                        .setWidth(520)      //默认宽度wrap_content
+                        .setHeight(ScreenUtil.getScreenHeight(mContext)/3*2)     //默认高度480
+                        .setWidth(ScreenUtil.getScreenHeight(mContext)/3*2)      //默认宽度wrap_content
                         .showIcon(true)     //显示菜单图标，默认为true
                         .dimBackground(true)           //背景变暗，默认为true
                         .needAnimationStyle(true)   //显示动画，默认为true

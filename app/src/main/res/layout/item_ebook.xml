@@ -86,6 +86,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:lines="1"
+        android:ellipsize="end"
         tools:text="@string/text_author_format"
         style="@style/ebook_item_common"
         app:layout_constraintEnd_toEndOf="@+id/tv_item_ebook_title"

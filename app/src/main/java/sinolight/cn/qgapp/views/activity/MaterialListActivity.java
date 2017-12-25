@@ -33,6 +33,7 @@ import sinolight.cn.qgapp.adapter.CommonTitleAdapter;
 import sinolight.cn.qgapp.dagger.component.DaggerMaterialListActivityComponent;
 import sinolight.cn.qgapp.dagger.module.MaterialListActivityModule;
 import sinolight.cn.qgapp.presenter.MaterialListActivityPresenter;
+import sinolight.cn.qgapp.utils.ScreenUtil;
 import sinolight.cn.qgapp.views.holder.TreeParentHolder;
 import sinolight.cn.qgapp.views.view.IMaterialListActivityView;
 import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
@@ -208,8 +209,8 @@ public class MaterialListActivity extends BaseActivity implements IMaterialListA
             if (mTopRightMenu == null) {
                 mTopRightMenu = new TopRightMenu(this, tView.getView());
                 mTopRightMenu
-                        .setHeight(850)     //默认高度480
-                        .setWidth(520)      //默认宽度wrap_content
+                        .setHeight(ScreenUtil.getScreenHeight(mContext)/3*2)     //默认高度480
+                        .setWidth(ScreenUtil.getScreenHeight(mContext)/3*2)      //默认宽度wrap_content
                         .showIcon(true)     //显示菜单图标，默认为true
                         .dimBackground(true)           //背景变暗，默认为true
                         .needAnimationStyle(true)   //显示动画，默认为true

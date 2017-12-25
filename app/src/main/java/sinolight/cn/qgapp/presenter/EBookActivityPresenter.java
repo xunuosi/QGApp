@@ -37,7 +37,7 @@ public class EBookActivityPresenter extends BasePresenter<IEBookActivityView, Ht
 
     private Context mContext;
     private AppContants.EBook.SortType sortType = AppContants.EBook.SortType.SORT_COMPREHENSIVE;
-    private AppContants.EBook.SortOrder sortOrder = AppContants.EBook.SortOrder.SORT_POSITIVE;
+    private AppContants.EBook.SortOrder sortOrder = AppContants.EBook.SortOrder.SORT_REVERSE;
 
     private List<DBResTypeEntity> mTreeTypeList;
     private List<TreeNode> mTreeNodes;
@@ -361,8 +361,8 @@ public class EBookActivityPresenter extends BasePresenter<IEBookActivityView, Ht
                 view().changeSortView(getActionTabItemPosi(type), ExpandIconView.LESS);
             }
         } else {
-            sortOrder = AppContants.EBook.SortOrder.SORT_POSITIVE;
-            view().changeSortView(getActionTabItemPosi(type), ExpandIconView.LESS);
+            sortOrder = AppContants.EBook.SortOrder.SORT_REVERSE;
+            view().changeSortView(getActionTabItemPosi(type), ExpandIconView.MORE);
         }
         // Update Data
         this.loadDataWithPara(null, null, false, false);

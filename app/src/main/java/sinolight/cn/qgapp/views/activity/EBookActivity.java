@@ -38,6 +38,7 @@ import sinolight.cn.qgapp.adapter.KDBResAdapter;
 import sinolight.cn.qgapp.dagger.component.DaggerEBookActivityComponent;
 import sinolight.cn.qgapp.dagger.module.EBookActivityModule;
 import sinolight.cn.qgapp.presenter.EBookActivityPresenter;
+import sinolight.cn.qgapp.utils.ScreenUtil;
 import sinolight.cn.qgapp.views.holder.TreeParentHolder;
 import sinolight.cn.qgapp.views.view.IEBookActivityView;
 import sinolight.cn.qgapp.views.widget.popmenu.TopRightMenu;
@@ -208,8 +209,8 @@ public class EBookActivity extends BaseActivity implements IEBookActivityView,
             if (mTopRightMenu == null) {
                 mTopRightMenu = new TopRightMenu(this, tView.getView());
                 mTopRightMenu
-                        .setHeight(850)     //默认高度480
-                        .setWidth(520)      //默认宽度wrap_content
+                        .setHeight(ScreenUtil.getScreenHeight(mContext)/3*2)     //默认高度480
+                        .setWidth(ScreenUtil.getScreenWidth(mContext)/3*2)      //默认宽度wrap_content
                         .showIcon(true)     //显示菜单图标，默认为true
                         .dimBackground(true)           //背景变暗，默认为true
                         .needAnimationStyle(true)   //显示动画，默认为true
@@ -370,15 +371,15 @@ public class EBookActivity extends BaseActivity implements IEBookActivityView,
         switch (position) {
             case 0:
                 tv.setText(getText(R.string.text_comprehensive));
-                exView.setState(ExpandIconView.LESS, false);
+                exView.setState(ExpandIconView.MORE, false);
                 break;
             case 1:
                 tv.setText(getText(R.string.text_new_goods));
-                exView.setState(ExpandIconView.LESS, false);
+                exView.setState(ExpandIconView.MORE, false);
                 break;
             case 2:
                 tv.setText(getText(R.string.text_price));
-                exView.setState(ExpandIconView.LESS, false);
+                exView.setState(ExpandIconView.MORE, false);
                 break;
         }
         return view;
