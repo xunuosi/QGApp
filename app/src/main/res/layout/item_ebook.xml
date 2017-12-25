@@ -55,7 +55,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/tv_item_ebook_price"
         app:layout_constraintStart_toStartOf="@+id/tv_item_ebook_title"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_ebook_isbn"/>
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
