@@ -7,9 +7,9 @@ package sinolight.cn.qgapp;
 
 public interface AppContants {
     // Release
-//    String BASE_URL = "http://192.168.0.133:8031/api/";
+    String BASE_URL = "http://59.110.69.106:8022/api/";
     // Test
-    String BASE_URL = "http:/192.168.25.183:8018/api/";
+//    String BASE_URL = "http://192.168.25.183:8018/api/";
     int SUCCESS_CODE = -1;
     // 身份验证失败
     int FAILED_TOKEN = 0;

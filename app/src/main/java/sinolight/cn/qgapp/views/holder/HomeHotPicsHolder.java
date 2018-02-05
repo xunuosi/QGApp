@@ -134,9 +134,11 @@ public class HomeHotPicsHolder extends RecyclerView.ViewHolder implements
     }
 
     private void gotoImgSetInfo(int position) {
-        Intent callIntent = ResPicListActivity.getCallIntent(App.getContext());
-        callIntent.putExtra(AppContants.Resource.RES_ID, datas.get(position).getId());
-        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        App.getContext().startActivity(callIntent);
+        if (datas != null) {
+            Intent callIntent = ResPicListActivity.getCallIntent(App.getContext());
+            callIntent.putExtra(AppContants.Resource.RES_ID, datas.get(position).getId());
+            callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            App.getContext().startActivity(callIntent);
+        }
     }
 }
