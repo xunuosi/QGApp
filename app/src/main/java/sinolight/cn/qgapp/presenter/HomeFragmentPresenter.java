@@ -320,9 +320,9 @@ public class HomeFragmentPresenter extends BasePresenter<IHomeFragmentView, Http
     private void insertHomeBanner() {
         if (mHomeBannerDatas == null) {
             mHomeBannerDatas = new ArrayList<>();
-        } else {
-            transformHomeData(mHomeBannerDatas, HomeAdapter.TYPE_BANNER, true);
         }
+        transformHomeData(mHomeBannerDatas, HomeAdapter.TYPE_BANNER, true);
+
         insertStore();
     }
 
